@@ -14,9 +14,47 @@
 <title>Sign Up</title>
 </head>
 <body>
+
 	<form action="" name="myForm" method="post" onsubmit="return signUpValidate();">
-	
+		
+		<legend>Sign Up</legend>
+			
+				<table>
+					
+					<tr>
+						<td><label for="signUpName">Name:</label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="text" id="signUpName" name="signUpName"></input></td>
+						<td><label id="signUpNameError"></label></td>
+					</tr>
+					
+					<tr>
+						<td><label for="signUpEmail">Email Address:</label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="text" id="signUpEmail" name="signUpEmail"></input></td>		
+						<td><label id="signUpEmailError"></label></td>
+					</tr>
+					
+					<tr>
+						<td><label for="signUpPassword">Password:</label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="password" id="signUpPassword" name="signUpPassword"></input></td>		
+						<td><label id="signUpPasswordError"></label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="submit" value="Sign Up!" name="signUpButton"></input></td>
+					</tr>
+						
+				</table>
 	</form>
+	
 </body>
 </html>
 </jsp:root>

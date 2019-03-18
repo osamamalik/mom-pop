@@ -15,7 +15,7 @@
 </head>
 <body>
 	<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
-	
+		this is the login page
 	</form>
 </body>
 </html>

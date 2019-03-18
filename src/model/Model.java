@@ -21,4 +21,6 @@ public class Model {
 	public LoginBean retrieveUser(String username) throws Exception {
 		return loginDAO.retrieveUser(username);
 	}
+	
+	
 }

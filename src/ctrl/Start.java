@@ -42,16 +42,39 @@ public class Start extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
+		//initializes the model object
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
-		try {
-			System.out.println(myModel.retrieveUser("ray").getPassword());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		
+		
+		//****************************************************
+		//Manages page redirections
+		
+		//Sets the default redirection target to the Home page
+		String target = "/Home.jspx";
+		
+		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
+		if (request.getParameter("signUpPageButton") != null) {
+			target = "/SignUp.jspx";
 		}
+		//checks if 'Login' button was pressed, sets target to the Login page if true
+		if (request.getParameter("loginPageButton") != null) {
+			target = "/Login.jspx";
+		}
+		
+		//Checks if there was a sign up attempt, takes appropriate action
+		if (request.getParameter("signUpButton") != null) {
+			
+		}
+
+		
+		
+				
+		
+		
+		request.getRequestDispatcher(target).forward(request, response);
+
 	}
 
 	/**

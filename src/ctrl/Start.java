@@ -66,9 +66,22 @@ public class Start extends HttpServlet {
 		//Checks if there was a sign up attempt, takes appropriate action
 		if (request.getParameter("signUpButton") != null) {
 			
+			/* CHECK ERROR HERE */
+			
+			String username = request.getParameter("signUpName");
+			String email = request.getParameter("signUpEmail");
+			String password = request.getParameter("signUpPassword"); 
+			
+			myModel.addUser(username, email, password);
+			
 		}
 
-		
+		try {
+			System.out.println(myModel.retrieveUser("asd").getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 				
 		

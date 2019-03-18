@@ -19,8 +19,8 @@ public class SignUpDAO {
 		}
 	}
 	
-	public void addUser(String username, String password, String email) throws SQLException {
-		String query ="INSERT INTO USER(username, password, email) VALUES('" + username + "','" + password + "','" + email+ "')";
+	public void addUser(String username, String email, String password) throws SQLException {
+		String query ="INSERT INTO USERS(username, email, password) VALUES('" + username + "','" + email + "','" + password+ "')";
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		int r = p.executeUpdate();

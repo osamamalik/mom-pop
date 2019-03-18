@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import DAO.*;
@@ -22,5 +23,13 @@ public class Model {
 		return loginDAO.retrieveUser(username);
 	}
 	
+	public void addUser(String username, String email, String password) {
+		try {
+			signUpDAO.addUser(username, email, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

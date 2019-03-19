@@ -48,15 +48,14 @@ public class BookDAO {
 	}
 	
 	public Map<String, BookBean> retrieveByAuthor(String author) throws SQLException {
-		String query = "select * from BOOKS where author like '" + author + "'";
+		String query = "select * from BOOKS where author like '%" + author + "%'";
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
-		String bid;
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
-		if(r.next()){
+		while(r.next()){
 			BookBean bb = new BookBean();
-			bid = r.getString("bid");
+			String bid = r.getString("bid");
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -74,13 +73,12 @@ public class BookDAO {
 	public Map<String, BookBean> retrieveByTitle(String title) throws SQLException {
 		String query = "select * from BOOKS where title like '%" + title + "%'";
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
-		String bid;
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
-		if(r.next()){
+		while(r.next()){
 			BookBean bb = new BookBean();
-			bid = r.getString("bid");
+			String bid = r.getString("bid");
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -96,15 +94,14 @@ public class BookDAO {
 	}
 	
 	public Map<String, BookBean> retrieveByCategory(String category) throws SQLException {
-		String query = "select * from BOOKS where category = '" + category + "'";
+		String query = "select * from BOOKS where category like '%" + category + "%'";
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
-		String bid;
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
-		if(r.next()){
+		while(r.next()){
 			BookBean bb = new BookBean();
-			bid = r.getString("bid");
+			String bid = r.getString("bid");
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -122,13 +119,12 @@ public class BookDAO {
 	public Map<String, BookBean> retrieveByPriceRange(int lowerRange, int higherRange) throws SQLException {
 		String query = "select * from BOOKS where price >= " + lowerRange + " and price <= " + higherRange;
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
-		String bid;
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
-		if(r.next()){
+		while(r.next()){
 			BookBean bb = new BookBean();
-			bid = r.getString("bid");
+			String bid = r.getString("bid");
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));

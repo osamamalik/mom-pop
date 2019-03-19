@@ -31,8 +31,13 @@ public class Model {
 	DATABASE USER OPERATIONS
     ****************************************************************/
 	
-	public UserBean retrieveUser(String username) throws Exception {
-		return userDAO.retrieveUser(username);
+	public UserBean retrieveUser(String username){
+		try {
+			return userDAO.retrieveUser(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void addUser(String username, String email, String password) {
@@ -61,33 +66,47 @@ public class Model {
 			try {
 				return bookDAO.retrieveBook(bid);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			}
 	}
 	
 	public Map<String, BookBean> retrieveByAuthor(String author){
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
 		try {
 			return bookDAO.retrieveByAuthor(author);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
 	public Map<String, BookBean> retrieveByTitle(String title){
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
 		try {
 			return bookDAO.retrieveByTitle(title);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	public Map<String, BookBean> retrieveByCategory(String category){
+		try {
+			return bookDAO.retrieveByCategory(category);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Map<String, BookBean> retrieveByPriceRange(int lowerRange, int higherRange){
+		try {
+			return bookDAO.retrieveByPriceRange(lowerRange, higherRange);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 
 	/***************************************************************

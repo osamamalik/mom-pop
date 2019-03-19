@@ -77,6 +77,18 @@ public class Model {
 		}
 		return null;
 	}
+	
+	public Map<String, BookBean> retrieveByTitle(String title){
+		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		try {
+			return bookDAO.retrieveByTitle(title);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 	/***************************************************************
 		ERROR CHECKING METHODS

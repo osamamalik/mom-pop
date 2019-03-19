@@ -72,7 +72,7 @@ public class BookDAO {
 	}
 	
 	public Map<String, BookBean> retrieveByTitle(String title) throws SQLException {
-		String query = "select * from BOOKS where title like '" + title + "'";
+		String query = "select * from BOOKS where title like '%" + title + "%'";
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
 		String bid;
 		Connection con = this.ds.getConnection();

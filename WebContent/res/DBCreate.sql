@@ -26,4 +26,6 @@ CREATE TABLE Books (
 INSERT INTO Books VALUES ('b001', 'Little Prince', 'datta', 20, 'Fiction', 'a');
 INSERT INTO Books VALUES ('b002','Physics', 'datta', 201, 'Science', 'a');
 INSERT INTO Books VALUES ('b003','Mechanics', 'datta', 100,'Engineering', 'a');
+INSERT INTO Books VALUES ('b004','Mechanics', 'datta', 110,'Engineering', 'b');
+
 

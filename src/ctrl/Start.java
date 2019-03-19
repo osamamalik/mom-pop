@@ -45,12 +45,15 @@ public class Start extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//initializes the model object
+		/***************************************************************
+			INITIALIZATION
+		 ****************************************************************/
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
-		
+		boolean error = false;
 
-		//****************************************************
-		//Manages page redirections
+		/***************************************************************
+			PAGE REDIRECTIONS
+		 ****************************************************************/
 
 		//Sets the default redirection target to the Home page
 		String target = "/Home.jspx";
@@ -63,6 +66,10 @@ public class Start extends HttpServlet {
 		if (request.getParameter("loginPageButton") != null) {
 			target = "/Login.jspx";
 		}
+		
+		/***************************************************************
+			SIGN UP
+		 ****************************************************************/
 
 		//Checks if there was a sign up attempt, takes appropriate action
 		if (request.getParameter("signUpButton") != null) {
@@ -76,45 +83,41 @@ public class Start extends HttpServlet {
 			myModel.addUser(username, email, password);
 
 		}
+		
+		/***************************************************************
+			LOGIN
+		****************************************************************/
 
 		//Checks if there was a sign up attempt, takes appropriate action
 		if (request.getParameter("loginButton") != null) {
-
-			/* CHECK ERROR HERE */
-
 			String username = request.getParameter("loginName");
 			String password = request.getParameter("loginPassword"); 
+			
+			// Sets errors, if any
+			myModel.checkLoginError(username, password);
 
-			// Check if user exists in database and set log in status
-			boolean userExists = myModel.checkUserExists(username);
-			if (userExists) {
+			if (!myModel.getErrorStatus()) {		// No errors, user is successfully logged in
 				loggedIn = true;
 				request.getSession().setAttribute("loggedInSession", loggedIn);
 				request.getSession().setAttribute("loggedInUser", username);
 			}
 			else {
-				// ERROR
-				System.out.println("User Not Found. Could not login.");
+				String loginErrorMessage = myModel.getErrorMessage();
+				error = true;
+				target = "/Login.jspx";
+				request.setAttribute("error", loginErrorMessage);
 			}
-			
 		}
-
-
-		/* Used For Testing Purposes */
-
-		try {
-			System.out.println("Does Baris exist: " + myModel.checkUserExists("baris"));
-			System.out.println("Does user exist: " + myModel.checkUserExists("fsff"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		System.out.println("Login status: (application): " + loggedIn);
-		System.out.println("Login status (session): " + request.getSession().getAttribute("loggedInSession"));
+		
+		/***************************************************************
+			USER SETTINGS
+		 ****************************************************************/
+		
+		//TODO
+		
+		
+		
 		request.getRequestDispatcher(target).forward(request, response);
-
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,39 +10,49 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.LoginBean;
+import bean.*;
 
-public class LoginDAO {
+public class UserDAO {
 	DataSource ds;
-
-	public LoginDAO() throws ClassNotFoundException{
+	
+	public UserDAO() throws ClassNotFoundException{
 		try {
-			this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
+		  this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public LoginBean retrieveUser(String username) throws SQLException {
+	
+	public void addUser(String username, String email, String password) throws SQLException {
+		String query ="INSERT INTO USERS(username, email, password) VALUES('" + username + "','" + email + "','" + password+ "')";
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		int r = p.executeUpdate();
+		p.close();
+		con.close();
+	}
+	
+	public UserBean retrieveUser(String username) throws SQLException {
 		String query = "select * from USERS where username ='" + username + "'";
-		LoginBean lb = new LoginBean();
+		UserBean ub = new UserBean();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		if(r.next()){
-			lb.setUsername(r.getString("username"));
-			lb.setPassword(r.getString("password"));
+			ub.setUsername(r.getString("username"));
+			ub.setPassword(r.getString("password"));
 		}
 
-		return lb;	
+		return ub;	
 	}
 	
 	public boolean checkUserExists(String username) throws SQLException {
 		String query = "select * from USERS where username ='" + username + "'";
-		LoginBean lb = new LoginBean();
+		UserBean ub = new UserBean();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		return r.next();	
 	}
+
 }

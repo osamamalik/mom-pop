@@ -1,3 +1,3 @@
 # e-men
 
-updated readme file - checking git
+Added near full functionality for login and signup pages, complete with server side error checking.

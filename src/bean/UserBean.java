@@ -32,9 +32,5 @@ public class UserBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-<<<<<<< HEAD:src/bean/signUpBean.java
 	
 }
-=======
-}
->>>>>>> 3fdaa2a06a5f234b0f7189a157fcee1e9640455d:src/bean/UserBean.java

@@ -15,4 +15,3 @@ ADDITIONS:
 
 - added error checking for signUp
 - added updatePassword method to model
-- added pa

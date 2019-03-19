@@ -4,7 +4,7 @@ FIXES:
 
 - addUser query was fixed: changed the PreparedStatement declaration to Statement. We need a Statement object when adding/updating items to tables.
 
-- other queries were fixed: Connection, PreparedStatement and ResultSet objects were not closed before after queries. Added closing statements.
+- other queries were fixed: Connection, PreparedStatement and ResultSet objects were not closed after queries. Added closing statements.
 without the closing statements website kept locking
 
 - there was an error on login error checking. 2 queries were called from the same method (checkUserExists and passwordValidation).

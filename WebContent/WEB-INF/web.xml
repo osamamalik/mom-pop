@@ -10,4 +10,10 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>Start</welcome-file>
   </welcome-file-list>
+  <context-param>
+  	<param-name>loggedIn</param-name>
+  	<param-value>false</param-value>
+  </context-param>
+  
+  
 </web-app>

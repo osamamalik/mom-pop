@@ -15,7 +15,33 @@
 </head>
 <body>
 	<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
-		this is the login page
+		<legend>Login</legend>
+			
+				<table>
+					
+					<tr>
+						<td><label for="loginName">Name:</label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="text" id="loginName" name="loginName"></input></td>
+						<td><label id="loginNameError"></label></td>
+					</tr>
+					
+					<tr>
+						<td><label for="loginPassword">Password:</label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="password" id="loginPassword" name="loginPassword"></input></td>		
+						<td><label id="loginPasswordError"></label></td>
+					</tr>
+					
+					<tr>
+						<td><input type="submit" value="Login" name="loginButton"></input></td>
+					</tr>
+						
+				</table>
 	</form>
 </body>
 </html>

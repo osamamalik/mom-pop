@@ -32,10 +32,16 @@ public class LoginDAO {
 			lb.setUsername(r.getString("username"));
 			lb.setPassword(r.getString("password"));
 		}
-		else{
-			// do something when no data arrived
-		}
 
 		return lb;	
+	}
+	
+	public boolean checkUserExists(String username) throws SQLException {
+		String query = "select * from USERS where username ='" + username + "'";
+		LoginBean lb = new LoginBean();
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		return r.next();	
 	}
 }

@@ -27,8 +27,16 @@ public class Model {
 		try {
 			signUpDAO.addUser(username, email, password);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public boolean checkUserExists(String username) {
+		try {
+			return loginDAO.checkUserExists(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	

@@ -140,9 +140,15 @@ public class Start extends HttpServlet {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
+	
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
 		books = myModel.retrieveByAuthor("datta");
+		
+		System.out.println(books.size());
+	
+		for (Map.Entry<String, BookBean> entry : books.entrySet()){
+			System.out.println(entry.getValue().getBid());
+		}
 			
 		//TODO
 			

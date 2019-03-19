@@ -1,6 +1,8 @@
 package ctrl;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.*;
+import bean.*;
+
 
 /**
  * Servlet implementation class Start
@@ -32,6 +36,7 @@ public class Start extends HttpServlet {
 		super.init(config);
 		ServletContext context = getServletContext();
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
+		
 		try {
 			context.setAttribute("myModel", new Model());
 		}
@@ -40,6 +45,7 @@ public class Start extends HttpServlet {
 		}
 	}
 
+		
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -122,9 +128,22 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
-			USER SETTINGS
+			TESTING BLOCK
 		 ****************************************************************/
+//		
+//		BookBean bb;
+//		try {
+//			bb = myModel.retrieveBook("b001");
+//			System.out.println(bb.getAuthor());
+//
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
+		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		books = myModel.retrieveByAuthor("datta");
+			
 		//TODO
 			
 		request.getRequestDispatcher(target).forward(request, response);

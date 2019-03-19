@@ -14,7 +14,8 @@ import javax.sql.DataSource;
 import bean.*;
 
 public class UserDAO {
-	DataSource ds;
+	
+	private DataSource ds;
 	
 	public UserDAO() throws ClassNotFoundException{
 		try {
@@ -43,7 +44,7 @@ public class UserDAO {
 	}
 	
 	public UserBean retrieveUser(String username) throws SQLException {
-		String query = "select * from USERS where username ='" + username + "'";
+		String query = "SELECT * from USERS where username ='" + username + "'";
 		UserBean ub = new UserBean();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
@@ -59,7 +60,7 @@ public class UserDAO {
 	}
 	
 	public boolean checkUserExists(String username) throws SQLException {
-		String query = "select * from USERS where username ='" + username + "'";
+		String query = "SELECT * from USERS where username ='" + username + "'";
 		Connection con = this.ds.getConnection();
 		con.setAutoCommit(false);
 		PreparedStatement p = con.prepareStatement(query);

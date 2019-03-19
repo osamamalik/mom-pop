@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import DAO.*;
@@ -8,6 +9,8 @@ import bean.*;
 
 public class Model {
 	private UserDAO userDAO;
+	private BookDAO bookDAO;
+
 	private boolean errorStatus;
 	private String errorMessage;
 
@@ -18,13 +21,14 @@ public class Model {
 
 		try {
 			userDAO = new UserDAO();
+			bookDAO = new BookDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/***************************************************************
-	DATABASE OPERATIONS
+	DATABASE USER OPERATIONS
     ****************************************************************/
 	
 	public UserBean retrieveUser(String username) throws Exception {
@@ -46,6 +50,32 @@ public class Model {
 			System.out.println("THERE WAS AN ERROR");
 			e.printStackTrace();
 		}
+	}
+	
+	/***************************************************************
+	DATABASE BOOK OPERATIONS
+    ****************************************************************/
+	
+	public BookBean retrieveBook(String bid){
+		
+			try {
+				return bookDAO.retrieveBook(bid);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+	}
+	
+	public Map<String, BookBean> retrieveByAuthor(String author){
+		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		try {
+			return bookDAO.retrieveByAuthor(author);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/***************************************************************

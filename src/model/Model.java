@@ -52,7 +52,6 @@ public class Model {
 		try {
 			userDAO.updatePassword(username, newPassword);
 		} catch (SQLException e) {
-			System.out.println("THERE WAS AN ERROR");
 			e.printStackTrace();
 		}
 	}

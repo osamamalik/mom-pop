@@ -144,13 +144,10 @@ public class Start extends HttpServlet {
 		Map<String, BookBean> books = new HashMap<String, BookBean>();
 		books = myModel.retrieveByPriceRange(90, 150);
 		
-	
 		for (Map.Entry<String, BookBean> entry : books.entrySet()){
 			System.out.println(entry.getValue().getBid());
 		}
-			
-		//TODO
-			
+						
 		request.getRequestDispatcher(target).forward(request, response);
 	}
 

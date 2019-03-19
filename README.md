@@ -15,3 +15,14 @@ ADDITIONS:
 
 - added error checking for signUp
 - added updatePassword method to model
+
+Tuesday, March 19, 2019:
+
+FIXES:
+
+- The database issue where added tables were not found.
+- ***if this happens, choose 'Upgrade Database to Current Version' under your database properties, and change the url in your context.xml accordingly
+
+ADDITIONS:
+
+-BookBean, BookDOA, corresponding methods inside model

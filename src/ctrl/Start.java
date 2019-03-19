@@ -48,6 +48,7 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			INITIALIZATION
 		 ****************************************************************/
+		
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
 		boolean error = false;
 
@@ -74,13 +75,24 @@ public class Start extends HttpServlet {
 		//Checks if there was a sign up attempt, takes appropriate action
 		if (request.getParameter("signUpButton") != null) {
 
-			/* CHECK ERROR HERE */
-
 			String username = request.getParameter("signUpName");
 			String email = request.getParameter("signUpEmail");
 			String password = request.getParameter("signUpPassword"); 
-
-			myModel.addUser(username, email, password);
+			
+			// Sets errors, if any
+			myModel.checkSignUpError(username, email, password);
+			if (!myModel.getErrorStatus()) {
+				myModel.addUser(username, email, password);
+				//logs in with the user credentials that was created
+				loggedIn = true;
+				request.getSession().setAttribute("loggedInSession", loggedIn);
+				request.getSession().setAttribute("loggedInUser", username);
+			}else {
+				String signUpErrorMessage = myModel.getErrorMessage();
+				error = true;
+				target = "/SignUp.jspx";
+				request.setAttribute("error", signUpErrorMessage);
+			}
 
 		}
 		
@@ -114,9 +126,7 @@ public class Start extends HttpServlet {
 		 ****************************************************************/
 		
 		//TODO
-		
-		
-		
+			
 		request.getRequestDispatcher(target).forward(request, response);
 	}
 

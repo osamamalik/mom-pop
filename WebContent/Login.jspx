@@ -26,7 +26,7 @@
 					</c:if>
 					
 					<tr>
-						<td><label for="loginName">Name:</label></td>
+						<td><label for="loginName">Username:</label></td>
 					</tr>
 					
 					<tr>

@@ -20,9 +20,15 @@
 		<legend>Sign Up</legend>
 			
 				<table>
+				
+					<c:if test="${not empty error}">
+						<tr>
+							<td><p style="color:red;">${error}</p></td>
+						</tr>
+					</c:if>
 					
 					<tr>
-						<td><label for="signUpName">Name:</label></td>
+						<td><label for="signUpName">Username:</label></td>
 					</tr>
 					
 					<tr>

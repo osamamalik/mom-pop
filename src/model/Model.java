@@ -23,6 +23,10 @@ public class Model {
 		}
 	}
 
+	/***************************************************************
+	DATABASE OPERATIONS
+    ****************************************************************/
+	
 	public UserBean retrieveUser(String username) throws Exception {
 		return userDAO.retrieveUser(username);
 	}
@@ -31,6 +35,15 @@ public class Model {
 		try {
 			userDAO.addUser(username, email, password);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updatePassword(String username, String newPassword) {
+		try {
+			userDAO.updatePassword(username, newPassword);
+		} catch (SQLException e) {
+			System.out.println("THERE WAS AN ERROR");
 			e.printStackTrace();
 		}
 	}
@@ -54,12 +67,35 @@ public class Model {
 		else if (!checkUserExists(username)) {
 			this.errorStatus = true;
 			this.errorMessage = "USERNOTFOUND";
-
 		}
 		else if (!passwordValidation(username, password)){
 			this.errorStatus = true;
 			this.errorMessage = "WRONGPASSWORD";
+		}
 
+	}
+	
+	public void checkSignUpError(String username, String email, String password) {
+		this.errorMessage = null;
+		this.errorStatus = false;
+		if (username == "" || email == "" || password == "") {
+			this.errorStatus = true;
+			if(username == "") {
+				this.errorMessage = "BLANKUSERNAME";
+			}else if (email == ""){
+				this.errorMessage = "BLANKEMAIL";
+			}else {
+				this.errorMessage = "BLANKPASSWORD";
+			}
+			return;
+		}
+		else if (!email.contains("@") || email.length() < 3) {
+			this.errorStatus = true;
+			this.errorMessage = "EMAILFORMAT";
+		}
+		else if (password.length() < 6) {
+			this.errorStatus = true;
+			this.errorMessage = "SHORTPASSWORD";
 		}
 	}
 	

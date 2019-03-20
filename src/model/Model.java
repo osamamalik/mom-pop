@@ -1,8 +1,14 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import DAO.*;
 import bean.*;
@@ -60,14 +66,24 @@ public class Model {
 	DATABASE BOOK OPERATIONS
     ****************************************************************/
 	
+	public Map<String, BookBean>  retrieveAllBooks(){
+		try {
+			return bookDAO.retrieveAllBooks();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+}
+	
 	public BookBean retrieveBook(String bid){
-		
 			try {
 				return bookDAO.retrieveBook(bid);
 			} catch (SQLException e) {
 				e.printStackTrace();
-				return null;
 			}
+			return null;
+
 	}
 	
 	public Map<String, BookBean> retrieveByAuthor(String author){
@@ -186,20 +202,20 @@ public class Model {
 	
 	public String getErrorMessage() {
 		return this.errorMessage;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

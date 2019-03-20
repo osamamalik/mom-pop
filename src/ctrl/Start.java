@@ -3,6 +3,7 @@ package ctrl;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -44,7 +45,6 @@ public class Start extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 		
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,6 +56,7 @@ public class Start extends HttpServlet {
 		 ****************************************************************/
 		
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
+		Map<String, BookBean> books = new HashMap<String, BookBean>();
 		boolean error = false;
 
 		/***************************************************************
@@ -72,6 +73,10 @@ public class Start extends HttpServlet {
 		//checks if 'Login' button was pressed, sets target to the Login page if true
 		if (request.getParameter("loginPageButton") != null) {
 			target = "/Login.jspx";
+		}
+		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
+		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null)) {
+			target = "/Books.jspx";
 		}
 		
 		/***************************************************************
@@ -128,28 +133,122 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
+		SIGN OUT
+	    ****************************************************************/
+		if (request.getParameter("signoutButton") != null) {
+			loggedIn = false;
+			request.getSession().setAttribute("loggedInSession", loggedIn);
+		}
+		
+		/***************************************************************
+		BOOK LISTINGS
+		****************************************************************/
+		
+		//Checks if book listings were requested, sets the book map with all books
+		if (request.getParameter("booksPageButton") != null) {
+			
+			books = myModel.retrieveAllBooks();
+			request.setAttribute("booksMap", books);
+		}
+		
+		//checks if a listing by category was requested, sets the book map
+		if (request.getParameter("fictionCategory") != null || request.getParameter("scienceCategory") != null || request.getParameter("engineeringCategory") != null) {
+					
+			target = "/Books.jspx";
+
+			String category;
+			
+			if (request.getParameter("fictionCategory") != null) {
+				System.out.println("fictionCategory");
+				category = "Fiction";
+			}
+			else if (request.getParameter("scienceCategory") != null ) {
+				System.out.println("scienceCategory");
+				category = "Science";
+			}
+			else {
+				System.out.println("engineeringCategory");
+				category = "Engineering";
+			}
+			
+			books = myModel.retrieveByCategory(category);
+			request.setAttribute("booksMap", books);
+
+		}
+		
+		/***************************************************************
+		BOOK SORTINGS
+		****************************************************************/
+		if (request.getParameter("sortButton") != null) {
+			
+			//obtains the sort term
+			String sortOption = request.getParameter("sortOption");
+			
+			if (sortOption.equals("Newest to Oldest")) {
+				
+			}
+			else if (sortOption.equals("Oldest to Newest")) {
+			}
+			else if (sortOption.equals("Review")) {
+			}
+			else if (sortOption.equals("Price - Low to High")) {
+			}
+			else if (sortOption.equals("Price - High to Low")) {
+			}
+		
+		}
+				
+		/***************************************************************
+		SEARCH BAR
+		****************************************************************/
+		
+		if (request.getParameter("searchButton") != null) {
+			
+			//obtains the searched term
+			String searchTerm = request.getParameter("searchBar");
+			
+			//checks if there was a search option was selected, conducts search accordingly
+			String searchOption = request.getParameter("searchOption");
+			
+			if (searchOption.equals("author")) {
+				books = myModel.retrieveByAuthor(searchTerm);
+			}
+			else if (searchOption.equals("category")) {
+				books = myModel.retrieveByCategory(searchTerm);
+			}
+			
+			//does a store-wide search by conducting queries by title, author, category, then combining them
+			else {
+				Map<String, BookBean> booksByTitle = new HashMap<String, BookBean>();
+				Map<String, BookBean> booksByAuthor = new HashMap<String, BookBean>();
+				Map<String, BookBean> booksByCategory = new HashMap<String, BookBean>();
+
+				booksByTitle = myModel.retrieveByAuthor(searchTerm);
+				booksByAuthor = myModel.retrieveByAuthor(searchTerm);
+				booksByCategory = myModel.retrieveByCategory(searchTerm);
+				
+				if (booksByTitle.size() > 0) {
+					books.putAll(booksByTitle);
+				}
+				if (booksByAuthor.size() > 0) {
+					books.putAll(booksByAuthor);
+				}
+				if (booksByCategory.size() > 0) {
+					books.putAll(booksByCategory);
+				}
+			}
+			
+			request.setAttribute("booksMap", books);			
+		}
+		
+		
+		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
-//		
-//		BookBean bb;
-//		try {
-//			bb = myModel.retrieveBook("b001");
-//			System.out.println(bb.getAuthor());
-//
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
-		books = myModel.retrieveByPriceRange(90, 150);
 		
-		for (Map.Entry<String, BookBean> entry : books.entrySet()){
-			System.out.println(entry.getValue().getBid());
-		}
-						
 		request.getRequestDispatcher(target).forward(request, response);
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -5,6 +5,9 @@ public class BookBean {
 	private String title;
 	private String author;
 	private double price;
+	private String description;
+	private int publishYear;
+	private double review;
 	private String category;
 	private String url;
 	
@@ -27,7 +30,7 @@ public class BookBean {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public String getAuthor() {
 		return author;
 	}
@@ -42,6 +45,30 @@ public class BookBean {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getPublishYear() {
+		return publishYear;
+	}
+
+	public void setPublishYear(int publishYear) {
+		this.publishYear = publishYear;
+	}
+
+	public double getReview() {
+		return review;
+	}
+
+	public void setReview(double review) {
+		this.review = review;
 	}
 
 	public String getCategory() {
@@ -59,5 +86,7 @@ public class BookBean {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+
 
 }

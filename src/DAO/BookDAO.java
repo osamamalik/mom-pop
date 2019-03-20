@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +28,9 @@ public class BookDAO {
 		}
 	}
 	
-	public Map<String, BookBean> retrieveAllBooks() throws SQLException {
+	public ArrayList<BookBean> retrieveAllBooks() throws SQLException {
 		String query = "select * from BOOKS";
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -45,7 +46,7 @@ public class BookDAO {
 			bb.setReview(Double.parseDouble(r.getString("review")));
 			bb.setCategory(r.getString("category"));
 			bb.setUrl(r.getString("url"));
-			books.put(bid, bb);
+			books.add(bb);
 		}
 		p.close();
 		con.close();
@@ -76,9 +77,9 @@ public class BookDAO {
 		return bb;
 	}
 	
-	public Map<String, BookBean> retrieveByAuthor(String author) throws SQLException {
+	public ArrayList<BookBean> retrieveByAuthor(String author) throws SQLException {
 		String query = "select * from BOOKS where author like '%" + author + "%'";
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -94,7 +95,7 @@ public class BookDAO {
 			bb.setReview(Double.parseDouble(r.getString("review")));
 			bb.setCategory(r.getString("category"));
 			bb.setUrl(r.getString("url"));
-			books.put(bid, bb);
+			books.add(bb);
 		}
 		p.close();
 		con.close();
@@ -102,9 +103,9 @@ public class BookDAO {
 		return books;
 	}
 	
-	public Map<String, BookBean> retrieveByTitle(String title) throws SQLException {
+	public ArrayList<BookBean> retrieveByTitle(String title) throws SQLException {
 		String query = "select * from BOOKS where title like '%" + title + "%'";
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -120,7 +121,7 @@ public class BookDAO {
 			bb.setReview(Double.parseDouble(r.getString("review")));
 			bb.setCategory(r.getString("category"));
 			bb.setUrl(r.getString("url"));
-			books.put(bid, bb);
+			books.add(bb);
 		}
 		p.close();
 		con.close();
@@ -128,9 +129,9 @@ public class BookDAO {
 		return books;
 	}
 	
-	public Map<String, BookBean> retrieveByCategory(String category) throws SQLException {
+	public ArrayList<BookBean> retrieveByCategory(String category) throws SQLException {
 		String query = "select * from BOOKS where category like '%" + category + "%'";
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -146,7 +147,7 @@ public class BookDAO {
 			bb.setReview(Double.parseDouble(r.getString("review")));
 			bb.setCategory(r.getString("category"));
 			bb.setUrl(r.getString("url"));
-			books.put(bid, bb);
+			books.add(bb);
 		}
 		p.close();
 		con.close();
@@ -154,9 +155,9 @@ public class BookDAO {
 		return books;
 	}
 	
-	public Map<String, BookBean> retrieveByPriceRange(int lowerRange, int higherRange) throws SQLException {
+	public ArrayList<BookBean> retrieveByPriceRange(int lowerRange, int higherRange) throws SQLException {
 		String query = "select * from BOOKS where price >= " + lowerRange + " and price <= " + higherRange;
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -172,17 +173,16 @@ public class BookDAO {
 			bb.setReview(Double.parseDouble(r.getString("review")));
 			bb.setCategory(r.getString("category"));
 			bb.setUrl(r.getString("url"));
-			books.put(bid, bb);
+			books.add(bb);
 		}
 		p.close();
 		con.close();
 		r.close();
 		return books;
 	}
-	
-	public Map<String, BookBean> retrieveBySearch(String searchTerm) throws SQLException {
-		String query = "select * from BOOKS where title like '%" + searchTerm + "%' or author like '%" + searchTerm + "%' or category like '%" + searchTerm + "%'";
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		
+	public ArrayList<BookBean> retrieveByQuery(String query) throws SQLException {
+		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -198,7 +198,7 @@ public class BookDAO {
 			bb.setReview(Double.parseDouble(r.getString("review")));
 			bb.setCategory(r.getString("category"));
 			bb.setUrl(r.getString("url"));
-			books.put(bid, bb);
+			books.add(bb);
 		}
 		p.close();
 		con.close();

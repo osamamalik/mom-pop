@@ -42,3 +42,23 @@ ADDITIONS:
 - Added a "sort by" dropdown menu, but haven't implemented it yet. In the servlet we can see what the user chose to sort by, but it doesn't return anything yet.
 	- My thought was to sort the 'books' map and display it again, but sorting this map by a field of its value is harder than I thought it would be. Let's discuss this.
 - Added a signout button and implemented it
+
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+
+Wednesday, March 20, 2019:
+
+FIXES:
+
+- Changed the return type of BookDAO to list from maps. We likely won't need maps, and sorting doesn't work with maps.
+
+ADDITIONS:
+
+- Sort by price ascending
+- Sort by price descending
+- Sort by year ascending
+- Sort by year descending
+- Sort by review descending
+
+
+

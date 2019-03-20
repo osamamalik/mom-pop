@@ -75,7 +75,7 @@ public class Start extends HttpServlet {
 			target = "/Login.jspx";
 		}
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null)) {
+		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null)) {
 			target = "/Books.jspx";
 		}
 		
@@ -179,13 +179,13 @@ public class Start extends HttpServlet {
 		/***************************************************************
 		BOOK SORTINGS
 		****************************************************************/
+		
 		if (request.getParameter("sortButton") != null) {
 			
-			//obtains the sort term
+			//obtains the sort option
 			String sortOption = request.getParameter("sortOption");
 			
 			if (sortOption.equals("Newest to Oldest")) {
-				
 			}
 			else if (sortOption.equals("Oldest to Newest")) {
 			}
@@ -198,7 +198,21 @@ public class Start extends HttpServlet {
 		
 		}
 		
-				
+		/***************************************************************
+		FILTER
+		****************************************************************/
+		
+		if (request.getParameter("filterButton") != null) {
+			String query = "select * from BOOKS where";
+			
+			//if a price range was selected, add to query
+			//if an author was selected, add to query
+			//if a category was selected, add to query
+			//if a year was selected, add to query
+			//if a rating was selected, add to query
+			
+		}
+		
 		/***************************************************************
 		SEARCH BAR
 		****************************************************************/
@@ -210,8 +224,8 @@ public class Start extends HttpServlet {
 						
 			//does a store-wide search by with the retrieveBySearch query
 			books = myModel.retrieveBySearch(searchTerm);
+			request.setAttribute("booksMap", books);	
 			
-			request.setAttribute("booksMap", books);			
 		}
 		
 		

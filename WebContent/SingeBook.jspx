@@ -48,14 +48,6 @@
 			
 				<tr>
 				
-					<td>
-						<select name="searchOption">
-						   <option>Search by...</option>
-						   <option>all</option>
-				           <option>author</option>
-				           <option>category</option>   
-      				 	</select>
-      				 </td>
 					<td><input type="text" id="searchBar" name="searchBar"></input></td>
 					<td><input type="submit" value="search" name="searchButton"></input></td>
 			

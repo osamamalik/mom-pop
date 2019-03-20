@@ -197,6 +197,7 @@ public class Start extends HttpServlet {
 			}
 		
 		}
+		
 				
 		/***************************************************************
 		SEARCH BAR
@@ -206,37 +207,9 @@ public class Start extends HttpServlet {
 			
 			//obtains the searched term
 			String searchTerm = request.getParameter("searchBar");
-			
-			//checks if there was a search option was selected, conducts search accordingly
-			String searchOption = request.getParameter("searchOption");
-			
-			if (searchOption.equals("author")) {
-				books = myModel.retrieveByAuthor(searchTerm);
-			}
-			else if (searchOption.equals("category")) {
-				books = myModel.retrieveByCategory(searchTerm);
-			}
-			
-			//does a store-wide search by conducting queries by title, author, category, then combining them
-			else {
-				Map<String, BookBean> booksByTitle = new HashMap<String, BookBean>();
-				Map<String, BookBean> booksByAuthor = new HashMap<String, BookBean>();
-				Map<String, BookBean> booksByCategory = new HashMap<String, BookBean>();
-
-				booksByTitle = myModel.retrieveByAuthor(searchTerm);
-				booksByAuthor = myModel.retrieveByAuthor(searchTerm);
-				booksByCategory = myModel.retrieveByCategory(searchTerm);
-				
-				if (booksByTitle.size() > 0) {
-					books.putAll(booksByTitle);
-				}
-				if (booksByAuthor.size() > 0) {
-					books.putAll(booksByAuthor);
-				}
-				if (booksByCategory.size() > 0) {
-					books.putAll(booksByCategory);
-				}
-			}
+						
+			//does a store-wide search by with the retrieveBySearch query
+			books = myModel.retrieveBySearch(searchTerm);
 			
 			request.setAttribute("booksMap", books);			
 		}

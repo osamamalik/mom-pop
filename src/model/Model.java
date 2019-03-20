@@ -83,7 +83,6 @@ public class Model {
 				e.printStackTrace();
 			}
 			return null;
-
 	}
 	
 	public Map<String, BookBean> retrieveByAuthor(String author){
@@ -116,6 +115,15 @@ public class Model {
 	public Map<String, BookBean> retrieveByPriceRange(int lowerRange, int higherRange){
 		try {
 			return bookDAO.retrieveByPriceRange(lowerRange, higherRange);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Map<String, BookBean> retrieveBySearch(String searchTerm){
+		try {
+			return bookDAO.retrieveBySearch(searchTerm);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

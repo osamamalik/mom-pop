@@ -180,5 +180,31 @@ public class BookDAO {
 		return books;
 	}
 	
+	public Map<String, BookBean> retrieveBySearch(String searchTerm) throws SQLException {
+		String query = "select * from BOOKS where title like '%" + searchTerm + "%' or author like '%" + searchTerm + "%' or category like '%" + searchTerm + "%'";
+		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while(r.next()){
+			BookBean bb = new BookBean();
+			String bid = r.getString("bid");
+			bb.setBid(bid);
+			bb.setTitle(r.getString("title"));
+			bb.setAuthor(r.getString("author"));
+			bb.setPrice(Double.parseDouble(r.getString("price")));
+			bb.setDescription(r.getString("description"));
+			bb.setPublishYear(Integer.parseInt(r.getString("publishYear")));
+			bb.setReview(Double.parseDouble(r.getString("review")));
+			bb.setCategory(r.getString("category"));
+			bb.setUrl(r.getString("url"));
+			books.put(bid, bb);
+		}
+		p.close();
+		con.close();
+		r.close();
+		return books;
+	}
+	
 		
 }

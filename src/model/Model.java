@@ -1,8 +1,14 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import DAO.*;
 import bean.*;
@@ -52,7 +58,6 @@ public class Model {
 		try {
 			userDAO.updatePassword(username, newPassword);
 		} catch (SQLException e) {
-			System.out.println("THERE WAS AN ERROR");
 			e.printStackTrace();
 		}
 	}
@@ -61,14 +66,23 @@ public class Model {
 	DATABASE BOOK OPERATIONS
     ****************************************************************/
 	
+	public Map<String, BookBean>  retrieveAllBooks(){
+		try {
+			return bookDAO.retrieveAllBooks();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+}
+	
 	public BookBean retrieveBook(String bid){
-		
 			try {
 				return bookDAO.retrieveBook(bid);
 			} catch (SQLException e) {
 				e.printStackTrace();
-				return null;
 			}
+			return null;
 	}
 	
 	public Map<String, BookBean> retrieveByAuthor(String author){
@@ -101,6 +115,15 @@ public class Model {
 	public Map<String, BookBean> retrieveByPriceRange(int lowerRange, int higherRange){
 		try {
 			return bookDAO.retrieveByPriceRange(lowerRange, higherRange);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Map<String, BookBean> retrieveBySearch(String searchTerm){
+		try {
+			return bookDAO.retrieveBySearch(searchTerm);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -187,20 +210,20 @@ public class Model {
 	
 	public String getErrorMessage() {
 		return this.errorMessage;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

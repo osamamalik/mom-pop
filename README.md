@@ -53,12 +53,14 @@ FIXES:
 - Changed the return type of BookDAO to list from maps. We likely won't need maps, and sorting doesn't work with maps.
 
 ADDITIONS:
+- Sorting
+	- Sort by price ascending
+	- Sort by price descending
+	- Sort by year ascending
+	- Sort by year descending
+	- Sort by review descending
 
-- Sort by price ascending
-- Sort by price descending
-- Sort by year ascending
-- Sort by year descending
-- Sort by review descending
-
+- Password confirmation on signup
+	- Asks you to enter password twice, gives error if they don't match
 
 

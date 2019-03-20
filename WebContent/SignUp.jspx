@@ -78,6 +78,15 @@
 			</tr>
 			
 			<tr>
+				<td><label for="signUpPasswordConfirmation">Confirm Your Password:</label></td>
+			</tr>
+			
+			<tr>
+				<td><input type="password" id="signUpPasswordConf" name="signUpPasswordConf"></input></td>		
+				<td><label id="signUpPasswordConfError"></label></td>
+			</tr>
+			
+			<tr>
 				<td><input type="submit" value="Sign Up!" name="signUpButton"></input></td>
 			</tr>
 				

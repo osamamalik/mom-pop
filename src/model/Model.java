@@ -160,7 +160,7 @@ public class Model {
 
 	}
 	
-	public void checkSignUpError(String username, String email, String password) {
+	public void checkSignUpError(String username, String email, String password, String passwordConf) {
 		this.errorMessage = null;
 		this.errorStatus = false;
 		if (username == "" || email == "" || password == "") {
@@ -181,6 +181,10 @@ public class Model {
 		else if (password.length() < 6) {
 			this.errorStatus = true;
 			this.errorMessage = "SHORTPASSWORD";
+		}
+		else if(!password.equals(passwordConf)) {
+			this.errorStatus = true;
+			this.errorMessage = "PASSWORDMISMATCH";
 		}
 	}
 	

@@ -91,9 +91,11 @@ public class Start extends HttpServlet {
 			String username = request.getParameter("signUpName");
 			String email = request.getParameter("signUpEmail");
 			String password = request.getParameter("signUpPassword"); 
+			String passwordConf = request.getParameter("signUpPasswordConf"); 
+
 			
 			// Sets errors, if any
-			myModel.checkSignUpError(username, email, password);
+			myModel.checkSignUpError(username, email, password, passwordConf);
 			if (!myModel.getErrorStatus()) {
 				myModel.addUser(username, email, password);
 				//logs in with the user credentials that was created

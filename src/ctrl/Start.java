@@ -151,7 +151,9 @@ public class Start extends HttpServlet {
 		//Checks if book listings were requested, sets the book map with all books
 		if (request.getParameter("booksPageButton") != null) {
 			
-			books = myModel.retrieveAllBooks();
+			query = "select * from BOOKS";
+			request.getSession().setAttribute("query", query);
+			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);
 		}
 		
@@ -159,25 +161,23 @@ public class Start extends HttpServlet {
 		if (request.getParameter("fictionCategory") != null || request.getParameter("scienceCategory") != null || request.getParameter("engineeringCategory") != null) {
 					
 			target = "/Books.jspx";
-
+			
 			String category;
 			
 			if (request.getParameter("fictionCategory") != null) {
-				System.out.println("fictionCategory");
 				category = "Fiction";
 			}
 			else if (request.getParameter("scienceCategory") != null ) {
-				System.out.println("scienceCategory");
 				category = "Science";
 			}
 			else {
-				System.out.println("engineeringCategory");
 				category = "Engineering";
 			}
 			
-			books = myModel.retrieveByCategory(category);
+			query = "select * from BOOKS where category like '%" + category + "%'";
+			request.getSession().setAttribute("query", query);
+			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);
-
 		}
 		
 		/***************************************************************
@@ -212,7 +212,6 @@ public class Start extends HttpServlet {
 			
 			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);	
-		
 		}
 		
 		/***************************************************************
@@ -220,7 +219,8 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		
 		if (request.getParameter("filterButton") != null) {
-			//String query = "select * from BOOKS where";
+			
+			query = "select * from BOOKS where";
 			
 			//if a price range was selected, add to query
 			//if an author was selected, add to query
@@ -228,6 +228,8 @@ public class Start extends HttpServlet {
 			//if a year was selected, add to query
 			//if a rating was selected, add to query
 			
+			books = myModel.retrieveByQuery(query);
+			request.setAttribute("booksMap", books);	
 		}
 		
 		/***************************************************************

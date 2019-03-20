@@ -51,6 +51,7 @@ Wednesday, March 20, 2019:
 FIXES:
 
 - Changed the return type of BookDAO to list from maps. We likely won't need maps, and sorting doesn't work with maps.
+- Sorting didn't work when the books were listed by the "List Books" button or a category button. Fixed this issue
 
 ADDITIONS:
 - Sorting

@@ -66,8 +66,7 @@
 			
 				<td>
 					<select name="sortOption">
-					   <option>Sort by...</option>
-					   <option>Top Matches</option>
+					   <option>Top Matches...</option>
 			           <option>Newest to Oldest</option>
 			           <option>Oldest to Newest</option>
 			           <option>Review</option>
@@ -75,24 +74,48 @@
  			           <option>Price - High to Low</option>
      				 </select>
      			</td>
-				<td><input type="submit" value="sort" name="sortButton"></input></td>
-		
+				<td>
+					<input type="submit" value="sort" name="sortButton"></input>
+				</td>
 			</tr>
-							
-			<c:forEach var="entry" items="${booksMap}">
-                
-                <tr>
-              		<!-- <img src="${entry.getUrl()}">	</img>  -->   
-	                <td><c:out value="${entry.getTitle()}"/></td>
-	                <td><c:out value="${entry.getAuthor()}"/></td>
-	                <td><c:out value="${entry.getPrice()}"/></td>
-	                <td><c:out value="${entry.getReview()}"/></td>
-	                <td><c:out value="${entry.getPublishYear()}"/></td>
-	               	<td><c:out value="${entry.getCategory()}"/></td>
-                </tr>
-                
-           	</c:forEach>
-
+			
+			<table>
+			
+				<tr>
+					<td><label>FILTER</label></td>
+				</tr>
+				
+				<tr>
+					<td><label>Price:</label></td>
+					<td><input type="number" id="priceLowFilter" name="priceLowFilter" placeholder="from"></input></td>
+					<td><input type="number" id="priceHighFilter" name="priceHighFilter" placeholder="to"></input></td>
+				</tr>
+				
+				<tr>
+					<td><label>Category:</label></td>
+					<tr><td><input type="radio" id="scienceFilter" name="scienceFilter">Science</input></td></tr>
+					<tr><td><input type="radio" id="fictionFilter" name="fictionFilter">Fiction</input></td></tr>
+					<tr><td><input type="radio" id="engineeringFilter" name="engineeringFilter">Engineering</input></td></tr>
+				</tr>
+				
+			
+			</table>
+	
+			<table>		
+				<c:forEach var="entry" items="${booksMap}">
+	                
+	                <tr>
+	              		<!-- <img src="${entry.getUrl()}">	</img>  -->   
+		                <td><c:out value="${entry.getTitle()}"/></td>
+		                <td><c:out value="${entry.getAuthor()}"/></td>
+		                <td><c:out value="${entry.getPrice()}"/></td>
+		                <td><c:out value="${entry.getReview()}"/></td>
+		                <td><c:out value="${entry.getPublishYear()}"/></td>
+		               	<td><c:out value="${entry.getCategory()}"/></td>
+	                </tr>
+	             
+	           	</c:forEach>
+			</table>
 
 				
 		</table>

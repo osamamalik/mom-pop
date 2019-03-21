@@ -57,8 +57,6 @@
 			</table>
 			
 		</header>
-		
-			
 			
 		<table>
 		
@@ -85,20 +83,37 @@
 					<td><label>FILTER</label></td>
 				</tr>
 				
+				
 				<tr>
 					<td><label>Price:</label></td>
 					<td><input type="number" id="priceLowFilter" name="priceLowFilter" placeholder="from"></input></td>
 					<td><input type="number" id="priceHighFilter" name="priceHighFilter" placeholder="to"></input></td>
 				</tr>
 				
-
 				
-				review bottom threshold
+				<tr>
+					<td>Category:</td>
+				</tr>
+				<c:forEach var="categoryFilter" items="${categoriesList}">
+		        	<tr>   
+			        	<td><input type="checkbox"><c:out value="${categoryFilter}"/></input></td>
+		            </tr>
+		        </c:forEach>
+		        
+		        
+		        
+		        
+		        
+		        				
+			<tr>
+				<td><input type="submit" value="Filter" name="filterButton"></input></td>
+			</tr>
 				
-				
-				
-			
 			</table>
+				
+
+
+
 	
 			<table>		
 				<c:forEach var="entry" items="${booksMap}">
@@ -111,8 +126,6 @@
 		                <td><c:out value="${entry.getReview()}"/></td>
 		                <td><c:out value="${entry.getPublishYear()}"/></td>
 		               	<td><c:out value="${entry.getCategory()}"/></td>
-		               	<td><c:out value="${entry.getDescription()}"/></td>
-
 	                </tr>
 	             
 	           	</c:forEach>

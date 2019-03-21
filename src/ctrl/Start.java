@@ -79,6 +79,11 @@ public class Start extends HttpServlet {
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
 		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null)) {
 			target = "/Books.jspx";
+
+			//Retrieves unique categories and sets the filter display
+			ArrayList <String>categories = new ArrayList<String>();
+			categories = myModel.retrieveUniqueCategories();
+			request.setAttribute("categoriesList", categories);
 		}
 		
 		/***************************************************************
@@ -217,8 +222,12 @@ public class Start extends HttpServlet {
 		
 		if (request.getParameter("filterButton") != null) {
 			
-			query = "select * from BOOKS where";
+			//Sets default query skeleton
+			//query = "select * from BOOKS where";
 			
+
+			
+			query = (String) request.getSession().getAttribute("query");
 			
 			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);	

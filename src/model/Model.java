@@ -123,8 +123,18 @@ public class Model {
 
 	public ArrayList<BookBean>retrieveByQuery(String query){
 		try {
-			return bookDAO.retrieveByQuery(query);
+			return bookDAO.retrieveBookByQuery(query);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<String> retrieveUniqueCategories(){
+		try {
+			return bookDAO.retrieveUniqueCategories();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

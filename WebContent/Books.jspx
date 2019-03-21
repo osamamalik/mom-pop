@@ -91,12 +91,11 @@
 					<td><input type="number" id="priceHighFilter" name="priceHighFilter" placeholder="to"></input></td>
 				</tr>
 				
-				<tr>
-					<td><label>Category:</label></td>
-					<tr><td><input type="radio" id="scienceFilter" name="scienceFilter">Science</input></td></tr>
-					<tr><td><input type="radio" id="fictionFilter" name="fictionFilter">Fiction</input></td></tr>
-					<tr><td><input type="radio" id="engineeringFilter" name="engineeringFilter">Engineering</input></td></tr>
-				</tr>
+
+				
+				review bottom threshold
+				
+				
 				
 			
 			</table>
@@ -112,6 +111,8 @@
 		                <td><c:out value="${entry.getReview()}"/></td>
 		                <td><c:out value="${entry.getPublishYear()}"/></td>
 		               	<td><c:out value="${entry.getCategory()}"/></td>
+		               	<td><c:out value="${entry.getDescription()}"/></td>
+
 	                </tr>
 	             
 	           	</c:forEach>

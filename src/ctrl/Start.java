@@ -219,11 +219,6 @@ public class Start extends HttpServlet {
 			
 			query = "select * from BOOKS where";
 			
-			//if a price range was selected, add to query
-			//if an author was selected, add to query
-			//if a category was selected, add to query
-			//if a year was selected, add to query
-			//if a rating was selected, add to query
 			
 			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);	
@@ -250,6 +245,11 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
+		
+		if (request.getParameter("scienceFilter") != null) {
+			System.out.println("SCIENCE WAS TICKED");
+		}
+		
 		
 		request.getRequestDispatcher(target).forward(request, response);
 	}

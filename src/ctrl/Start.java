@@ -77,13 +77,13 @@ public class Start extends HttpServlet {
 			target = "/Login.jspx";
 		}
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null)) {
+		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
 			target = "/Books.jspx";
 
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
 			categories = myModel.retrieveUniqueCategories();
-			request.setAttribute("categoriesList", categories);
+			request.setAttribute("categoriesFilterList", categories);
 		}
 		
 		/***************************************************************
@@ -153,7 +153,7 @@ public class Start extends HttpServlet {
 			BOOK LISTINGS
 		****************************************************************/
 		
-		//Checks if book listings were requested, sets the book map with all books
+		//Checks if book listings were requested, sets the book list with all books
 		if (request.getParameter("booksPageButton") != null) {
 			
 			query = "select * from BOOKS";
@@ -162,21 +162,49 @@ public class Start extends HttpServlet {
 			request.setAttribute("booksMap", books);
 		}
 		
-		//checks if a listing by category was requested, sets the book map
-		if (request.getParameter("fictionCategory") != null || request.getParameter("scienceCategory") != null || request.getParameter("engineeringCategory") != null) {
-					
-			target = "/Books.jspx";
+		//checks if a listing by category was requested on the header, sets the book list
+		if (request.getParameter("headerCategory") != null) {
+							
+			String category = request.getParameter("headerCategory");
 			
-			String category;
-			
-			if (request.getParameter("fictionCategory") != null) {
+			if (category.equals("Biography")) {
+				category = "Biography";
+			}
+			else if (category.equals("Business")) {
+				category = "Business";
+			}
+			else if (category.equals("Fantasy")) {
+				category = "Fantasy";
+			}
+			else if (category.equals("Fiction")) {
 				category = "Fiction";
 			}
-			else if (request.getParameter("scienceCategory") != null ) {
-				category = "Science";
+			else if (category.equals("Food")) {
+				category = "Food";
 			}
-			else {
-				category = "Engineering";
+			else if (category.equals("Graphic Novels")) {
+				category = "Graphic Novels";
+			}
+			else if (category.equals("History")) {
+				category = "History";
+			}
+			else if (category.equals("Kids")) {
+				category = "Kids";
+			}
+			else if (category.equals("Mystery")) {
+				category = "Mystery";
+			}
+			else if (category.equals("Non-Fiction")) {
+				category = "Non-Fiction";
+			}
+			else if (category.equals("Science Fiction")) {
+				category = "Science Fiction";
+			}
+			else if (category.equals("Textbooks")) {
+				category = "Textbooks";
+			}
+			else if (category.equals("Young Adult")) {
+				category = "Young Adult";
 			}
 			
 			query = "select * from BOOKS where category like '%" + category + "%'";
@@ -255,10 +283,7 @@ public class Start extends HttpServlet {
 			TESTING BLOCK
 		 ****************************************************************/
 		
-		if (request.getParameter("scienceFilter") != null) {
-			System.out.println("SCIENCE WAS TICKED");
-		}
-		
+
 		
 		request.getRequestDispatcher(target).forward(request, response);
 	}

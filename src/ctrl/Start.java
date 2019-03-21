@@ -236,9 +236,9 @@ public class Start extends HttpServlet {
 		if (request.getParameter("searchButton") != null) {
 						
 			//obtains the searched term
-			String searchTerm = request.getParameter("searchBar");
+			String searchTerm = request.getParameter("searchBar").toUpperCase();
 			
-			query = "select * from BOOKS where title like '%" + searchTerm + "%' or author like '%" + searchTerm + "%' or category like '%" + searchTerm + "%'";
+			query = "select * from BOOKS where UPPER(title) like '%" + searchTerm + "%' or UPPER(author) like '%" + searchTerm + "%' or UPPER(category) like '%" + searchTerm + "%'";
 			request.getSession().setAttribute("query", query);
 			
 			//does a store-wide search by with the retrieveBySearch query

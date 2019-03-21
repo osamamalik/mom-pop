@@ -196,15 +196,12 @@ public class Start extends HttpServlet {
 			}
 			else if (sortOption.equals("Oldest to Newest")) {
 				query += " order by publishYear asc";
-
 			}
 			else if (sortOption.equals("Review")) {
 				query += " order by review desc";
-
 			}
 			else if (sortOption.equals("Price - Low to High")) {
 				query += " order by price asc";
-
 			}
 			else if (sortOption.equals("Price - High to Low")) {
 				query += " order by price desc";
@@ -247,7 +244,6 @@ public class Start extends HttpServlet {
 			//does a store-wide search by with the retrieveBySearch query
 			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);		
-			
 		}
 		
 		

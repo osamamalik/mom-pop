@@ -14,41 +14,66 @@
 <title>Login</title>
 </head>
 <body>
+
 	<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
 		<legend>Login</legend>
+		
+		<header>
+		
+			<table>
 			
-				<table>
+				<tr>
 				
-					<c:if test="${not empty error}">
-						<tr>
-							<td><p style="color:red;">${error}</p></td>
-						</tr>
-					</c:if>
+					<td><input type="submit" value="Home" name="homeButton"></input></td>
+					<td><input type="submit" value="List Books" name="booksPageButton"></input></td>
+					<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
 					
-					<tr>
-						<td><label for="loginName">Name:</label></td>
-					</tr>
-					
-					<tr>
-						<td><input type="text" id="loginName" name="loginName"></input></td>
-						<td><label id="loginNameError"></label></td>
-					</tr>
-					
-					<tr>
-						<td><label for="loginPassword">Password:</label></td>
-					</tr>
-					
-					<tr>
-						<td><input type="password" id="loginPassword" name="loginPassword"></input></td>		
-						<td><label id="loginPasswordError"></label></td>
-					</tr>
-					
-					<tr>
-						<td><input type="submit" value="Login" name="loginButton"></input></td>
-					</tr>
-						
-				</table>
+				</tr>
+			
+				<tr>
+				
+					<td><input type="text" id="searchBar" name="searchBar"></input></td>
+					<td><input type="submit" value="search" name="searchButton"></input></td>
+			
+				</tr>
+
+			</table>
+			
+		</header>
+		
+		<table>
+		
+			<c:if test="${not empty error}">
+				<tr>
+					<td><p style="color:red;">${error}</p></td>
+				</tr>
+			</c:if>
+			
+			<tr>
+				<td><label for="loginName">Username:</label></td>
+			</tr>
+			
+			<tr>
+				<td><input type="text" id="loginName" name="loginName"></input></td>
+				<td><label id="loginNameError"></label></td>
+			</tr>
+			
+			<tr>
+				<td><label for="loginPassword">Password:</label></td>
+			</tr>
+			
+			<tr>
+				<td><input type="password" id="loginPassword" name="loginPassword"></input></td>		
+				<td><label id="loginPasswordError"></label></td>
+			</tr>
+			
+			<tr>
+				<td><input type="submit" value="Login" name="loginButton"></input></td>
+			</tr>
+				
+		</table>
 	</form>
+	
 </body>
 </html>
 </jsp:root>

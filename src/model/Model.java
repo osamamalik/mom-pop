@@ -66,7 +66,7 @@ public class Model {
 	DATABASE BOOK OPERATIONS
     ****************************************************************/
 	
-	public Map<String, BookBean>  retrieveAllBooks(){
+	public ArrayList<BookBean> retrieveAllBooks(){
 		try {
 			return bookDAO.retrieveAllBooks();
 		} catch (SQLException e) {
@@ -85,7 +85,7 @@ public class Model {
 			return null;
 	}
 	
-	public Map<String, BookBean> retrieveByAuthor(String author){
+	public ArrayList<BookBean> retrieveByAuthor(String author){
 		try {
 			return bookDAO.retrieveByAuthor(author);
 		} catch (SQLException e) {
@@ -94,7 +94,7 @@ public class Model {
 		return null;
 	}
 	
-	public Map<String, BookBean> retrieveByTitle(String title){
+	public ArrayList<BookBean> retrieveByTitle(String title){
 		try {
 			return bookDAO.retrieveByTitle(title);
 		} catch (SQLException e) {
@@ -103,7 +103,7 @@ public class Model {
 		return null;
 	}
 	
-	public Map<String, BookBean> retrieveByCategory(String category){
+	public ArrayList<BookBean>retrieveByCategory(String category){
 		try {
 			return bookDAO.retrieveByCategory(category);
 		} catch (SQLException e) {
@@ -112,7 +112,7 @@ public class Model {
 		return null;
 	}
 
-	public Map<String, BookBean> retrieveByPriceRange(int lowerRange, int higherRange){
+	public ArrayList<BookBean> retrieveByPriceRange(int lowerRange, int higherRange){
 		try {
 			return bookDAO.retrieveByPriceRange(lowerRange, higherRange);
 		} catch (SQLException e) {
@@ -121,14 +121,15 @@ public class Model {
 		return null;
 	}
 
-	public Map<String, BookBean> retrieveBySearch(String searchTerm){
+	public ArrayList<BookBean>retrieveByQuery(String query){
 		try {
-			return bookDAO.retrieveBySearch(searchTerm);
+			return bookDAO.retrieveByQuery(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 
 
 
@@ -159,7 +160,7 @@ public class Model {
 
 	}
 	
-	public void checkSignUpError(String username, String email, String password) {
+	public void checkSignUpError(String username, String email, String password, String passwordConf) {
 		this.errorMessage = null;
 		this.errorStatus = false;
 		if (username == "" || email == "" || password == "") {
@@ -180,6 +181,10 @@ public class Model {
 		else if (password.length() < 6) {
 			this.errorStatus = true;
 			this.errorMessage = "SHORTPASSWORD";
+		}
+		else if(!password.equals(passwordConf)) {
+			this.errorStatus = true;
+			this.errorMessage = "PASSWORDMISMATCH";
 		}
 	}
 	

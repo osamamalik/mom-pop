@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -56,8 +57,9 @@ public class Start extends HttpServlet {
 		 ****************************************************************/
 		
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
-		Map<String, BookBean> books = new HashMap<String, BookBean>();
+		ArrayList <BookBean>books = new ArrayList<BookBean>();
 		boolean error = false;
+		String query;
 
 		/***************************************************************
 			PAGE REDIRECTIONS
@@ -89,9 +91,11 @@ public class Start extends HttpServlet {
 			String username = request.getParameter("signUpName");
 			String email = request.getParameter("signUpEmail");
 			String password = request.getParameter("signUpPassword"); 
+			String passwordConf = request.getParameter("signUpPasswordConf"); 
+
 			
 			// Sets errors, if any
-			myModel.checkSignUpError(username, email, password);
+			myModel.checkSignUpError(username, email, password, passwordConf);
 			if (!myModel.getErrorStatus()) {
 				myModel.addUser(username, email, password);
 				//logs in with the user credentials that was created
@@ -133,7 +137,7 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
-		SIGN OUT
+			SIGN OUT
 	    ****************************************************************/
 		if (request.getParameter("signoutButton") != null) {
 			loggedIn = false;
@@ -141,13 +145,15 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
-		BOOK LISTINGS
+			BOOK LISTINGS
 		****************************************************************/
 		
 		//Checks if book listings were requested, sets the book map with all books
 		if (request.getParameter("booksPageButton") != null) {
 			
-			books = myModel.retrieveAllBooks();
+			query = "select * from BOOKS";
+			request.getSession().setAttribute("query", query);
+			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);
 		}
 		
@@ -155,29 +161,27 @@ public class Start extends HttpServlet {
 		if (request.getParameter("fictionCategory") != null || request.getParameter("scienceCategory") != null || request.getParameter("engineeringCategory") != null) {
 					
 			target = "/Books.jspx";
-
+			
 			String category;
 			
 			if (request.getParameter("fictionCategory") != null) {
-				System.out.println("fictionCategory");
 				category = "Fiction";
 			}
 			else if (request.getParameter("scienceCategory") != null ) {
-				System.out.println("scienceCategory");
 				category = "Science";
 			}
 			else {
-				System.out.println("engineeringCategory");
 				category = "Engineering";
 			}
 			
-			books = myModel.retrieveByCategory(category);
+			query = "select * from BOOKS where category like '%" + category + "%'";
+			request.getSession().setAttribute("query", query);
+			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);
-
 		}
 		
 		/***************************************************************
-		BOOK SORTINGS
+			BOOK SORTINGS
 		****************************************************************/
 		
 		if (request.getParameter("sortButton") != null) {
@@ -185,25 +189,35 @@ public class Start extends HttpServlet {
 			//obtains the sort option
 			String sortOption = request.getParameter("sortOption");
 			
+			query = (String) request.getSession().getAttribute("query");
+			
 			if (sortOption.equals("Newest to Oldest")) {
+				query += " order by publishYear desc";
 			}
 			else if (sortOption.equals("Oldest to Newest")) {
+				query += " order by publishYear asc";
 			}
 			else if (sortOption.equals("Review")) {
+				query += " order by review desc";
 			}
 			else if (sortOption.equals("Price - Low to High")) {
+				query += " order by price asc";
 			}
 			else if (sortOption.equals("Price - High to Low")) {
+				query += " order by price desc";
 			}
-		
+			
+			books = myModel.retrieveByQuery(query);
+			request.setAttribute("booksMap", books);	
 		}
 		
 		/***************************************************************
-		FILTER
+			FILTER
 		****************************************************************/
 		
 		if (request.getParameter("filterButton") != null) {
-			String query = "select * from BOOKS where";
+			
+			query = "select * from BOOKS where";
 			
 			//if a price range was selected, add to query
 			//if an author was selected, add to query
@@ -211,21 +225,25 @@ public class Start extends HttpServlet {
 			//if a year was selected, add to query
 			//if a rating was selected, add to query
 			
+			books = myModel.retrieveByQuery(query);
+			request.setAttribute("booksMap", books);	
 		}
 		
 		/***************************************************************
-		SEARCH BAR
+			SEARCH BAR
 		****************************************************************/
 		
 		if (request.getParameter("searchButton") != null) {
-			
+						
 			//obtains the searched term
 			String searchTerm = request.getParameter("searchBar");
-						
-			//does a store-wide search by with the retrieveBySearch query
-			books = myModel.retrieveBySearch(searchTerm);
-			request.setAttribute("booksMap", books);	
 			
+			query = "select * from BOOKS where title like '%" + searchTerm + "%' or author like '%" + searchTerm + "%' or category like '%" + searchTerm + "%'";
+			request.getSession().setAttribute("query", query);
+			
+			//does a store-wide search by with the retrieveBySearch query
+			books = myModel.retrieveByQuery(query);
+			request.setAttribute("booksMap", books);		
 		}
 		
 		

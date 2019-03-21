@@ -76,6 +76,9 @@ public class Start extends HttpServlet {
 		if (request.getParameter("loginPageButton") != null) {
 			target = "/Login.jspx";
 		}
+		if (request.getParameter("Analytics") != null) {
+			target = "/Analytics.jspx";
+		}
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
 		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null)) {
 			target = "/Books.jspx";
@@ -196,12 +199,15 @@ public class Start extends HttpServlet {
 			}
 			else if (sortOption.equals("Oldest to Newest")) {
 				query += " order by publishYear asc";
+
 			}
 			else if (sortOption.equals("Review")) {
 				query += " order by review desc";
+
 			}
 			else if (sortOption.equals("Price - Low to High")) {
 				query += " order by price asc";
+
 			}
 			else if (sortOption.equals("Price - High to Low")) {
 				query += " order by price desc";
@@ -236,16 +242,37 @@ public class Start extends HttpServlet {
 		if (request.getParameter("searchButton") != null) {
 						
 			//obtains the searched term
-			String searchTerm = request.getParameter("searchBar").toUpperCase();
+			String searchTerm = request.getParameter("searchBar");
 			
-			query = "select * from BOOKS where UPPER(title) like '%" + searchTerm + "%' or UPPER(author) like '%" + searchTerm + "%' or UPPER(category) like '%" + searchTerm + "%'";
+			query = "select * from BOOKS where title like '%" + searchTerm + "%' or author like '%" + searchTerm + "%' or category like '%" + searchTerm + "%'";
 			request.getSession().setAttribute("query", query);
 			
 			//does a store-wide search by with the retrieveBySearch query
 			books = myModel.retrieveByQuery(query);
 			request.setAttribute("booksMap", books);		
+			
 		}
 		
+		/***************************************************************
+					Analytics
+		 ****************************************************************/
+		if(request.getParameter("AnalyticsButton") != null) {
+			ServletContext context = this.getServletContext();
+			
+			String bid = request.getParameter("bid");
+			String f = "export/" + request.getSession().getId()+".xml";
+			String filename = context.getRealPath("/" + f);
+			request.getSession().setAttribute("filenameProductService", filename);
+			request.setAttribute("fProductService", f);
+			
+			try {
+				myModel.exportProductServices(bid, filename);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			target="/DoneAnalytics.jspx";
+		}
 		
 		/***************************************************************
 			TESTING BLOCK

@@ -61,7 +61,10 @@
 		<input type="submit" value="Fiction" name="fictionCategory"></input>
 		<input type="submit" value="Science" name="scienceCategory"></input>
 		<input type="submit" value="Engineering" name="engineeringCategory"></input>
-				
+		
+		
+		
+		<input type="submit" value="Analytics" name ="Analytics"></input>		
 	</form>
 
 </body>

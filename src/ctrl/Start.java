@@ -93,12 +93,12 @@ public class Start extends HttpServlet {
 			BOOK LISTINGS
 		****************************************************************/
 		
-		//Checks if a listing of all books were requested, sets the book list with all books
+		// Calls method for listing all books
 		if (request.getParameter("booksPageButton") != null) {
 			this.listAllBooks(request, response, myModel);
 		}
 		
-		//checks if a listing by category was requested on the header, sets the book list
+		// Calls method for listing books by category
 		if (request.getParameter("headerCategory") != null) {
 			this.listBooksByCategory(request, response, myModel);
 		}
@@ -130,6 +130,15 @@ public class Start extends HttpServlet {
 		 ****************************************************************/
 		
 		
+		
+		
+		
+		
+		
+		/***************************************************************
+			TESTING BLOCK
+		****************************************************************/
+		
 		request.getRequestDispatcher(target).forward(request, response);
 	}
 
@@ -143,7 +152,6 @@ public class Start extends HttpServlet {
 	}
 	
 	
-	// Method that handles logins
 	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 
 		String username = request.getParameter("loginName");
@@ -167,7 +175,6 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	// Method that handles signups
 	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		String username = request.getParameter("signUpName");
 		String email = request.getParameter("signUpEmail");
@@ -191,13 +198,11 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	// Method that handles signout requests
 	protected void signOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		loggedIn = false;
 		request.getSession().setAttribute("loggedInSession", loggedIn);
 	}
 	
-	// Method that handles page redirections
 	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
 		if (request.getParameter("homeButton") != null) {

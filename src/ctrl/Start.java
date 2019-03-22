@@ -235,49 +235,10 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		
 		String category = request.getParameter("headerCategory");
-		
-		if (category.equals("Biography")) {
-			category = "Biography";
-		}
-		else if (category.equals("Business")) {
-			category = "Business";
-		}
-		else if (category.equals("Fantasy")) {
-			category = "Fantasy";
-		}
-		else if (category.equals("Fiction")) {
-			category = "Fiction";
-		}
-		else if (category.equals("Food")) {
-			category = "Food";
-		}
-		else if (category.equals("Graphic Novels")) {
-			category = "Graphic Novels";
-		}
-		else if (category.equals("History")) {
-			category = "History";
-		}
-		else if (category.equals("Kids")) {
-			category = "Kids";
-		}
-		else if (category.equals("Mystery")) {
-			category = "Mystery";
-		}
-		else if (category.equals("Non-Fiction")) {
-			category = "Non-Fiction";
-		}
-		else if (category.equals("Science Fiction")) {
-			category = "Science Fiction";
-		}
-		else if (category.equals("Textbooks")) {
-			category = "Textbooks";
-		}
-		else if (category.equals("Young Adult")) {
-			category = "Young Adult";
-		}
-		
-		query = "select * from BOOKS where category like '%" + category + "%'";
+				
+		query = "select * from BOOKS where category = '" + category + "'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);
@@ -323,13 +284,136 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {		
-		//Sets default query skeleton
-		//query = "select * from BOOKS where";
-		
+			
+		ArrayList<String> filterQuery = new ArrayList<String>();
+
 		query = (String) request.getSession().getAttribute("query");
 		
+		// checks if any filters were selected, if so, adds either 'and' or 'where' to the end of the existing query
+		if (request.getParameter("categoryFilter") != null || request.getParameter("reviewFilter") != null || !request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+			
+			
+			if (query.contains("where")) {
+				query += " and ";
+			}
+			else {
+				query += " where ";
+			}
+		}
+				
+		
+		if (request.getParameter("categoryFilter") != null) {
+			String categoryFilter = request.getParameter("categoryFilter");
+			String categoryFilterQuery = "category = '" + categoryFilter + "'";
+			filterQuery.add(categoryFilterQuery);
+		}
+
+		if (request.getParameter("reviewFilter") != null) {
+		
+			String reviewFilter = request.getParameter("reviewFilter");
+			String reviewFilterQuery;
+			
+			if (reviewFilter.equals("above1")) {
+				reviewFilterQuery = "review >= 1";
+			}
+			else if (reviewFilter.equals("above2")) {
+				reviewFilterQuery = "review >= 2";
+			}
+			else if (reviewFilter.equals("above3")) {
+				reviewFilterQuery = "review >= 3";
+			}			
+			else {
+				reviewFilterQuery = "review >= 4";
+			}
+			filterQuery.add(reviewFilterQuery);
+			
+		}
+		
+		if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+			
+			String priceFilterQuery;	
+			double priceLowFilter;
+			double priceHighFilter;
+			
+			if (!request.getParameter("priceLowFilter").equals("") && !request.getParameter("priceHighFilter").equals("")) {
+				priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
+				priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
+				priceFilterQuery = "price >= '" + priceLowFilter + "' and price <= '" + priceHighFilter + "'";
+				System.out.println("HITS HERE");
+			}
+			else if (!request.getParameter("priceLowFilter").equals("") && request.getParameter("priceHighFilter").equals("")) {
+				priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
+				priceFilterQuery = "price >= '" + priceLowFilter + "'";
+
+			}
+			else{
+				priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
+				priceFilterQuery = "price <= '" + priceHighFilter + "'";
+			}
+			
+			filterQuery.add(priceFilterQuery);
+			
+		}
+		
+		// if multiple filters were selected, adds 'and' terms in between
+		if (filterQuery.size() > 1) {
+			int index = 1;
+			while (index <= filterQuery.size() - 1) {
+				filterQuery.add(index, " and ");
+				index += 2;
+			}
+		}
+		
+		// adds 
+		for (int i = 0; i < filterQuery.size(); i++) {
+			query += filterQuery.get(i);
+		}
+		
+		System.out.println(query);
+		
+		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
-		request.setAttribute("booksMap", books);	
+		request.setAttribute("booksMap", books);
+			
 	}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+	
 
 }

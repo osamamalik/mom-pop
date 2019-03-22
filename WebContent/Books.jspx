@@ -46,26 +46,39 @@
 					<td><label>FILTER</label></td>
 				</tr>
 				
-				
 				<tr>
 					<td><label>Price:</label></td>
-					<td><input type="number" id="priceLowFilter" name="priceLowFilter" placeholder="from"></input></td>
-					<td><input type="number" id="priceHighFilter" name="priceHighFilter" placeholder="to"></input></td>
+					<td><input type="number" id="priceLowFilter" name="priceLowFilter"></input></td>
+					<td><input type="number" id="priceHighFilter" name="priceHighFilter"></input></td>
 				</tr>
-				
 				
 				<tr>
 					<td>Category:</td>
 				</tr>
-				<c:forEach var="categoryFilter" items="${categoriesFilterList}">
+				<c:forEach var="category" items="${categoriesFilterList}">
 		        	<tr>   
-			        	<td><input type="checkbox"><c:out value="${categoryFilter}"/></input></td>
+			        	<td><input type="checkbox" name="categoryFilter" value = "${category}"> <c:out value= "${category}"/> </input></td>
 		            </tr>
 		        </c:forEach>
-
+		        
+		        <tr>
+					<td>Average Review:</td>
+				</tr>
+				<tr>   
+			    	<td><input type="radio" name="reviewFilter" value="above4">4 and up</input></td>
+		        </tr>
+				<tr>   
+			    	<td><input type="radio" name="reviewFilter" value="above3">3 and up</input></td>
+		        </tr>
+				<tr>   
+			    	<td><input type="radio" name="reviewFilter" value="above2">2 and up</input></td>
+		        </tr>
+				<tr>   
+			    	<td><input type="radio" name="reviewFilter" value="above1">1 and up</input></td>
+		        </tr>
   				
 			<tr>
-				<td><input type="submit" value="Filter" name="filterButton"></input></td>
+				<td><input type="submit" value="Apply Filter" name="filterButton"></input></td>
 			</tr>
 				
 			</table>

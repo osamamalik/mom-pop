@@ -206,7 +206,6 @@ public class BookDAO {
 		return books;
 	}
 	
-	
 	public ArrayList<String> retrieveUniqueCategories() throws SQLException {
 		String query = "select distinct category from BOOKS";
 		ArrayList<String> categories = new ArrayList<String>();

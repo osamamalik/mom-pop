@@ -25,7 +25,10 @@ import bean.*;
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean loggedIn;
-
+	String target;
+	String query;
+	boolean error;
+	ArrayList <BookBean>books;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -38,7 +41,9 @@ public class Start extends HttpServlet {
 		super.init(config);
 		ServletContext context = getServletContext();
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
-		
+		target = "/Home.jspx";
+		error = false;
+		books = new ArrayList<BookBean>();
 		try {
 			context.setAttribute("myModel", new Model());
 		}
@@ -46,210 +51,93 @@ public class Start extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-		
+	
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		/***************************************************************
-			INITIALIZATION
+			INITIALIZATION OF MODEL
 		 ****************************************************************/
-		
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
-		ArrayList <BookBean>books = new ArrayList<BookBean>();
-		boolean error = false;
-		String query;
 
 		/***************************************************************
 			PAGE REDIRECTIONS
 		 ****************************************************************/
-
-		//Sets the default redirection target to the Home page
-		String target = "/Home.jspx";
-
-		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("signUpPageButton") != null) {
-			target = "/SignUp.jspx";
-		}
-		//checks if 'Login' button was pressed, sets target to the Login page if true
-		if (request.getParameter("loginPageButton") != null) {
-			target = "/Login.jspx";
-		}
-		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null)) {
-			target = "/Books.jspx";
-		}
+		this.redirector(request, response, myModel);
 		
 		/***************************************************************
 			SIGN UP
 		 ****************************************************************/
-
-		//Checks if there was a sign up attempt, takes appropriate action
 		if (request.getParameter("signUpButton") != null) {
-
-			String username = request.getParameter("signUpName");
-			String email = request.getParameter("signUpEmail");
-			String password = request.getParameter("signUpPassword"); 
-			String passwordConf = request.getParameter("signUpPasswordConf"); 
-
-			
-			// Sets errors, if any
-			myModel.checkSignUpError(username, email, password, passwordConf);
-			if (!myModel.getErrorStatus()) {
-				myModel.addUser(username, email, password);
-				//logs in with the user credentials that was created
-				loggedIn = true;
-				request.getSession().setAttribute("loggedInSession", loggedIn);
-				request.getSession().setAttribute("loggedInUser", username);
-			}else {
-				String signUpErrorMessage = myModel.getErrorMessage();
-				error = true;
-				target = "/SignUp.jspx";
-				request.setAttribute("error", signUpErrorMessage);
-			}
-
+			this.signUp(request, response, myModel);
 		}
 		
 		/***************************************************************
 			LOGIN
 		****************************************************************/
-
-		//Checks if there was a sign up attempt, takes appropriate action
 		if (request.getParameter("loginButton") != null) {
-			String username = request.getParameter("loginName");
-			String password = request.getParameter("loginPassword"); 
-			
-			// Sets errors, if any
-			myModel.checkLoginError(username, password);
-
-			if (!myModel.getErrorStatus()) {		// No errors, user is successfully logged in
-				loggedIn = true;
-				request.getSession().setAttribute("loggedInSession", loggedIn);
-				request.getSession().setAttribute("loggedInUser", username);
-			}
-			else {
-				String loginErrorMessage = myModel.getErrorMessage();
-				error = true;
-				target = "/Login.jspx";
-				request.setAttribute("error", loginErrorMessage);
-			}
+			this.logIn(request, response, myModel);
 		}
 		
 		/***************************************************************
 			SIGN OUT
 	    ****************************************************************/
 		if (request.getParameter("signoutButton") != null) {
-			loggedIn = false;
-			request.getSession().setAttribute("loggedInSession", loggedIn);
+			this.signOut(request, response);
 		}
 		
 		/***************************************************************
 			BOOK LISTINGS
 		****************************************************************/
 		
-		//Checks if book listings were requested, sets the book map with all books
+		// Calls method for listing all books
 		if (request.getParameter("booksPageButton") != null) {
-			
-			query = "select * from BOOKS";
-			request.getSession().setAttribute("query", query);
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);
+			this.listAllBooks(request, response, myModel);
 		}
 		
-		//checks if a listing by category was requested, sets the book map
-		if (request.getParameter("fictionCategory") != null || request.getParameter("scienceCategory") != null || request.getParameter("engineeringCategory") != null) {
-					
-			target = "/Books.jspx";
-			
-			String category;
-			
-			if (request.getParameter("fictionCategory") != null) {
-				category = "Fiction";
-			}
-			else if (request.getParameter("scienceCategory") != null ) {
-				category = "Science";
-			}
-			else {
-				category = "Engineering";
-			}
-			
-			query = "select * from BOOKS where category like '%" + category + "%'";
-			request.getSession().setAttribute("query", query);
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);
+		// Calls method for listing books by category
+		if (request.getParameter("headerCategory") != null) {
+			this.listBooksByCategory(request, response, myModel);
 		}
 		
 		/***************************************************************
 			BOOK SORTINGS
 		****************************************************************/
-		
 		if (request.getParameter("sortButton") != null) {
-			
-			//obtains the sort option
-			String sortOption = request.getParameter("sortOption");
-			
-			query = (String) request.getSession().getAttribute("query");
-			
-			if (sortOption.equals("Newest to Oldest")) {
-				query += " order by publishYear desc";
-			}
-			else if (sortOption.equals("Oldest to Newest")) {
-				query += " order by publishYear asc";
-			}
-			else if (sortOption.equals("Review")) {
-				query += " order by review desc";
-			}
-			else if (sortOption.equals("Price - Low to High")) {
-				query += " order by price asc";
-			}
-			else if (sortOption.equals("Price - High to Low")) {
-				query += " order by price desc";
-			}
-			
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);	
+			this.sortBooks(request, response, myModel);	
 		}
 		
 		/***************************************************************
 			FILTER
 		****************************************************************/
-		
 		if (request.getParameter("filterButton") != null) {
-			
-			query = "select * from BOOKS where";
-			
-			//if a price range was selected, add to query
-			//if an author was selected, add to query
-			//if a category was selected, add to query
-			//if a year was selected, add to query
-			//if a rating was selected, add to query
-			
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);	
+			this.filter(request, response, myModel);
 		}
 		
 		/***************************************************************
 			SEARCH BAR
 		****************************************************************/
-		
 		if (request.getParameter("searchButton") != null) {
-						
-			//obtains the searched term
-			String searchTerm = request.getParameter("searchBar").toUpperCase();
-			
-			query = "select * from BOOKS where UPPER(title) like '%" + searchTerm + "%' or UPPER(author) like '%" + searchTerm + "%' or UPPER(category) like '%" + searchTerm + "%'";
-			request.getSession().setAttribute("query", query);
-			
-			//does a store-wide search by with the retrieveBySearch query
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);		
+			this.searchStore(request, response, myModel);
 		}
 		
 		
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
+		
+		
+		
+		
+		
+		
+		
+		/***************************************************************
+			TESTING BLOCK
+		****************************************************************/
 		
 		request.getRequestDispatcher(target).forward(request, response);
 	}
@@ -261,6 +149,187 @@ public class Start extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	
+	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+
+		String username = request.getParameter("loginName");
+		String password = request.getParameter("loginPassword"); 
+		
+		// Sets errors, if any
+		myModel.checkLoginError(username, password);
+
+		if (!myModel.getErrorStatus()) {		// No errors, user is successfully logged in
+			loggedIn = true;
+			request.getSession().setAttribute("loggedInSession", loggedIn);
+			request.getSession().setAttribute("loggedInUser", username);
+			this.target = "/Home.jspx";
+
+		}
+		else {
+			String loginErrorMessage = myModel.getErrorMessage();
+			error = true;
+			target = "/Login.jspx";
+			request.setAttribute("error", loginErrorMessage);
+		}
+	}
+	
+	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		String username = request.getParameter("signUpName");
+		String email = request.getParameter("signUpEmail");
+		String password = request.getParameter("signUpPassword"); 
+		String passwordConf = request.getParameter("signUpPasswordConf"); 
+
+		// Sets errors, if any
+		myModel.checkSignUpError(username, email, password, passwordConf);
+		if (!myModel.getErrorStatus()) {
+			myModel.addUser(username, email, password);
+			loggedIn = true;
+			request.getSession().setAttribute("loggedInSession", loggedIn);
+			request.getSession().setAttribute("loggedInUser", username);
+			this.target = "/Home.jspx";
+
+		}else {
+			String signUpErrorMessage = myModel.getErrorMessage();
+			error = true;
+			target = "/SignUp.jspx";
+			request.setAttribute("error", signUpErrorMessage);
+		}
+	}
+	
+	protected void signOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		loggedIn = false;
+		request.getSession().setAttribute("loggedInSession", loggedIn);
+	}
+	
+	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
+		if (request.getParameter("homeButton") != null) {
+			target = "/Home.jspx";
+		}
+		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
+		if (request.getParameter("signUpPageButton") != null) {
+			target = "/SignUp.jspx";
+		}
+		//checks if 'Login' button was pressed, sets target to the Login page if true
+		if (request.getParameter("loginPageButton") != null) {
+			target = "/Login.jspx";
+		}
+		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
+		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
+			target = "/Books.jspx";
+
+			//Retrieves unique categories and sets the filter display
+			ArrayList <String>categories = new ArrayList<String>();
+			categories = myModel.retrieveUniqueCategories();
+			request.setAttribute("categoriesFilterList", categories);
+		}
+	}
+	
+	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		query = "select * from BOOKS";
+		request.getSession().setAttribute("query", query);
+		books = myModel.retrieveByQuery(query);
+		request.setAttribute("booksMap", books);
+	}
+	
+	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		String category = request.getParameter("headerCategory");
+		
+		if (category.equals("Biography")) {
+			category = "Biography";
+		}
+		else if (category.equals("Business")) {
+			category = "Business";
+		}
+		else if (category.equals("Fantasy")) {
+			category = "Fantasy";
+		}
+		else if (category.equals("Fiction")) {
+			category = "Fiction";
+		}
+		else if (category.equals("Food")) {
+			category = "Food";
+		}
+		else if (category.equals("Graphic Novels")) {
+			category = "Graphic Novels";
+		}
+		else if (category.equals("History")) {
+			category = "History";
+		}
+		else if (category.equals("Kids")) {
+			category = "Kids";
+		}
+		else if (category.equals("Mystery")) {
+			category = "Mystery";
+		}
+		else if (category.equals("Non-Fiction")) {
+			category = "Non-Fiction";
+		}
+		else if (category.equals("Science Fiction")) {
+			category = "Science Fiction";
+		}
+		else if (category.equals("Textbooks")) {
+			category = "Textbooks";
+		}
+		else if (category.equals("Young Adult")) {
+			category = "Young Adult";
+		}
+		
+		query = "select * from BOOKS where category like '%" + category + "%'";
+		request.getSession().setAttribute("query", query);
+		books = myModel.retrieveByQuery(query);
+		request.setAttribute("booksMap", books);
+	}
+	
+	protected void sortBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		//obtains the sort option
+		String sortOption = request.getParameter("sortOption");
+		
+		query = (String) request.getSession().getAttribute("query");
+		
+		if (sortOption.equals("Newest to Oldest")) {
+			query += " order by publishYear desc";
+		}
+		else if (sortOption.equals("Oldest to Newest")) {
+			query += " order by publishYear asc";
+		}
+		else if (sortOption.equals("Review")) {
+			query += " order by review desc";
+		}
+		else if (sortOption.equals("Price - Low to High")) {
+			query += " order by price asc";
+		}
+		else if (sortOption.equals("Price - High to Low")) {
+			query += " order by price desc";
+		}
+		
+		books = myModel.retrieveByQuery(query);
+		request.setAttribute("booksMap", books);
+		
+	}
+	
+	protected void searchStore(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		//obtains the searched term
+		String searchTerm = request.getParameter("searchBar").toUpperCase();
+		
+		query = "select * from BOOKS where UPPER(title) like '%" + searchTerm + "%' or UPPER(author) like '%" + searchTerm + "%' or UPPER(category) like '%" + searchTerm + "%'";
+		request.getSession().setAttribute("query", query);
+		
+		//does a store-wide search by with the retrieveBySearch query
+		books = myModel.retrieveByQuery(query);
+		request.setAttribute("booksMap", books);	
+	}
+	
+	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {		
+		//Sets default query skeleton
+		//query = "select * from BOOKS where";
+		
+		query = (String) request.getSession().getAttribute("query");
+		
+		books = myModel.retrieveByQuery(query);
+		request.setAttribute("booksMap", books);	
 	}
 
 }

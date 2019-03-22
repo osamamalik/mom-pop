@@ -16,49 +16,10 @@
 <body>
 
 	<form action="" name="" method="post">
-		
-		<legend>Books</legend>
-		
+						
 		<header>
-		
-			<table>
-			
-				<tr>
-				
-					<td><input type="submit" value="Home" name="homeButton"></input></td>
-					<td><input type="submit" value="List Books" name="booksPageButton"></input></td>
-					<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
-					
-					<c:choose>	
-			
-						<c:when test="${loggedInSession}">
-								<td><input type="submit" value="Signout" name="signoutButton"></input></td>
-								<td><input type="submit" value="Cart" name="showShoppingCart"></input></td>
-								<td><input type="submit" value="Checkout" name="checkoutButton"></input></td>
-						</c:when>
-						
-						<c:otherwise>
-								<td><input type="submit" value="Sign Up" name="signUpPageButton"></input></td>
-								<td><input type="submit" value="Login" name="loginPageButton"></input></td>
-						</c:otherwise>
-						
-					</c:choose>
-					
-							
-				</tr>
-			
-				<tr>
-				
-					<td><input type="text" id="searchBar" name="searchBar"></input></td>
-					<td><input type="submit" value="search" name="searchButton"></input></td>
-			
-				</tr>
-
-			</table>
-			
+			<jsp:include page="Header.jspx"/>
 		</header>
-		
-			
 			
 		<table>
 		
@@ -85,22 +46,31 @@
 					<td><label>FILTER</label></td>
 				</tr>
 				
+				
 				<tr>
 					<td><label>Price:</label></td>
 					<td><input type="number" id="priceLowFilter" name="priceLowFilter" placeholder="from"></input></td>
 					<td><input type="number" id="priceHighFilter" name="priceHighFilter" placeholder="to"></input></td>
 				</tr>
 				
-				<tr>
-					<td><label>Category:</label></td>
-					<tr><td><input type="radio" id="scienceFilter" name="scienceFilter">Science</input></td></tr>
-					<tr><td><input type="radio" id="fictionFilter" name="fictionFilter">Fiction</input></td></tr>
-					<tr><td><input type="radio" id="engineeringFilter" name="engineeringFilter">Engineering</input></td></tr>
-				</tr>
 				
-			
+				<tr>
+					<td>Category:</td>
+				</tr>
+				<c:forEach var="categoryFilter" items="${categoriesFilterList}">
+		        	<tr>   
+			        	<td><input type="checkbox"><c:out value="${categoryFilter}"/></input></td>
+		            </tr>
+		        </c:forEach>
+
+  				
+			<tr>
+				<td><input type="submit" value="Filter" name="filterButton"></input></td>
+			</tr>
+				
 			</table>
-	
+				
+
 			<table>		
 				<c:forEach var="entry" items="${booksMap}">
 	                

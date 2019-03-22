@@ -16,45 +16,9 @@
 <body>
 	<form action="" name="" method="post">
 		
-		<legend>Books</legend>
-		
+				
 		<header>
-		
-			<table>
-			
-				<tr>
-				
-					<td><input type="submit" value="Home" name="homeButton"></input></td>
-					<td><input type="submit" value="List Books" name="booksPageButton"></input></td>
-					<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
-					
-					<c:choose>	
-			
-						<c:when test="${loggedInSession}">
-								<td><input type="submit" value="Signout" name="signoutButton"></input></td>
-								<td><input type="submit" value="Cart" name="showShoppingCart"></input></td>
-								<td><input type="submit" value="Checkout" name="checkoutButton"></input></td>
-						</c:when>
-						
-						<c:otherwise>
-								<td><input type="submit" value="Sign Up" name="signUpPageButton"></input></td>
-								<td><input type="submit" value="Login" name="loginPageButton"></input></td>
-						</c:otherwise>
-						
-					</c:choose>
-					
-							
-				</tr>
-			
-				<tr>
-				
-					<td><input type="text" id="searchBar" name="searchBar"></input></td>
-					<td><input type="submit" value="search" name="searchButton"></input></td>
-			
-				</tr>
-
-			</table>
-			
+			<jsp:include page="Header.jspx"/>
 		</header>
 		
 				

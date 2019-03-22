@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8" 
+		pageEncoding="UTF-8" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="StyleSheet" href="res/styles.css" type="text/css"
+	title="cse4413" media="screen, print"/>
+	<script type="text/javascript" src="res/myJS.js">;</script>
+<title>Header</title>
+</head>
+<body>
+		
+		<table>
+			<tr>
+			
+				<td><input type="submit" value="Home" name="homeButton"></input></td>
+				<td><input type="submit" value="Browse" name="booksPageButton"></input></td>
+				<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
+				
+				<c:choose>	
+		
+					<c:when test="${loggedInSession}">
+							<td><input type="submit" value="Signout" name="signoutButton"></input></td>
+							<td><input type="submit" value="Cart" name="showShoppingCart"></input></td>
+							<td><input type="submit" value="Checkout" name="checkoutButton"></input></td>
+					</c:when>
+					
+					<c:otherwise>
+							<td><input type="submit" value="Sign Up" name="signUpPageButton"></input></td>
+							<td><input type="submit" value="Login" name="loginPageButton"></input></td>
+					</c:otherwise>
+					
+				</c:choose>	
+				
+			</tr>
+		</table>
+		
+		
+		<table>
+			<tr>
+				<td><input type="text" id="searchBar" name="searchBar" placeholder="Search the store..."></input></td>
+				<td><input type="submit" value="search" name="searchButton"></input></td>
+			</tr>
+		</table>
+		
+		
+        <table>
+			<tr>
+				<td><input type="submit" value="Biography" name="headerCategory"></input></td>
+				<td><input type="submit" value="Business" name="headerCategory"></input></td>
+				<td><input type="submit" value="Fantasy" name="headerCategory"></input></td>
+				<td><input type="submit" value="Fiction" name="headerCategory"></input></td>
+				<td><input type="submit" value="Food" name="headerCategory"></input></td>
+				<td><input type="submit" value="Graphic Novels" name="headerCategory"></input></td>
+				<td><input type="submit" value="History" name="headerCategory"></input></td>
+				<td><input type="submit" value="Kids" name="headerCategory"></input></td>
+				<td><input type="submit" value="Mystery" name="headerCategory"></input></td>
+				<td><input type="submit" value="Non-Fiction" name="headerCategory"></input></td>
+				<td><input type="submit" value="Science Fiction" name="headerCategory"></input></td>
+				<td><input type="submit" value="Textbooks" name="headerCategory"></input></td>
+				<td><input type="submit" value="Young Adult" name="headerCategory"></input></td>
+			</tr>
+		</table>
+
+
+</body>
+</html>
+</jsp:root>

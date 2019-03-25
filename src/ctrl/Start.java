@@ -67,25 +67,6 @@ public class Start extends HttpServlet {
 			PAGE REDIRECTIONS
 		 ****************************************************************/
 		this.redirector(request, response, myModel);
-
-		//Sets the default redirection target to the Home page
-		String target = "/Home.jspx";
-
-		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("signUpPageButton") != null) {
-			target = "/SignUp.jspx";
-		}
-		//checks if 'Login' button was pressed, sets target to the Login page if true
-		if (request.getParameter("loginPageButton") != null) {
-			target = "/Login.jspx";
-		}
-		if (request.getParameter("Analytics") != null) {
-			target = "/Analytics.jspx";
-		}
-		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null)) {
-			target = "/Books.jspx";
-		}
 		
 		/***************************************************************
 			SIGN UP
@@ -127,33 +108,6 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("sortButton") != null) {
 			this.sortBooks(request, response, myModel);	
-			
-			//obtains the sort option
-			String sortOption = request.getParameter("sortOption");
-			
-			query = (String) request.getSession().getAttribute("query");
-			
-			if (sortOption.equals("Newest to Oldest")) {
-				query += " order by publishYear desc";
-			}
-			else if (sortOption.equals("Oldest to Newest")) {
-				query += " order by publishYear asc";
-
-			}
-			else if (sortOption.equals("Review")) {
-				query += " order by review desc";
-
-			}
-			else if (sortOption.equals("Price - Low to High")) {
-				query += " order by price asc";
-
-			}
-			else if (sortOption.equals("Price - High to Low")) {
-				query += " order by price desc";
-			}
-			
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);	
 		}
 		
 		/***************************************************************
@@ -175,39 +129,8 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("searchButton") != null) {
 			this.searchStore(request, response, myModel);
-						
-			//obtains the searched term
-			String searchTerm = request.getParameter("searchBar");
-			
-			query = "select * from BOOKS where title like '%" + searchTerm + "%' or author like '%" + searchTerm + "%' or category like '%" + searchTerm + "%'";
-			request.getSession().setAttribute("query", query);
-			
-			//does a store-wide search by with the retrieveBySearch query
-			books = myModel.retrieveByQuery(query);
-			request.setAttribute("booksMap", books);		
-			
 		}
 		
-		/***************************************************************
-					Analytics
-		 ****************************************************************/
-		if(request.getParameter("AnalyticsButton") != null) {
-			ServletContext context = this.getServletContext();
-			
-			String bid = request.getParameter("bid");
-			String f = "export/" + request.getSession().getId()+".xml";
-			String filename = context.getRealPath("/" + f);
-			request.getSession().setAttribute("filenameProductService", filename);
-			request.setAttribute("fProductService", f);
-			
-			try {
-				myModel.exportProductServices(bid, filename);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			target="/DoneAnalytics.jspx";
-		}
 		
 		/***************************************************************
 			TESTING BLOCK

@@ -1,8 +1,5 @@
 package model;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,13 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import DAO.*;
 import bean.*;
@@ -235,51 +225,6 @@ public class Model {
 		return this.errorMessage;
 		}
 
-	/***************************************************************
-			Product Catalog Component/Service
-	 ****************************************************************/
-	
-public void exportProductServices(String bid, String filename) throws Exception{
-		
-	
-		BookBean bb = retrieveBook(bid);
-		String title = bb.getTitle();
-		String author = bb.getAuthor();
-		double price = bb.getPrice();
-		String description = bb.getDescription();
-		int publishYear = bb.getPublishYear();
-		double rating = bb.getRating();
-		String cat = bb.getCategory();
-		
-		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear,
-			rating, cat);
-		
-		//String path = filename.split("export")[0]+"export";
-		//SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		//Schema schema = sf.newSchema(new File(path+"/SIS.xsd"));
-		
-		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
-		Marshaller marshaller = jc.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-
-
-		StringWriter sw = new StringWriter();
-		
-		sw.write("\n");
-		
-		//marshaller.setSchema (schema);
-		marshaller.marshal(bw, new StreamResult(sw));
-		
-		System.out.println(sw.toString());
-		
-		
-		FileWriter fw = new FileWriter(filename);
-		
-		fw.write(sw.toString());
-		fw.close();
-	}
-	
 }
 
 

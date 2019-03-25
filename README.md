@@ -37,18 +37,19 @@ Wednesday, March 20, 2019:
 
 FIXES:
 
-- addUser query was fixed: changed the PreparedStatement declaration to Statement. We need a Statement object when adding/updating items to tables.
-- other queries were fixed: Connection, PreparedStatement and ResultSet objects were not closed after queries. Added closing statements.
-without the closing statements website kept locking
-- there was an error on login error checking. 2 queries were called from the same method (checkUserExists and passwordValidation).
-apparently there can only be one ResultSet open at a time. one of these methods locked the other one which kept giving SQl errors.
-instead of using a ResultSet, called the next() method directly on p.executeQuery() on checkUserExists, this fixed the issue.
+- Changed the return type of BookDAO to list from maps. We likely won't need maps, and sorting doesn't work with maps.
+- Sorting didn't work when the books were listed by the "List Books" button or a category button. Fixed this issue
 
 ADDITIONS:
+- Sorting
+	- Sort by price ascending
+	- Sort by price descending
+	- Sort by year ascending
+	- Sort by year descending
+	- Sort by review descending
 
-- added error checking for signUp
-- added updatePassword method to model
-
+- Password confirmation on signup
+	- Asks you to enter password twice, gives error if they don't match
 
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************
@@ -78,21 +79,21 @@ ADDITIONS:
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************
 
-Wednesday, March 20, 2019:
+Monday, March 18, 2018:
 
 FIXES:
 
-- Changed the return type of BookDAO to list from maps. We likely won't need maps, and sorting doesn't work with maps.
-- Sorting didn't work when the books were listed by the "List Books" button or a category button. Fixed this issue
+- addUser query was fixed: changed the PreparedStatement declaration to Statement. We need a Statement object when adding/updating items to tables.
+
+- other queries were fixed: Connection, PreparedStatement and ResultSet objects were not closed after queries. Added closing statements.
+without the closing statements website kept locking
+
+- there was an error on login error checking. 2 queries were called from the same method (checkUserExists and passwordValidation).
+apparently there can only be one ResultSet open at a time. one of these methods locked the other one which kept giving SQl errors.
+instead of using a ResultSet, called the next() method directly on p.executeQuery() on checkUserExists, this fixed the issue.
 
 ADDITIONS:
-- Sorting
-	- Sort by price ascending
-	- Sort by price descending
-	- Sort by year ascending
-	- Sort by year descending
-	- Sort by review descending
 
-- Password confirmation on signup
-	- Asks you to enter password twice, gives error if they don't match
+- added error checking for signUp
+- added updatePassword method to model
 

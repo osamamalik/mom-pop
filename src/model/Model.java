@@ -225,6 +225,54 @@ public class Model {
 		return this.errorMessage;
 		}
 
+<<<<<<< HEAD
+=======
+	/***************************************************************
+			Product Catalog Component/Service
+	 ****************************************************************/
+	
+public void exportProductServices(String bid, String filename) throws Exception{
+		
+	
+		BookBean bb = retrieveBook(bid);
+		String title = bb.getTitle();
+		String author = bb.getAuthor();
+		double price = bb.getPrice();
+		String description = bb.getDescription();
+		int publishYear = bb.getPublishYear();
+		double rating = bb.getReview();
+		String cat = bb.getCategory();
+		
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear,
+			rating, cat);
+		
+		//String path = filename.split("export")[0]+"export";
+		//SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		//Schema schema = sf.newSchema(new File(path+"/SIS.xsd"));
+		
+		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+
+		StringWriter sw = new StringWriter();
+		
+		sw.write("\n");
+		
+		//marshaller.setSchema (schema);
+		marshaller.marshal(bw, new StreamResult(sw));
+		
+		System.out.println(sw.toString());
+		
+		
+		FileWriter fw = new FileWriter(filename);
+		
+		fw.write(sw.toString());
+		fw.close();
+	}
+	
+>>>>>>> parent of 551e3db... Analytics
 }
 
 

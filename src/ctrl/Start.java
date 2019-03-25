@@ -253,40 +253,6 @@ public class Start extends HttpServlet {
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		String category = request.getParameter("headerCategory");
 		
-		if (category.equals("Biography")) {
-			category = "Biography";
-		}
-		else if (category.equals("Fantasy")) {
-			category = "Fantasy";
-		}
-		else if (category.equals("Fiction")) {
-			category = "Fiction";
-		}
-		else if (category.equals("Food")) {
-			category = "Food";
-		}
-		else if (category.equals("Graphic Novels")) {
-			category = "Graphic Novels";
-		}
-		else if (category.equals("History")) {
-			category = "History";
-		}
-		else if (category.equals("Kids")) {
-			category = "Kids";
-		}
-		else if (category.equals("Mystery")) {
-			category = "Mystery";
-		}
-		else if (category.equals("Non-Fiction")) {
-			category = "Non-Fiction";
-		}
-		else if (category.equals("Science Fiction")) {
-			category = "Science Fiction";
-		}
-		else if (category.equals("Young Adult")) {
-			category = "Young Adult";
-		}
-		
 		query = "select * from BOOKS where category like '%" + category + "%'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);

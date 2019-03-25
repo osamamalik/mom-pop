@@ -1,4 +1,9 @@
+DROP TABLE Reviews;
+DROP TABLE OrderDetails;
+DROP TABLE Orders;
+DROP TABLE Cart;
 DROP TABLE Users;
+DROP TABLE Books;
 
 CREATE TABLE Users (
 	username	VARCHAR(30) NOT NULL,
@@ -10,8 +15,6 @@ CREATE TABLE Users (
 INSERT INTO Users VALUES ('osama', 'omalik91@gmail.com', 'abc123');
 INSERT INTO Users VALUES ('ray', 'raymondsbarakat@gmail.com', 'abc123');
 INSERT INTO Users VALUES ('baris', 'bbagcilar@gmail.com', 'abc123');
-
-DROP TABLE Books;
 
 CREATE TABLE Books (
 	bid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -76,7 +79,7 @@ Like his masterly, Pulitzer Prize-winning biography Truman, David McCullough''s 
 2001,
 4.06,
 'Biography',
-'https://www.goodreads.com/book/show/2203.John_Adams');
+'https://images.gr-assets.com/books/1478144278l/2203.jpg');
 
 INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Bossypants',
@@ -279,7 +282,7 @@ A GAME OF THRONES
 
 Long ago, in a time forgotten, a preternatural event threw the seasons out of balance. In a land where summers can last decades and winters a lifetime, trouble is brewing. The cold is returning, and in the frozen wastes to the north of Winterfell, sinister and supernatural forces are massing beyond the kingdom’s protective Wall. At the center of the conflict lie the Starks of Winterfell, a family as harsh and unyielding as the land they were born to. Sweeping from a land of brutal cold to a distant summertime kingdom of epicurean plenty, here is a tale of lords and ladies, soldiers and sorcerers, assassins and bastards, who come together in a time of grim omens.
 
-Here an enigmatic band of warriors bear swords of no human metal- a tribe of fierce wildlings carry men off into madness- a cruel young dragon prince barters his sister to win back his throne; and a determined woman undertakes the most treacherous of journeys. Amid plots and counterplots, tragedy and betrayal, victory and terror, the fate of the Starks, their allies, and their enemies hangs perilously in the balance, as each endeavors to win that deadliest of conflicts: the game of thrones.',
+Here an enigmatic band of warriors bear swords of no human metal- a tribe of fierce wildlings carry men off into madness- a cruel young dragon prince barters his sister to win back his throne- and a determined woman undertakes the most treacherous of journeys. Amid plots and counterplots, tragedy and betrayal, victory and terror, the fate of the Starks, their allies, and their enemies hangs perilously in the balance, as each endeavors to win that deadliest of conflicts: the game of thrones.',
 1996,
 4.45,
 'Fantasy',
@@ -1231,12 +1234,39 @@ With her razor-sharp writing and trademark psychological insight, Gillian Flynn 
 'Mystery',
 'https://images.gr-assets.com/books/1386574953l/19288043.jpg');
 
-/*INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
-'',
-'',
-price,
-'',
-year,
-rating,
-'',
-'');*/
+CREATE TABLE Reviews (
+	rid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username VARCHAR(30) NOT NULL,
+	bid INT NOT NULL,
+	review VARCHAR(2500) NOT NULL,
+	rating INT NOT NULL,
+	PRIMARY KEY (rid),
+	CONSTRAINT reviews_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
+	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+CREATE TABLE Orders (
+	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	odate DATE NOT NULL,
+	username VARCHAR(30) NOT NULL,
+	PRIMARY KEY (oid),
+	CONSTRAINT orders_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+CREATE TABLE OrderDetails (
+	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	oid INT NOT NULL,
+	bid INT NOT NULL,
+	PRIMARY KEY (odid),
+	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
+	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
+);
+
+CREATE TABLE Cart (
+	cid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username VARCHAR(30) NOT NULL,
+	bid INT NOT NULL,
+	PRIMARY KEY (cid),
+	CONSTRAINT cart_username_ref FOREIGN KEY (username) REFERENCES Users (username),
+	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
+);

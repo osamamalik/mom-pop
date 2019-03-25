@@ -34,9 +34,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Walter Isaacson',
 30.25,
 'From the author of the bestselling biographies of Benjamin Franklin and Albert Einstein, this is the exclusive, New York Times bestselling biography of Apple co-founder Steve Jobs.
-
 Based on more than forty interviews with Jobs conducted over two years—as well as interviews with more than a hundred family members, friends, adversaries, competitors, and colleagues—Walter Isaacson has written a riveting story of the roller-coaster life and searingly intense personality of a creative entrepreneur whose passion for perfection and ferocious drive revolutionized six industries: personal computers, animated movies, music, phones, tablet computing, and digital publishing.
-
 At a time when America is seeking ways to sustain its innovative edge, and when societies around the world are trying to build digital-age economies, Jobs stands as the ultimate icon of inventiveness and applied imagination. He knew that the best way to create value in the twenty-first century was to connect creativity with technology. He built a company where leaps of the imagination were combined with remarkable feats of engineering.',
 2011,
 4.12,
@@ -60,7 +58,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'In her long-awaited new book, Laura Hillenbrand writes with the same rich and vivid narrative voice she displayed in Seabiscuit. Telling an unforgettable story of a man''s journey into extremity, Unbroken is a testament to the resilience of the human mind, body, and spirit.
 On a May afternoon in 1943, an Army Air Forces bomber crashed into the Pacific Ocean and disappeared, leaving only a spray of debris and a slick of oil, gasoline, and blood. Then, on the ocean surface, a face appeared. It was that of a young lieutenant, the plane''s bombardier, who was struggling to a life raft and pulling himself aboard. So began one of the most extraordinary odysseys of the Second World War.
 The lieutenant’s name was Louis Zamperini. In boyhood, he''d been a cunning and incorrigible delinquent, breaking into houses, brawling, and fleeing his home to ride the rails. As a teenager, he had channeled his defiance into running, discovering a prodigious talent that had carried him to the Berlin Olympics and within sight of the four-minute mile. But when war had come, the athlete had become an airman, embarking on a journey that led to his doomed flight, a tiny raft, and a drift into the unknown.
-
 Ahead of Zamperini lay thousands of miles of open ocean, leaping sharks, a foundering raft, thirst and starvation, enemy aircraft, and, beyond, a trial even greater. Driven to the limits of endurance, Zamperini would answer desperation with ingenuity; suffering with hope, resolve, and humor; brutality with rebellion. His fate, whether triumph or tragedy, would be suspended on the fraying wire of his will.',
 2010,
 4.38,
@@ -72,9 +69,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'David McCullough',
 16.86,
 'The enthralling, often surprising story of John Adams, one of the most important and fascinating Americans who ever lived.
-
 In this powerful, epic biography, David McCullough unfolds the adventurous life-journey of John Adams, the brilliant, fiercely independent, often irascible, always honest Yankee patriot - "the colossus of independence," as Thomas Jefferson called him - who spared nothing in his zeal for the American Revolution- who rose to become the second President of the United States and saved the country from blundering into an unnecessary war- who was learned beyond all but a few and regarded by some as "out of his senses"- and whose marriage to the wise and valiant Abigail Adams is one of the moving love stories in American history. 
-
 Like his masterly, Pulitzer Prize-winning biography Truman, David McCullough''s John Adams has the sweep and vitality of a great novel. It is both a riveting portrait of an abundantly human man and a vivid evocation of his time, much of it drawn from an outstanding collection of Adams family letters and diaries. In particular, the more than one thousand surviving letters between John and Abigail Adams, nearly half of which have never been published, provide extraordinary access to their private lives and make it possible to know John Adams as no other major American of his founding era.',
 2001,
 4.06,
@@ -86,11 +81,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Tina Fey',
 18.87,
 'Before Liz Lemon, before "Weekend Update," before "Sarah Palin," Tina Fey was just a young girl with a dream: a recurring stress dream that she was being chased through a local airport by her middle-school gym teacher. She also had a dream that one day she would be a comedian on TV.
-
 She has seen both these dreams come true.
-
 At last, Tina Fey''s story can be told. From her youthful days as a vicious nerd to her tour of duty on Saturday Night Live; from her passionately halfhearted pursuit of physical beauty to her life as a mother eating things off the floor; from her one-sided college romance to her nearly fatal honeymoon—from the beginning of this paragraph to this final sentence.
-
 Tina Fey reveals all, and proves what we''ve all suspected: you''re no one until someone calls you bossy.',
 2011,
 3.95,
@@ -102,7 +94,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Ron Chernow',
 23.40,
 'Pulitzer Prize-winning author Ron Chernow presents a landmark biography of Alexander Hamilton, the Founding Father who galvanized, inspired, scandalized, and shaped the newborn nation.
-
 In the first full-length biography of Alexander Hamilton in decades, Ron Chernow tells the riveting story of a man who overcame all odds to shape, inspire, and scandalize the newborn America. According to historian Joseph Ellis, Alexander Hamilton is “a robust full-length portrait, in my view the best ever written, of the most brilliant, charismatic and dangerous founder of them all.”',
 2005,
 4.24,
@@ -134,7 +125,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Jon Krakauer',
 18.00,
 'In April 1992 a young man from a well-to-do family hitchhiked to Alaska and walked alone into the wilderness north of Mt. McKinley. His name was Christopher Johnson McCandless. He had given $25,000 in savings to charity, abandoned his car and most of his possessions, burned all the cash in his wallet, and invented a new life for himself. Four months later, a party of moose hunters found his decomposed body. How McCandless came to die is the unforgettable story of Into the Wild.
-
 Immediately after graduating from college in 1991, McCandless had roamed through the West and Southwest on a vision quest like those made by his heroes Jack London and John Muir. In the Mojave Desert he abandoned his car, stripped it of its license plates, and burned all of his cash. He would give himself a new name, Alexander Supertramp, and, unencumbered by money and belongings, he would be free to wallow in the raw, unfiltered experiences that nature presented. Craving a blank spot on the map, McCandless simply threw away the maps. Leaving behind his desperate parents and sister, he vanished into the wild.',
 1997,
 3.97,
@@ -157,7 +147,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Walter Isaacson',
 27.29,
 'Benjamin Franklin is the Founding Father who winks at us. An ambitious urban entrepreneur who rose up the social ladder, from leather-aproned shopkeeper to dining with kings, he seems made of flesh rather than of marble. In bestselling author Walter Isaacson''s vivid and witty full-scale biography, we discover why Franklin seems to turn to us from history''s stage with eyes that twinkle from behind his new-fangled spectacles. By bringing Franklin to life, Isaacson shows how he helped to define both his own time and ours.
-
 He was, during his 84-year life, America''s best scientist, inventor, diplomat, writer, and business strategist, and he was also one of its most practical—though not most profound—political thinkers. He proved by flying a kite that lightning was electricity, and he invented a rod to tame it. He sought practical ways to make stoves less smoky and commonwealths less corrupt. He organized neighborhood constabularies and international alliances, local lending libraries and national legislatures. He combined two types of lenses to create bifocals and two concepts of representation to foster the nation''s federal compromise. He was the only man who shaped all the founding documents of America: the Albany Plan of Union, the Declaration of Independence, the treaty of alliance with France, the peace treaty with England, and the Constitution. And he helped invent America''s unique style of homespun humor, democratic values, and philosophical pragmatism.',
 2003,
 3.98,
@@ -169,9 +158,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Marlon James',
 27.29,
 'Tracker is known far and wide for his skills as a hunter: "He has a nose," people say. Engaged to track down a mysterious boy who disappeared three years earlier, Tracker breaks his own rule of always working alone when he finds himself part of a group that comes together to search for the boy. The band is a hodgepodge, full of unusual characters with secrets of their own, including a shape-shifting man-animal known as Leopard.
-
 As Tracker follows the boy''s scent—from one ancient city to another; into dense forests and across deep rivers—he and the band are set upon by creatures intent on destroying them. As he struggles to survive, Tracker starts to wonder: Who, really, is this boy? Why has he been missing for so long? Why do so many people want to keep Tracker from finding him? And perhaps the most important questions of all: Who is telling the truth, and who is lying?
-
 Drawing from African history and mythology and his own rich imagination, Marlon James has written a saga of breathtaking adventure that''s also an ambitious, involving read. Defying categorization and full of unforgettable characters, Black Leopard, Red Wolf is both surprising and profound as it explores the fundamentals of truths, the limits of power, the excesses of ambition, and our need to understand them all.',
 2019,
 3.70,
@@ -183,11 +170,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'J.K. Rowling',
 43.52,
 'Harry Potter''s life is miserable. His parents are dead and he''s stuck with his heartless relatives, who force him to live in a tiny closet under the stairs. But his fortune changes when he receives a letter that tells him the truth about himself: he''s a wizard. A mysterious visitor rescues him from his relatives and takes him to his new home, Hogwarts School of Witchcraft and Wizardry.
-
 After a lifetime of bottling up his magical powers, Harry finally feels like a normal kid. But even within the Wizarding community, he is special. He is the boy who lived: the only person to have ever survived a killing curse inflicted by the evil Lord Voldemort, who launched a brutal takeover of the Wizarding world, only to vanish after failing to kill Harry.
-
 Though Harry''s first year at Hogwarts is the best of his life, not everything is perfect. There is a dangerous secret object hidden within the castle walls, and Harry believes it''s his responsibility to prevent it from falling into evil hands. But doing so will bring him into contact with forces more terrifying than he ever could have imagined.
-
 Full of sympathetic characters, wildly imaginative situations, and countless exciting details, the first installment in the series assembles an unforgettable magical world and sets the stage for many high-stakes adventures to come.',
 1997,
 4.46,
@@ -229,11 +213,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'J.K. Rowling',
 18.45,
 'There is a door at the end of a silent corridor. And it’s haunting Harry Pottter’s dreams. Why else would he be waking in the middle of the night, screaming in terror?
-
 Harry has a lot on his mind for this, his fifth year at Hogwarts: a Defense Against the Dark Arts teacher with a personality like poisoned honey- a big surprise on the Gryffindor Quidditch team- and the looming terror of the Ordinary Wizarding Level exams. But all these things pale next to the growing threat of He-Who-Must-Not-Be-Named---a threat that neither the magical government nor the authorities at Hogwarts can stop.
-
 As the grasp of darkness tightens, Harry must discover the true depth and strength of his friends, the importance of boundless loyalty, and the shocking price of unbearable sacrifice.
-
 His fate depends on them all.',
 2003,
 4.48,
@@ -245,11 +226,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'J.K. Rowling',
 14.91,
 'When Harry Potter and the Half-Blood Prince opens, the war against Voldemort has begun. The Wizarding world has split down the middle, and as the casualties mount, the effects even spill over onto the Muggles. Dumbledore is away from Hogwarts for long periods, and the Order of the Phoenix has suffered grievous losses. And yet, as in all wars, life goes on.
-
 Harry, Ron, and Hermione, having passed their O.W.L. level exams, start on their specialist N.E.W.T. courses. Sixth-year students learn to Apparate, losing a few eyebrows in the process. Teenagers flirt and fight and fall in love. Harry becomes captain of the Gryffindor Quidditch team, while Draco Malfoy pursues his own dark ends. And classes are as fascinating and confounding as ever, as Harry receives some extraordinary help in Potions from the mysterious Half-Blood Prince.
-
 Most importantly, Dumbledore and Harry work together to uncover the full and complex story of a boy once named Tom Riddle—the boy who became Lord Voldemort. Like Harry, he was the son of one Muggle-born and one Wizarding parent, raised unloved, and a speaker of Parseltongue. But the similarities end there, as the teenaged Riddle became deeply interested in the Dark objects known as Horcruxes: objects in which a wizard can hide part of his soul, if he dares splinter that soul through murder.
-
 Harry must use all the tools at his disposal to draw a final secret out of one of Riddle’s teachers, the sly Potions professor Horace Slughorn. Finally Harry and Dumbledore hold the key to the Dark Lord’s weaknesses... until a shocking reversal exposes Dumbledore’s own vulnerabilities, and casts Harry’s—and Hogwarts’s—future in shadow.',
 2005,
 4.56,
@@ -261,11 +239,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'J.K. Rowling',
 33.52,
 'Harry Potter is leaving Privet Drive for the last time. But as he climbs into the sidecar of Hagrid’s motorbike and they take to the skies, he knows Lord Voldemort and the Death Eaters will not be far behind.
-
 The protective charm that has kept him safe until now is broken. But the Dark Lord is breathing fear into everything he loves. And he knows he can’t keep hiding.
-
 To stop Voldemort, Harry knows he must find the remaining Horcruxes and destroy them.
-
 He will have to face his enemy in one final battle.',
 2007,
 4.63,
@@ -277,11 +252,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'George R.R. Martin',
 4.98,
 'Here is the first volume in George R. R. Martin’s magnificent cycle of novels that includes A Clash of Kings and A Storm of Swords. As a whole, this series comprises a genuine masterpiece of modern fantasy, bringing together the best the genre has to offer. Magic, mystery, intrigue, romance, and adventure fill these pages and transport us to a world unlike any we have ever experienced. Already hailed as a classic, George R. R. Martin’s stunning series is destined to stand as one of the great achievements of imaginative fiction.
-
 A GAME OF THRONES
-
 Long ago, in a time forgotten, a preternatural event threw the seasons out of balance. In a land where summers can last decades and winters a lifetime, trouble is brewing. The cold is returning, and in the frozen wastes to the north of Winterfell, sinister and supernatural forces are massing beyond the kingdom’s protective Wall. At the center of the conflict lie the Starks of Winterfell, a family as harsh and unyielding as the land they were born to. Sweeping from a land of brutal cold to a distant summertime kingdom of epicurean plenty, here is a tale of lords and ladies, soldiers and sorcerers, assassins and bastards, who come together in a time of grim omens.
-
 Here an enigmatic band of warriors bear swords of no human metal- a tribe of fierce wildlings carry men off into madness- a cruel young dragon prince barters his sister to win back his throne- and a determined woman undertakes the most treacherous of journeys. Amid plots and counterplots, tragedy and betrayal, victory and terror, the fate of the Starks, their allies, and their enemies hangs perilously in the balance, as each endeavors to win that deadliest of conflicts: the game of thrones.',
 1996,
 4.45,
@@ -293,9 +265,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'George R.R. Martin',
 19.36,
 'A comet the color of blood and flame cuts across the sky. Two great leaders—Lord Eddard Stark and Robert Baratheon—who hold sway over an age of enforced peace are dead, victims of royal treachery. Now, from the ancient citadel of Dragonstone to the forbidding shores of Winterfell, chaos reigns. Six factions struggle for control of a divided land and the Iron Throne of the Seven Kingdoms, preparing to stake their claims through tempest, turmoil, and war. 
-
 It is a tale in which brother plots against brother and the dead rise to walk in the night. Here a princess masquerades as an orphan boy- a knight of the mind prepares a poison for a treacherous sorceress- and wild men descend from the Mountains of the Moon to ravage the countryside. Against a backdrop of incest and fratricide, alchemy and murder, victory may go to the men and women possessed of the coldest steel...and the coldest hearts. For when kings clash, the whole land trembles.
-
 Here is the second volume in George R.R. Martin magnificent cycle of novels that includes A Game of Thrones and A Storm of Swords. As a whole, this series comprises a genuine masterpiece of modern fantasy, bringing together the best the genre has to offer. Magic, mystery, intrigue, romance, and adventure fill these pages and transport us to a world unlike any we have ever experienced. Already hailed as a classic, George R.R. Martin stunning series is destined to stand as one of the great achievements of imaginative fiction.',
 1998,
 4.41,
@@ -307,7 +277,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'George R.R. Martin',
 8.36,
 'Here is the third volume in George R.R. Martin''s magnificent cycle of novels that includes A Game of Thrones and A Clash of Kings. Together, this series comprises a genuine masterpiece of modern fantasy, destined to stand as one of the great achievements of imaginative fiction.
-
 Of the five contenders for power, one is dead, another in disfavor, and still the wars rage as alliances are made and broken. Joffrey sits on the Iron Throne, the uneasy ruler of the Seven Kingdoms. His most bitter rival, Lord Stannis, stands defeated and disgraced, victim of the sorceress who holds him in her thrall. Young Robb still rules the North from the fortress of Riverrun. Meanwhile, making her way across a blood-drenched continent is the exiled queen, Daenerys, mistress of the only three dragons still left in the world. And as opposing forces manoeuver for the final showdown, an army of barbaric wildlings arrives from the outermost limits of civilization, accompanied by a horde of mythical Others—a supernatural army of the living dead whose animated corpses are unstoppable. As the future of the land hangs in the balance, no one will rest until the Seven Kingdoms have exploded in a veritable storm of swords...',
 2000,
 4.54,
@@ -319,11 +288,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'George R.R. Martin',
 8.15,
 'Crows will fight over a dead man''s flesh, and kill each other for his eyes.
-
 Bloodthirsty, treacherous and cunning, the Lannisters are in power on the Iron Throne in the name of the boy-king Tommen. The war in the Seven Kingdoms has burned itself out, but in its bitter aftermath new conflicts spark to life.
-
 The Martells of Dorne and the Starks of Winterfell seek vengeance for their dead. Euron Crow''s Eye, as black a pirate as ever raised a sail, returns from the smoking ruins of Valyria to claim the Iron Isles. From the icy north, where Others threaten the Wall, apprentice Maester Samwell Tarly brings a mysterious babe in arms to the Citadel.
-
 Against a backdrop of incest and fratricide, alchemy and murder, victory will go to the men and women possessed of the coldest steel and the coldest hearts.',
 2005,
 4.12,
@@ -335,11 +301,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'George R.R. Martin',
 8.22,
 'In the aftermath of a colossal battle, the future of the Seven Kingdoms hangs in the balance—beset by newly emerging threats from every direction. In the east, Daenerys Targaryen, the last scion of House Targaryen, rules with her three dragons as queen of a city built on dust and death. But Daenerys has thousands of enemies, and many have set out to find her. As they gather, one young man embarks upon his own quest for the queen, with an entirely different goal in mind.
-
 Fleeing from Westeros with a price on his head, Tyrion Lannister, too, is making his way to Daenerys. But his newest allies in this quest are not the rag-tag band they seem, and at their heart lies one who could undo Daenerys’s claim to Westeros forever.
-
 Meanwhile, to the north lies the mammoth Wall of ice and stone—a structure only as strong as those guarding it. There, Jon Snow, 998th Lord Commander of the Night’s Watch, will face his greatest challenge. For he has powerful foes not only within the Watch but also beyond, in the land of the creatures of ice.
-
 From all corners, bitter conflicts reignite, intimate betrayals are perpetrated, and a grand cast of outlaws and priests, soldiers and skinchangers, nobles and slaves, will face seemingly insurmountable obstacles. Some will fail, others will grow in the strength of darkness. But in a time of rising restlessness, the tides of destiny and politics will lead inevitably to the greatest dance of all.',
 2011,
 4.32,
@@ -351,9 +314,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Neil Gaiman',
 21.21,
 'Days before his release from prison, Shadow''s wife, Laura, dies in a mysterious car crash. Numbly, he makes his way back home. On the plane, he encounters the enigmatic Mr Wednesday, who claims to be a refugee from a distant war, a former god and the king of America.
-
 Together they embark on a profoundly strange journey across the heart of the USA, whilst all around them a storm of preternatural and epic proportions threatens to break.
-
 Scary, gripping and deeply unsettling, American Gods takes a long, hard look into the soul of America. You''ll be surprised by what - and who - it finds there...',
 2001,
 2.98,
@@ -365,9 +326,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Charlie Jane Anders',
 31.49,
 '"If you control our sleep, then you can own our dreams... And from there, it''s easy to control our entire lives." 
-
 Set on a planet that has fully definitive, never-changing zones of day and night, with ensuing extreme climates of endless, frigid darkness and blinding, relentless light, humankind has somehow continued apace -- though the perils outside the built cities are rife with danger as much as the streets below.
-
 But in a world where time means only what the ruling government proclaims, and the levels of light available are artificially imposed to great consequence, lost souls and disappeared bodies are shadow-bound and savage, and as common as grains of sand. And one such pariah, sacrificed to the night, but borne up by time and a mysterious bond with an enigmatic beast, will rise to take on the entire planet - before it can crumble beneath the weight of human existence.',
 2019,
 3.77,
@@ -379,17 +338,11 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Blake Crouch',
 29.70,
 '“Are you happy with your life?” 
-
 Those are the last words Jason Dessen hears before the masked abductor knocks him unconscious. 
-
 Before he awakens to find himself strapped to a gurney, surrounded by strangers in hazmat suits. 
-
 Before a man Jason’s never met smiles down at him and says, “Welcome back, my friend.” 
-
 In this world he’s woken up to, Jason’s life is not the one he knows. His wife is not his wife. His son was never born. And Jason is not an ordinary college physics professor, but a celebrated genius who has achieved something remarkable. Something impossible.
-
 Is it this world or the other that’s the dream? And even if the home he remembers is real, how can Jason possibly make it back to the family he loves? The answers lie in a journey more wondrous and horrifying than anything he could’ve imagined—one that will force him to confront the darkest parts of himself even as he battles a terrifying, seemingly unbeatable foe.
-
 From the author of the bestselling Wayward Pines trilogy, Dark Matter is a brilliantly plotted tale that is at once sweeping and intimate, mind-bendingly strange and profoundly human—a relentlessly surprising science-fiction thriller about choices, paths not taken, and how far we’ll go to claim the lives we dream of.',
 2016,
 4.10,
@@ -401,13 +354,9 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Andy Weir',
 25.80,
 'Six days ago, astronaut Mark Watney became one of the first people to walk on Mars. 
-
 Now, he’s sure he’ll be the first person to die there.
-
 After a dust storm nearly kills him and forces his crew to evacuate while thinking him dead, Mark finds himself stranded and completely alone with no way to even signal Earth that he’s alive—and even if he could get word out, his supplies would be gone long before a rescue could arrive. 
-
 Chances are, though, he won’t have time to starve to death. The damaged machinery, unforgiving environment, or plain-old “human error” are much more likely to kill him first. 
-
 But Mark isn’t ready to give up yet. Drawing on his ingenuity, his engineering skills — and a relentless, dogged refusal to quit — he steadfastly confronts one seemingly insurmountable obstacle after the next. Will his resourcefulness be enough to overcome the impossible odds against him?',
 2012,
 4.40,
@@ -429,7 +378,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Orson Scott Card',
 8.99,
 'Andrew ''Ender'' Wiggin thinks he is playing computer simulated war games; he is, in fact, engaged in something far more desperate. The result of genetic experimentation, Ender may be the military genius Earth desperately needs in a war against an alien enemy seeking to destroy all human life. The only way to find out is to throw Ender into ever harsher training, to chip away and find the diamond inside, or destroy him utterly. Ender Wiggin is six years old when it begins. He will grow up fast.
-
 But Ender is not the only result of the experiment. The war with the Buggers has been raging for a hundred years, and the quest for the perfect general has been underway almost as long. Ender''s two older siblings, Peter and Valentine, are every bit as unusual as he is, but in very different ways. While Peter was too uncontrollably violent, Valentine very nearly lacks the capability for violence altogether. Neither was found suitable for the military''s purpose. But they are driven by their jealousy of Ender, and by their inbred drive for power. Peter seeks to control the political process, to become a ruler. Valentine''s abilities turn more toward the subtle control of the beliefs of commoner and elite alike, through powerfully convincing essays. Hiding their youth and identities behind the anonymity of the computer networks, these two begin working together to shape the destiny of Earth-an Earth that has no future at all if their brother Ender fails.',
 1985,
 4.30,
@@ -441,7 +389,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Philip K. Dick',
 2.65,
 'It''s America in 1962. Slavery is legal once again. The few Jews who still survive hide under assumed names. In San Francisco, the I Ching is as common as the Yellow Pages. All because some twenty years earlier the United States lost a war—and is now occupied by Nazi Germany and Japan.
-
 This harrowing, Hugo Award-winning novel is the work that established Philip K. Dick as an innovator in science fiction while breaking the barrier between science fiction and the serious novel of ideas. In it Dick offers a haunting vision of history as a nightmare from which it may just be possible to wake.',
 1962,
 2.42,
@@ -453,9 +400,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Andy Weir',
 24.88,
 'Jazz Bashara is a criminal.
-
 Well, sort of. Life on Artemis, the first and only city on the moon, is tough if you''re not a rich tourist or an eccentric billionaire. So smuggling in the occasional harmless bit of contraband barely counts, right? Not when you''ve got debts to pay and your job as a porter barely covers the rent.
-
 Everything changes when Jazz sees the chance to commit the perfect crime, with a reward too lucrative to turn down. But pulling off the impossible is just the start of her problems, as she learns that she''s stepped square into a conspiracy for control of Artemis itself—and that now, her only chance at survival lies in a gambit even riskier than the first.',
 2017,
 3.34,
@@ -467,11 +412,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Kazuo Ishiguro',
 18.70,
 'From the Booker Prize-winning author of The Remains of the Day and When We Were Orphans, comes an unforgettable edge-of-your-seat mystery that is at once heartbreakingly tender and morally courageous about what it means to be human.
-
 Hailsham seems like a pleasant English boarding school, far from the influences of the city. Its students are well tended and supported, trained in art and literature, and become just the sort of people the world wants them to be. But, curiously, they are taught nothing of the outside world and are allowed little contact with it.
-
 Within the grounds of Hailsham, Kathy grows from schoolgirl to young woman, but it’s only when she and her friends Ruth and Tommy leave the safe grounds of the school (as they always knew they would) that they realize the full truth of what Hailsham is.
-
 Never Let Me Go breaks through the boundaries of the literary novel. It is a gripping mystery, a beautiful love story, and also a scathing critique of human arrogance and a moral examination of how we treat the vulnerable and different in our society. In exploring the themes of memory and the impact of the past, Ishiguro takes on the idea of a possible future to create his most moving and powerful book to date.',
 2005,
 3.81,
@@ -483,9 +425,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Cormac McCarthy',
 26.99,
 'A searing, postapocalyptic novel destined to become Cormac McCarthy’s masterpiece.
-
 A father and his son walk alone through burned America. Nothing moves in the ravaged landscape save the ash on the wind. It is cold enough to crack stones, and when the snow falls it is gray. The sky is dark. Their destination is the coast, although they don’t know what, if anything, awaits them there. They have nothing- just a pistol to defend themselves against the lawless bands that stalk the road, the clothes they are wearing, a cart of scavenged food—and each other.
-
 The Road is the profoundly moving story of a journey. It boldly imagines a future in which no hope remains, but in which the father and his son, “each the other’s world entire,” are sustained by love. Awesome in the totality of its vision, it is an unflinching meditation on the worst and the best that we are capable of: ultimate destructiveness, desperate tenacity, and the tenderness that keeps two people alive in the face of total devastation.',
 2006,
 3.96,
@@ -497,11 +437,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Erik Larson',
 14.53,
 'On May 1, 1915, with WWI entering its tenth month, a luxury ocean liner as richly appointed as an English country house sailed out of New York, bound for Liverpool, carrying a record number of children and infants. The passengers were surprisingly at ease, even though Germany had declared the seas around Britain to be a war zone. For months, German U-boats had brought terror to the North Atlantic. But the Lusitania was one of the era’s great transatlantic “Greyhounds”—the fastest liner then in service—and her captain, William Thomas Turner, placed tremendous faith in the gentlemanly strictures of warfare that for a century had kept civilian ships safe from attack. 
-
 Germany, however, was determined to change the rules of the game, and Walther Schwieger, the captain of Unterseeboot-20, was happy to oblige. Meanwhile, an ultra-secret British intelligence unit tracked Schwieger’s U-boat, but told no one. As U-20 and the Lusitania made their way toward Liverpool, an array of forces both grand and achingly small—hubris, a chance fog, a closely guarded secret, and more—all converged to produce one of the great disasters of history.
-
 It is a story that many of us think we know but don’t, and Erik Larson tells it thrillingly, switching between hunter and hunted while painting a larger portrait of America at the height of the Progressive Era. Full of glamour and suspense, Dead Wake brings to life a cast of evocative characters, from famed Boston bookseller Charles Lauriat to pioneering female architect Theodate Pope to President Woodrow Wilson, a man lost to grief, dreading the widening war but also captivated by the prospect of new love. 
-
 Gripping and important, Dead Wake captures the sheer drama and emotional power of a disaster whose intimate details and true meaning have long been obscured by history.',
 2015,
 2.5,
@@ -514,11 +451,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 13.06,
 'Hitler boasted that The Third Reich would last a thousand years. It lasted only 12. But those 12 years contained some of the most catastrophic events Western civilization has ever known.
 No other powerful empire ever bequeathed such mountains of evidence about its birth and destruction as the Third Reich. When the bitter war was over, and before the Nazis could destroy their files, the Allied demand for unconditional surrender produced an almost hour-by-hour record of the nightmare empire built by Adolph Hitler. This record included the testimony of Nazi leaders and of concentration camp inmates, the diaries of officials, transcripts of secret conferences, army orders, private letters—all the vast paperwork behind Hitler''s drive to conquer the world.
-
 The famed foreign correspondent and historian William L. Shirer, who had watched and reported on the Nazis since 1925, spent five and a half years sifting through this massive documentation. The result is a monumental study that has been widely acclaimed as the definitive record of one of the most frightening chapters in the history of mankind.
-
 This worldwide bestseller has been acclaimed as the definitive book on Nazi Germany; it is a classic work.
-
 The accounts of how the United States got involved and how Hitler used Mussolini and Japan are astonishing, and the coverage of the war-from Germany''s early successes to her eventual defeat-is must reading',
 1960,
 4.16,
@@ -542,9 +476,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Georges St-Pierre',
 49.00,
 'UFC fighter, Georges “Rush” St. Pierre, shares the lessons he learned on his way to the top, in The Way of the Fight, revealing how he overcame bullying and injury to become an internationally celebrated athlete and champion.
-
 The reigning UFC welterweight champion, St. Pierre seemed untouchable until injury derailed him and jeopardized his title and his career. Determined to make his comeback, he embarked on a careful regimen of physical therapy. He also used this healing period to assess his life, where he''s been, what he''s achieved, where he wants to go, and and lessons that helped shape who he is.
-
 In The Way of the Fight, Canadian championship fighter St. Pierre invites fans into the circle of his life, sharing his most closely guarded memories. A compelling memoir that offers an intimate, gritty look at a fighter’s journey, told through inspiring vignettes, GSP is a moving account of commitment and power, achievement and pain, dedication and conviction from one of the world''s greatest champions.',
 2013,
 3.98,
@@ -556,7 +488,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'André Aciman',
 4.18,
 'Call Me by Your Name is the story of a sudden and powerful romance that blossoms between an adolescent boy and a summer guest at his parents'' cliff-side mansion on the Italian Riviera. Unprepared for the consequences of their attraction, at first each feigns indifference. But during the restless summer weeks that follow, unrelenting buried currents of obsession and fear, fascination and desire, intensify their passion as they test the charged ground between them. What grows from the depths of their spirits is a romance of scarcely six weeks'' duration and an experience that marks them for a lifetime. For what the two discover on the Riviera and during a sultry evening in Rome is the one thing both already fear they may never truly find again: total intimacy.
-
 The psychological maneuvers that accompany attraction have seldom been more shrewdly captured than in André Aciman''s frank, unsentimental, heartrending elegy to human passion. Call Me by Your Name is clear-eyed, bare-knuckled, and ultimately unforgettable.',
 2007,
 2.68,
@@ -568,10 +499,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Lawrence Wright',
 5.64,
 'A gripping day-by-day account of the 1978 Camp David conference, when President Jimmy Carter persuaded Israeli prime minister Menachem Begin and Egyptian president Anwar Sadat to sign the first peace treaty in the modern Middle East, one which endures to this day.
-
 With his hallmark insight into the forces at play in the Middle East and his acclaimed journalistic skill, Lawrence Wright takes us through each of the thirteen days of the Camp David conference, illuminating the issues that have made the problems of the region so intractable, as well as exploring the scriptural narratives that continue to frame the conflict. In addition to his in-depth accounts of the lives of the three leaders, Wright draws vivid portraits of other fiery personalities who were present at Camp David––including Moshe Dayan, Osama el-Baz, and Zbigniew Brzezinski––as they work furiously behind the scenes. Wright also explores the significant role played by Rosalynn Carter. 
 What emerges is a riveting view of the making of this unexpected and so far unprecedented peace. Wright exhibits the full extent of Carter’s persistence in pushing an agreement forward, the extraordinary way in which the participants at the conference—many of them lifelong enemies—attained it, and the profound difficulties inherent in the process and its outcome, not the least of which has been the still unsettled struggle between the Israelis and the Palestinians.
-
 In Thirteen Days in September, Wright gives us a resonant work of history and reportage that provides both a timely revisiting of this important diplomatic triumph and an inside look at how peace is made.',
 2014,
 4.15,
@@ -583,7 +512,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'James Comey',
 23.85,
 'Former FBI Director James Comey shares his never-before-told experiences from some of the highest-stakes situations of his career in the past two decades of American government, exploring what good, ethical leadership looks like, and how it drives sound decisions. His journey provides an unprecedented entry into the corridors of power, and a remarkable lesson in what makes an effective leader.
-
 Mr. Comey served as Director of the FBI from 2013 to 2017, appointed to the post by President Barack Obama. He previously served as U.S. attorney for the Southern District of New York, and the U.S. deputy attorney general in the administration of President George W. Bush. From prosecuting the Mafia and Martha Stewart to helping change the Bush administration''s policies on torture and electronic surveillance, overseeing the Hillary Clinton e-mail investigation as well as ties between the Trump campaign and Russia, Comey has been involved in some of the most consequential cases and policies of recent history.',
 2018,
 4.21,
@@ -595,9 +523,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Michael Wolff',
 22.93,
 'With extraordinary access to the West Wing, Michael Wolff reveals what happened behind-the-scenes in the first nine months of the most controversial presidency of our time in Fire and Fury: Inside the Trump White House.
-
 Since Donald Trump was sworn in as the 45th President of the United States, the country―and the world―has witnessed a stormy, outrageous, and absolutely mesmerizing presidential term that reflects the volatility and fierceness of the man elected Commander-in-Chief.
-
 This riveting and explosive account of Trump’s administration provides a wealth of new details about the chaos in the Oval Office',
 2018,
 2.77,
@@ -609,13 +535,9 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'V.E. Schwab',
 27.61,
 'Kell is one of the last Antari—magicians with a rare, coveted ability to travel between parallel Londons- Red, Grey, White, and, once upon a time, Black. 
-
 Kell was raised in Arnes—Red London—and officially serves the Maresh Empire as an ambassador, traveling between the frequent bloody regime changes in White London and the court of George III in the dullest of Londons, the one without any magic left to see.
-
 Unofficially, Kell is a smuggler, servicing people willing to pay for even the smallest glimpses of a world they''ll never see. It''s a defiant hobby with dangerous consequences, which Kell is now seeing firsthand.
-
 After an exchange goes awry, Kell escapes to Grey London and runs into Delilah Bard, a cut-purse with lofty aspirations. She first robs him, then saves him from a deadly enemy, and finally forces Kell to spirit her to another world for a proper adventure.
-
 Now perilous magic is afoot, and treachery lurks at every turn. To save all of the worlds, they''ll first need to stay alive.',
 2015,
 4.09,
@@ -627,9 +549,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'V.E. Schwab',
 32.85,
 'It has been four months since a mysterious obsidian stone fell into Kell''s possession. Four months since his path crossed with Delilah Bard. Four months since Prince Rhy was wounded, and since the nefarious Dane twins of White London fell, and four months since the stone was cast with Holland''s dying body through the rift--back into Black London.
-
 Now, restless after having given up his smuggling habit, Kell is visited by dreams of ominous magical events, waking only to think of Lila, who disappeared from the docks as she always meant to do. As Red London finalizes preparations for the Element Games--an extravagant international competition of magic meant to entertain and keep healthy the ties between neighboring countries--a certain pirate ship draws closer, carrying old friends back into port.
-
 And while Red London is caught up in the pageantry and thrills of the Games, another London is coming back to life. After all, a shadow that was gone in the night will reappear in the morning. But the balance of magic is ever perilous, and for one city to flourish, another London must fall.',
 2016,
 1.51,
@@ -661,11 +581,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Khaled Hosseini',
 12.99,
 '“It may be unfair, but what happens in a few days, sometimes even a single day, can change the course of a whole lifetime." 
-
 Amir is the son of a wealthy Kabul merchant, a member of the ruling caste of Pashtuns. Hassan, his servant and constant companion, is a Hazara, a despised and impoverished caste. Their uncommon bond is torn by Amir''s choice to abandon his friend amidst the increasing ethnic, religious, and political tensions of the dying years of the Afghan monarchy, wrenching them far apart. But so strong is the bond between the two boys that Amir journeys back to a distant world, to try to right past wrongs against the only true friend he ever had.
-
 The unforgettable, heartbreaking story of the unlikely friendship between a wealthy boy and the son of his father’s servant, The Kite Runner is a beautifully crafted novel set in a country that is in the process of being destroyed. It is about the power of reading, the price of betrayal, and the possibility of redemption; and an exploration of the power of fathers over sons—their love, their sacrifices, their lies.
-
 A sweeping story of family, love, and friendship told against the devastating backdrop of the history of Afghanistan over the last thirty years, The Kite Runner is an unusual and powerful novel that has become a beloved, one-of-a-kind classic.',
 2003,
 4.68,
@@ -677,9 +594,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Alan Sepinwall',
 19.03,
 'A mob boss in therapy. An experimental, violent prison unit. The death of an American city, as seen through a complex police investigation. A lawless frontier town trying to talk its way into the United States. A corrupt cop who rules his precinct like a warlord. The survivors of a plane crash trying to make sense of their disturbing new island home. A high school girl by day, monster fighter by night. A spy who never sleeps. A space odyssey inspired by 9/11. An embattled high school football coach. A polished ad exec with a secret. A chemistry teacher turned drug lord.
-
 These are the subjects of 12 shows that started a revolution in TV drama: The Sopranos. Oz. The Wire. Deadwood. The Shield. Lost. Buffy the Vampire Slayer. 24. Battlestar Galactica. Friday Night Lights. Mad Men. Breaking Bad.
-
 These 12 shows, and the many more they made possible, ushered in a new golden age of television — one that made people take the medium more seriously than ever before. Alan Sepinwall became a TV critic right before this creative revolution began, was there to chronicle this incredible moment in pop culture history, and along the way “changed the nature of television criticism,” according to Slate. The Revolution Was Televised is the story of these 12 shows, as told by Sepinwall and the people who made them, including David Chase, David Simon, David Milch, Damon Lindelof and Carlton Cuse, Vince Gilligan and more.',
 2012,
 3.12,
@@ -691,11 +606,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Daniel O''Malley',
 18.51,
 '"The body you are wearing used to be mine." So begins the letter Myfanwy Thomas is holding when she awakes in a London park surrounded by bodies all wearing latex gloves. With no recollection of who she is, Myfanwy must follow the instructions her former self left behind to discover her identity and track down the agents who want to destroy her. 
-
 She soon learns that she is a Rook, a high-ranking member of a secret organization called the Chequy that battles the many supernatural forces at work in Britain. She also discovers that she possesses a rare, potentially deadly supernatural ability of her own. 
-
 In her quest to uncover which member of the Chequy betrayed her and why, Myfanwy encounters a person with four bodies, an aristocratic woman who can enter her dreams, a secret training facility where children are transformed into deadly fighters, and a conspiracy more vast than she ever could have imagined.
-
 Filled with characters both fascinating and fantastical, THE ROOK is a richly inventive, suspenseful, and often wry thriller that marks an ambitious debut from a promising young writer.',
 2012,
 3.98,
@@ -707,13 +619,11 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Elif Shafak',
 14.99,
 'From one of Turkey’s most acclaimed and outspoken writers, a novel about the tangled histories of two families.
-
 In her second novel written in English, Elif Shafak confronts her country’s violent past in a vivid and colorful tale set in both Turkey and the United States. At its center is the “bastard” of the title, Asya, a nineteen-year-old woman who loves Johnny Cash and the French Existentialists, and the four sisters of the Kazanci family who all live together in an extended household in Istanbul: Zehila, the zestful, headstrong youngest sister who runs a tattoo parlor and is Asya’s mother- Banu, who has newly discovered herself as a clairvoyant; Cevriye, a widowed high school teacher; and Feride, a hypochondriac obsessed with impending disaster. Their one estranged brother lives in Arizona with his wife and her Armenian daughter, Armanoush. When Armanoush secretly flies to Istanbul in search of her identity, she finds the Kazanci sisters and becomes fast friends with Asya. A secret is uncovered that links the two families and ties them to the 1915 Armenian deportations and massacres. Full of vigorous, unforgettable female characters, The Bastard of Istanbul is a bold, powerful tale that will confirm Shafak as a rising star of international fiction.',
 2006,
 3.81,
 'Fiction',
 'https://images.gr-assets.com/books/1309282092l/98920.jpg');
-
 INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Complete Maus',
 'Art Spiegelman',
@@ -723,7 +633,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 3.55,
 'Graphic Novels',
 'https://images.gr-assets.com/books/1327354180l/15195.jpg');
-
 INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 '13 Things Mentally Strong People Don''t Do: Take Back Your Power, Embrace Change, Face Your Fears, and Train Your Brain for Happiness and Success',
 'Amy Morin',
@@ -747,9 +656,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Neil Gaiman',
 8.99,
 'When Coraline steps through a door to find another house strangely similar to her own (only better), things seem marvelous.
-
 But there''s another mother there, and another father, and they want her to stay and be their little girl. They want to change her and never let her go.
-
 Coraline will have to fight with all her wits and courage if she is to save herself and return to her ordinary life.',
 2002,
 4.05,
@@ -761,7 +668,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Yaa Gyasi',
 16.96,
 'Effia and Esi: two sisters with two very different destinies. One sold into slavery; one a slave trader''s wife. The consequences of their fate reverberate through the generations that follow. Taking us from the Gold Coast of Africa to the cotton-picking plantations of Mississippi; from the missionary schools of Ghana to the dive bars of Harlem, spanning three continents and seven generations, Yaa Gyasi has written a miraculous novel - the intimate, gripping story of a brilliantly vivid cast of characters and through their lives the very story of America itself.
-
 Epic in its canvas and intimate in its portraits, Homegoing is a searing and profound debut from a masterly new writer.',
 2016,
 4.42,
@@ -773,13 +679,9 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Charles Duhigg',
 34.80,
 'A young woman walks into a laboratory. Over the past two years, she has transformed almost every aspect of her life. She has quit smoking, run a marathon, and been promoted at work. The patterns inside her brain, neurologists discover, have fundamentally changed.
-
 Marketers at Procter & Gamble study videos of people making their beds. They are desperately trying to figure out how to sell a new product called Febreze, on track to be one of the biggest flops in company history. Suddenly, one of them detects a nearly imperceptible pattern—and with a slight shift in advertising, Febreze goes on to earn a billion dollars a year.
-
 An untested CEO takes over one of the largest companies in America. His first order of business is attacking a single pattern among his employees—how they approach worker safety—and soon the firm, Alcoa, becomes the top performer in the Dow Jones.
-
 What do all these people have in common? They achieved success by focusing on the patterns that shape every aspect of our lives. 
-
 They succeeded by transforming habits.',
 2012,
 2.66,
@@ -809,9 +711,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Chuck Klosterman',
 27.25,
 'We live in a culture of casual certitude. This has always been the case, no matter how often that certainty has failed. Though no generation believes there’s nothing left to learn, every generation unconsciously assumes that what has already been defined and accepted is (probably) pretty close to how reality will be viewed in perpetuity. And then, of course, time passes. Ideas shift. Opinions invert. What once seemed reasonable eventually becomes absurd, replaced by modern perspectives that feel even more irrefutable and secure—until, of course, they don’t.
-
 But What If We’re Wrong? visualizes the contemporary world as it will appear to those who''ll perceive it as the distant past. Chuck Klosterman asks questions that are profound in their simplicity: How certain are we about our understanding of gravity? How certain are we about our understanding of time? What will be the defining memory of rock music, five hundred years from today? How seriously should we view the content of our dreams? How seriously should we view the content of television? Are all sports destined for extinction? Is it possible that the greatest artist of our era is currently unknown (or—weirder still—widely known, but entirely disrespected)? Is it possible that we “overrate” democracy? And perhaps most disturbing, is it possible that we’ve reached the end of knowledge?
-
 Kinetically slingshotting through a broad spectrum of objective and subjective problems, But What If We’re Wrong? is built on interviews with a variety of creative thinkers—George Saunders, David Byrne, Jonathan Lethem, Kathryn Schulz, Neil deGrasse Tyson, Brian Greene, Junot Díaz, Amanda Petrusich, Ryan Adams, Nick Bostrom, Dan Carlin, and Richard Linklater, among others—interwoven with the type of high-wire humor and nontraditional analysis only Klosterman would dare to attempt. It’s a seemingly impossible achievement: a book about the things we cannot know, explained as if we did. It’s about how we live now, once “now” has become “then.”',
 2016,
 2.65,
@@ -823,9 +723,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Chimamanda Ngozi Adichie',
 15.17,
 'Fifteen-year-old Kambili’s world is circumscribed by the high walls and frangipani trees of her family compound. Her wealthy Catholic father, under whose shadow Kambili lives, while generous and politically active in the community, is repressive and fanatically religious at home.
-
 When Nigeria begins to fall apart under a military coup, Kambili’s father sends her and her brother away to stay with their aunt, a University professor, whose house is noisy and full of laughter. There, Kambili and her brother discover a life and love beyond the confines of their father’s authority. The visit will lift the silence from their world and, in time, give rise to devotion and defiance that reveal themselves in profound and unexpected ways. 
-
 This is a book about the promise of freedom- about the blurred lines between childhood and adulthood; between love and hatred, between the old gods and the new.',
 2003,
 4.16,
@@ -837,9 +735,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Leo Tolstoy',
 22.45,
 'Hailed as one of the world''s supreme masterpieces on the subject of death and dying, The Death of Ivan Ilyich is the story of a worldly careerist, a high court judge who has never given the inevitability of his dying so much as a passing thought. But one day, death announces itself to him, and to his shocked surprise, he is brought face to face with his own mortality. 
-
 How, Tolstoy asks, does an unreflective man confront his one and only moment of truth?
-
 This short novel was an artistic culmination of a profound spiritual crisis in Tolstoy''s life, a nine-year period following the publication of Anna Karenina during which he wrote not a word of fiction.
 A thoroughly absorbing, and, at times, terrifying glimpse into the abyss of death, it is also a strong testament to the possibility of finding spiritual salvation.',
 1886,
@@ -852,13 +748,9 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Carlos Ruiz Zafón',
 19.80,
 'From the author of the international phenomenon, The Shadow of the Wind, comes The Angel’s Game, a new page-turner about the perilous nature of obsession, in literature and in love.
-
 “The whole of Barcelona stretched out at my feet and I wanted to believe that, when I opened those windows, its streets would whisper stories to me, secrets I could capture on paper and narrate to whomever cared to listen . . .” 
-
 In an abandoned mansion at the heart of Barcelona, a young man, David Martín, makes his living by writing sensationalist novels under a pseudonym. The survivor of a troubled childhood, he has taken refuge in the world of books and spends his nights spinning baroque tales about the city’s underworld. But perhaps his dark imaginings are not as strange as they seem, for in a locked room deep within the house lie photographs and letters hinting at the mysterious death of the previous owner. 
-
 Like a slow poison, the history of the place seeps into his bones as he struggles with an impossible love. Close to despair, David receives a letter from a reclusive French editor, Andreas Corelli, who makes him the offer of a lifetime. He is to write a book unlike anything that has ever existed—a book with the power to change hearts and minds. In return, he will receive a fortune, and perhaps more. But as David begins the work, he realizes that there is a connection between his haunting book and the shadows that surround his home.
-
 Once again, Zafón takes us into a dark, gothic universe first seen in the Shadow of the Wind and creates a breathtaking adventure of intrigue, romance, and tragedy. Through a dizzingly constructed labyrinth of secrets, the magic of books, passion, and friendship blend into a masterful story.',
 2008,
 3.90,
@@ -870,11 +762,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Paul Kalanithi',
 14.99,
 'For readers of Atul Gawande, Andrew Solomon, and Anne Lamott, a profoundly moving, exquisitely observed memoir by a young neurosurgeon faced with a terminal cancer diagnosis who attempts to answer the question What makes a life worth living?
-
 At the age of thirty-six, on the verge of completing a decade''s worth of training as a neurosurgeon, Paul Kalanithi was diagnosed with stage IV lung cancer. One day he was a doctor treating the dying, and the next he was a patient struggling to live. And just like that, the future he and his wife had imagined evaporated. When Breath Becomes Air chronicles Kalanithi''s transformation from a naïve medical student "possessed," as he wrote, "by the question of what, given that all organisms die, makes a virtuous and meaningful life" into a neurosurgeon at Stanford working in the brain, the most critical place for human identity, and finally into a patient and new father confronting his own mortality. 
-
 What makes life worth living in the face of death? What do you do when the future, no longer a ladder toward your goals in life, flattens out into a perpetual present? What does it mean to have a child, to nurture a new life as another fades away? These are some of the questions Kalanithi wrestles with in this profoundly moving, exquisitely observed memoir. 
-
 Paul Kalanithi died in March 2015, while working on this book, yet his words live on as a guide and a gift to us all. "I began to realize that coming face to face with my own mortality, in a sense, had changed nothing and everything," he wrote. "Seven words from Samuel Beckett began to repeat in my head: ''I can''t go on. I''ll go on.''" When Breath Becomes Air is an unforgettable, life-affirming reflection on the challenge of facing death and on the relationship between doctor and patient, from a brilliant writer who became both.',
 2016,
 4.54,
@@ -888,9 +777,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Is my daughter telling me the truth about where she was last night?
 How can I show my boss that I am ready for a promotion?
 I think that girl likes me, but I''m not sure.
-
 Crossed arms. Eye contact. Fidgeting. These are all the body''s subtle ways of speaking, and they can tell you more than you think. With over half of human communication coming from movement, you need a comprehensive guide to reading and understanding body language. This updated edition features an expanded section on discovering deception and foolproof ways to spot a liar.
-
 With this guide, you''ll learn valuable nonverbal nuances, including how to:
 Project professional body language at work
 Detect a liar at home, school, or in a relationship
@@ -908,9 +795,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Jeffrey Toobin',
 14.99,
 'In A Vast Conspiracy, the best-selling author of The Run of His Life casts an insightful, unbiased eye over the most extraordinary public saga of our time -- the Clinton sex scandals.  A superlative journalist known for the skillfulness of his investigating and the power of his writing, Jeffrey Toobin tells the unlikely story of the events that began over doughnuts in a Little Rock hotel and ended on the floor of the United States Senate, with only the second vote on Presidential removal in American history.  This is an entirely fresh look at the scandal that very nearly brought down a president.
-
 Packed with news-making disclosures and secret documents published here for the first time, Toobin unravels the three strands of a national scandal - those leading from  Paula Jones, Kenneth Starr, and Monica Lewinsky - that created a legal, personal, and political disaster for Bill Clinton.  A Vast Conspiracy is written with the narrative drive of a sensational (if improbable) legal thriller, and Toobin brilliantly explores the high principle and low comedy that were the hallmarks of the story.  From Tripp to Goldberg, Isikoff to Hyde, the complex and tangled motivations behind the scandal are laid bare.
-
 While misguided, outlandish behavior was played out at the very highest level, Toobin analyzes the facts and the key figures with a level of dignity and insight that this story has not yet received. The Clinton scandals will shape forever how we think about the signature issues of our day -- sex and sexual harassment, privacy and perjury, civil rights, and, yes, cigars.  Toobin''s book will shape forever how we think about the Clinton scandals.',
 2000,
 3.87,
@@ -934,7 +819,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'John le Carré',
 16.83,
 'George Smiley had liked the man and now the man was dead. Suicide. But why? An anonymous letter had alleged that Foreign Office man Samuel Fennan had been a member of the Communist Party as a student before the war. Nothing very unusual for his generation.
-
 Smiley had made it clear that the investigation, little more than a routine security check, was over and that the file on Fennan could be closed. Next day, Fennan was dead with a note by his body saying his career was finished and he couldn’t go on.',
 1961,
 1.89,
@@ -958,9 +842,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Shūsaku Endō',
 13.42,
 'Beneath the light of the candle I am sitting with my hands on my knees, staring in front of me. And I keep turning over in my mind the thought that I am at the end of the earth, in a place which you do not know and which your whole lives through you will never visit.
-
 It is 1640 and Father Sebastian Rodrigues, an idealistic Jesuit priest, sets sail for Japan determined to help the brutally oppressed Christians there. He is also desperate to discover the truth about his former mentor, rumoured to have renounced his faith under torture. Rodrigues cannot believe the stories about a man he so revered, but as his journey takes him deeper into Japan and then into the hands of those who would crush his faith, he finds himself forced to make an impossible choice: whether to abandon his flock or his God.
-
 The recipient of the 1966 Tanizaki Prize, Silence is Shusaku Endo''s most highly acclaimed work and has been called one of the twentieth century''s finest novels. As empathetic as it is powerful, it is an astonishing exploration of faith and suffering and an award-winning classic.',
 1966,
 2.74,
@@ -972,7 +854,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Joseph Boyden',
 10.60,
 'An Ojibwe boy runs away from a North Ontario Indian School, not realizing just how far away home is. Along the way he''s followed by Manitous, spirits of the forest who comment on his plight, cajoling, taunting, and ultimately offering him a type of comfort on his difficult journey back to the place he was so brutally removed from.
-
 Written by Scotiabank Giller Prize-winning author Joseph Boyden and beautifully illustrated by acclaimed artist Kent Monkman, Wenjack is a powerful and poignant look into the world of a residential school runaway trying to find his way home.',
 2016,
 3.28,
@@ -1005,11 +886,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 13.57,
 '“Inoki can use his bare fists. He can use karate. This is serious. There’s $10 million involved. I wouldn’t pull a fraud on the public. This is real. There’s no plan. The blood. The holds. The pain. Everything is going to be real. I’m not here in this time of my life to come out with some phony action. I want you to know this is real."
 —Muhammad Ali, June 14, 1976, The Tonight Show
-
 On June 26, 1976, Muhammad Ali fought in a mixed-rules contest against iconic pro wrestling champion Antonio Inoki for the so-called “martial arts championship of the world.” Broadcast from Tokyo to a potential audience of 1.4 billion in 34 countries, the spectacle foreshadowed and, in many ways, led to the rise of mixed martial arts as a major sport.
-
 The unique contest was controversial and panned by wrestling and boxing supporters alike, but the real action was behind the scenes. Egos, competing interests, and a general sense of apprehension over what would happen in the ring led to hodgepodge rules thrown together at the last minute. Bizarre plans to “save” Ali if the fight got out of hand were even concocted.
-
 In Ali vs. Inoki, author Josh Gross gets inside Ali’s head leading up to the match by resurrecting pre-fight interviews. Gross also introduces us to Inoki, the most famous face in Japan who was instrumental in shaping modern mixed martial arts.',
 2016,
 3.69,
@@ -1021,11 +899,8 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Norm Macdonald',
 11.99,
 'Wild, dangerous, and flat-out unbelievable, here is the incredible memoir of the actor, gambler, raconteur, SNL veteran, and one of the best stand-up comedians of all time.
-
 As this book''s title suggests, Norm Macdonald tells the story of his life more or less from his origins on a farm in the-back-of-beyond Canada and an epically disastrous appearance on Star Search to his account of auditioning for Lorne Michaels and his memorable run as the anchor of Weekend Update on Saturday Night Live until he was fired because a corporate executive didn''t think he was funny.
-
 But Based on a True Story is much more than a memoir- it''s the hilarious, inspired epic of Norm''s life. In dispatches from a road trip to Las Vegas (part of a plan hatched to regain the fortune he''d lost to sports betting and other vices) with his sidekick and enabler, Adam Eget, Norm recounts the milestone moments, the regrets, the love affairs, the times fortune smiled on his life, and the times it refused to smile. As the clock ticks down, Norm''s debt reaches record heights, and he must find a way to evade the hefty price that''s been placed on his head by one of the most dangerous loan sharks in the country.
-
 As a comedy legend should, Norm peppers these pages with classic jokes and fondly mythologized Hollywood stories. This wildly adventurous, totally original, and absurdly funny saga turns the conventional comic''s memoir on its head and gives the reader an exclusive pass into the mad, glorious mind of Norm Macdonald.',
 2016,
 3.94,
@@ -1049,9 +924,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Suzanne Collins',
 15.89,
 'Could you survive on your own, in the wild, with everyone out to make sure you don''t live to see the morning?
-
 In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen, who lives alone with her mother and younger sister, regards it as a death sentence when she is forced to represent her district in the Games. But Katniss has been close to dead before - and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.
-
 New York Times bestselling author Suzanne Collins delivers equal parts suspense and philosophy, adventure and romance, in this searing novel set in a future with unsettling parallels to our present.',
 2008,
 4.33,
@@ -1063,9 +936,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Suzanne Collins',
 14.59,
 'Against all odds, Katniss has won the Hunger Games. She and fellow District 12 tribute Peeta Mellark are miraculously still alive. Katniss should be relieved, happy even. After all, she has returned to her family and her longtime friend, Gale. Yet nothing is the way Katniss wishes it to be. Gale holds her at an icy distance. Peeta has turned his back on her completely. And there are whispers of a rebellion against the Capitol - a rebellion that Katniss and Peeta may have helped create.
-
 Much to her shock, Katniss has fueled an unrest she''s afraid she cannot stop. And what scares her even more is that she''s not entirely convinced she should try. As time draws near for Katniss and Peeta to visit the districts on the Capitol''s cruel Victory Tour, the stakes are higher than ever. If they can''t prove, without a shadow of a doubt, that they are lost in their love for each other, the consequences will be horrifying.
-
 In Catching Fire, the second novel in the Hunger Games trilogy, Suzanne Collins continues the story of Katniss Everdeen, testing her more than ever before...and surprising readers at every turn.',
 2009,
 4.29,
@@ -1077,9 +948,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Suzanne Collins',
 17.61,
 'Katniss Everdeen, girl on fire, has survived, even though her home has been destroyed. Gale has escaped. Katniss''s family is safe. Peeta has been captured by the Capitol. District 13 really does exist. There are rebels. There are new leaders. A revolution is unfolding.
-
 It is by design that Katniss was rescued from the arena in the cruel and haunting Quarter Quell, and it is by design that she has long been part of the revolution without knowing it. District 13 has come out of the shadows and is plotting to overthrow the Capitol. Everyone, it seems, has had a hand in the carefully laid plans-except Katniss.
-
 The success of the rebellion hinges on Katniss''s willingness to be a pawn, to accept responsibility for countless lives, and to change the course of the future of Panem. To do this, she must put aside her feelings of anger and distrust. She must become the rebels'' Mockingjay-no matter what the personal cost.',
 2010,
 4.03,
@@ -1091,7 +960,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Veronica Roth',
 16.75,
 'In Beatrice Prior''s dystopian Chicago world, society is divided into five factions, each dedicated to the cultivation of a particular virtue—Candor (the honest), Abnegation (the selfless), Dauntless (the brave), Amity (the peaceful), and Erudite (the intelligent). On an appointed day of every year, all sixteen-year-olds must select the faction to which they will devote the rest of their lives. For Beatrice, the decision is between staying with her family and being who she really is—she can''t have both. So she makes a choice that surprises everyone, including herself.
-
 During the highly competitive initiation that follows, Beatrice renames herself Tris and struggles alongside her fellow initiates to live out the choice they have made. Together they must undergo extreme physical tests of endurance and intense psychological simulations, some with devastating consequences. As initiation transforms them all, Tris must determine who her friends really are—and where, exactly, a romance with a sometimes fascinating, sometimes exasperating boy fits into the life she'' chosen. But Tris also has a secret, one she''s kept hidden from everyone because she''s been warned it can mean death. And as she discovers unrest and growing conflict that threaten to unravel her seemingly perfect society, she also learns that her secret might help her save those she loves... or it might destroy her.',
 2011,
 3.21,
@@ -1103,7 +971,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'John Green',
 16.95,
 'Despite the tumor-shrinking medical miracle that has bought her a few years, Hazel has never been anything but terminal, her final chapter inscribed upon diagnosis. But when a gorgeous plot twist named Augustus Waters suddenly appears at Cancer Kid Support Group, Hazel''s story is about to be completely rewritten.
-
 Insightful, bold, irreverent, and raw, The Fault in Our Stars is award-winning author John Green''s most ambitious and heartbreaking work yet, brilliantly exploring the funny, thrilling, and tragic business of being alive and in love.',
 2012,
 3.24,
@@ -1115,13 +982,9 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Stephenie Meyer',
 19.06,
 'About three things I was absolutely positive.
-
 First, Edward was a vampire.
-
 Second, there was a part of him—and I didn''t know how dominant that part might be—that thirsted for my blood.
-
 And third, I was unconditionally and irrevocably in love with him.
-
 In the first book of the Twilight Saga, internationally bestselling author Stephenie Meyer introduces Bella Swan and Edward Cullen, a pair of star-crossed lovers whose forbidden relationship ripens against the backdrop of small-town suspicion and a mysterious coven of vampires. This is a love story with bite.',
 2006,
 3.58,
@@ -1133,7 +996,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Stephenie Myer',
 14.86,
 'I knew we were both in mortal danger. Still, in that instant, I felt well. Whole. I could feel my heart racing in my chest, the blood pulsing hot and fast through my veins again. My lungs filled deep with the sweet scent that came off his skin. It was like there had never been any hole in my chest. I was perfect - not healed, but as if there had never been a wound in the first place. 
-
 For Bella Swan, there is one thing more important than life itself: Edward Cullen. But being in love with a vampire is even more dangerous than Bella could ever have imagined. Edward has already rescued Bella from the clutches of one evil vampire, but now, as their daring relationship threatens all that is near and dear to them, they realize their troubles may be just beginning...',
 2006,
 3.53,
@@ -1145,9 +1007,7 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Veronica Roth',
 11.99,
 'One choice can transform you—or it can destroy you. But every choice has consequences, and as unrest surges in the factions all around her, Tris Prior must continue trying to save those she loves—and herself—while grappling with haunting questions of grief and forgiveness, identity and loyalty, politics and love.
-
 Tris''s initiation day should have been marked by celebration and victory with her chosen faction; instead, the day ended with unspeakable horrors. War now looms as conflict between the factions and their ideologies grows. And in times of war, sides must be chosen, secrets will emerge, and choices will become even more irrevocable—and even more powerful. Transformed by her own decisions but also by haunting grief and guilt, radical new discoveries, and shifting relationships, Tris must fully embrace her Divergence, even if she does not know what she may lose by doing so.
-
 New York Times bestselling author Veronica Roth''s much-anticipated second book of the dystopian DIVERGENT series is another intoxicating thrill ride of a story, rich with hallmark twists, heartbreaks, romance, and powerful insights about human nature.',
 2012,
 3.05,
@@ -1169,7 +1029,6 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Irma S. Rombauer',
 7.49,
 'Since its original publication, Joy of Cooking has been the most authoritative cookbook in America, the one upon which millions of cooks have confidently relied for more than sixty-five years. It''s the book your grandmother and mother probably learned to cook from, the book you gave your sister when she got married. This, the first revision in more than twenty years, is better than ever. Here''s why: Every chapter has been rethought with an emphasis on freshness, convenience, and health.
-
 All the recipes have been reconceived and tested with an eye to modern taste, and the cooking knowledge imparted with each subject enriched to the point where everyone from a beginning to an experienced cook will feel completely supported.',
 1931,
 4.13,
@@ -1221,13 +1080,9 @@ INSERT INTO Books (title, author, price, description, publishYear, rating, categ
 'Gillian Flynn',
 19.80,
 'Marriage can be a real killer.
-
 One of the most critically acclaimed suspense writers of our time, New York Times bestseller Gillian Flynn takes that statement to its darkest place in this unputdownable masterpiece about a marriage gone terribly, terribly wrong. The Chicago Tribune proclaimed that her work “draws you in and keeps you reading with the force of a pure but nasty addiction.” Gone Girl’s toxic mix of sharp-edged wit and deliciously chilling prose creates a nerve-fraying thriller that confounds you at every turn.
-
 On a warm summer morning in North Carthage, Missouri, it is Nick and Amy Dunne’s fifth wedding anniversary. Presents are being wrapped and reservations are being made when Nick’s clever and beautiful wife disappears from their rented McMansion on the Mississippi River. Husband-of-the-Year Nick isn’t doing himself any favors with cringe-worthy daydreams about the slope and shape of his wife’s head, but passages from Amy''s diary reveal the alpha-girl perfectionist could have put anyone dangerously on edge. Under mounting pressure from the police and the media—as well as Amy’s fiercely doting parents—the town golden boy parades an endless series of lies, deceits, and inappropriate behavior. Nick is oddly evasive, and he’s definitely bitter—but is he really a killer?
-
 As the cops close in, every couple in town is soon wondering how well they know the one that they love. With his twin sister, Margo, at his side, Nick stands by his innocence. Trouble is, if Nick didn’t do it, where is that beautiful wife? And what was in that silvery gift box hidden in the back of her bedroom closet?
-
 With her razor-sharp writing and trademark psychological insight, Gillian Flynn delivers a fast-paced, devilishly dark, and ingeniously plotted thriller that confirms her status as one of the hottest writers around.',
 2012,
 4.06,

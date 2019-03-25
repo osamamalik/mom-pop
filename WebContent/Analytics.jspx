@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
+		pageEncoding="ISO-8859-1" session="false"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Analyze</title>
+</head>
+<body>
+		<form action="" name="AnalyticsForm" method="post">
+		
+		<legend>Analytics</legend>
+		
+		<header>
+		
+			<table>
+			
+				<tr>
+				
+					<td><input type="submit" value="Home" name="homeButton"></input></td>
+					<td><input type="submit" value="List Books" name="booksPageButton"></input></td>
+					<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
+					
+				</tr>
+			
+				<tr>
+				
+					<td><input type="text" id="searchBar" name="searchBar"></input></td>
+					<td><input type="submit" value="search" name="searchButton"></input></td>
+			
+				</tr>
+
+			</table>
+			
+		</header>
+
+	<label for="Bookid">Book id:</label> <br/>
+	<input id="Bookid" name="bid" type="text"/><br/>
+	<button action="submit" type="submit" name="AnalyticsButton">Generate</button>
+</form>
+</body>
+</html>
+</jsp:root>

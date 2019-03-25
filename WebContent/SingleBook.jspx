@@ -21,7 +21,7 @@
 			<jsp:include page="Header.jspx"/>
 		</header>
 		<div>
-			<div style="float:left;padding:10px;">
+			<div style="float:left;padding:10px;width=20%">
 				<img src="${singleBook.getUrl()}" />
 			</div>
 			
@@ -35,7 +35,7 @@
 				
 				<p>${singleBook.getDescription()}</p>
 			</div>
-			</div>
+		</div>
 	</form>
 
 </body>

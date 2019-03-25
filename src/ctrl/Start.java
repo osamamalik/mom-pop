@@ -329,12 +329,10 @@ public class Start extends HttpServlet {
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		String category = request.getParameter("headerCategory");
-		System.out.println(category);
+		
 		query = "select * from BOOKS where category like '%" + category + "%'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
-		System.out.println(books.size());
-
 		request.setAttribute("booksMap", books);
 	}
 	

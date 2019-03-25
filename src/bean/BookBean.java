@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"bid", "title", "author" , "price", "description", "publishYear", "review","category"})
+@XmlType(propOrder={"bid", "title", "author" , "price", "description", "publishYear", "rating","category"})
 public class BookBean {
 	private String bid;
 	private String title;
@@ -15,7 +15,7 @@ public class BookBean {
 	private double price;
 	private String description;
 	private int publishYear;
-	private double review;
+	private double rating;
 	private String category;
 	private String url;
 	
@@ -71,12 +71,12 @@ public class BookBean {
 		this.publishYear = publishYear;
 	}
 
-	public double getReview() {
-		return review;
+	public double getRating() {
+		return rating;
 	}
 
-	public void setReview(double review) {
-		this.review = review;
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	public String getCategory() {

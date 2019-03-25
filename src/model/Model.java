@@ -240,7 +240,7 @@ public void exportProductServices(String bid, String filename) throws Exception{
 		double price = bb.getPrice();
 		String description = bb.getDescription();
 		int publishYear = bb.getPublishYear();
-		double rating = bb.getReview();
+		double rating = bb.getRating();
 		String cat = bb.getCategory();
 		
 		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear,

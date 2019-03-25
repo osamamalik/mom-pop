@@ -20,13 +20,13 @@ CREATE TABLE Books (
 	price DOUBLE NOT NULL,
 	description VARCHAR(2500) NOT NULL,
 	publishYear INT NOT NULL,
-	review DOUBLE NOT NULL,
+	rating DOUBLE NOT NULL,
 	category VARCHAR(32) CHECK (category IN ('Biography', 'Fantasy', 'Fiction', 'Food', 'Graphic Novels', 'History', 'Childrens', 'Mystery', 'Non-Fiction', 'Science Fiction', 'Young Adult')),
 	url VARCHAR(10000) NOT NULL,
 	PRIMARY KEY(bid)
 );
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Steve Jobs',
 'Walter Isaacson',
 30.25,
@@ -40,7 +40,7 @@ At a time when America is seeking ways to sustain its innovative edge, and when 
 'Biography',
 'https://images.gr-assets.com/books/1511288482l/11084145.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Diary of a Young Girl',
 'Anne Frank',
 8.09,
@@ -50,7 +50,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Biography',
 'https://images.gr-assets.com/books/1537075718l/48855.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Unbroken: A World War II Story of Survival, Resilience and Redemption',
 'Laura Hillenbrand',
 20.99,
@@ -64,7 +64,7 @@ Ahead of Zamperini lay thousands of miles of open ocean, leaping sharks, a found
 'Biography',
 'https://images.gr-assets.com/books/1327861115l/8664353.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'John Adams',
 'David McCullough',
 16.86,
@@ -78,7 +78,7 @@ Like his masterly, Pulitzer Prize-winning biography Truman, David McCullough''s 
 'Biography',
 'https://www.goodreads.com/book/show/2203.John_Adams');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Bossypants',
 'Tina Fey',
 18.87,
@@ -94,7 +94,7 @@ Tina Fey reveals all, and proves what we''ve all suspected: you''re no one until
 'Biography',
 'https://images.gr-assets.com/books/1481509554l/9418327.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Alexander Hamilton',
 'Ron Chernow',
 23.40,
@@ -106,7 +106,7 @@ In the first full-length biography of Alexander Hamilton in decades, Ron Chernow
 'Biography',
 'https://images.gr-assets.com/books/1436131915l/16130.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Einstein: His Life and Universe',
 'Walter Isaacson',
 10.30,
@@ -116,7 +116,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Biography',
 'https://images.gr-assets.com/books/1328011405l/10884.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future',
 'Ashlee Vance',
 27.54,
@@ -126,7 +126,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Biography',
 'https://images.gr-assets.com/books/1518291452l/25541028.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Into the Wild',
 'Jon Krakauer',
 18.00,
@@ -138,7 +138,7 @@ Immediately after graduating from college in 1991, McCandless had roamed through
 'Biography',
 'https://images.gr-assets.com/books/1403173986l/1845.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Autobiography of Malcolm X',
 'Malcolm X',
 9.89,
@@ -149,7 +149,7 @@ An established classic of modern America, "The Autobiography of Malcolm X" was h
 'Biography',
 'https://images.gr-assets.com/books/1434682864l/92057.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Benjamin Franklin: An American Life',
 'Walter Isaacson',
 27.29,
@@ -161,7 +161,7 @@ He was, during his 84-year life, America''s best scientist, inventor, diplomat, 
 'Biography',
 'https://images.gr-assets.com/books/1397772877l/10883.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Black Leopard, Red Wolf',
 'Marlon James',
 27.29,
@@ -175,7 +175,7 @@ Drawing from African history and mythology and his own rich imagination, Marlon 
 'Fantasy',
 'https://images.gr-assets.com/books/1538656386l/40524312.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Sorcerer''s Stone',
 'J.K. Rowling',
 43.52,
@@ -191,7 +191,7 @@ Full of sympathetic characters, wildly imaginative situations, and countless exc
 'Fantasy',
 'https://images.gr-assets.com/books/1474154022l/3.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Chamber of Secrets',
 'J.K. Rowling',
 31.14,
@@ -201,7 +201,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Fantasy',
 'https://images-na.ssl-images-amazon.com/images/I/51OihdkhSBL._SX329_BO1,204,203,200_.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Prisoner of Azkaban',
 'J.K. Rowling',
 1.40,
@@ -211,7 +211,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Fantasy',
 'https://images.gr-assets.com/books/1499277281l/5.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Goblet of Fire',
 'J.K. Rowling',
 17.53,
@@ -221,7 +221,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Fantasy',
 'https://images.gr-assets.com/books/1361482611l/6.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Order of the Phoenix',
 'J.K. Rowling',
 18.45,
@@ -237,7 +237,7 @@ His fate depends on them all.',
 'Fantasy',
 'https://images.gr-assets.com/books/1546910265l/2.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Half-Blood Prince',
 'J.K. Rowling',
 14.91,
@@ -253,7 +253,7 @@ Harry must use all the tools at his disposal to draw a final secret out of one o
 'Fantasy',
 'https://images.gr-assets.com/books/1361039191l/1.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Harry Potter and the Deathly Hallows',
 'J.K. Rowling',
 33.52,
@@ -269,7 +269,7 @@ He will have to face his enemy in one final battle.',
 'Fantasy',
 'https://images.gr-assets.com/books/1474171184l/136251.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Game of Thrones',
 'George R.R. Martin',
 4.98,
@@ -285,7 +285,7 @@ Here an enigmatic band of warriors bear swords of no human metal- a tribe of fie
 'Fantasy',
 'https://images.gr-assets.com/books/1436732693l/13496.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Clash of Kings',
 'George R.R. Martin',
 19.36,
@@ -299,7 +299,7 @@ Here is the second volume in George R.R. Martin magnificent cycle of novels that
 'Fantasy',
 'https://images.gr-assets.com/books/1358254974l/10572.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Storm of Swords',
 'George R.R. Martin',
 8.36,
@@ -311,7 +311,7 @@ Of the five contenders for power, one is dead, another in disfavor, and still th
 'Fantasy',
 'https://images.gr-assets.com/books/1396958446l/13253102.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Feast for Crows',
 'George R.R. Martin',
 8.15,
@@ -327,7 +327,7 @@ Against a backdrop of incest and fratricide, alchemy and murder, victory will go
 'Fantasy',
 'https://images.gr-assets.com/books/1429538615l/13497.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Dance with Dragons',
 'George R.R. Martin',
 8.22,
@@ -343,7 +343,7 @@ From all corners, bitter conflicts reignite, intimate betrayals are perpetrated,
 'Fantasy',
 'https://images.gr-assets.com/books/1327885335l/10664113.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'American Gods',
 'Neil Gaiman',
 21.21,
@@ -357,7 +357,7 @@ Scary, gripping and deeply unsettling, American Gods takes a long, hard look int
 'Fantasy',
 'https://images.gr-assets.com/books/1462924585l/30165203.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The City in the Middle of the Night',
 'Charlie Jane Anders',
 31.49,
@@ -371,7 +371,7 @@ But in a world where time means only what the ruling government proclaims, and t
 'Science Fiction',
 'https://images.gr-assets.com/books/1532447389l/37534907.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Dark Matter',
 'Blake Crouch',
 29.70,
@@ -393,7 +393,7 @@ From the author of the bestselling Wayward Pines trilogy, Dark Matter is a brill
 'Science Fiction',
 'https://images.gr-assets.com/books/1472119680l/27833670.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Martian',
 'Andy Weir',
 25.80,
@@ -411,7 +411,7 @@ But Mark isn’t ready to give up yet. Drawing on his ingenuity, his engineering
 'Science Fiction',
 'https://images.gr-assets.com/books/1413706054l/18007564.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Ready Player One',
 'Ernest Cline',
 26.70,
@@ -421,7 +421,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Science Fiction',
 'https://images.gr-assets.com/books/1500930947l/9969571.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Ender''s Game',
 'Orson Scott Card',
 8.99,
@@ -433,7 +433,7 @@ But Ender is not the only result of the experiment. The war with the Buggers has
 'Science Fiction',
 'https://images.gr-assets.com/books/1408303130l/375802.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Man in the High Castle',
 'Philip K. Dick',
 2.65,
@@ -445,7 +445,7 @@ This harrowing, Hugo Award-winning novel is the work that established Philip K. 
 'Science Fiction',
 'https://images.gr-assets.com/books/1448756803l/216363.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Artemis',
 'Andy Weir',
 24.88,
@@ -459,7 +459,7 @@ Everything changes when Jazz sees the chance to commit the perfect crime, with a
 'Science Fiction',
 'https://images.gr-assets.com/books/1494273579l/34928122.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Never Let Me Go',
 'Kazuo Ishiguro',
 18.70,
@@ -475,7 +475,7 @@ Never Let Me Go breaks through the boundaries of the literary novel. It is a gri
 'Science Fiction',
 'https://images.gr-assets.com/books/1353048590l/6334.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Road',
 'Cormac McCarthy',
 26.99,
@@ -489,7 +489,7 @@ The Road is the profoundly moving story of a journey. It boldly imagines a futur
 'Science Fiction',
 'https://images.gr-assets.com/books/1439197219l/6288.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Dead Wake: The Last Crossing of the Lusitania',
 'Erik Larson',
 14.53,
@@ -505,7 +505,7 @@ Gripping and important, Dead Wake captures the sheer drama and emotional power o
 'History',
 'https://images.gr-assets.com/books/1454880537l/28686819.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Rise and Fall of the Third Reich: A History of Nazi Germany',
 'William L. Shirer',
 13.06,
@@ -522,7 +522,7 @@ The accounts of how the United States got involved and how Hitler used Mussolini
 'History',
 'https://images.gr-assets.com/books/1331223772l/767171.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'As a Man Thinketh',
 'James Allen',
 9.30,
@@ -534,7 +534,7 @@ character, circumstances, and destiny',
 'Non-Fiction',
 'https://images.gr-assets.com/books/1479862643l/33098919.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Way of the Fight',
 'Georges St-Pierre',
 49.00,
@@ -548,7 +548,7 @@ In The Way of the Fight, Canadian championship fighter St. Pierre invites fans i
 'Biography',
 'https://images.gr-assets.com/books/1394405620l/17886840.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Call Me By Your Name',
 'André Aciman',
 4.18,
@@ -560,7 +560,7 @@ The psychological maneuvers that accompany attraction have seldom been more shre
 'Fiction',
 'https://images.gr-assets.com/books/1519203520l/36336078.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Thirteen Days in September: Carter, Begin, and Sadat at Camp David',
 'Lawrence Wright',
 5.64,
@@ -575,7 +575,7 @@ In Thirteen Days in September, Wright gives us a resonant work of history and re
 'History',
 'https://images.gr-assets.com/books/1408925868l/21965079.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Higher Loyalty: Truth, Lies, and Leadership',
 'James Comey',
 23.85,
@@ -587,7 +587,7 @@ Mr. Comey served as Director of the FBI from 2013 to 2017, appointed to the post
 'Biography',
 'https://images.gr-assets.com/books/1509630796l/35108805.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Fire and Fury: Inside the Trump White House',
 'Michael Wolff',
 22.93,
@@ -601,7 +601,7 @@ This riveting and explosive account of Trump’s administration provides a wealt
 'Non-Fiction',
 'https://images.gr-assets.com/books/1514994130l/36595101.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Darker Shade of Magic',
 'V.E. Schwab',
 27.61,
@@ -619,7 +619,7 @@ Now perilous magic is afoot, and treachery lurks at every turn. To save all of t
 'Fantasy',
 'https://images.gr-assets.com/books/1400322851l/22055262.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Gathering of Shadows',
 'V.E. Schwab',
 32.85,
@@ -633,7 +633,7 @@ And while Red London is caught up in the pageantry and thrills of the Games, ano
 'Fantasy',
 'https://images.gr-assets.com/books/1429627728l/20764879.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'King Leopold''s Ghost',
 'Adam Hochschild',
 20.80,
@@ -643,7 +643,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'History',
 'https://images.gr-assets.com/books/1348621563l/347610.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Friends of Eddie Coyle',
 'George V. Higgins',
 33.78,
@@ -653,7 +653,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Fiction',
 'https://images.gr-assets.com/books/1171012318l/82121.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Kite Runner',
 'Khaled Hosseini',
 12.99,
@@ -669,7 +669,7 @@ A sweeping story of family, love, and friendship told against the devastating ba
 'Fiction',
 'https://images.gr-assets.com/books/1546093833l/77203.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Revolution Was Televised: The Cops, Crooks, Slingers and Slayers Who Changed TV Drama Forever',
 'Alan Sepinwall',
 19.03,
@@ -683,7 +683,7 @@ These 12 shows, and the many more they made possible, ushered in a new golden ag
 'Non-Fiction',
 'https://images.gr-assets.com/books/1470071246l/31310052.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Rook',
 'Daniel O''Malley',
 18.51,
@@ -699,7 +699,7 @@ Filled with characters both fascinating and fantastical, THE ROOK is a richly in
 'Fantasy',
 'https://images.gr-assets.com/books/1392570607l/13528319.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Bastard of Istanbul',
 'Elif Shafak',
 14.99,
@@ -711,7 +711,7 @@ In her second novel written in English, Elif Shafak confronts her country’s vi
 'Fiction',
 'https://images.gr-assets.com/books/1309282092l/98920.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Complete Maus',
 'Art Spiegelman',
 21.37,
@@ -721,7 +721,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Graphic Novels',
 'https://images.gr-assets.com/books/1327354180l/15195.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 '13 Things Mentally Strong People Don''t Do: Take Back Your Power, Embrace Change, Face Your Fears, and Train Your Brain for Happiness and Success',
 'Amy Morin',
 34.72,
@@ -739,7 +739,7 @@ Like physical strength, mental strength requires healthy habits, exercise, and h
 'Non-Fiction',
 'https://images.gr-assets.com/books/1421012364l/23215490.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Coraline',
 'Neil Gaiman',
 8.99,
@@ -753,7 +753,7 @@ Coraline will have to fight with all her wits and courage if she is to save hers
 'Childrens',
 'https://images.gr-assets.com/books/1493497528l/589836.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Homegoing',
 'Yaa Gyasi',
 16.96,
@@ -765,7 +765,7 @@ Epic in its canvas and intimate in its portraits, Homegoing is a searing and pro
 'Fiction',
 'https://images.gr-assets.com/books/1465020516l/30347641.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Power of Habit: Why We Do What We Do in Life and Business',
 'Charles Duhigg',
 34.80,
@@ -783,7 +783,7 @@ They succeeded by transforming habits.',
 'Non-Fiction',
 'https://images.gr-assets.com/books/1545854312l/12609433.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Lawrence in Arabia: War, Deceit, Imperial Folly, and the Making of the Modern Middle East',
 'Scott Anderson',
 5.30,
@@ -801,7 +801,7 @@ Based on years of intensive primary document research, LAWRENCE IN ARABIA defini
 'History',
 'https://images.gr-assets.com/books/1363837257l/17262206.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'But What If We''re Wrong? Thinking About the Present As If It Were the Past',
 'Chuck Klosterman',
 27.25,
@@ -815,7 +815,7 @@ Kinetically slingshotting through a broad spectrum of objective and subjective p
 'Non-Fiction',
 'https://images.gr-assets.com/books/1454284600l/27068734.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Purple Hibiscus',
 'Chimamanda Ngozi Adichie',
 15.17,
@@ -829,7 +829,7 @@ This is a book about the promise of freedom- about the blurred lines between chi
 'Fiction',
 'https://images.gr-assets.com/books/1527779236l/126381.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Death of Ivan Ilych',
 'Leo Tolstoy',
 22.45,
@@ -844,7 +844,7 @@ A thoroughly absorbing, and, at times, terrifying glimpse into the abyss of deat
 'Fiction',
 'https://images.gr-assets.com/books/1336967150l/18386.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Angel''s Game',
 'Carlos Ruiz Zafón',
 19.80,
@@ -862,7 +862,7 @@ Once again, Zafón takes us into a dark, gothic universe first seen in the Shado
 'Fiction',
 'https://images.gr-assets.com/books/1434302581l/5196764.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'When Breath Becomes Air',
 'Paul Kalanithi',
 14.99,
@@ -878,7 +878,7 @@ Paul Kalanithi died in March 2015, while working on this book, yet his words liv
 'Non-Fiction',
 'https://images.gr-assets.com/books/1492677644l/25899336.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Everything Body Language Book: Succeed in work, love, and life - all without saying a word!',
 'Shelly Hagen',
 24.86,
@@ -900,7 +900,7 @@ From dating to job interviews to finding out if your kid really did eat his vegg
 'Non-Fiction',
 'https://images.gr-assets.com/books/1348412915l/11476418.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'A Vast Conspiracy: The Real Story of the Sex Scandal That Nearly Brought Down a President',
 'Jeffrey Toobin',
 14.99,
@@ -914,7 +914,7 @@ While misguided, outlandish behavior was played out at the very highest level, T
 'Non-Fiction',
 'https://images.gr-assets.com/books/1386277947l/19216267.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'In the Garden of Beasts: Love, Terror, and an American Family in Hitler''s Berlin',
 'Erik Larson',
 17.10,
@@ -926,7 +926,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'History',
 'https://images.gr-assets.com/books/1340831738l/12602377.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Call for the Dead',
 'John le Carré',
 16.83,
@@ -938,7 +938,7 @@ Smiley had made it clear that the investigation, little more than a routine secu
 'Mystery',
 'https://images.gr-assets.com/books/1353314998l/16158666.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Tarkin',
 'James Luceno',
 10.79,
@@ -950,7 +950,7 @@ Bestselling Star Wars veteran James Luceno gives Tarkin the Star Wars: Darth Pla
 'Fiction',
 'https://images.gr-assets.com/books/1398456370l/22012250.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Silence',
 'Shūsaku Endō',
 13.42,
@@ -964,7 +964,7 @@ The recipient of the 1966 Tanizaki Prize, Silence is Shusaku Endo''s most highly
 'Fiction',
 'https://images.gr-assets.com/books/1503294393l/25200.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Wenjack',
 'Joseph Boyden',
 10.60,
@@ -976,7 +976,7 @@ Written by Scotiabank Giller Prize-winning author Joseph Boyden and beautifully 
 'Fiction',
 'https://images.gr-assets.com/books/1469406055l/30079906.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Devil in the White City: Murder, Magic, and Madness at the Fair That Changed America',
 'Erik Larson',
 13.63,
@@ -986,7 +986,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'History',
 'https://images.gr-assets.com/books/1388184618l/259028.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Jungle Book',
 'Rudyard Kipling',
 20.83,
@@ -996,7 +996,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Childrens',
 'https://images.gr-assets.com/books/1327873594l/77270.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Ali vs. Inoki: The Forgotten Fight That Inspired Mixed Martial Arts and Launched Sports Entertainment',
 'Josh Gross',
 13.57,
@@ -1013,7 +1013,7 @@ In Ali vs. Inoki, author Josh Gross gets inside Ali’s head leading up to the m
 'Non-Fiction',
 'https://images.gr-assets.com/books/1447716930l/27040540.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Based on a True Story',
 'Norm Macdonald',
 11.99,
@@ -1029,7 +1029,7 @@ As a comedy legend should, Norm peppers these pages with classic jokes and fondl
 'Non-Fiction',
 'https://images.gr-assets.com/books/1468269907l/28686959.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Time For The Stars',
 'Robert A. Heinlein',
 22.40,
@@ -1041,7 +1041,7 @@ Identical twins Tom and Pat are enlisted to be the human radios that will keep t
 'Science Fiction',
 'https://images.gr-assets.com/books/1312056144l/356.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Hunger Games',
 'Suzanne Collins',
 15.89,
@@ -1055,7 +1055,7 @@ New York Times bestselling author Suzanne Collins delivers equal parts suspense 
 'Young Adult',
 'https://images.gr-assets.com/books/1447303603l/2767052.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Catching Fire',
 'Suzanne Collins',
 14.59,
@@ -1069,7 +1069,7 @@ In Catching Fire, the second novel in the Hunger Games trilogy, Suzanne Collins 
 'Young Adult',
 'https://images.gr-assets.com/books/1358273780l/6148028.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Mockingjay',
 'Suzanne Collins',
 17.61,
@@ -1083,7 +1083,7 @@ The success of the rebellion hinges on Katniss''s willingness to be a pawn, to a
 'Young Adult',
 'https://images.gr-assets.com/books/1358275419l/7260188.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Divergent',
 'Veronica Roth',
 16.75,
@@ -1095,7 +1095,7 @@ During the highly competitive initiation that follows, Beatrice renames herself 
 'Young Adult',
 'https://images.gr-assets.com/books/1328559506l/13335037.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Fault in Our Stars',
 'John Green',
 16.95,
@@ -1107,7 +1107,7 @@ Insightful, bold, irreverent, and raw, The Fault in Our Stars is award-winning a
 'Young Adult',
 'https://images.gr-assets.com/books/1360206420l/11870085.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Twilight',
 'Stephenie Meyer',
 19.06,
@@ -1125,7 +1125,7 @@ In the first book of the Twilight Saga, internationally bestselling author Steph
 'Young Adult',
 'https://images.gr-assets.com/books/1361039443l/41865.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'New Moon',
 'Stephenie Myer',
 14.86,
@@ -1137,7 +1137,7 @@ For Bella Swan, there is one thing more important than life itself: Edward Culle
 'Young Adult',
 'https://images.gr-assets.com/books/1361039440l/49041.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Insurgent',
 'Veronica Roth',
 11.99,
@@ -1151,7 +1151,7 @@ New York Times bestselling author Veronica Roth''s much-anticipated second book 
 'Young Adult',
 'https://images.gr-assets.com/books/1325667729l/11735983.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Alice''s Adventures in Wonderland',
 'Lewis Carroll',
 17.96,
@@ -1161,7 +1161,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Childrens',
 'https://images.gr-assets.com/books/1391204048l/6324090.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'The Joy of Cooking',
 'Irma S. Rombauer',
 7.49,
@@ -1173,7 +1173,7 @@ All the recipes have been reconceived and tested with an eye to modern taste, an
 'Food',
 'https://images.gr-assets.com/books/1433263698l/75205.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Veganomicon: The Ultimate Vegan Cookbook',
 'Isa Chandra Moskowitz',
 32.50,
@@ -1183,7 +1183,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Food',
 'https://images.gr-assets.com/books/1328751476l/1059680.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'How to Cook Everything: Simple Recipes for Great Food',
 'Mark Bittman',
 13.89,
@@ -1193,7 +1193,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Food',
 'https://images.gr-assets.com/books/1407047944l/603204.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'And Then There Were None',
 'Agatha Christie',
 6.98,
@@ -1203,7 +1203,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Mystery',
 'https://images.gr-assets.com/books/1391120695l/16299.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Murder on the Orient Express',
 'Agatha Christie',
 14.95,
@@ -1213,7 +1213,7 @@ INSERT INTO Books (title, author, price, description, publishYear, review, categ
 'Mystery',
 'https://images.gr-assets.com/books/1486131451l/853510.jpg');
 
-INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Gone Girl',
 'Gillian Flynn',
 19.80,
@@ -1231,7 +1231,7 @@ With her razor-sharp writing and trademark psychological insight, Gillian Flynn 
 'Mystery',
 'https://images.gr-assets.com/books/1386574953l/19288043.jpg');
 
-/*INSERT INTO Books (title, author, price, description, publishYear, review, category, url) VALUES(
+/*INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 '',
 '',
 price,

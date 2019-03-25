@@ -7,7 +7,7 @@ public class BookBean {
 	private double price;
 	private String description;
 	private int publishYear;
-	private double review;
+	private double rating;
 	private String category;
 	private String url;
 	
@@ -63,12 +63,12 @@ public class BookBean {
 		this.publishYear = publishYear;
 	}
 
-	public double getReview() {
-		return review;
+	public double getRating() {
+		return rating;
 	}
 
-	public void setReview(double review) {
-		this.review = review;
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	public String getCategory() {

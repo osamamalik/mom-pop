@@ -21,8 +21,20 @@
 			<jsp:include page="Header.jspx"/>
 		</header>
 		
-				
+		<div style="float:left;">
+			<img src="${singleBook.getUrl()}" />
+		</div>
 		
+		<div>
+			<h1>${singleBook.getTitle()}</h1>
+			<h3>by <strong>${singleBook.getAuthor()}</strong></h3>
+			<h3>${singleBook.getCategory()} | ${singleBook.getPublishYear()}</h3>
+			<h2>$${singleBook.getPrice()}</h2>
+			
+			<p>Rating: ${singleBook.getRating()}</p>
+			
+			<p>${singleBook.getDescription()}</p>
+		</div>
 		
 	</form>
 

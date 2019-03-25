@@ -111,6 +111,13 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
+			SINGLE BOOK PAGE
+		****************************************************************/
+		if (request.getParameter("title") != null ) {
+			this.openBook(request, response, myModel, request.getParameter("title"));
+		}
+		
+		/***************************************************************
 			FILTER
 		****************************************************************/
 		if (request.getParameter("filterButton") != null) {
@@ -204,6 +211,10 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		// checks if a 'Single Book' has been clicked on
+		if (request.getParameter("title") != null) {
+			target = "/SingleBook.jspx";
+		}
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
 		if (request.getParameter("homeButton") != null) {
 			target = "/Home.jspx";
@@ -227,6 +238,11 @@ public class Start extends HttpServlet {
 		}
 	}
 	
+	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID)throws ServletException, IOException {
+		BookBean singleBook = myModel.retrieveBook(bookID);
+		request.setAttribute("singleBook", singleBook);
+	}
+	
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		query = "select * from BOOKS";
 		request.getSession().setAttribute("query", query);
@@ -239,9 +255,6 @@ public class Start extends HttpServlet {
 		
 		if (category.equals("Biography")) {
 			category = "Biography";
-		}
-		else if (category.equals("Business")) {
-			category = "Business";
 		}
 		else if (category.equals("Fantasy")) {
 			category = "Fantasy";
@@ -269,9 +282,6 @@ public class Start extends HttpServlet {
 		}
 		else if (category.equals("Science Fiction")) {
 			category = "Science Fiction";
-		}
-		else if (category.equals("Textbooks")) {
-			category = "Textbooks";
 		}
 		else if (category.equals("Young Adult")) {
 			category = "Young Adult";

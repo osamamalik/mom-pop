@@ -52,7 +52,6 @@
         <table>
 			<tr>
 				<td><input type="submit" value="Biography" name="headerCategory"></input></td>
-				<td><input type="submit" value="Business" name="headerCategory"></input></td>
 				<td><input type="submit" value="Fantasy" name="headerCategory"></input></td>
 				<td><input type="submit" value="Fiction" name="headerCategory"></input></td>
 				<td><input type="submit" value="Food" name="headerCategory"></input></td>
@@ -62,7 +61,6 @@
 				<td><input type="submit" value="Mystery" name="headerCategory"></input></td>
 				<td><input type="submit" value="Non-Fiction" name="headerCategory"></input></td>
 				<td><input type="submit" value="Science Fiction" name="headerCategory"></input></td>
-				<td><input type="submit" value="Textbooks" name="headerCategory"></input></td>
 				<td><input type="submit" value="Young Adult" name="headerCategory"></input></td>
 			</tr>
 		</table>

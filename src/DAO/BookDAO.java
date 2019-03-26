@@ -222,5 +222,29 @@ public class BookDAO {
 		return categories;
 	}
 	
-		
+	public ArrayList<String> retrieveReviewByUsernameAndBook(String username, int bookID) throws SQLException {
+		String query = "select review, rating from reviews where username = '" + username + "' and bid = " + bookID;
+		ArrayList<String> review = new ArrayList<String>();
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while(r.next()){
+			review.add(r.getString("review"));
+			review.add(r.getString("rating").toString());
+		}
+		p.close();
+		con.close();
+		r.close();
+		return review;
+	}
+	
+	public void addReview(String username, int bookID, String review, int rating) throws SQLException {
+		review = review.replace("'","''");
+		String query = "INSERT INTO REVIEWS (username, bid, review, rating) VALUES ('" + username + "'," + bookID + ",'" + review + "'," + rating + ")";
+		Connection con = this.ds.getConnection();
+		Statement stmt = con.createStatement();
+		stmt.executeUpdate(query);
+		stmt.close();
+		con.close();
+	}
 }

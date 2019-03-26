@@ -131,6 +131,12 @@ public class Start extends HttpServlet {
 			this.searchStore(request, response, myModel);
 		}
 		
+		/***************************************************************
+					Product Catalog Services
+		 ****************************************************************/
+		if (request.getParameter("PCSbutton") != null) {
+			this.CatalogService(request, response, myModel);
+		}
 		
 		/***************************************************************
 			TESTING BLOCK
@@ -230,12 +236,20 @@ public class Start extends HttpServlet {
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
 		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
 			target = "/Books.jspx";
-
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
 			categories = myModel.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
+		
+		if (request.getParameter("ProductCatalogServices") != null) {
+			target = "/ProductCatalogService.jspx";
+		}
+	
+		if (request.getParameter("PCSbutton") != null){
+			target = "/DonePCS.jspx";
+		}
+		
 	}
 	
 	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID)throws ServletException, IOException {
@@ -306,6 +320,25 @@ public class Start extends HttpServlet {
 		
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);	
+	}
+	
+	
+	
+	protected void CatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
+		ServletContext context = this.getServletContext();
+		
+		String bid = request.getParameter("bid");
+		String f = "export/" + request.getSession().getId()+".xml";
+		String filename = context.getRealPath("/" + f);
+		request.getSession().setAttribute("filenameProductService", filename);
+		request.setAttribute("fProductService", f);
+		
+		try {
+			myModel.exportProductServices(bid, filename);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

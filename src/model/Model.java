@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
 
 import DAO.*;
 import bean.*;
@@ -224,6 +232,32 @@ public class Model {
 	public String getErrorMessage() {
 		return this.errorMessage;
 		}
+	
+	
+	/***************************************************************
+	 * Product Catalog Component/Service
+	 ****************************************************************/
+
+	public void exportProductServices(String bid, String filename) throws Exception {
+
+		BookBean bb = retrieveBook(bid);
+		String title = bb.getTitle();
+		String author = bb.getAuthor();
+		double price = bb.getPrice();
+		String description = bb.getDescription();
+		int publishYear = bb.getPublishYear();
+		double rating = bb.getRating();
+		String cat = bb.getCategory();
+
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
+		
+		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		OutputStream os = new FileOutputStream(filename);
+		marshaller.marshal(bw, os);
+	}
 
 }
 

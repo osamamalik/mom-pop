@@ -24,6 +24,7 @@ import bean.*;
 public class Model {
 	private UserDAO userDAO;
 	private BookDAO bookDAO;
+	private CartDAO cartDAO;
 
 	private boolean errorStatus;
 	private String errorMessage;
@@ -258,10 +259,22 @@ public class Model {
 		OutputStream os = new FileOutputStream(filename);
 		marshaller.marshal(bw, os);
 	}
+	
+	
+	/***************************************************************
+					DATABASE Shopping Cart OPERATIONS
+	 * @throws SQLException 
+	 ****************************************************************/
+
+	public void addToCart(String bid, String user) throws SQLException {
+		cartDAO.addToCart(bid, user);
+	}
+
+	public void retrieveCart(String user) throws SQLException {
+		cartDAO.retrieveCart(user, this);
+	}
 
 }
-
-
 
 
 

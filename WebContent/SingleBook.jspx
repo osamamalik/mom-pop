@@ -36,6 +36,7 @@
 				<p>${singleBook.getDescription()}</p>
 			</div>
 		</div>
+		<button action="submit" type="submit" name="addToCart">Add to Cart</button>
 	</form>
 
 </body>

@@ -155,7 +155,7 @@ public class BookDAO {
 		return books;
 	}
 	
-	public ArrayList<BookBean> retrieveByPriceRange(int lowerRange, int higherRange) throws SQLException {
+	public ArrayList<BookBean> retrieveByPriceRange(double lowerRange, double higherRange) throws SQLException {
 		String query = "select * from BOOKS where price >= " + lowerRange + " and price <= " + higherRange;
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
@@ -180,7 +180,22 @@ public class BookDAO {
 		r.close();
 		return books;
 	}
-		
+			
+	public ArrayList<String> retrieveUniqueCategories() throws SQLException {
+		String query = "select distinct category from BOOKS";
+		ArrayList<String> categories = new ArrayList<String>();
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while(r.next()){
+			categories.add(r.getString("category"));
+		}
+		p.close();
+		con.close();
+		r.close();
+		return categories;
+	}
+	
 	public ArrayList<BookBean> retrieveBookByQuery(String query) throws SQLException {
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
@@ -204,21 +219,6 @@ public class BookDAO {
 		con.close();
 		r.close();
 		return books;
-	}
-	
-	public ArrayList<String> retrieveUniqueCategories() throws SQLException {
-		String query = "select distinct category from BOOKS";
-		ArrayList<String> categories = new ArrayList<String>();
-		Connection con = this.ds.getConnection();
-		PreparedStatement p = con.prepareStatement(query);
-		ResultSet r = p.executeQuery();
-		while(r.next()){
-			categories.add(r.getString("category"));
-		}
-		p.close();
-		con.close();
-		r.close();
-		return categories;
 	}
 	
 		

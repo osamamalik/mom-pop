@@ -25,6 +25,9 @@ import bean.*;
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean loggedIn;
+	boolean activeSearch;
+	boolean activeFilter;
+
 	String target;
 	String query;
 	boolean error;
@@ -40,10 +43,15 @@ public class Start extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		ServletContext context = getServletContext();
+		
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
+		activeSearch = Boolean.parseBoolean(this.getServletContext().getInitParameter("activeSearch"));
+		activeFilter = Boolean.parseBoolean(this.getServletContext().getInitParameter("activeFilter"));
+
 		target = "/Home.jspx";
 		error = false;
 		books = new ArrayList<BookBean>();
+		
 		try {
 			context.setAttribute("myModel", new Model());
 		}
@@ -131,7 +139,8 @@ public class Start extends HttpServlet {
 		
 		
 		
-		
+		System.out.println(query);
+
 		
 		
 		
@@ -154,6 +163,9 @@ public class Start extends HttpServlet {
 	
 	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 
+		this.activeSearch = false;
+		this.activeFilter = false;
+		
 		String username = request.getParameter("loginName");
 		String password = request.getParameter("loginPassword"); 
 		
@@ -176,6 +188,10 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		
+		this.activeSearch = false;
+		this.activeFilter = false;
+		
 		String username = request.getParameter("signUpName");
 		String email = request.getParameter("signUpEmail");
 		String password = request.getParameter("signUpPassword"); 
@@ -199,6 +215,10 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void signOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		this.activeSearch = false;
+		this.activeFilter = false;
+		
 		loggedIn = false;
 		request.getSession().setAttribute("loggedInSession", loggedIn);
 	}
@@ -228,6 +248,10 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		
+		this.activeSearch = false;
+		this.activeFilter = false;
+
 		query = "select * from BOOKS";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
@@ -235,6 +259,9 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		
+		this.activeSearch = false;
+		this.activeFilter = false;
 		
 		String category = request.getParameter("headerCategory");
 				
@@ -272,6 +299,9 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void searchStore(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		
+		this.activeSearch = true;
+		
 		//obtains the searched term
 		String searchTerm = request.getParameter("searchBar").toUpperCase();
 		
@@ -285,96 +315,116 @@ public class Start extends HttpServlet {
 	
 	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {		
 			
-		ArrayList<String> filterQuery = new ArrayList<String>();
-
+		ArrayList<String> filterQueryList = new ArrayList<String>();
+		Boolean filterSelected = false;
+		
+		// saves the state of the session query without any filters applied to it
+		if (!activeFilter) {
+			request.getSession().setAttribute("rawQuery", query);
+		}
+		
 		query = (String) request.getSession().getAttribute("query");
 		
 		// checks if any filters were selected, if so, adds either 'and' or 'where' to the end of the existing query
 		if (request.getParameter("categoryFilter") != null || request.getParameter("reviewFilter") != null || !request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+			filterSelected = true;
+		}	
+		
+		// checks if a filter was selected
+		if (filterSelected) {
+			
+			// obtains the selected category filter
+			if (request.getParameter("categoryFilter") != null) {	
+				String categoryFilter = request.getParameter("categoryFilter");
+				String categoryFilterQuery = "category = '" + categoryFilter + "'";
+				filterQueryList.add(categoryFilterQuery);
+			}
+
+			// obtains the selected review filter
+			if (request.getParameter("reviewFilter") != null) {
+			
+				String reviewFilter = request.getParameter("reviewFilter");
+				String reviewFilterQuery;
+				
+				if (reviewFilter.equals("above1")) {
+					reviewFilterQuery = "review >= 1";
+				}
+				else if (reviewFilter.equals("above2")) {
+					reviewFilterQuery = "review >= 2";
+				}
+				else if (reviewFilter.equals("above3")) {
+					reviewFilterQuery = "review >= 3";
+				}			
+				else {
+					reviewFilterQuery = "review >= 4";
+				}
+				filterQueryList.add(reviewFilterQuery);
+			}
+			
+			// obtains the selected price range filter
+			if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+				
+				String priceFilterQuery;	
+				double priceLowFilter;
+				double priceHighFilter;
+				
+				if (!request.getParameter("priceLowFilter").equals("") && !request.getParameter("priceHighFilter").equals("")) {
+					priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
+					priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
+					priceFilterQuery = "price >= '" + priceLowFilter + "' and price <= '" + priceHighFilter + "'";
+					System.out.println("HITS HERE");
+				}
+				else if (!request.getParameter("priceLowFilter").equals("") && request.getParameter("priceHighFilter").equals("")) {
+					priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
+					priceFilterQuery = "price >= '" + priceLowFilter + "'";
+
+				}
+				else{
+					priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
+					priceFilterQuery = "price <= '" + priceHighFilter + "'";
+				}
+				filterQueryList.add(priceFilterQuery);
+			}
 			
 			
+			if (activeFilter) {
+				query = (String) request.getSession().getAttribute("rawQuery");
+			}
+			
+			// if the session query already contains a 'where' clause, appends it with 'and'
 			if (query.contains("where")) {
 				query += " and ";
 			}
+			// if the session query does not contain a 'where' clause, appends it with 'where'
 			else {
 				query += " where ";
 			}
+			
+			// if multiple filters were selected, adds 'and' terms in between
+			if (filterQueryList.size() > 1) {
+				int index = 1;
+				while (index <= filterQueryList.size() - 1) {
+					filterQueryList.add(index, " and ");
+					index += 2;
+				}
+			}
+			
+			// iteratively adds the filterQuery items to the end of session query
+			for (int i = 0; i < filterQueryList.size(); i++) {
+				query += filterQueryList.get(i);
+			}
+			
+			request.getSession().setAttribute("query", query);
+			
+			this.activeFilter = true;
+					
 		}
-				
-		
-		if (request.getParameter("categoryFilter") != null) {
-			String categoryFilter = request.getParameter("categoryFilter");
-			String categoryFilterQuery = "category = '" + categoryFilter + "'";
-			filterQuery.add(categoryFilterQuery);
-		}
+			
 
-		if (request.getParameter("reviewFilter") != null) {
-		
-			String reviewFilter = request.getParameter("reviewFilter");
-			String reviewFilterQuery;
-			
-			if (reviewFilter.equals("above1")) {
-				reviewFilterQuery = "review >= 1";
-			}
-			else if (reviewFilter.equals("above2")) {
-				reviewFilterQuery = "review >= 2";
-			}
-			else if (reviewFilter.equals("above3")) {
-				reviewFilterQuery = "review >= 3";
-			}			
-			else {
-				reviewFilterQuery = "review >= 4";
-			}
-			filterQuery.add(reviewFilterQuery);
-			
-		}
-		
-		if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
-			
-			String priceFilterQuery;	
-			double priceLowFilter;
-			double priceHighFilter;
-			
-			if (!request.getParameter("priceLowFilter").equals("") && !request.getParameter("priceHighFilter").equals("")) {
-				priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
-				priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
-				priceFilterQuery = "price >= '" + priceLowFilter + "' and price <= '" + priceHighFilter + "'";
-				System.out.println("HITS HERE");
-			}
-			else if (!request.getParameter("priceLowFilter").equals("") && request.getParameter("priceHighFilter").equals("")) {
-				priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
-				priceFilterQuery = "price >= '" + priceLowFilter + "'";
+		System.out.println("ACTIVE FILTER: " + activeFilter);
 
-			}
-			else{
-				priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
-				priceFilterQuery = "price <= '" + priceHighFilter + "'";
-			}
-			
-			filterQuery.add(priceFilterQuery);
-			
-		}
-		
-		// if multiple filters were selected, adds 'and' terms in between
-		if (filterQuery.size() > 1) {
-			int index = 1;
-			while (index <= filterQuery.size() - 1) {
-				filterQuery.add(index, " and ");
-				index += 2;
-			}
-		}
-		
-		// adds 
-		for (int i = 0; i < filterQuery.size(); i++) {
-			query += filterQuery.get(i);
-		}
-		
-		System.out.println(query);
-		
-		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);
-			
 	}
 			
 			

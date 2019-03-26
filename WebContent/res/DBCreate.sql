@@ -1245,6 +1245,15 @@ CREATE TABLE Reviews (
 	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
 );
 
+INSERT INTO Reviews (username, bid, review, rating) VALUES(
+'osama',
+1,
+'I must admit that I do not like Apple and was never a fan of Jobs but when I saw that his biography was on a must read list online, I decided to open my heart to this book. When I started reading it, I was a little close-minded to Steve Jobs story but as I advanced his personality grew on me and I actually started laughing and caring about who he was as a person, almost as if he were a friend...this book made me care about Steve job''s life and legacy because it gave me a different perspective on him. I was aware that he was deceased when I began exploring his biography but as I finished I could not help but cry for I knew that he was not part of the world anymore...but one of the last sentences of the book....truly made me laugh and this helped with the sadness.
+
+I believe this book should be read by anyone really, to learn from it in many ways and experience the good sides of Steve Jobs instead of just the bad things that were constantly said about him. He is someone who had a big impact on the 21st century and brought our society into a more advanced technological world. Thank you, Steve Jobs, and for all you contributed to our world, your legacy will live on forever!',
+4.5
+);
+
 CREATE TABLE Orders (
 	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	odate DATE NOT NULL,

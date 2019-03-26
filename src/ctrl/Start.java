@@ -117,6 +117,10 @@ public class Start extends HttpServlet {
 			this.openBook(request, response, myModel, request.getParameter("title"));
 		}
 		
+		if (request.getParameter("addReviewButton") != null) {
+			this.addReview(request, response, myModel);
+		}
+		
 		/***************************************************************
 			FILTER
 		****************************************************************/
@@ -221,6 +225,10 @@ public class Start extends HttpServlet {
 		if (request.getParameter("title") != null) {
 			target = "/SingleBook.jspx";
 		}
+		// once a review has been submitted, the page is reloaded
+		if (request.getParameter("addReviewButton") != null) {
+			target = "/SingleBook.jspx";
+		}
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
 		if (request.getParameter("homeButton") != null) {
 			target = "/Home.jspx";
@@ -252,9 +260,34 @@ public class Start extends HttpServlet {
 		
 	}
 	
-	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID)throws ServletException, IOException {
+	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID) throws ServletException, IOException {
 		BookBean singleBook = myModel.retrieveBook(bookID);
 		request.setAttribute("singleBook", singleBook);
+		
+		// Retrieve user review for book if it exists, otherwise give option to add review:
+		if (request.getSession().getAttribute("loggedInUser") != null) {
+			String username = request.getSession().getAttribute("loggedInUser").toString();
+			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, Integer.parseInt(bookID));
+			if (!review.isEmpty()) {
+				request.setAttribute("userReviewExists", true);
+				request.setAttribute("userReview", review.get(0));
+				request.setAttribute("userRating", review.get(1));
+			}
+			else {
+				request.setAttribute("userReviewExists", false);
+				request.setAttribute("userReview", null);
+				request.setAttribute("userRating", null);
+			}
+		}
+	}
+	
+	protected void addReview(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		String username = request.getSession().getAttribute("loggedInUser").toString();
+		int bookID = Integer.parseInt(request.getParameter("title"));
+		String review = request.getParameter("review");
+		int rating = Integer.parseInt(request.getParameter("rating"));
+		myModel.addReview(username, bookID, review, rating);
+		openBook(request, response, myModel, request.getParameter("title"));
 	}
 	
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
@@ -267,7 +300,7 @@ public class Start extends HttpServlet {
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		String category = request.getParameter("headerCategory");
 		
-		query = "select * from BOOKS where category like '%" + category + "%'";
+		query = "select * from BOOKS where category = '" + category + "'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);

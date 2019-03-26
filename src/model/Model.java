@@ -42,7 +42,7 @@ public class Model {
 	}
 
 	/***************************************************************
-	DATABASE USER OPERATIONS
+		DATABASE USER OPERATIONS
     ****************************************************************/
 	
 	public UserBean retrieveUser(String username){
@@ -71,7 +71,7 @@ public class Model {
 	}
 	
 	/***************************************************************
-	DATABASE BOOK OPERATIONS
+		DATABASE BOOK OPERATIONS
     ****************************************************************/
 	
 	public ArrayList<BookBean> retrieveAllBooks(){
@@ -142,13 +142,32 @@ public class Model {
 		try {
 			return bookDAO.retrieveUniqueCategories();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	/***************************************************************
+		DATABASE REVIEW OPERATIONS
+    ****************************************************************/
 
-
+	public ArrayList<String> retrieveReviewByUsernameAndBook(String username, int bookID) {
+		try {
+			return bookDAO.retrieveReviewByUsernameAndBook(username, bookID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void addReview(String username, int bookID, String review, int rating) {
+		try {
+			bookDAO.addReview(username, bookID, review, rating);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/***************************************************************
 		ERROR CHECKING METHODS
 	 ****************************************************************/

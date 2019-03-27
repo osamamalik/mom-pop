@@ -37,6 +37,7 @@ public class Model {
 		try {
 			userDAO = new UserDAO();
 			bookDAO = new BookDAO();
+			cartDAO = new CartDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

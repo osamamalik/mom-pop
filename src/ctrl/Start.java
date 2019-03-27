@@ -149,7 +149,8 @@ public class Start extends HttpServlet {
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
 			try {
-				this.addToCart(request, response, myModel, request.getParameter("title"));
+				String bid =  request.getParameter("title");
+				this.addToCart(request, response, myModel, bid);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -195,7 +196,7 @@ public class Start extends HttpServlet {
 
 		if (!myModel.getErrorStatus()) {		// No errors, user is successfully logged in
 			loggedIn = true;
-			request.getSession().setAttribute("loggedInSession", (Boolean)loggedIn);
+			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
 			this.target = "/Home.jspx";
 
@@ -395,7 +396,11 @@ public class Start extends HttpServlet {
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String bid)throws ServletException, IOException, SQLException {
 		
-		if((Boolean)request.getSession().getAttribute("loggedInSession") == true) {
+		Object b=  request.getSession().getAttribute("loggedInSession");
+		
+		boolean flag = (Boolean) b;
+		System.out.println(flag);
+		if(flag == true) {
 			
 			String user = request.getSession().getAttribute("loggedInUser").toString();
 			myModel.addToCart(bid, user);

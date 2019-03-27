@@ -27,8 +27,8 @@ public class CartDAO {
 	}
 	
 	public void addToCart(String bid, String user) throws SQLException {
-		
-			String query ="INSERT INTO Cart(username, bid) VALUES('" + user + "','" + bid + "')";
+			
+			String query ="INSERT INTO Cart(username, bid) VALUES('" + user + "','" + Integer.parseInt(bid) + "')";
 			Connection con = this.ds.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
@@ -37,7 +37,7 @@ public class CartDAO {
 	}
 	
 	public ArrayList<BookBean> retrieveCart(String user, Model myModel) throws SQLException {
-		
+			
 			ArrayList<BookBean> list = new ArrayList<BookBean>();
 			
 			String query = "Select * from Cart where username = '" + user + "'";

@@ -82,7 +82,9 @@
 		                <td><c:out value="${entry.getRating()}"/></td>
 		                <td><c:out value="${entry.getPublishYear()}"/></td>
 		               	<td><c:out value="${entry.getCategory()}"/></td>
+		               	<td><button action="submit" type="submit" name="addToCart">Add to Cart</button></td>
 	                </tr>
+	                
 	             
 	           	</c:forEach>
 			</table>

@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,6 +143,21 @@ public class Start extends HttpServlet {
 			this.CatalogService(request, response, myModel);
 		}
 		
+		
+		/***************************************************************
+						Shopping Cart 
+		 ****************************************************************/
+		if (request.getParameter("addToCart") != null) {
+			try {
+				this.addToCart(request, response, myModel, request.getParameter("title"));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
@@ -179,7 +195,7 @@ public class Start extends HttpServlet {
 
 		if (!myModel.getErrorStatus()) {		// No errors, user is successfully logged in
 			loggedIn = true;
-			request.getSession().setAttribute("loggedInSession", loggedIn);
+			request.getSession().setAttribute("loggedInSession", (Boolean)loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
 			this.target = "/Home.jspx";
 
@@ -256,6 +272,9 @@ public class Start extends HttpServlet {
 	
 		if (request.getParameter("PCSbutton") != null){
 			target = "/DonePCS.jspx";
+		}
+		if (request.getParameter("addToCart") != null) {
+			target = "/ShoppingCart.jspx";
 		}
 		
 	}
@@ -373,5 +392,21 @@ public class Start extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
+	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String bid)throws ServletException, IOException, SQLException {
+		
+		if((Boolean)request.getSession().getAttribute("loggedInSession") == true) {
+			
+			String user = request.getSession().getAttribute("loggedInUser").toString();
+			myModel.addToCart(bid, user);
+			
+		}
+		else {
+			System.out.println("must be signed in");
+		}
+		
+		
+		
+		
+	}
 }

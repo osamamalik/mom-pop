@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.sun.javafx.collections.MappingChange.Map;
+
 import bean.BookBean;
 import model.Model;
 
@@ -27,8 +29,9 @@ public class CartDAO {
 	}
 	
 	public void addToCart(String bid, String user) throws SQLException {
-			
-			String query ="INSERT INTO Cart(username, bid) VALUES('" + user + "','" + Integer.parseInt(bid) + "')";
+		int x = Integer.parseInt(bid);
+			String query ="INSERT INTO Cart(username, bid) VALUES('" + user + "'," + x + ")";
+
 			Connection con = this.ds.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);

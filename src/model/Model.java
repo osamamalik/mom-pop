@@ -290,8 +290,8 @@ public class Model {
 		cartDAO.addToCart(bid, user);
 	}
 
-	public void retrieveCart(String user) throws SQLException {
-		cartDAO.retrieveCart(user, this);
+	public ArrayList<BookBean> retrieveCart(String user) throws SQLException {
+		return cartDAO.retrieveCart(user, this);
 	}
 
 }

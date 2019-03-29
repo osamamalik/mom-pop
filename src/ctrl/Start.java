@@ -148,8 +148,8 @@ public class Start extends HttpServlet {
 						Shopping Cart 
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
+			String bid = request.getParameter("title");
 			try {
-				String bid =  request.getParameter("title");
 				this.addToCart(request, response, myModel, bid);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -404,7 +404,9 @@ public class Start extends HttpServlet {
 			
 			String user = request.getSession().getAttribute("loggedInUser").toString();
 			myModel.addToCart(bid, user);
-			
+			ArrayList<BookBean> userCart = new ArrayList<BookBean>();
+			userCart = myModel.retrieveCart(user);
+			request.getSession().setAttribute("Cart", userCart);
 		}
 		else {
 			System.out.println("must be signed in");

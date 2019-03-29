@@ -37,6 +37,7 @@ public class Model {
 		try {
 			userDAO = new UserDAO();
 			bookDAO = new BookDAO();
+			cartDAO = new CartDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -270,8 +271,8 @@ public class Model {
 		cartDAO.addToCart(bid, user);
 	}
 
-	public void retrieveCart(String user) throws SQLException {
-		cartDAO.retrieveCart(user, this);
+	public ArrayList<BookBean> retrieveCart(String user) throws SQLException {
+		return cartDAO.retrieveCart(user, this);
 	}
 
 }

@@ -343,14 +343,13 @@ public class Start extends HttpServlet {
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
-<<<<<<< HEAD
+
 		this.activeSearch = false;
 		this.activeFilter = false;
 		
 		String category = request.getParameter("headerCategory");
 				
-=======
->>>>>>> 72dea0f5cc9d5d19276239e97f8590d152af845f
+
 		query = "select * from BOOKS where category = '" + category + "'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
@@ -512,48 +511,7 @@ public class Start extends HttpServlet {
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);
 	}
-<<<<<<< HEAD
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
-		
-		
-	
 
-=======
 	
 	
 	
@@ -576,10 +534,11 @@ public class Start extends HttpServlet {
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String bid)throws ServletException, IOException, SQLException {
 		
-		Object b=  request.getSession().getAttribute("loggedInSession");
+		Object b =  request.getSession().getAttribute("loggedInSession");
 		
 		boolean flag = (Boolean) b;
 		System.out.println(flag);
+		
 		if(flag == true) {
 			
 			String user = request.getSession().getAttribute("loggedInUser").toString();
@@ -592,9 +551,5 @@ public class Start extends HttpServlet {
 			System.out.println("must be signed in");
 		}
 		
-		
-		
-		
 	}
->>>>>>> 72dea0f5cc9d5d19276239e97f8590d152af845f
 }

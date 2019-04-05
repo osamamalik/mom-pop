@@ -181,20 +181,7 @@ public class BookDAO {
 		return books;
 	}
 			
-	public ArrayList<String> retrieveUniqueCategories() throws SQLException {
-		String query = "select distinct category from BOOKS";
-		ArrayList<String> categories = new ArrayList<String>();
-		Connection con = this.ds.getConnection();
-		PreparedStatement p = con.prepareStatement(query);
-		ResultSet r = p.executeQuery();
-		while(r.next()){
-			categories.add(r.getString("category"));
-		}
-		p.close();
-		con.close();
-		r.close();
-		return categories;
-	}
+
 	
 	public ArrayList<BookBean> retrieveBookByQuery(String query) throws SQLException {
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -215,15 +202,13 @@ public class BookDAO {
 			bb.setUrl(r.getString("url"));
 			books.add(bb);
 		}
+		
 		p.close();
 		con.close();
 		r.close();
 		return books;
 	}
 	
-<<<<<<< HEAD
-		
-=======
 	
 	public ArrayList<String> retrieveUniqueCategories() throws SQLException {
 		String query = "select distinct category from BOOKS";
@@ -265,5 +250,5 @@ public class BookDAO {
 		stmt.close();
 		con.close();
 	}
->>>>>>> 72dea0f5cc9d5d19276239e97f8590d152af845f
+
 }

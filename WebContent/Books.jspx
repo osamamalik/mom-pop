@@ -89,13 +89,15 @@
 	                
 	                <tr>
 	              		<!-- <img src="${entry.getUrl()}">	</img>  -->   
-		                <td><c:out value="${entry.getTitle()}"/></td>
+		                <td><a href="Start?title=${entry.getBid()"><c:out value="${entry.getTitle()}"/></a></td>
 		                <td><c:out value="${entry.getAuthor()}"/></td>
 		                <td><c:out value="${entry.getPrice()}"/></td>
-		                <td><c:out value="${entry.getReview()}"/></td>
+		                <td><c:out value="${entry.getRating()}"/></td>
 		                <td><c:out value="${entry.getPublishYear()}"/></td>
 		               	<td><c:out value="${entry.getCategory()}"/></td>
+		            <!-- <td><button action="submit" type="submit" name="addToCart">Add to Cart</button></td>  -->   	
 	                </tr>
+	                
 	             
 	           	</c:forEach>
 			</table>

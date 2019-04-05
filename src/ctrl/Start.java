@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,6 +120,17 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
+			SINGLE BOOK PAGE
+		****************************************************************/
+		if (request.getParameter("title") != null ) {
+			this.openBook(request, response, myModel, request.getParameter("title"));
+		}
+		
+		if (request.getParameter("addReviewButton") != null) {
+			this.addReview(request, response, myModel);
+		}
+		
+		/***************************************************************
 			FILTER
 		****************************************************************/
 		if (request.getParameter("filterButton") != null) {
@@ -131,6 +143,28 @@ public class Start extends HttpServlet {
 		if (request.getParameter("searchButton") != null) {
 			this.searchStore(request, response, myModel);
 		}
+		
+		/***************************************************************
+					Product Catalog Services
+		 ****************************************************************/
+		if (request.getParameter("PCSbutton") != null) {
+			this.CatalogService(request, response, myModel);
+		}
+		
+		
+		/***************************************************************
+						Shopping Cart 
+		 ****************************************************************/
+		if (request.getParameter("addToCart") != null) {
+			String bid = request.getParameter("title");
+			try {
+				this.addToCart(request, response, myModel, bid);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		
 		/***************************************************************
@@ -224,6 +258,14 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		// checks if a 'Single Book' has been clicked on
+		if (request.getParameter("title") != null) {
+			target = "/SingleBook.jspx";
+		}
+		// once a review has been submitted, the page is reloaded
+		if (request.getParameter("addReviewButton") != null) {
+			target = "/SingleBook.jspx";
+		}
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
 		if (request.getParameter("homeButton") != null) {
 			target = "/Home.jspx";
@@ -239,12 +281,53 @@ public class Start extends HttpServlet {
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
 		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
 			target = "/Books.jspx";
-
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
 			categories = myModel.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
+		
+		if (request.getParameter("ProductCatalogServices") != null) {
+			target = "/ProductCatalogService.jspx";
+		}
+	
+		if (request.getParameter("PCSbutton") != null){
+			target = "/DonePCS.jspx";
+		}
+		if (request.getParameter("addToCart") != null) {
+			target = "/ShoppingCart.jspx";
+		}
+		
+	}
+	
+	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID) throws ServletException, IOException {
+		BookBean singleBook = myModel.retrieveBook(bookID);
+		request.setAttribute("singleBook", singleBook);
+		
+		// Retrieve user review for book if it exists, otherwise give option to add review:
+		if (request.getSession().getAttribute("loggedInUser") != null) {
+			String username = request.getSession().getAttribute("loggedInUser").toString();
+			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, Integer.parseInt(bookID));
+			if (!review.isEmpty()) {
+				request.setAttribute("userReviewExists", true);
+				request.setAttribute("userReview", review.get(0));
+				request.setAttribute("userRating", review.get(1));
+			}
+			else {
+				request.setAttribute("userReviewExists", false);
+				request.setAttribute("userReview", null);
+				request.setAttribute("userRating", null);
+			}
+		}
+	}
+	
+	protected void addReview(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		String username = request.getSession().getAttribute("loggedInUser").toString();
+		int bookID = Integer.parseInt(request.getParameter("title"));
+		String review = request.getParameter("review");
+		int rating = Integer.parseInt(request.getParameter("rating"));
+		myModel.addReview(username, bookID, review, rating);
+		openBook(request, response, myModel, request.getParameter("title"));
 	}
 	
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
@@ -260,11 +343,14 @@ public class Start extends HttpServlet {
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
+<<<<<<< HEAD
 		this.activeSearch = false;
 		this.activeFilter = false;
 		
 		String category = request.getParameter("headerCategory");
 				
+=======
+>>>>>>> 72dea0f5cc9d5d19276239e97f8590d152af845f
 		query = "select * from BOOKS where category = '" + category + "'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
@@ -426,6 +512,7 @@ public class Start extends HttpServlet {
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);
 	}
+<<<<<<< HEAD
 			
 			
 			
@@ -466,4 +553,48 @@ public class Start extends HttpServlet {
 		
 	
 
+=======
+	
+	
+	
+	protected void CatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
+		ServletContext context = this.getServletContext();
+		
+		String bid = request.getParameter("bid");
+		String f = "export/" + request.getSession().getId()+".xml";
+		String filename = context.getRealPath("/" + f);
+		request.getSession().setAttribute("filenameProductService", filename);
+		request.setAttribute("fProductService", f);
+		
+		try {
+			myModel.exportProductServices(bid, filename);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String bid)throws ServletException, IOException, SQLException {
+		
+		Object b=  request.getSession().getAttribute("loggedInSession");
+		
+		boolean flag = (Boolean) b;
+		System.out.println(flag);
+		if(flag == true) {
+			
+			String user = request.getSession().getAttribute("loggedInUser").toString();
+			myModel.addToCart(bid, user);
+			ArrayList<BookBean> userCart = new ArrayList<BookBean>();
+			userCart = myModel.retrieveCart(user);
+			request.getSession().setAttribute("Cart", userCart);
+		}
+		else {
+			System.out.println("must be signed in");
+		}
+		
+		
+		
+		
+	}
+>>>>>>> 72dea0f5cc9d5d19276239e97f8590d152af845f
 }

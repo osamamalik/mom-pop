@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,12 +14,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
+
 import DAO.*;
 import bean.*;
 
 public class Model {
 	private UserDAO userDAO;
 	private BookDAO bookDAO;
+	private CartDAO cartDAO;
 
 	private boolean errorStatus;
 	private String errorMessage;
@@ -28,13 +37,14 @@ public class Model {
 		try {
 			userDAO = new UserDAO();
 			bookDAO = new BookDAO();
+			cartDAO = new CartDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/***************************************************************
-	DATABASE USER OPERATIONS
+		DATABASE USER OPERATIONS
     ****************************************************************/
 	
 	public UserBean retrieveUser(String username){
@@ -63,7 +73,7 @@ public class Model {
 	}
 	
 	/***************************************************************
-	DATABASE BOOK OPERATIONS
+		DATABASE BOOK OPERATIONS
     ****************************************************************/
 	
 	public ArrayList<BookBean> retrieveAllBooks(){
@@ -134,13 +144,32 @@ public class Model {
 		try {
 			return bookDAO.retrieveUniqueCategories();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	/***************************************************************
+		DATABASE REVIEW OPERATIONS
+    ****************************************************************/
 
-
+	public ArrayList<String> retrieveReviewByUsernameAndBook(String username, int bookID) {
+		try {
+			return bookDAO.retrieveReviewByUsernameAndBook(username, bookID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void addReview(String username, int bookID, String review, int rating) {
+		try {
+			bookDAO.addReview(username, bookID, review, rating);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/***************************************************************
 		ERROR CHECKING METHODS
 	 ****************************************************************/
@@ -224,10 +253,48 @@ public class Model {
 	public String getErrorMessage() {
 		return this.errorMessage;
 		}
+	
+	
+	/***************************************************************
+	 * Product Catalog Component/Service
+	 ****************************************************************/
+
+	public void exportProductServices(String bid, String filename) throws Exception {
+
+		BookBean bb = retrieveBook(bid);
+		String title = bb.getTitle();
+		String author = bb.getAuthor();
+		double price = bb.getPrice();
+		String description = bb.getDescription();
+		int publishYear = bb.getPublishYear();
+		double rating = bb.getRating();
+		String cat = bb.getCategory();
+
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
+		
+		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		OutputStream os = new FileOutputStream(filename);
+		marshaller.marshal(bw, os);
+	}
+	
+	
+	/***************************************************************
+					DATABASE Shopping Cart OPERATIONS
+	 * @throws SQLException 
+	 ****************************************************************/
+
+	public void addToCart(String bid, String user) throws SQLException {
+		cartDAO.addToCart(bid, user);
+	}
+
+	public ArrayList<BookBean> retrieveCart(String user) throws SQLException {
+		return cartDAO.retrieveCart(user, this);
+	}
 
 }
-
-
 
 
 

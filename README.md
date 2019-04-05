@@ -3,13 +3,32 @@
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************
 
+Sunday, March 24, 2019:
+
+FIXES:
+
+- Removed Business and Textbook categories
+- Changed Review column in Books table to Rating. This will represent the average rating based on all reviews. A ratings table is needed
+
+ADDITION:
+
+- Implemented the SingleBook page
+- All Book listings are now links to their respective SingleBook pages
+
+***************************************************************************************************************************************************
+***************************************************************************************************************************************************
+
 Thursday, March 21, 2019:
 
 FIXES:
 
 - Search is now case-insensitive
 
+ADDITIONS:
 
+- Book additions into the database
+- The header was imported to the jspx files from a separate jspx file
+- All operations within the Start servlet have been delegated to methods
 
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************

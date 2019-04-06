@@ -170,6 +170,20 @@ public class Model {
 		}
 	}
 	
+	
+	/***************************************************************
+		DATABASE SHOPPING CART OPERATIONS
+	****************************************************************/
+
+	public void addToCart(String bid, String user) throws SQLException {
+		cartDAO.addToCart(bid, user);
+	}
+
+	public ArrayList<BookBean> retrieveCart(String user) throws SQLException {
+		return cartDAO.retrieveCart(user, this);
+	}
+	
+	
 	/***************************************************************
 		ERROR CHECKING METHODS
 	 ****************************************************************/
@@ -255,9 +269,10 @@ public class Model {
 		}
 	
 	
+	
 	/***************************************************************
-	 * Product Catalog Component/Service
-	 ****************************************************************/
+		PRODUCT CATALOG COMPONENT/SERVICE
+	****************************************************************/
 
 	public void exportProductServices(String bid, String filename) throws Exception {
 
@@ -270,30 +285,34 @@ public class Model {
 		double rating = bb.getRating();
 		String cat = bb.getCategory();
 
+	
 		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
 		
 		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
 		Marshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+		StringWriter sw = new StringWriter();
+		sw.write("\n");
 		
-		OutputStream os = new FileOutputStream(filename);
-		marshaller.marshal(bw, os);
+		marshaller.marshal(bw, new StreamResult(sw));
+
+		System.out.println(sw.toString()); // for debugging
+
+		FileWriter fw = new FileWriter(filename);
+		fw.write(sw.toString());
+		fw.close();
+		
+//		OutputStream os = new FileOutputStream(filename);
+//		marshaller.marshal(bw, os);
+		
+		
+		
+		
+		
 	}
 	
-	
-	/***************************************************************
-					DATABASE Shopping Cart OPERATIONS
-	 * @throws SQLException 
-	 ****************************************************************/
-
-	public void addToCart(String bid, String user) throws SQLException {
-		cartDAO.addToCart(bid, user);
-	}
-
-	public ArrayList<BookBean> retrieveCart(String user) throws SQLException {
-		return cartDAO.retrieveCart(user, this);
-	}
-
 }
 
 

@@ -22,13 +22,14 @@ import bean.*;
 /**
  * Servlet implementation class Start
  */
-@WebServlet("/Start")
+@WebServlet({"/Start", "/Start/*"})
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean loggedIn;
+	boolean adminLoggedIn;
 	boolean activeSearch;
 	boolean activeFilter;
-
+	
 	String target;
 	String query;
 	boolean error;
@@ -46,6 +47,7 @@ public class Start extends HttpServlet {
 		ServletContext context = getServletContext();
 		
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
+		adminLoggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("adminLoggedIn"));
 		activeSearch = Boolean.parseBoolean(this.getServletContext().getInitParameter("activeSearch"));
 		activeFilter = Boolean.parseBoolean(this.getServletContext().getInitParameter("activeFilter"));
 
@@ -145,15 +147,15 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
-					Product Catalog Services
+			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
-		if (request.getParameter("PCSbutton") != null) {
+		if (request.getParameter("PCSGenerateButton") != null) {
 			this.CatalogService(request, response, myModel);
 		}
 		
 		
 		/***************************************************************
-						Shopping Cart 
+			SHOPPING SERVICES
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
 			String bid = request.getParameter("title");
@@ -173,7 +175,7 @@ public class Start extends HttpServlet {
 		
 		
 		
-		System.out.println(query);
+		System.out.println(target);
 
 		
 		
@@ -182,7 +184,10 @@ public class Start extends HttpServlet {
 			TESTING BLOCK
 		****************************************************************/
 		
+		
 		request.getRequestDispatcher(target).forward(request, response);
+		
+		
 	}
 
 
@@ -194,7 +199,78 @@ public class Start extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	
+	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+						
+		//checks if a 'Single Book' has been clicked on
+		if (request.getParameter("title") != null) {
+			target = "/SingleBook.jspx";
+		}
+		//once a review has been submitted, the page is reloaded
+		if (request.getParameter("addReviewButton") != null) {
+			target = "/SingleBook.jspx";
+		}
+
+		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
+		if (request.getParameter("signUpPageButton") != null) {
+			target = "/SignUp.jspx";
+		}
+		//checks if 'Login' button was pressed, sets target to the Login page if true
+		if (request.getParameter("loginPageButton") != null) {
+			target = "/Login.jspx";
+		}
+		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
+		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
+			target = "/Books.jspx";
+			//Retrieves unique categories and sets the filter display
+			ArrayList <String>categories = new ArrayList<String>();
+			categories = myModel.retrieveUniqueCategories();
+			request.setAttribute("categoriesFilterList", categories);
+		}
+				
+		//checks if services access is requested
+		//checks if user is logged in as admin
+		if (request.getParameter("servicesButton") != null) {
+			if (request.getSession().getAttribute("loggedInUser").equals(null) || !request.getSession().getAttribute("loggedInUser").equals("admin")) {
+				target = "/Login.jspx";
+			}
+			else if (!request.getSession().getAttribute("loggedInUser").equals(null) && request.getSession().getAttribute("loggedInUser").equals("admin")){
+				target = "/Services.jspx";
+				System.out.println("AUUUUUUUU");
+			}		
+		}
+		
+		//checks if analytics access is requested
+		//checks if user is logged in as admin
+		if (request.getParameter("analyticsButton") != null) {
+			if (request.getSession().getAttribute("loggedInUser").equals(null) || !request.getSession().getAttribute("loggedInUser").equals("admin")) {
+				target = "/Login.jspx";
+			}
+			else if (!request.getSession().getAttribute("loggedInUser").equals(null) && request.getSession().getAttribute("loggedInUser").equals("admin")){
+				target = "/Analytics.jspx";
+			}		
+		}
+				
+		if (request.getParameter("addToCart") != null) {
+			target = "/ShoppingCart.jspx";
+		}
+		
+		//checks if PCS was requested
+		if (request.getParameter("PCSRequestButton") != null) {
+			target = "/ProductCatalogService.jspx";	
+		}
+		
+		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
+		if (request.getParameter("homeButton") != null) {
+			if (adminLoggedIn) {
+				adminLoggedIn = false;
+				loggedIn = false;
+				request.getSession().setAttribute("loggedInSession", loggedIn);				
+			}
+			target = "/Home.jspx";
+		}
+		
+	}
+		
 	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 
 		this.activeSearch = false;
@@ -205,18 +281,25 @@ public class Start extends HttpServlet {
 		
 		// Sets errors, if any
 		myModel.checkLoginError(username, password);
-
-		if (!myModel.getErrorStatus()) {		// No errors, user is successfully logged in
+		
+		// No errors, user is successfully logged in
+		if (!myModel.getErrorStatus()) {		
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
-			this.target = "/Home.jspx";
-
+			
+			if (request.getSession().getAttribute("loggedInUser").equals("admin")) {
+				this.adminLoggedIn = true;
+				this.target = "/Admin.jspx";
+			}else {
+				this.target = "/Home.jspx";
+			}			
 		}
+		
 		else {
 			String loginErrorMessage = myModel.getErrorMessage();
 			error = true;
-			target = "/Login.jspx";
+			this.target = "/Login.jspx";
 			request.setAttribute("error", loginErrorMessage);
 		}
 	}
@@ -257,79 +340,7 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("loggedInSession", loggedIn);
 	}
 	
-	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		// checks if a 'Single Book' has been clicked on
-		if (request.getParameter("title") != null) {
-			target = "/SingleBook.jspx";
-		}
-		// once a review has been submitted, the page is reloaded
-		if (request.getParameter("addReviewButton") != null) {
-			target = "/SingleBook.jspx";
-		}
-		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("homeButton") != null) {
-			target = "/Home.jspx";
-		}
-		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("signUpPageButton") != null) {
-			target = "/SignUp.jspx";
-		}
-		//checks if 'Login' button was pressed, sets target to the Login page if true
-		if (request.getParameter("loginPageButton") != null) {
-			target = "/Login.jspx";
-		}
-		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
-			target = "/Books.jspx";
-			//Retrieves unique categories and sets the filter display
-			ArrayList <String>categories = new ArrayList<String>();
-			categories = myModel.retrieveUniqueCategories();
-			request.setAttribute("categoriesFilterList", categories);
-		}
-		
-		if (request.getParameter("ProductCatalogServices") != null) {
-			target = "/ProductCatalogService.jspx";
-		}
-	
-		if (request.getParameter("PCSbutton") != null){
-			target = "/DonePCS.jspx";
-		}
-		if (request.getParameter("addToCart") != null) {
-			target = "/ShoppingCart.jspx";
-		}
-		
-	}
-	
-	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID) throws ServletException, IOException {
-		BookBean singleBook = myModel.retrieveBook(bookID);
-		request.setAttribute("singleBook", singleBook);
-		
-		// Retrieve user review for book if it exists, otherwise give option to add review:
-		if (request.getSession().getAttribute("loggedInUser") != null) {
-			String username = request.getSession().getAttribute("loggedInUser").toString();
-			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, Integer.parseInt(bookID));
-			if (!review.isEmpty()) {
-				request.setAttribute("userReviewExists", true);
-				request.setAttribute("userReview", review.get(0));
-				request.setAttribute("userRating", review.get(1));
-			}
-			else {
-				request.setAttribute("userReviewExists", false);
-				request.setAttribute("userReview", null);
-				request.setAttribute("userRating", null);
-			}
-		}
-	}
-	
-	protected void addReview(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		String username = request.getSession().getAttribute("loggedInUser").toString();
-		int bookID = Integer.parseInt(request.getParameter("title"));
-		String review = request.getParameter("review");
-		int rating = Integer.parseInt(request.getParameter("rating"));
-		myModel.addReview(username, bookID, review, rating);
-		openBook(request, response, myModel, request.getParameter("title"));
-	}
-	
+
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
 		this.activeSearch = false;
@@ -343,13 +354,11 @@ public class Start extends HttpServlet {
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
-
 		this.activeSearch = false;
 		this.activeFilter = false;
 		
 		String category = request.getParameter("headerCategory");
 				
-
 		query = "select * from BOOKS where category = '" + category + "'";
 		request.getSession().setAttribute("query", query);
 		books = myModel.retrieveByQuery(query);
@@ -513,25 +522,6 @@ public class Start extends HttpServlet {
 	}
 
 	
-	
-	
-	protected void CatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
-		ServletContext context = this.getServletContext();
-		
-		String bid = request.getParameter("bid");
-		String f = "export/" + request.getSession().getId()+".xml";
-		String filename = context.getRealPath("/" + f);
-		request.getSession().setAttribute("filenameProductService", filename);
-		request.setAttribute("fProductService", f);
-		
-		try {
-			myModel.exportProductServices(bid, filename);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String bid)throws ServletException, IOException, SQLException {
 		
 		Object b =  request.getSession().getAttribute("loggedInSession");
@@ -551,5 +541,54 @@ public class Start extends HttpServlet {
 			System.out.println("must be signed in");
 		}
 		
+	}
+	
+	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID) throws ServletException, IOException {
+		BookBean singleBook = myModel.retrieveBook(bookID);
+		request.setAttribute("singleBook", singleBook);
+		
+		// Retrieve user review for book if it exists, otherwise give option to add review:
+		if (request.getSession().getAttribute("loggedInUser") != null) {
+			String username = request.getSession().getAttribute("loggedInUser").toString();
+			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, Integer.parseInt(bookID));
+			if (!review.isEmpty()) {
+				request.setAttribute("userReviewExists", true);
+				request.setAttribute("userReview", review.get(0));
+				request.setAttribute("userRating", review.get(1));
+			}
+			else {
+				request.setAttribute("userReviewExists", false);
+				request.setAttribute("userReview", null);
+				request.setAttribute("userRating", null);
+			}
+		}
+	}
+	
+	protected void addReview(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		String username = request.getSession().getAttribute("loggedInUser").toString();
+		int bookID = Integer.parseInt(request.getParameter("title"));
+		String review = request.getParameter("review");
+		int rating = Integer.parseInt(request.getParameter("rating"));
+		myModel.addReview(username, bookID, review, rating);
+		openBook(request, response, myModel, request.getParameter("title"));
+	}
+	
+	protected void CatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
+		
+		String bid = request.getParameter("bid");
+		String f = "xmlExports/" + request.getSession().getId()+".xml";
+		String filename = this.getServletContext().getRealPath("/" + f);
+		request.getSession().setAttribute("filenameProductService", filename);
+		request.setAttribute("fProductService", f);
+		System.out.println(filename);
+		try {
+			myModel.exportProductServices(bid, filename);
+			request.setAttribute("PCSResultReady", true);
+			target = "ProductCatalogService.jspx";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 }

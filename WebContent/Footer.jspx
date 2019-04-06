@@ -11,11 +11,16 @@
 <title>Footer</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<td><input type="submit" value="ProductCatalogServices" name ="ProductCatalogServices"></input></td>		
-		</tr>
-	</table>
+	<form>
+	
+		<table>
+			<tr>
+				<td><input type="submit" value="Services" name="servicesButton"></input></td>
+				<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
+			</tr>
+		</table>
+		
+	</form>
 </body>
 </html>
 </jsp:root>

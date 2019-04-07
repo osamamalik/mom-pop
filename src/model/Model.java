@@ -149,6 +149,16 @@ public class Model {
 		return null;
 	}
 	
+	public ArrayList<BookBean> queryConstructor(QueryConstructor query){
+		try {
+			return bookDAO.constructQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	/***************************************************************
 		DATABASE REVIEW OPERATIONS
     ****************************************************************/

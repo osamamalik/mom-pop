@@ -26,14 +26,14 @@ import bean.*;
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean loggedIn;
-	boolean adminLoggedIn;
-	boolean activeSearch;
-	boolean activeFilter;
-	
+	boolean adminLoggedIn;	
 	String target;
-	String query;
 	boolean error;
 	ArrayList <BookBean>books;
+	
+	//to be deleted
+	String query;
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -78,8 +78,8 @@ public class Start extends HttpServlet {
 			INITIALIZATION OF MODEL AND QUERY
 		 ****************************************************************/
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
-		QueryConstructor query = (QueryConstructor) this.getServletContext().getAttribute("query");
-		request.getSession().setAttribute("query", query);
+		QueryConstructor queryObject = (QueryConstructor) this.getServletContext().getAttribute("query");
+		request.getSession().setAttribute("query", queryObject);
 		
 		/***************************************************************
 			PAGE REDIRECTIONS
@@ -113,7 +113,7 @@ public class Start extends HttpServlet {
 		
 		// Calls method for listing all books
 		if (request.getParameter("booksPageButton") != null) {
-			this.listAllBooks(request, response, myModel);
+			this.listAllBooks(request, response, myModel, queryObject);
 		}
 		
 		// Calls method for listing books by category
@@ -278,9 +278,6 @@ public class Start extends HttpServlet {
 	}
 		
 	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-
-		this.activeSearch = false;
-		this.activeFilter = false;
 		
 		String username = request.getParameter("loginName");
 		String password = request.getParameter("loginPassword"); 
@@ -312,9 +309,6 @@ public class Start extends HttpServlet {
 	
 	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
-		this.activeSearch = false;
-		this.activeFilter = false;
-		
 		String username = request.getParameter("signUpName");
 		String email = request.getParameter("signUpEmail");
 		String password = request.getParameter("signUpPassword"); 
@@ -338,30 +332,21 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void signOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		this.activeSearch = false;
-		this.activeFilter = false;
-		
+				
 		loggedIn = false;
 		request.getSession().setAttribute("loggedInSession", loggedIn);
 	}
 	
 
-	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		
-		this.activeSearch = false;
-		this.activeFilter = false;
-
-		query = "select * from BOOKS";
-		request.getSession().setAttribute("query", query);
-		books = myModel.retrieveByQuery(query);
+	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+	
+		queryObject.setAllBooks(true);
+		request.getSession().setAttribute("query", queryObject);
+		books = myModel.queryConstructor(queryObject);
 		request.setAttribute("booksMap", books);
 	}
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		
-		this.activeSearch = false;
-		this.activeFilter = false;
 		
 		String category = request.getParameter("headerCategory");
 				
@@ -399,9 +384,7 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void searchStore(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		
-		this.activeSearch = true;
-		
+			
 		//obtains the searched term
 		String searchTerm = request.getParameter("searchBar").toUpperCase();
 		
@@ -418,11 +401,7 @@ public class Start extends HttpServlet {
 		ArrayList<String> filterQueryList = new ArrayList<String>();
 		Boolean filterSelected = false;
 		
-		// saves the state of the session query without any filters applied to it
-		if (!activeFilter) {
-			request.getSession().setAttribute("rawQuery", query);
-		}
-		
+
 		query = (String) request.getSession().getAttribute("query");
 		
 		// checks if any filters were selected, if so, adds either 'and' or 'where' to the end of the existing query
@@ -486,10 +465,7 @@ public class Start extends HttpServlet {
 				filterQueryList.add(priceFilterQuery);
 			}
 			
-			
-			if (activeFilter) {
-				query = (String) request.getSession().getAttribute("rawQuery");
-			}
+
 			
 			// if the session query already contains a 'where' clause, appends it with 'and'
 			if (query.contains("where")) {
@@ -516,12 +492,11 @@ public class Start extends HttpServlet {
 			
 			request.getSession().setAttribute("query", query);
 			
-			this.activeFilter = true;
+		
 					
 		}
 			
 
-		System.out.println("ACTIVE FILTER: " + activeFilter);
 
 		books = myModel.retrieveByQuery(query);
 		request.setAttribute("booksMap", books);

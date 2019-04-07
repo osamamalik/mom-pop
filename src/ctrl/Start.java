@@ -61,6 +61,13 @@ public class Start extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		try {
+			context.setAttribute("query", new QueryConstructor());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -70,10 +77,12 @@ public class Start extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		/***************************************************************
-			INITIALIZATION OF MODEL
+			INITIALIZATION OF MODEL AND QUERY
 		 ****************************************************************/
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
-
+		QueryConstructor query = (QueryConstructor) this.getServletContext().getAttribute("query");
+		request.getSession().setAttribute("query", query);
+		
 		/***************************************************************
 			PAGE REDIRECTIONS
 		 ****************************************************************/

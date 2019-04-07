@@ -84,7 +84,7 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			PAGE REDIRECTIONS
 		 ****************************************************************/
-		this.redirector(request, response, myModel);
+		this.redirector(request, response, myModel, queryObject);
 		
 		/***************************************************************
 			SIGN UP
@@ -118,16 +118,23 @@ public class Start extends HttpServlet {
 		
 		// Calls method for listing books by category
 		if (request.getParameter("headerCategory") != null) {
-			this.listBooksByCategory(request, response, myModel);
+			this.listBooksByCategory(request, response, myModel, queryObject);
 		}
 		
 		/***************************************************************
 			BOOK SORTINGS
 		****************************************************************/
 		if (request.getParameter("sortButton") != null) {
-			this.sortBooks(request, response, myModel);	
+			this.sortBooks(request, response, myModel, queryObject);	
 		}
 		
+		/***************************************************************
+			FILTER
+		****************************************************************/
+		if (request.getParameter("filterButton") != null || request.getParameter("resetFilterButton") != null ) {
+			this.filter(request, response, myModel, queryObject);
+		}
+	
 		/***************************************************************
 			SINGLE BOOK PAGE
 		****************************************************************/
@@ -139,18 +146,12 @@ public class Start extends HttpServlet {
 			this.addReview(request, response, myModel);
 		}
 		
-		/***************************************************************
-			FILTER
-		****************************************************************/
-		if (request.getParameter("filterButton") != null) {
-			this.filter(request, response, myModel);
-		}
 		
 		/***************************************************************
 			SEARCH BAR
 		****************************************************************/
 		if (request.getParameter("searchButton") != null) {
-			this.searchStore(request, response, myModel);
+			this.searchStore(request, response, myModel, queryObject);
 		}
 		
 		/***************************************************************
@@ -206,7 +207,7 @@ public class Start extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
 						
 		//checks if a 'Single Book' has been clicked on
 		if (request.getParameter("title") != null) {
@@ -270,6 +271,9 @@ public class Start extends HttpServlet {
 			if (adminLoggedIn) {
 				adminLoggedIn = false;
 				loggedIn = false;
+				queryObject.reset();
+				queryObject.resetFilter();
+				queryObject.resetSort();
 				request.getSession().setAttribute("loggedInSession", loggedIn);				
 			}
 			target = "/Home.jspx";
@@ -340,166 +344,144 @@ public class Start extends HttpServlet {
 
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
 	
+		queryObject.setCategory(null);
+		queryObject.setSearchTerm(null);
+		queryObject.resetFilter();
+		
 		queryObject.setAllBooks(true);
-		request.getSession().setAttribute("query", queryObject);
 		books = myModel.queryConstructor(queryObject);
 		request.setAttribute("booksMap", books);
 	}
 	
-	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+		
+		queryObject.setAllBooks(false);
+		queryObject.setSearchTerm(null);
 		
 		String category = request.getParameter("headerCategory");
-				
-		query = "select * from BOOKS where category = '" + category + "'";
-		request.getSession().setAttribute("query", query);
-		books = myModel.retrieveByQuery(query);
+		queryObject.setCategory(category);
+		books = myModel.queryConstructor(queryObject);
 		request.setAttribute("booksMap", books);
+		
 	}
 	
-	protected void sortBooks(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void sortBooks(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+		
 		//obtains the sort option
 		String sortOption = request.getParameter("sortOption");
-		
-		query = (String) request.getSession().getAttribute("query");
-		
+		queryObject.resetSort();
+
+		queryObject.setSort(true);
+
 		if (sortOption.equals("Newest to Oldest")) {
-			query += " order by publishYear desc";
+			queryObject.setSortNewestToOldest(true);
 		}
 		else if (sortOption.equals("Oldest to Newest")) {
-			query += " order by publishYear asc";
+			queryObject.setSortOldestToNewest(true);
 		}
-		else if (sortOption.equals("Review")) {
-			query += " order by review desc";
+		else if (sortOption.equals("Rating")) {
+			queryObject.setSortReviewHighToLow(true);
 		}
 		else if (sortOption.equals("Price - Low to High")) {
-			query += " order by price asc";
+			queryObject.setSortPriceLowtoHigh(true);
 		}
 		else if (sortOption.equals("Price - High to Low")) {
-			query += " order by price desc";
+			queryObject.setSortPriceHighToLow(true);
 		}
 		
-		books = myModel.retrieveByQuery(query);
+		books = myModel.queryConstructor(queryObject);
 		request.setAttribute("booksMap", books);
 		
 	}
 	
-	protected void searchStore(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-			
+	protected void searchStore(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+		
+		queryObject.setAllBooks(false);
+		queryObject.setCategory(null);
+
 		//obtains the searched term
 		String searchTerm = request.getParameter("searchBar").toUpperCase();
 		
-		query = "select * from BOOKS where UPPER(title) like '%" + searchTerm + "%' or UPPER(author) like '%" + searchTerm + "%' or UPPER(category) like '%" + searchTerm + "%'";
-		request.getSession().setAttribute("query", query);
-		
-		//does a store-wide search by with the retrieveBySearch query
-		books = myModel.retrieveByQuery(query);
+		queryObject.setSearchTerm(searchTerm);
+			
+		books = myModel.queryConstructor(queryObject);
 		request.setAttribute("booksMap", books);	
 	}
 	
-	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {		
-			
-		ArrayList<String> filterQueryList = new ArrayList<String>();
-		Boolean filterSelected = false;
+	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {		
 		
-
-		query = (String) request.getSession().getAttribute("query");
 		
-		// checks if any filters were selected, if so, adds either 'and' or 'where' to the end of the existing query
-		if (request.getParameter("categoryFilter") != null || request.getParameter("reviewFilter") != null || !request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
-			filterSelected = true;
-		}	
-		
-		// checks if a filter was selected
-		if (filterSelected) {
-			
-			// obtains the selected category filter
-			if (request.getParameter("categoryFilter") != null) {	
-				String categoryFilter = request.getParameter("categoryFilter");
-				String categoryFilterQuery = "category = '" + categoryFilter + "'";
-				filterQueryList.add(categoryFilterQuery);
-			}
-
-			// obtains the selected review filter
-			if (request.getParameter("reviewFilter") != null) {
-			
-				String reviewFilter = request.getParameter("reviewFilter");
-				String reviewFilterQuery;
-				
-				if (reviewFilter.equals("above1")) {
-					reviewFilterQuery = "review >= 1";
-				}
-				else if (reviewFilter.equals("above2")) {
-					reviewFilterQuery = "review >= 2";
-				}
-				else if (reviewFilter.equals("above3")) {
-					reviewFilterQuery = "review >= 3";
-				}			
-				else {
-					reviewFilterQuery = "review >= 4";
-				}
-				filterQueryList.add(reviewFilterQuery);
-			}
-			
-			// obtains the selected price range filter
-			if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
-				
-				String priceFilterQuery;	
-				double priceLowFilter;
-				double priceHighFilter;
-				
-				if (!request.getParameter("priceLowFilter").equals("") && !request.getParameter("priceHighFilter").equals("")) {
-					priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
-					priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
-					priceFilterQuery = "price >= '" + priceLowFilter + "' and price <= '" + priceHighFilter + "'";
-					System.out.println("HITS HERE");
-				}
-				else if (!request.getParameter("priceLowFilter").equals("") && request.getParameter("priceHighFilter").equals("")) {
-					priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
-					priceFilterQuery = "price >= '" + priceLowFilter + "'";
-
-				}
-				else{
-					priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
-					priceFilterQuery = "price <= '" + priceHighFilter + "'";
-				}
-				filterQueryList.add(priceFilterQuery);
-			}
-			
-
-			
-			// if the session query already contains a 'where' clause, appends it with 'and'
-			if (query.contains("where")) {
-				query += " and ";
-			}
-			// if the session query does not contain a 'where' clause, appends it with 'where'
-			else {
-				query += " where ";
-			}
-			
-			// if multiple filters were selected, adds 'and' terms in between
-			if (filterQueryList.size() > 1) {
-				int index = 1;
-				while (index <= filterQueryList.size() - 1) {
-					filterQueryList.add(index, " and ");
-					index += 2;
-				}
-			}
-			
-			// iteratively adds the filterQuery items to the end of session query
-			for (int i = 0; i < filterQueryList.size(); i++) {
-				query += filterQueryList.get(i);
-			}
-			
-			request.getSession().setAttribute("query", query);
-			
-		
-					
+		//if user chose to reset the filter, queryObject's filter attributes are reset
+		//if not, queryObject's filter attributes are initialized
+		if (request.getParameter("resetFilterButton") != null) {
+			queryObject.resetFilter();
+			books = myModel.queryConstructor(queryObject);
+			request.setAttribute("booksMap", books);			
 		}
-			
+		else {
+		
+			// checks if any filters were selected
+			if (request.getParameter("categoryFilter") != null || request.getParameter("ratingFilter") != null || !request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+				queryObject.setFilter(true);
+	
+				// obtains the selected category filter, adds it to queryObject
+				if (request.getParameter("categoryFilter") != null) {
+					String categoryFilter = request.getParameter("categoryFilter");
+					queryObject.setCategoryFilter(categoryFilter);
+					
+				}
+	
+				// obtains the selected review filter, adds it to queryObject
+				if (request.getParameter("ratingFilter") != null) {
+				
+					String ratingFilter = request.getParameter("ratingFilter");
+					
+					if (ratingFilter.equals("above1")) {
+						queryObject.setRatingFilter(1);
+					}
+					else if (ratingFilter.equals("above2")) {
+						queryObject.setRatingFilter(2);
+					}
+					else if (ratingFilter.equals("above3")) {
+						queryObject.setRatingFilter(3);
+					}			
+					else {
+						queryObject.setRatingFilter(4);
+					}
+					
+				}
+				
+				// obtains the selected price range filter
+				if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+					
+					String priceFilterQuery;	
+					double priceLowFilter;
+					double priceHighFilter;
+					
+					if (!request.getParameter("priceLowFilter").equals("") && !request.getParameter("priceHighFilter").equals("")) {
+						priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
+						priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
+						queryObject.setPriceFilterHigh(priceHighFilter);
+						queryObject.setPriceFilterLow(priceLowFilter);
+					}
+					else if (!request.getParameter("priceLowFilter").equals("") && request.getParameter("priceHighFilter").equals("")) {
+						priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
+						queryObject.setPriceFilterLow(priceLowFilter);
+						queryObject.setPriceFilterHigh(Double.MAX_VALUE);
+					}
+					else{
+						priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
+						queryObject.setPriceFilterHigh(priceHighFilter);
+						queryObject.setPriceFilterLow(0);
 
-
-		books = myModel.retrieveByQuery(query);
-		request.setAttribute("booksMap", books);
+					}
+				}
+							
+			}
+				
+			books = myModel.queryConstructor(queryObject);
+			request.setAttribute("booksMap", books);
+		}
 	}
 
 	

@@ -30,7 +30,7 @@
 					   <option>Top Matches...</option>
 			           <option>Newest to Oldest</option>
 			           <option>Oldest to Newest</option>
-			           <option>Review</option>
+			           <option>Rating</option>
  			           <option>Price - Low to High</option>
  			           <option>Price - High to Low</option>
      				 </select>
@@ -62,23 +62,24 @@
 		        </c:forEach>
 		        
 		        <tr>
-					<td>Average Review:</td>
+					<td>Average Rating:</td>
 				</tr>
 				<tr>   
-			    	<td><input type="radio" name="reviewFilter" value="above4">4 and up</input></td>
+			    	<td><input type="radio" name="ratingFilter" value="above4">4 and up</input></td>
 		        </tr>
 				<tr>   
-			    	<td><input type="radio" name="reviewFilter" value="above3">3 and up</input></td>
+			    	<td><input type="radio" name="ratingFilter" value="above3">3 and up</input></td>
 		        </tr>
 				<tr>   
-			    	<td><input type="radio" name="reviewFilter" value="above2">2 and up</input></td>
+			    	<td><input type="radio" name="ratingFilter" value="above2">2 and up</input></td>
 		        </tr>
 				<tr>   
-			    	<td><input type="radio" name="reviewFilter" value="above1">1 and up</input></td>
+			    	<td><input type="radio" name="ratingFilter" value="above1">1 and up</input></td>
 		        </tr>
   				
 			<tr>
 				<td><input type="submit" value="Apply Filter" name="filterButton"></input></td>
+				<td><input type="submit" value="Reset Filter" name="resetFilterButton"></input></td>
 			</tr>
 				
 			</table>

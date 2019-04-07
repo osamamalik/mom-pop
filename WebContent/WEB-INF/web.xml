@@ -21,6 +21,10 @@
   <context-param>
     <param-name>adminLoggedIn</param-name>
     <param-value>false</param-value>
+<<<<<<< HEAD
   </context-param>  
+=======
+  </context-param> 
+>>>>>>> 76e1d3bf6e3a36f0d8e33571fe4aa36d44bc55bb
   
 </web-app>

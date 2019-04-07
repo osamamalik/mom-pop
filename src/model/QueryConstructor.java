@@ -2,8 +2,8 @@ package model;
 
 public class QueryConstructor {
 	private boolean allBooks;
-	private String searchItem;
 	private String category;
+	private String searchTerm;
 	private boolean sort;
 	private boolean sortNewestToOldest;
 	private boolean sortOldestToNewest;
@@ -13,14 +13,57 @@ public class QueryConstructor {
 	private boolean sortPriceLowtoHigh;
 	private boolean filter;
 	private double priceFilterLow;
-	private double reviewFilter;
+	private double priceFilterHigh;
+	private double ratingFilter;
 	private String categoryFilter;
 
 	public QueryConstructor() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.allBooks = false;
+		this.category = null;
+		this.searchTerm = null;
+		this.sort = false;
+		this.sortNewestToOldest = false;
+		this.sort = false;
+		this.sortNewestToOldest = false;
+		this.sortOldestToNewest = false;
+		this.sortReviewHighToLow = false;
+		this.sortReviewLowtoHigh = false;
+		this.sortPriceHighToLow = false;
+		this.sortPriceLowtoHigh = false;
+		this.filter = false;
+		this.priceFilterLow = 0;
+		this.priceFilterHigh = -1;
+		this.ratingFilter = 0;
+		this.categoryFilter = null;
+	}
+	
+	public void reset() {
+		this.allBooks = false;
+		this.category = null;
+		this.searchTerm = null;
 	}
 
+	public void resetSort() {
+		this.sort = false;
+		this.sortNewestToOldest = false;
+		this.sort = false;
+		this.sortNewestToOldest = false;
+		this.sortOldestToNewest = false;
+		this.sortReviewHighToLow = false;
+		this.sortReviewLowtoHigh = false;
+		this.sortPriceHighToLow = false;
+		this.sortPriceLowtoHigh = false;
+	}
+	
+	public void resetFilter() {
+		this.filter = false;
+		this.priceFilterLow = 0;
+		this.priceFilterHigh = 0;
+		this.ratingFilter = 0;
+		this.categoryFilter = null;
+	}
+	
 	public boolean isAllBooks() {
 		return allBooks;
 	}
@@ -29,12 +72,12 @@ public class QueryConstructor {
 		this.allBooks = allBooks;
 	}
 
-	public String getSearchItem() {
-		return searchItem;
+	public String getSearchTerm() {
+		return searchTerm;
 	}
 
-	public void setSearchItem(String searchItem) {
-		this.searchItem = searchItem;
+	public void setSearchTerm(String searchTerm) {
+		this.searchTerm = searchTerm;
 	}
 
 	public String getCategory() {
@@ -117,12 +160,20 @@ public class QueryConstructor {
 		this.priceFilterLow = priceFilterLow;
 	}
 
-	public double getReviewFilter() {
-		return reviewFilter;
+	public double getPriceFilterHigh() {
+		return priceFilterHigh;
 	}
 
-	public void setReviewFilter(double reviewFilter) {
-		this.reviewFilter = reviewFilter;
+	public void setPriceFilterHigh(double priceFilterHigh) {
+		this.priceFilterHigh = priceFilterHigh;
+	}
+	
+	public double getRatingFilter() {
+		return ratingFilter;
+	}
+
+	public void setRatingFilter(double ratingFilter) {
+		this.ratingFilter = ratingFilter;
 	}
 
 	public String getCategoryFilter() {

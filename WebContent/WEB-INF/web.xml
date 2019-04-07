@@ -21,15 +21,6 @@
   <context-param>
     <param-name>adminLoggedIn</param-name>
     <param-value>false</param-value>
-  </context-param>
-  <context-param>
-    <param-name>activeSearch</param-name>
-    <param-value>false</param-value>
-  </context-param>
-  <context-param>
-    <param-name>activeFilter</param-name>
-    <param-value>false</param-value>
-  </context-param>
-  
+  </context-param>  
   
 </web-app>

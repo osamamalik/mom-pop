@@ -48,8 +48,6 @@ public class Start extends HttpServlet {
 		
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
 		adminLoggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("adminLoggedIn"));
-		activeSearch = Boolean.parseBoolean(this.getServletContext().getInitParameter("activeSearch"));
-		activeFilter = Boolean.parseBoolean(this.getServletContext().getInitParameter("activeFilter"));
 
 		target = "/Home.jspx";
 		error = false;

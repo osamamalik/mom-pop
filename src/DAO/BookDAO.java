@@ -281,9 +281,10 @@ public class BookDAO {
 		
 
 		String constructedQuery = "select * from books";
-		ArrayList<BookBean> ratingOrPriceBooks = new ArrayList<BookBean>();
+		ArrayList<BookBean> filterBooks = new ArrayList<BookBean>();
 		
 		//constructs a query based on the category attribute of the 'query' object
+		//note: this is not a filter; this denotes browsing by category
 		if (query.getCategory() != null) {
 			String category = query.getCategory();
 			constructedQuery += " where category like '%" + category + "%'";
@@ -295,34 +296,22 @@ public class BookDAO {
 			constructedQuery = "select * from BOOKS where UPPER(title) like '%" + searchTerm + "%' or UPPER(author) like '%" + searchTerm + "%' or UPPER(category) like '%" + searchTerm + "%'";
 		}
 
-		
 		//sets the query to all books if user clicked the 'Browse' button
 		if (query.isAllBooks()) {
 			constructedQuery = "select * from books";
 		}
 		
-		//checks if any filters were added, adjusts the query
-		
+		//checks if any filters were added, prepares a bookBean filterBooks that holds the intersection of filters
 		if (query.isFilter()) {
 			
 			ArrayList<BookBean> ratingFilterBooks = new ArrayList<BookBean>();
 			ArrayList<BookBean> priceFilterBooks = new ArrayList<BookBean>();
+			ArrayList<BookBean> categoryFilterBooks = new ArrayList<BookBean>();
+			ArrayList<BookBean> tempBooks = new ArrayList<BookBean>();
 			
-			// if category filter was chosen, added to the constructedQuery
-			if (query.getCategoryFilter() != null) {			
-				
-				// if the constructed query already contains a 'where' clause, appends it with 'and'
-				if (constructedQuery.contains("where")) {
-					constructedQuery += " and ";
-				}
-				// if the constructed query does not contain a 'where' clause, appends it with 'where'
-				else {
-					constructedQuery += " where ";
-				}
-				
-				String category = query.getCategoryFilter();
-				constructedQuery += "category = '" + category + "'";
-				
+			//if category filter was chosen, books with this request are obtained
+			if (query.getCategoryFilter() != null) {
+				categoryFilterBooks = this.retrieveByCategory(query.getCategoryFilter());
 			}
 			
 			// if rating filter was chosen, books with this request are obtained
@@ -332,26 +321,63 @@ public class BookDAO {
 			
 			// if the price filter was chosen, books with this request are obtained
 			if (query.getPriceFilterLow() != 0 || query.getPriceFilterHigh() != Double.MAX_VALUE) {
-				
 				double priceLowFilter = query.getPriceFilterLow();
-				double priceHighFilter = query.getPriceFilterHigh();
-				
-				System.out.println(priceLowFilter);
-				System.out.println(priceHighFilter);
-
-				
+				double priceHighFilter = query.getPriceFilterHigh();				
 				priceFilterBooks = this.retrieveByPriceRange(priceLowFilter, priceHighFilter);
+			}
+
+			//if all filters return books, takes the intersection, stores in filterBooks
+			if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty() && !categoryFilterBooks.isEmpty()) {
 				
+				//first takes the intersection of rating and price filters, stores in tempBook
+				for (BookBean ratingBook : ratingFilterBooks) {
+					for (BookBean priceBook : priceFilterBooks) {
+		            	if (ratingBook.getBid().equals(priceBook.getBid())) {
+		            		tempBooks.add(ratingBook);
+		            	}
+		            }
+		        }
+				//takes intersection of tempBook with categoryBook
+				for (BookBean tempBook : tempBooks) {
+					for (BookBean categoryBook : categoryFilterBooks) {
+		            	if (tempBook.getBid().equals(categoryBook.getBid())) {
+		            		filterBooks.add(tempBook);
+		            	}
+		            }
+		        }
 			}
 			
-
-			//if both rating and price filters return books, takes the intersection, stores in ratingOrPriceBooks
-			if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty() ) {
+			//if only rating and price filters return books, takes the intersection, stores in filterBooks
+			else if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty()) {
 							
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean priceBook : priceFilterBooks) {
 		            	if (ratingBook.getBid().equals(priceBook.getBid())) {
-		            		ratingOrPriceBooks.add(ratingBook);
+		            		filterBooks.add(ratingBook);
+		            	}
+		            }
+		        }
+			}
+			
+			//if only price and category filters return books, takes the intersection, stores in filterBooks
+			else if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty()) {
+							
+				for (BookBean priceBook : priceFilterBooks) {
+					for (BookBean categoryBook : categoryFilterBooks) {
+		            	if (priceBook.getBid().equals(categoryBook.getBid())) {
+		            		filterBooks.add(priceBook);
+		            	}
+		            }
+		        }
+			}
+			
+			//if only rating and category filters return books, takes the intersection, stores in filterBooks
+			else if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty()) {
+							
+				for (BookBean ratingBook : ratingFilterBooks) {
+					for (BookBean categoryBook : categoryFilterBooks) {
+		            	if (ratingBook.getBid().equals(categoryBook.getBid())) {
+		            		filterBooks.add(ratingBook);
 		            	}
 		            }
 		        }
@@ -359,18 +385,21 @@ public class BookDAO {
 			
 			//if only rating filter returns books, stores them in ratingOrPriceBooks
 			else if(!ratingFilterBooks.isEmpty()){
-				ratingOrPriceBooks = ratingFilterBooks;
+				filterBooks = ratingFilterBooks;
 			}
+			
 			//if only price filter returns books, stores them in ratingOrPriceBooks
 			else if(!priceFilterBooks.isEmpty()){
-				ratingOrPriceBooks = priceFilterBooks;
+				filterBooks = priceFilterBooks;
 			}
-
+			//if only category filter returns books, stores them in ratingOrPriceBooks
+			else if(!priceFilterBooks.isEmpty()){
+				filterBooks = categoryFilterBooks;
+			}
+			
 		}
 		
-		
-		System.out.println(ratingOrPriceBooks);
-		
+				
 		//adds the sorting elements to the end of the query if the user has chosen sorting
 		if (query.isSort()) {
 			
@@ -419,20 +448,18 @@ public class BookDAO {
 		con.close();
 		r.close();
 		
-
-		//checks if the rating or price filters were applied
-		//if so, returns the books that are in both lists
-		if (!ratingOrPriceBooks.isEmpty()) {
+		//checks if a filter was applied, if so, returns the intersection of
+		//'book' obtained by query and filterBooks obtained by filter intersections
+		if (query.isFilter()) {
 			ArrayList<BookBean> result = new ArrayList<BookBean>();
 			for (BookBean book : books) {
-				for (BookBean ratingOrPriceBook : ratingOrPriceBooks) {
-	            	if (book.getBid().equals(ratingOrPriceBook.getBid())) {
+				for (BookBean filterBook : filterBooks) {
+	            	if (book.getBid().equals(filterBook.getBid())) {
 	            		result.add(book);
 	            	}
 	            }
 	        }
 			return result;
-
 		}
 		else {
 			return books;

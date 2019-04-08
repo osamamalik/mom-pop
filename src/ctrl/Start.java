@@ -422,13 +422,13 @@ public class Start extends HttpServlet {
 		
 			// checks if any filters were selected
 			if (request.getParameter("categoryFilter") != null || request.getParameter("ratingFilter") != null || !request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
+				
 				queryObject.setFilter(true);
 	
 				// obtains the selected category filter, adds it to queryObject
 				if (request.getParameter("categoryFilter") != null) {
 					String categoryFilter = request.getParameter("categoryFilter");
 					queryObject.setCategoryFilter(categoryFilter);
-					
 				}
 	
 				// obtains the selected review filter, adds it to queryObject

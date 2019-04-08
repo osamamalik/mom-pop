@@ -238,10 +238,10 @@ public class Start extends HttpServlet {
 		//checks if services access is requested
 		//checks if user is logged in as admin
 		if (request.getParameter("servicesButton") != null) {
-			if (request.getSession().getAttribute("loggedInUser").equals(null) || !request.getSession().getAttribute("loggedInUser").equals("admin")) {
+			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
-			else if (!request.getSession().getAttribute("loggedInUser").equals(null) && request.getSession().getAttribute("loggedInUser").equals("admin")){
+			else if (adminLoggedIn){
 				target = "/Services.jspx";
 			}		
 		}
@@ -249,10 +249,10 @@ public class Start extends HttpServlet {
 		//checks if analytics access is requested
 		//checks if user is logged in as admin
 		if (request.getParameter("analyticsButton") != null) {
-			if (request.getSession().getAttribute("loggedInUser").equals(null) || !request.getSession().getAttribute("loggedInUser").equals("admin")) {
+			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
-			else if (!request.getSession().getAttribute("loggedInUser").equals(null) && request.getSession().getAttribute("loggedInUser").equals("admin")){
+			else if (adminLoggedIn){
 				target = "/Analytics.jspx";
 			}		
 		}
@@ -552,6 +552,6 @@ public class Start extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 	}
+	
 }

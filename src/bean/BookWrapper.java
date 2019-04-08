@@ -1,6 +1,5 @@
 package bean;
 
-
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -21,8 +20,8 @@ public class BookWrapper {
 	private String description;
 	//@XmlAttribute(name="publishYear")
 	private int publishYear;
-	//@XmlAttribute(name="review")
-	private double review;
+	//@XmlAttribute(name="rating")
+	private double rating;
 	//@XmlAttribute(name="category")
 	private String category;
 	//@XmlAttribute(name="url")
@@ -63,11 +62,11 @@ public class BookWrapper {
 	public void setPublishYear(int publishYear) {
 		this.publishYear = publishYear;
 	}
-	public double getReview() {
-		return review;
+	public double getRating() {
+		return rating;
 	}
-	public void setReview(double review) {
-		this.review = review;
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 	public String getCategory() {
 		return category;
@@ -86,7 +85,7 @@ public class BookWrapper {
 		// TODO Auto-generated constructor stub
 	}
 	public BookWrapper(String bid, String title, String author, double price, String description, int publishYear,
-			double review, String category) {
+			double rating, String category) {
 		super();
 		this.bid = bid;
 		this.title = title;
@@ -94,7 +93,7 @@ public class BookWrapper {
 		this.price = price;
 		this.description = description;
 		this.publishYear = publishYear;
-		this.review = review;
+		this.rating = rating;
 		this.category = category;
 		this.url = url;
 	}

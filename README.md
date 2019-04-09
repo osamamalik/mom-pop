@@ -4,12 +4,42 @@
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************
 
-Monday, April 4, 2019:
+Monday, April 9, 2019:
 
 TO DO:
 
-- full implementation of shopping cart and payment
-- OPS implementation
+● ERROR CHECKING BACK-END
+	-PCS
+	-OPS
+	-SHOPPING CART QUANTITY
+	-PAYMENT
+● ERROR CHECKING FRONT-END
+	-LOGIN
+	-SIGNUP
+	-PCS
+	-OPS
+	-PAYMENT
+
+● AJAX
+	
+● PAYMENT PAGE
+
+● OPS IMPLEMENTATION
+
+● PCS AND OPS AS SERVICES
+
+● ANALYTICS PAGE
+
+● VISITOR LOGGING TO DATABASE (SEE PROJECT DOCUMENTATION - LAST TABLE VisitEvent)
+
+● PERFORMANCE AND SCALABILITY
+
+● SECURITY
+
+● TESTING
+
+● DESIGN DOCUMENT
+
 
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************

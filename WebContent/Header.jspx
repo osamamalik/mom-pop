@@ -21,14 +21,13 @@
 				<td><input type="submit" value="Home" name="homeButton"></input></td>
 				<td><input type="submit" value="Browse" name="booksPageButton"></input></td>
 				<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
-				
+				<td><input type="submit" value="Cart" name="showShoppingCart"></input></td>
+				<td><input type="submit" value="Checkout" name="checkoutButton"></input></td>	
 				
 				<c:choose>	
 		
 					<c:when test="${loggedInSession}">
 							<td><input type="submit" value="Signout" name="signoutButton"></input></td>
-							<td><input type="submit" value="Cart" name="showShoppingCart"></input></td>
-							<td><input type="submit" value="Checkout" name="checkoutButton"></input></td>	
 					</c:when>
 					
 					<c:otherwise>

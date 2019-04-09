@@ -29,7 +29,7 @@ public class Start extends HttpServlet {
 	boolean adminLoggedIn;	
 	String target;
 	boolean error;
-	ArrayList <BookBean>books;
+	ArrayList <BookBean> books;
 	
 	//to be deleted
 	String query;
@@ -48,13 +48,23 @@ public class Start extends HttpServlet {
 		
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
 		adminLoggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("adminLoggedIn"));
-
+		
 		target = "/Home.jspx";
 		error = false;
 		books = new ArrayList<BookBean>();
 		
 		try {
 			context.setAttribute("myModel", new Model());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Model model = new Model();
+		model.clearVisitorCart();
+		
+		try {
+			context.setAttribute("errorChecking", new ErrorChecking());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +88,7 @@ public class Start extends HttpServlet {
 			INITIALIZATION OF MODEL AND QUERY
 		 ****************************************************************/
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
+		ErrorChecking errorChecking = (ErrorChecking) this.getServletContext().getAttribute("errorChecking");
 		QueryConstructor queryObject = (QueryConstructor) this.getServletContext().getAttribute("query");
 		request.getSession().setAttribute("query", queryObject);
 		
@@ -90,14 +101,14 @@ public class Start extends HttpServlet {
 			SIGN UP
 		 ****************************************************************/
 		if (request.getParameter("signUpButton") != null) {
-			this.signUp(request, response, myModel);
+			this.signUp(request, response, myModel, errorChecking);
 		}
 		
 		/***************************************************************
 			LOGIN
 		****************************************************************/
 		if (request.getParameter("loginButton") != null) {
-			this.logIn(request, response, myModel);
+			this.logIn(request, response, myModel, errorChecking);
 		}
 		
 		/***************************************************************
@@ -159,7 +170,7 @@ public class Start extends HttpServlet {
 			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
 		if (request.getParameter("PCSGenerateButton") != null) {
-			this.catalogService(request, response, myModel);
+			this.catalogService(request, response, myModel, errorChecking);
 		}
 		
 		
@@ -183,15 +194,6 @@ public class Start extends HttpServlet {
 		if (request.getParameter("updateCart") != null) {
 			this.updateCart(request, response, myModel);
 		}
-	
-		
-		/***************************************************************
-			VIEW SHOPPING CART
-		 ****************************************************************/
-		if (request.getParameter("showShoppingCart") != null) {
-			this.showCart(request, response, myModel);
-		}
-		
 		
 		
 		
@@ -297,54 +299,69 @@ public class Start extends HttpServlet {
 		
 	}
 		
-	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException {
 		
 		String username = request.getParameter("loginName");
 		String password = request.getParameter("loginPassword"); 
 		
 		// Sets errors, if any
-		myModel.checkLoginError(username, password);
+		errorChecking.checkLoginError(username, password);
 		
 		// No errors, user is successfully logged in
-		if (!myModel.getErrorStatus()) {		
+		if (!errorChecking.getErrorStatus()) {		
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
 			
+			//if admin logs in, redirects to the admin page
 			if (request.getSession().getAttribute("loggedInUser").equals("admin")) {
 				this.adminLoggedIn = true;
 				this.target = "/Admin.jspx";
 			}else {
 				this.target = "/Home.jspx";
-			}			
+			}		
+			
+			//clears the 'visitor' shopping cart
+			myModel.clearVisitorCart();
+			
+			//sets the user's cart
+			this.setCart(request, response, myModel, username);
 		}
 		
 		else {
-			String loginErrorMessage = myModel.getErrorMessage();
+			String loginErrorMessage = errorChecking.getErrorMessage();
 			error = true;
 			this.target = "/Login.jspx";
 			request.setAttribute("error", loginErrorMessage);
 		}
 	}
 	
-	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException {
 		
-		String username = request.getParameter("signUpName");
+		String firstName = request.getParameter("signUpFirstName");
+		String lastName = request.getParameter("signUpLastName");
+		String username = request.getParameter("signUpUsername");
 		String email = request.getParameter("signUpEmail");
-		String password = request.getParameter("signUpPassword"); 
+		String password = request.getParameter("signUpPassword");
 		String passwordConf = request.getParameter("signUpPasswordConf"); 
 
 		//Sets errors, if any
-		myModel.checkSignUpError(username, email, password, passwordConf);
-		if (!myModel.getErrorStatus()) {
-			myModel.addUser(username, email, password);
+		errorChecking.checkSignUpError(username, email, password, passwordConf);
+		if (!errorChecking.getErrorStatus()) {
+			myModel.addUser(username, firstName, lastName, email, password);
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
 			this.target = "/Home.jspx";
+			
+			//clears the 'visitor' shopping cart
+			myModel.clearVisitorCart();
+			
+			//sets the user's cart
+			this.setCart(request, response, myModel, username);
 
 		}else {
-			String signUpErrorMessage = myModel.getErrorMessage();
+			String signUpErrorMessage = errorChecking.getErrorMessage();
 			error = true;
 			target = "/SignUp.jspx";
 			request.setAttribute("error", signUpErrorMessage);
@@ -503,43 +520,58 @@ public class Start extends HttpServlet {
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
-		//if no user is logged in, redirects to the login page
-		if (!loggedIn) {
-			target = "Login.jspx";
+		String username;
+		
+		//obtains bid of the book being added to cart
+		int bid = Integer.parseInt(request.getParameter("addToCart"));
+		
+		//obtains the username if the user is logged in. If not, sets username as "visitor"
+		if (loggedIn) {
+			username = (String) request.getSession().getAttribute("loggedInUser");
 		}
 		else {
-			//obtains bid of the book being added to cart and username, adds the book to user's cart
-			int bid = Integer.parseInt(request.getParameter("addToCart"));
-			String username = (String) request.getSession().getAttribute("loggedInUser");
-			myModel.addToCart(bid, username);
+			username = "visitor";
 		}
+		
+		myModel.addToCart(bid, username);
+		
+		this.setCart(request, response, myModel, username);
+
 	}
 	
 	protected void removeFromCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
+		String username;
 
-		//obtains bid of the book being removed from cart and username, removes the book from user's cart
+		//obtains bid of the book being removed from cart
 		int bid = Integer.parseInt(request.getParameter("removeItem"));
-		String username = (String) request.getSession().getAttribute("loggedInUser");
 		
-		myModel.removeFromCart(bid, username);
-		ArrayList<CartBean> shoppingCart = myModel.retrieveCart(username);
-		double totalPrice = 0;
-
-		for (CartBean cartItem : shoppingCart) {
-			totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+		//obtains the username if the user is logged in. If not, sets username as "visitor"
+		if (loggedIn) {
+			username = (String) request.getSession().getAttribute("loggedInUser");
+		}
+		else {
+			username = "visitor";
 		}
 		
-		request.getSession().setAttribute("cart", shoppingCart);
-		request.getSession().setAttribute("totalPrice", totalPrice);
+		myModel.removeFromCart(bid, username);
+		this.setCart(request, response, myModel, username);
 		
 	}
 	
 	protected void updateCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 
-		double totalPrice = 0;
+		String username;
 		int quantity;
-		String username = (String) request.getSession().getAttribute("loggedInUser");
+			
+		//obtains the username if the user is logged in. If not, sets username as "visitor"
+		if (loggedIn) {
+			username = (String) request.getSession().getAttribute("loggedInUser");
+		}
+		else {
+			username = "visitor";
+		}
+		
 		ArrayList<CartBean> databaseShoppingCart = myModel.retrieveCart(username);
 		
 		for (CartBean cartItem : databaseShoppingCart) {
@@ -555,35 +587,18 @@ public class Start extends HttpServlet {
 			}
 		}
 		
-		//updates the shopping cart to the new state
-		databaseShoppingCart = myModel.retrieveCart(username);
-		
-		//adjusts the totalPrice
-		for (CartBean cartItem : databaseShoppingCart) {
-			totalPrice += cartItem.getPrice() * cartItem.getQuantity();
-		}
-
-		request.getSession().setAttribute("cart", databaseShoppingCart);
-		request.getSession().setAttribute("totalPrice", totalPrice);
+		this.setCart(request, response, myModel, username);
 		
 	}
 	
-	protected void showCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-
-		String username = (String) request.getSession().getAttribute("loggedInUser");
+	protected void setCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
+		
 		ArrayList<CartBean> shoppingCart = myModel.retrieveCart(username);
-		
-		double totalPrice = 0;
-		
-		for (CartBean cartItem : shoppingCart) {
-			totalPrice += cartItem.getPrice();
-		}
-
+		double totalPrice = myModel.getTotalPrice(username);
 		request.getSession().setAttribute("cart", shoppingCart);
 		request.getSession().setAttribute("totalPrice", totalPrice);
-
+		
 	}
-	
 		
 	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, int bookID) throws ServletException, IOException {
 		BookBean singleBook = myModel.retrieveBook(bookID);
@@ -616,7 +631,7 @@ public class Start extends HttpServlet {
 		openBook(request, response, myModel, title);
 	}
 	
-	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
+	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
 		
 		int bid = (Integer.parseInt(request.getParameter("bid")));
 		String f = "xmlExports/" + request.getSession().getId()+".xml";

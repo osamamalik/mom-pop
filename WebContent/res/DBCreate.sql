@@ -7,15 +7,17 @@ DROP TABLE Books;
 
 CREATE TABLE Users (
 	username	VARCHAR(30) NOT NULL,
+	fname		VARCHAR(30) NOT NULL,
+	lname		VARCHAR(30) NOT NULL,
 	email		VARCHAR(30) NOT NULL,
 	password	VARCHAR(50) NOT NULL,
 	PRIMARY KEY(username)
 );
 
-INSERT INTO Users VALUES ('osama', 'omalik91@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('ray', 'raymondsbarakat@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('baris', 'bbagcilar@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('admin', 'admin@gmail.com', 'admin');
+INSERT INTO Users VALUES ('osama', 'Osama', 'Malik', 'omalik91@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
 
 
 CREATE TABLE Books (
@@ -1279,6 +1281,5 @@ CREATE TABLE Cart (
 	bid INT NOT NULL,
 	quantity INT NOT NULL,
 	PRIMARY KEY (cid),
-	CONSTRAINT cart_username_ref FOREIGN KEY (username) REFERENCES Users (username),
 	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );

@@ -18,47 +18,13 @@
 	<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
 		<legend>Login</legend>
 		
-		<header>
 		
-			<table>
-			
-				<tr>
-				
-					<td><input type="submit" value="Home" name="homeButton"></input></td>
-					<td><input type="submit" value="Browse" name="booksPageButton"></input></td>
-					<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
-					
-				</tr>
-			
-				<tr>
-				
-					<td><input type="text" id="searchBar" name="searchBar"></input></td>
-					<td><input type="submit" value="search" name="searchButton"></input></td>
-			
-				</tr>
-				
-				<table>
-					<tr>
-						<td><input type="submit" value="Biography" name="headerCategory"></input></td>
-						<td><input type="submit" value="Business" name="headerCategory"></input></td>
-						<td><input type="submit" value="Fantasy" name="headerCategory"></input></td>
-						<td><input type="submit" value="Fiction" name="headerCategory"></input></td>
-						<td><input type="submit" value="Food" name="headerCategory"></input></td>
-						<td><input type="submit" value="Graphic Novels" name="headerCategory"></input></td>
-						<td><input type="submit" value="History" name="headerCategory"></input></td>
-						<td><input type="submit" value="Kids" name="headerCategory"></input></td>
-						<td><input type="submit" value="Mystery" name="headerCategory"></input></td>
-						<td><input type="submit" value="Non-Fiction" name="headerCategory"></input></td>
-						<td><input type="submit" value="Science Fiction" name="headerCategory"></input></td>
-						<td><input type="submit" value="Textbooks" name="headerCategory"></input></td>
-						<td><input type="submit" value="Young Adult" name="headerCategory"></input></td>
-					</tr>
-					
-				</table>
-
-			</table>
-			
+		<header>
+			<jsp:include page="Header.jspx"/>
 		</header>
+		
+		
+			
 		
 		<table>
 		
@@ -91,6 +57,13 @@
 			</tr>
 				
 		</table>
+		
+		
+		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		
 	</form>
 	
 </body>

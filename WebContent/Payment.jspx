@@ -8,20 +8,24 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link rel="StyleSheet" href="res/styles.css" type="text/css"
+	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
 	<script type="text/javascript" src="res/myJS.js">;</script>
-<title>Shopping Cart</title>
+<title>Checkout</title>
 </head>
 <body>
-		<form method="post">
+	
+	<form method="post">
 	
 		<header>
 			<jsp:include page="Header.jspx"/>
 		</header>
-			
-			<table>
-			
+		
+		
+		
+		
+		
+			<table>			
 				<c:forEach var="entry" items="${sessionScope['cart']}"> 
 				
 	                <tr>
@@ -32,22 +36,52 @@
 						<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
 	                </tr>
 
-	           	</c:forEach>
-	           	
+	           	</c:forEach>  
+	           	  	
 	           		<tr>
 						<td><button name="updateCart">update</button></td>
 	                </tr>
+	                
 	           		<tr>
 	           			<td><label>Total:</label></td>
 	           			<td>${totalPrice}</td>
 	           		</tr>
-			</table>		 
+	           		
+			</table>	
+			
+				
+			
+			 
+		 
+		 	<table>
+		 	
+		 		<tr>
+		 		
+		 		</tr>
+		 	
+		 	
+		 	
+		 	
+		 	
+
+		 	</table>
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		 
 	 	<footer>
 			<jsp:include page="Footer.jspx"/>
 		</footer> 
 		
 	</form>
+
 </body>
 </html>
 </jsp:root>

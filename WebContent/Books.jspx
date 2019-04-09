@@ -106,6 +106,9 @@
 		</table>
 		
 		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
 		
 	</form>
 

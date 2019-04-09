@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 /build/
 /MyDB/
 *context.xml
+=======
+build/
+MyDB/
+/WebContent/META-INF/context.xml
+>>>>>>> 18ebb63b87484d2ae88623098386112401564b35

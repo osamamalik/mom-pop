@@ -35,24 +35,20 @@ public class CartDAO {
 		
 		Connection con = this.ds.getConnection();
 		Statement stmt = con.createStatement();
-		boolean updated = false;
 		String query = "insert into CART(username, bid, quantity) values('" + user + "', " + bid + "," + 1 + ")";
 		
 		//retrieves the user's shopping cart
 		ArrayList<CartBean> userCart = this.retrieveCart(user);
-
 		
 		//checks if this user's cart already contains the book
-		//if so, query is adjusted to updte quantity. if not, new item is added to cart
+		//if so, query is adjusted to update quantity. if not, new item is added to cart
 		for (CartBean cart : userCart) {
 		
 			if (cart.getBid() == bid) {
-				updated = true;
 				query = "update cart set quantity = quantity + 1 where cid = " + cart.getCid() + " and username = '" + user + "'";
 			}
 		}
 		
-	
 		stmt.executeUpdate(query);
 		stmt.close();
 		con.close();
@@ -83,7 +79,6 @@ public class CartDAO {
 	
 	public ArrayList<CartBean> retrieveCart(String user) throws SQLException {
 			
-		Model myModel = new Model();
 		ArrayList<CartBean> shoppingCart = new ArrayList<CartBean>();
 		
 		String query = "select * from cart join books on cart.bid = books.bid where username = '" + user + "'";
@@ -100,6 +95,7 @@ public class CartDAO {
 			cart.setPrice(r.getDouble("price"));
 			cart.setTitle(r.getString("title"));
 			cart.setQuantity(r.getInt("quantity"));
+			cart.setAuthor(r.getString("author"));
 			shoppingCart.add(cart);
 		}
 		
@@ -111,4 +107,36 @@ public class CartDAO {
 		
 	}
 	
+	public void clearVisitorCart() throws SQLException {
+		
+		String query = "delete from CART where username = 'visitor'";
+		Connection con = this.ds.getConnection();
+		Statement stmt = con.createStatement();
+		stmt.executeUpdate(query);
+		stmt.close();
+		con.close();
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

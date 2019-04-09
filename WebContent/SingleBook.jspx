@@ -65,6 +65,11 @@
 		
 		<button action="submit" type="submit" name="addToCart" value = "${singleBook.getBid()}">Add to Cart</button>
 		
+		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		
 	</form>
 
 </body>

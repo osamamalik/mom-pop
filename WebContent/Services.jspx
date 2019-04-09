@@ -22,8 +22,8 @@
 			<input type="submit" value="Home" name="homeButton"></input>
 		</header>
 		
-		<table>
 		
+		<table>
 		
 			<tr>
 				<td><input type="submit" value="Product Catalog Services" name ="PCSRequestButton"></input></td>		
@@ -32,8 +32,8 @@
 				<td><input type="submit" value="Order Process Services" name ="PCSRequestButton"></input></td>		
 			</tr>	
 			
-			
 		</table>
+		
 		
 		<footer>
 			<jsp:include page="Footer.jspx"/>

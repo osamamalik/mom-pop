@@ -1,18 +1,9 @@
 package model;
 
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.OutputStream;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -56,9 +47,9 @@ public class Model {
 		return null;
 	}
 
-	public void addUser(String username, String email, String password) {
+	public void addUser(String username, String firstName, String lastName, String email, String password) {
 		try {
-			userDAO.addUser(username, email, password);
+			userDAO.addUser(username, firstName, lastName, email, password);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -70,6 +61,16 @@ public class Model {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean checkUserExists(String username){
+		try {
+			return userDAO.checkUserExists(username);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	/***************************************************************
@@ -84,7 +85,7 @@ public class Model {
 		}
 		return null;
 
-}
+	}
 	
 	public BookBean retrieveBook(int bid){
 			try {
@@ -160,6 +161,22 @@ public class Model {
 		return null;
 	}
 	
+	public double getTotalPrice(String username) {
+		
+		double totalPrice = 0;
+		ArrayList<CartBean> shoppingCart = retrieveCart(username);
+		
+		if (shoppingCart.size() != 0 || shoppingCart != null) {
+			for (CartBean cartItem : shoppingCart) {
+				totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+			}
+		}
+
+		
+		return totalPrice;
+		
+	}
+	
 	/***************************************************************
 		DATABASE REVIEW OPERATIONS
     ****************************************************************/
@@ -223,92 +240,16 @@ public class Model {
 		return null;
 	}
 	
-	
-	/***************************************************************
-		ERROR CHECKING METHODS
-	 ****************************************************************/
-	
-	public void checkLoginError(String username, String password) {
-		this.errorMessage = null;
-		this.errorStatus = false;
-		if (username == "" || password == "") {
-			this.errorStatus = true;
-			if(username == "") {
-				this.errorMessage = "BLANKUSERNAME";
-			}
-			else {
-				this.errorMessage = "BLANKPASSWORD";
-			}
-		}
-		else if (!checkUserExists(username)) {
-			this.errorStatus = true;
-			this.errorMessage = "USERNOTFOUND";
-		}
-		else if (!passwordValidation(username, password)){
-			this.errorStatus = true;
-			this.errorMessage = "WRONGPASSWORD";
-		}
-
-	}
-	
-	public void checkSignUpError(String username, String email, String password, String passwordConf) {
-		this.errorMessage = null;
-		this.errorStatus = false;
-		if (username == "" || email == "" || password == "") {
-			this.errorStatus = true;
-			if(username == "") {
-				this.errorMessage = "BLANKUSERNAME";
-			}else if (email == ""){
-				this.errorMessage = "BLANKEMAIL";
-			}else {
-				this.errorMessage = "BLANKPASSWORD";
-			}
-			return;
-		}
-		else if (!email.contains("@") || email.length() < 3) {
-			this.errorStatus = true;
-			this.errorMessage = "EMAILFORMAT";
-		}
-		else if (password.length() < 6) {
-			this.errorStatus = true;
-			this.errorMessage = "SHORTPASSWORD";
-		}
-		else if(!password.equals(passwordConf)) {
-			this.errorStatus = true;
-			this.errorMessage = "PASSWORDMISMATCH";
-		}
-	}
-	
-	public boolean passwordValidation(String username, String password) {
-		UserBean ub = new UserBean();
+	public void clearVisitorCart() {
 		try {
-			ub = retrieveUser(username);
-			return ub.getPassword().equals(password);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	public boolean checkUserExists(String username) {
-		try {
-			return userDAO.checkUserExists(username);
+			cartDAO.clearVisitorCart();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
 	}
 	
-	public boolean getErrorStatus() {
-		return this.errorStatus;
-	}
-	
-	public String getErrorMessage() {
-		return this.errorMessage;
-		}
-	
-	
-	
+		
 	/***************************************************************
 		SERVICES
 	****************************************************************/

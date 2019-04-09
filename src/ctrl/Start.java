@@ -149,8 +149,8 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			SINGLE BOOK PAGE
 		****************************************************************/
-		if (request.getParameter("title") != null ) {
-			int title = (Integer.parseInt(request.getParameter("title")));
+		if (request.getParameter("viewSingleBook") != null) {
+			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
 			this.openBook(request, response, myModel, title);
 		}
 		
@@ -227,7 +227,7 @@ public class Start extends HttpServlet {
 	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
 						
 		//checks if a 'Single Book' has been clicked on
-		if (request.getParameter("title") != null) {
+		if (request.getParameter("viewSingleBook") != null) {
 			target = "/SingleBook.jspx";
 		}
 		//once a review has been submitted, the page is reloaded
@@ -536,6 +536,8 @@ public class Start extends HttpServlet {
 		myModel.addToCart(bid, username);
 		
 		this.setCart(request, response, myModel, username);
+		
+		this.openBook(request, response, myModel, bid);
 
 	}
 	

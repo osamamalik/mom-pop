@@ -503,13 +503,17 @@ public class Start extends HttpServlet {
 	
 	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {		
 		
-		
 		//if user chose to reset the filter, queryObject's filter attributes are reset
 		//if not, queryObject's filter attributes are initialized
 		if (request.getParameter("resetFilterButton") != null) {
 			queryObject.resetFilter();
 			books = myModel.queryConstructor(queryObject);
-			request.setAttribute("booksList", books);			
+			request.setAttribute("booksList", books);		
+			
+			//Retrieves unique categories and sets the filter display
+			ArrayList <String>categories = new ArrayList<String>();
+			categories = myModel.retrieveUniqueCategories();
+			request.setAttribute("categoriesFilterList", categories);
 		}
 		else {
 		

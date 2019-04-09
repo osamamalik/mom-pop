@@ -383,6 +383,7 @@ public class Start extends HttpServlet {
 			billingAB.setCity(shippingAB.getCity());
 			billingAB.setZip(shippingAB.getZip());
 			billingAB.setPhoneNumber(shippingAB.getPhoneNumber());
+			errorChecking.checkSignUpError(username, email, password, passwordConf, shippingAB, shippingAB);
 		}
 		else {
 			billingAB.setType("billing");
@@ -394,10 +395,10 @@ public class Start extends HttpServlet {
 			billingAB.setCity(request.getParameter("billingCity"));
 			billingAB.setZip(request.getParameter("billingZip"));
 			billingAB.setPhoneNumber(request.getParameter("billingPhone"));
+			errorChecking.checkSignUpError(username, email, password, passwordConf, shippingAB, billingAB);
 		}
 		
 		//Sets errors, if any
-		errorChecking.checkSignUpError(username, email, password, passwordConf);
 		if (!errorChecking.getErrorStatus()) {
 			myModel.addUser(username, firstName, lastName, email, password);
 			myModel.addAddress(shippingAB);

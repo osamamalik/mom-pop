@@ -41,9 +41,11 @@ public class ErrorChecking {
 	
 	}
 	
-	public void checkSignUpError(String username, String email, String password, String passwordConf) {
+	public void checkSignUpError(String username, String email, String password, String passwordConf, AddressBean shippingAB, AddressBean billingAB) {
 		setErrorMessage(null);
 		setErrorStatus(false);
+		
+		//checks if username, email, or password are blank
 		if (username == "" || email == "" || password == "") {
 			setErrorStatus(true);
 			if(username == "") {
@@ -55,17 +57,66 @@ public class ErrorChecking {
 			}
 			return;
 		}
+		//checks if password is too short
 		else if (password.length() < 6) {
 			setErrorStatus(true);
 			setErrorMessage("SHORTPASSWORD");
 		}
+		//checks if entered passwords don't match
 		else if(!password.equals(passwordConf)) {
 			setErrorStatus(true);
 			setErrorMessage("PASSWORDMISMATCH");
 		}
+		//checks if username already exists in database
 		else if(myModel.retrieveUser(username).getUsername() != null) {
 			setErrorStatus(true);
 			setErrorMessage("EXISTINGUSER");
+		}
+		
+		//checks if any of shipping address fields are blank
+		else if(shippingAB.getAddressLine1() == "" || shippingAB.getCountry() == "" || shippingAB.getProvince() == "" || shippingAB.getCity() == "" || shippingAB.getPhoneNumber() == "" || shippingAB.getZip() == "") {
+			setErrorStatus(true);
+			if (shippingAB.getAddressLine1() == "") {
+				setErrorMessage("BLANKSHIPPINGADDRESSLINE1");
+			}
+			else if(shippingAB.getCountry() == "" ) {
+				setErrorMessage("BLANKSHIPPINGADDRESSCOUNTRY");
+			}
+			else if(shippingAB.getProvince() == "" ) {
+				setErrorMessage("BLANKSHIPPINGADDRESSPROVINCE");
+			}
+			else if(shippingAB.getCity() == "" ) {
+				setErrorMessage("BLANKSHIPPINGADDRESSCITY");
+			}
+			else if(shippingAB.getPhoneNumber() == "" ) {
+				setErrorMessage("BLANKSHIPPINGADDRESSPHONENUMBER");
+			}
+			else if(shippingAB.getZip() == "" ) {
+				setErrorMessage("BLANKSHIPPINGADDRESSZIPCODE");
+			}
+		}
+		
+		//checks if any of billing address fields are blank
+		else if(billingAB.getAddressLine1() == "" || billingAB.getCountry() == "" || billingAB.getProvince() == "" || billingAB.getCity() == "" || billingAB.getPhoneNumber() == "" || billingAB.getZip() == "") {
+			setErrorStatus(true);
+			if (billingAB.getAddressLine1() == "") {
+				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
+			}
+			else if(billingAB.getCountry() == "" ) {
+				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
+			}
+			else if(billingAB.getProvince() == "" ) {
+				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
+			}
+			else if(billingAB.getCity() == "" ) {
+				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
+			}
+			else if(billingAB.getPhoneNumber() == "" ) {
+				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
+			}
+			else if(billingAB.getZip() == "" ) {
+				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
+			}
 		}
 	}
 	

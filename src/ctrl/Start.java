@@ -534,7 +534,6 @@ public class Start extends HttpServlet {
 		}
 		
 		myModel.addToCart(bid, username);
-		
 		this.setCart(request, response, myModel, username);
 
 	}

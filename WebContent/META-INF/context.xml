@@ -6,7 +6,7 @@
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 		type="javax.sql.DataSource"
 		driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-		url="jdbc:derby:C:\Users\Barisbc\eclipse-workspace\Project\e-men\MyDB;upgrade=true" />
+		url="jdbc:derby:C:\Users\Barisbc\eclipse-workspace\Project\e-men\MyDB;create=true" />
 		<!-- url = "jdbc:derby:C:\Users\Raymond\eclipse-workspace\e-men\MyDB" /> -->
 		<!-- url="jdbc:derby:/Users/osamamalik/eclipse-workspace/e-men/MyDB" /> -->
 	<ResourceLink global="jdbc/EECS" name="jdbc/EECS"

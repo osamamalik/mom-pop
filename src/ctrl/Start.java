@@ -139,7 +139,8 @@ public class Start extends HttpServlet {
 			SINGLE BOOK PAGE
 		****************************************************************/
 		if (request.getParameter("title") != null ) {
-			this.openBook(request, response, myModel, request.getParameter("title"));
+			int title = (Integer.parseInt(request.getParameter("title")));
+			this.openBook(request, response, myModel, title);
 		}
 		
 		if (request.getParameter("addReviewButton") != null) {
@@ -158,39 +159,53 @@ public class Start extends HttpServlet {
 			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
 		if (request.getParameter("PCSGenerateButton") != null) {
-			this.CatalogService(request, response, myModel);
+			this.catalogService(request, response, myModel);
 		}
 		
 		
 		/***************************************************************
-			SHOPPING SERVICES
+			ADD TO SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
-			String bid = request.getParameter("title");
-			try {
-				this.addToCart(request, response, myModel, bid);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.addToCart(request, response, myModel);
 		}
+		
+		/***************************************************************
+			REMOVE FROM SHOPPING CART
+		 ****************************************************************/
+		if (request.getParameter("removeItem") != null) {
+			this.removeFromCart(request, response, myModel);
+		}
+		
+		/***************************************************************
+			UPDATE SHOPPING CART
+		 ****************************************************************/
+		if (request.getParameter("updateCart") != null) {
+			this.updateCart(request, response, myModel);
+		}
+	
+		
+		/***************************************************************
+			VIEW SHOPPING CART
+		 ****************************************************************/
+		if (request.getParameter("showShoppingCart") != null) {
+			this.showCart(request, response, myModel);
+		}
+		
 		
 		
 		
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
+	
 		
-		
-		
-		System.out.println(target);
-
-		
-		
+			
 		
 		/***************************************************************
 			TESTING BLOCK
 		****************************************************************/
+		
 		
 		
 		request.getRequestDispatcher(target).forward(request, response);
@@ -256,10 +271,6 @@ public class Start extends HttpServlet {
 				target = "/Analytics.jspx";
 			}		
 		}
-				
-		if (request.getParameter("addToCart") != null) {
-			target = "/ShoppingCart.jspx";
-		}
 		
 		//checks if PCS was requested
 		if (request.getParameter("PCSRequestButton") != null) {
@@ -277,6 +288,11 @@ public class Start extends HttpServlet {
 				request.getSession().setAttribute("loggedInSession", loggedIn);				
 			}
 			target = "/Home.jspx";
+		}
+		
+		//checks if Shopping Cart was requested
+		if (request.getParameter("showShoppingCart") != null) {
+			target = "/ShoppingCart.jspx";	
 		}
 		
 	}
@@ -318,7 +334,7 @@ public class Start extends HttpServlet {
 		String password = request.getParameter("signUpPassword"); 
 		String passwordConf = request.getParameter("signUpPasswordConf"); 
 
-		// Sets errors, if any
+		//Sets errors, if any
 		myModel.checkSignUpError(username, email, password, passwordConf);
 		if (!myModel.getErrorStatus()) {
 			myModel.addUser(username, email, password);
@@ -339,6 +355,7 @@ public class Start extends HttpServlet {
 				
 		loggedIn = false;
 		request.getSession().setAttribute("loggedInSession", loggedIn);
+		request.getSession().setAttribute("loggedInUser", null);
 	}
 	
 
@@ -350,7 +367,7 @@ public class Start extends HttpServlet {
 		
 		queryObject.setAllBooks(true);
 		books = myModel.queryConstructor(queryObject);
-		request.setAttribute("booksMap", books);
+		request.setAttribute("booksList", books);
 	}
 	
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
@@ -361,7 +378,7 @@ public class Start extends HttpServlet {
 		String category = request.getParameter("headerCategory");
 		queryObject.setCategory(category);
 		books = myModel.queryConstructor(queryObject);
-		request.setAttribute("booksMap", books);
+		request.setAttribute("booksList", books);
 		
 	}
 	
@@ -390,7 +407,7 @@ public class Start extends HttpServlet {
 		}
 		
 		books = myModel.queryConstructor(queryObject);
-		request.setAttribute("booksMap", books);
+		request.setAttribute("booksList", books);
 		
 	}
 	
@@ -405,7 +422,7 @@ public class Start extends HttpServlet {
 		queryObject.setSearchTerm(searchTerm);
 			
 		books = myModel.queryConstructor(queryObject);
-		request.setAttribute("booksMap", books);	
+		request.setAttribute("booksList", books);	
 	}
 	
 	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {		
@@ -416,7 +433,7 @@ public class Start extends HttpServlet {
 		if (request.getParameter("resetFilterButton") != null) {
 			queryObject.resetFilter();
 			books = myModel.queryConstructor(queryObject);
-			request.setAttribute("booksMap", books);			
+			request.setAttribute("booksList", books);			
 		}
 		else {
 		
@@ -454,7 +471,6 @@ public class Start extends HttpServlet {
 				// obtains the selected price range filter
 				if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
 					
-					String priceFilterQuery;	
 					double priceLowFilter;
 					double priceHighFilter;
 					
@@ -480,40 +496,104 @@ public class Start extends HttpServlet {
 			}
 				
 			books = myModel.queryConstructor(queryObject);
-			request.setAttribute("booksMap", books);
+			request.setAttribute("booksList", books);
 		}
 	}
 
 	
-	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String bid)throws ServletException, IOException, SQLException {
+	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
 		
-		Object b =  request.getSession().getAttribute("loggedInSession");
-		
-		boolean flag = (Boolean) b;
-		System.out.println(flag);
-		
-		if(flag == true) {
-			
-			String user = request.getSession().getAttribute("loggedInUser").toString();
-			myModel.addToCart(bid, user);
-			ArrayList<BookBean> userCart = new ArrayList<BookBean>();
-			userCart = myModel.retrieveCart(user);
-			request.getSession().setAttribute("Cart", userCart);
+		//if no user is logged in, redirects to the login page
+		if (!loggedIn) {
+			target = "Login.jspx";
 		}
 		else {
-			System.out.println("must be signed in");
+			//obtains bid of the book being added to cart and username, adds the book to user's cart
+			int bid = Integer.parseInt(request.getParameter("addToCart"));
+			String username = (String) request.getSession().getAttribute("loggedInUser");
+			myModel.addToCart(bid, username);
 		}
+	}
+	
+	protected void removeFromCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+		
+
+		//obtains bid of the book being removed from cart and username, removes the book from user's cart
+		int bid = Integer.parseInt(request.getParameter("removeItem"));
+		String username = (String) request.getSession().getAttribute("loggedInUser");
+		
+		myModel.removeFromCart(bid, username);
+		ArrayList<CartBean> shoppingCart = myModel.retrieveCart(username);
+		double totalPrice = 0;
+
+		for (CartBean cartItem : shoppingCart) {
+			totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+		}
+		
+		request.getSession().setAttribute("cart", shoppingCart);
+		request.getSession().setAttribute("totalPrice", totalPrice);
 		
 	}
 	
-	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, String bookID) throws ServletException, IOException {
+	protected void updateCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+
+		double totalPrice = 0;
+		int quantity;
+		String username = (String) request.getSession().getAttribute("loggedInUser");
+		ArrayList<CartBean> databaseShoppingCart = myModel.retrieveCart(username);
+		
+		for (CartBean cartItem : databaseShoppingCart) {
+			
+			//gets the bid of the item being inspected from the database
+			String databaseBid = Integer.toString(cartItem.getBid()); 
+			//gets the quantity that appears in the current state of cart of the same item		
+			quantity = Integer.parseInt(request.getParameter(databaseBid));
+			System.out.println(databaseBid + " WORKED");
+			//checks if the inspected item's quantity has been changed
+			//if so, updates database. if not, inspects the next item
+			if (quantity != cartItem.getQuantity()) {
+				myModel.updateQuantity(cartItem.getBid(), cartItem.getUsername(), quantity);
+			}
+		}
+		
+		//updates the shopping cart to the new state
+		databaseShoppingCart = myModel.retrieveCart(username);
+		
+		//adjusts the totalPrice
+		for (CartBean cartItem : databaseShoppingCart) {
+			totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+		}
+
+		request.getSession().setAttribute("cart", databaseShoppingCart);
+		request.getSession().setAttribute("totalPrice", totalPrice);
+		
+	}
+	
+	protected void showCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+
+		String username = (String) request.getSession().getAttribute("loggedInUser");
+		ArrayList<CartBean> shoppingCart = myModel.retrieveCart(username);
+		
+		double totalPrice = 0;
+		
+		for (CartBean cartItem : shoppingCart) {
+			totalPrice += cartItem.getPrice();
+		}
+
+		request.getSession().setAttribute("cart", shoppingCart);
+		request.getSession().setAttribute("totalPrice", totalPrice);
+
+	}
+	
+		
+	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, int bookID) throws ServletException, IOException {
 		BookBean singleBook = myModel.retrieveBook(bookID);
 		request.setAttribute("singleBook", singleBook);
 		
 		// Retrieve user review for book if it exists, otherwise give option to add review:
 		if (request.getSession().getAttribute("loggedInUser") != null) {
 			String username = request.getSession().getAttribute("loggedInUser").toString();
-			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, Integer.parseInt(bookID));
+			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, bookID);
 			if (!review.isEmpty()) {
 				request.setAttribute("userReviewExists", true);
 				request.setAttribute("userReview", review.get(0));
@@ -533,12 +613,13 @@ public class Start extends HttpServlet {
 		String review = request.getParameter("review");
 		int rating = Integer.parseInt(request.getParameter("rating"));
 		myModel.addReview(username, bookID, review, rating);
-		openBook(request, response, myModel, request.getParameter("title"));
+		int title = (Integer.parseInt(request.getParameter("title")));
+		openBook(request, response, myModel, title);
 	}
 	
-	protected void CatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
+	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
 		
-		String bid = request.getParameter("bid");
+		int bid = (Integer.parseInt(request.getParameter("bid")));
 		String f = "xmlExports/" + request.getSession().getId()+".xml";
 		String filename = this.getServletContext().getRealPath("/" + f);
 		request.getSession().setAttribute("filenameProductService", filename);

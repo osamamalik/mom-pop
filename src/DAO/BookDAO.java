@@ -37,7 +37,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -55,8 +55,8 @@ public class BookDAO {
 		return books;
 	}
 	
-	public BookBean retrieveBook(String bid) throws SQLException {
-		String query = "select * from BOOKS where bid = " + Integer.parseInt(bid);
+	public BookBean retrieveBook(int bid) throws SQLException {
+		String query = "select * from BOOKS where bid = " + bid;
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -86,7 +86,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -112,7 +112,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -138,7 +138,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -164,7 +164,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -190,7 +190,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -206,6 +206,7 @@ public class BookDAO {
 		con.close();
 		r.close();
 		return books;
+		
 	}
 
 	public ArrayList<BookBean> retrieveBookByQuery(String query) throws SQLException {
@@ -215,7 +216,7 @@ public class BookDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -277,9 +278,9 @@ public class BookDAO {
 	}
 	
 	
+	//completes a query based on the attributes of the 'query' object passed as a parameter
 	public ArrayList<BookBean> constructQuery(QueryConstructor query) throws SQLException {
 		
-
 		String constructedQuery = "select * from books";
 		ArrayList<BookBean> filterBooks = new ArrayList<BookBean>();
 		
@@ -332,7 +333,7 @@ public class BookDAO {
 				//first takes the intersection of rating and price filters, stores in tempBook
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean priceBook : priceFilterBooks) {
-		            	if (ratingBook.getBid().equals(priceBook.getBid())) {
+		            	if (ratingBook.getBid() == priceBook.getBid()) {
 		            		tempBooks.add(ratingBook);
 		            	}
 		            }
@@ -340,7 +341,7 @@ public class BookDAO {
 				//takes intersection of tempBook with categoryBook
 				for (BookBean tempBook : tempBooks) {
 					for (BookBean categoryBook : categoryFilterBooks) {
-		            	if (tempBook.getBid().equals(categoryBook.getBid())) {
+		            	if (tempBook.getBid() == categoryBook.getBid()) {
 		            		filterBooks.add(tempBook);
 		            	}
 		            }
@@ -352,7 +353,7 @@ public class BookDAO {
 							
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean priceBook : priceFilterBooks) {
-		            	if (ratingBook.getBid().equals(priceBook.getBid())) {
+		            	if (ratingBook.getBid() == priceBook.getBid()) {
 		            		filterBooks.add(ratingBook);
 		            	}
 		            }
@@ -364,7 +365,7 @@ public class BookDAO {
 							
 				for (BookBean priceBook : priceFilterBooks) {
 					for (BookBean categoryBook : categoryFilterBooks) {
-		            	if (priceBook.getBid().equals(categoryBook.getBid())) {
+		            	if (priceBook.getBid() == categoryBook.getBid()) {
 		            		filterBooks.add(priceBook);
 		            	}
 		            }
@@ -376,7 +377,7 @@ public class BookDAO {
 							
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean categoryBook : categoryFilterBooks) {
-		            	if (ratingBook.getBid().equals(categoryBook.getBid())) {
+		            	if (ratingBook.getBid() == categoryBook.getBid()) {
 		            		filterBooks.add(ratingBook);
 		            	}
 		            }
@@ -421,18 +422,18 @@ public class BookDAO {
 		}
 		
 		
-		System.out.println("**************************************");
+		System.out.println("*********************************************");
 		System.out.println(constructedQuery);
-		System.out.println("**************************************");
+		System.out.println("*********************************************");
 
-		
+				
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(constructedQuery);
 		ResultSet r = p.executeQuery();
 		while(r.next()){
 			BookBean bb = new BookBean();
-			String bid = r.getString("bid");
+			int bid = (Integer.parseInt(r.getString("bid")));
 			bb.setBid(bid);
 			bb.setTitle(r.getString("title"));
 			bb.setAuthor(r.getString("author"));
@@ -454,7 +455,7 @@ public class BookDAO {
 			ArrayList<BookBean> result = new ArrayList<BookBean>();
 			for (BookBean book : books) {
 				for (BookBean filterBook : filterBooks) {
-	            	if (book.getBid().equals(filterBook.getBid())) {
+	            	if (book.getBid() == filterBook.getBid()) {
 	            		result.add(book);
 	            	}
 	            }

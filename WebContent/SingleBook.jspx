@@ -62,7 +62,9 @@
 				</c:if>
 			</div>
 		</div>
-		<button action="submit" type="submit" name="addToCart">Add to Cart</button>
+		
+		<button action="submit" type="submit" name="addToCart" value = "${singleBook.getBid()}">Add to Cart</button>
+		
 	</form>
 
 </body>

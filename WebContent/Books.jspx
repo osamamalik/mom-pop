@@ -86,7 +86,7 @@
 				
 
 			<table>		
-				<c:forEach var="entry" items="${booksMap}">
+				<c:forEach var="entry" items="${booksList}">
 	                
 	                <tr>
 	              		<!-- <img src="${entry.getUrl()}">	</img>  -->   
@@ -96,10 +96,9 @@
 		                <td><c:out value="${entry.getRating()}"/></td>
 		                <td><c:out value="${entry.getPublishYear()}"/></td>
 		               	<td><c:out value="${entry.getCategory()}"/></td>
-		            <!-- <td><button action="submit" type="submit" name="addToCart">Add to Cart</button></td>  -->   	
+						<td><button action="submit" type="submit" name="addToCart" value = "${entry.getBid()}">Add</button></td>
 	                </tr>
 	                
-	             
 	           	</c:forEach>
 			</table>
 

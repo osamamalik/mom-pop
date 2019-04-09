@@ -86,7 +86,7 @@ public class Model {
 
 }
 	
-	public BookBean retrieveBook(String bid){
+	public BookBean retrieveBook(int bid){
 			try {
 				return bookDAO.retrieveBook(bid);
 			} catch (SQLException e) {
@@ -130,6 +130,7 @@ public class Model {
 		}
 		return null;
 	}
+	
 
 	public ArrayList<BookBean>retrieveByQuery(String query){
 		try {
@@ -185,12 +186,41 @@ public class Model {
 		DATABASE SHOPPING CART OPERATIONS
 	****************************************************************/
 
-	public void addToCart(String bid, String user) throws SQLException {
-		cartDAO.addToCart(bid, user);
+	public void addToCart(int bid, String user) {
+		try {
+			cartDAO.addToCart(bid, user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	public ArrayList<BookBean> retrieveCart(String user) throws SQLException {
-		return cartDAO.retrieveCart(user, this);
+	
+	public void removeFromCart(int bid, String user) {
+		try {
+			cartDAO.removeFromCart(bid, user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateQuantity(int bid, String user, int quantity) {
+		try {
+			cartDAO.updateQuantity(bid, user, quantity);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<CartBean> retrieveCart(String user) {
+		try {
+			return cartDAO.retrieveCart(user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	
@@ -281,10 +311,10 @@ public class Model {
 	
 	
 	/***************************************************************
-		PRODUCT CATALOG COMPONENT/SERVICE
+		SERVICES
 	****************************************************************/
 
-	public void exportProductServices(String bid, String filename) throws Exception {
+	public void exportProductServices(int bid, String filename) throws Exception {
 
 		BookBean bb = retrieveBook(bid);
 		String title = bb.getTitle();
@@ -314,14 +344,12 @@ public class Model {
 		fw.write(sw.toString());
 		fw.close();
 		
-//		OutputStream os = new FileOutputStream(filename);
-//		marshaller.marshal(bw, os);
-		
-		
-		
-		
-		
 	}
+	
+	public void exportOrderServices(int orderID, String filename) throws Exception {
+
+	}
+	
 	
 }
 

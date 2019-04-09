@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder={"bid", "title", "author" , "price", "description", "publishYear", "review","category"})
 public class BookBean {
-	private String bid;
+	private int bid;
 	private String title;
 	private String author;
 	private double price;
@@ -23,11 +23,11 @@ public class BookBean {
 		super();
 	}
 
-	public String getBid() {
+	public int getBid() {
 		return bid;
 	}
 
-	public void setBid(String bid) {
+	public void setBid(int bid) {
 		this.bid = bid;
 	}
 

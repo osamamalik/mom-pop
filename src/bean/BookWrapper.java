@@ -8,8 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "productReport")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class BookWrapper {
+	
 	//@XmlAttribute(name="bid")
-	private String bid;
+	private int bid;
 	//@XmlAttribute(name="title")
 	private String title;
 	//@XmlAttribute(name="author")
@@ -26,10 +27,27 @@ public class BookWrapper {
 	private String category;
 	//@XmlAttribute(name="url")
 	private String url;
-	public String getBid() {
+	
+	
+	public BookWrapper(int bid, String title, String author, double price, String description, int publishYear,
+			double rating, String category) {
+		super();
+		this.bid = bid;
+		this.title = title;
+		this.author = author;
+		this.price = price;
+		this.description = description;
+		this.publishYear = publishYear;
+		this.rating = rating;
+		this.category = category;
+		this.url = url;
+	}
+	
+	
+	public int getBid() {
 		return bid;
 	}
-	public void setBid(String bid) {
+	public void setBid(int bid) {
 		this.bid = bid;
 	}
 	public String getTitle() {
@@ -83,19 +101,6 @@ public class BookWrapper {
 	public BookWrapper() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-	public BookWrapper(String bid, String title, String author, double price, String description, int publishYear,
-			double rating, String category) {
-		super();
-		this.bid = bid;
-		this.title = title;
-		this.author = author;
-		this.price = price;
-		this.description = description;
-		this.publishYear = publishYear;
-		this.rating = rating;
-		this.category = category;
-		this.url = url;
 	}
 	
 	

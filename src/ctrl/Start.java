@@ -30,9 +30,7 @@ public class Start extends HttpServlet {
 	String target;
 	boolean error;
 	ArrayList <BookBean> books;
-	
-	//to be deleted
-	String query;
+	ArrayList <CartBean> cart;
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,6 +50,9 @@ public class Start extends HttpServlet {
 		target = "/Home.jspx";
 		error = false;
 		books = new ArrayList<BookBean>();
+		cart = new ArrayList<CartBean>();
+		Model model = new Model();
+		model.clearVisitorCart();
 		
 		try {
 			context.setAttribute("myModel", new Model());
@@ -59,9 +60,6 @@ public class Start extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		Model model = new Model();
-		model.clearVisitorCart();
 		
 		try {
 			context.setAttribute("errorChecking", new ErrorChecking());
@@ -149,8 +147,8 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			SINGLE BOOK PAGE
 		****************************************************************/
-		if (request.getParameter("title") != null ) {
-			int title = (Integer.parseInt(request.getParameter("title")));
+		if (request.getParameter("viewSingleBook") != null) {
+			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
 			this.openBook(request, response, myModel, title);
 		}
 		
@@ -202,7 +200,24 @@ public class Start extends HttpServlet {
 		 ****************************************************************/
 	
 		
+		if (loggedIn) {
 			
+			String username = (String) request.getSession().getAttribute("loggedInUser");
+			AddressBean shippingAB = myModel.retrieveAddress(username, "shipping");
+			AddressBean billingAB = myModel.retrieveAddress(username, "billing");
+			System.out.println("USER: " + username);
+			
+			System.out.println("PHONE NUMBER: "+ billingAB.getPhoneNumber());
+			
+			System.out.println("SHIPPING ADDRESS LINE1: " + shippingAB.getAddressLine1());
+			System.out.println("SHIPPING ADDRESS CITY: "+ shippingAB.getCity());
+			System.out.println("SHIPPING ADDRESS PROVINCE: "+ shippingAB.getProvince());
+
+			
+			System.out.println("BILLING ADDRESS LINE1: " + billingAB.getAddressLine1());
+			System.out.println("BILLING ADDRESS CITY: "+ billingAB.getCity());
+			System.out.println("BILLING ADDRESS PROVINCE: "+ billingAB.getProvince());
+		}
 		
 		/***************************************************************
 			TESTING BLOCK
@@ -227,7 +242,7 @@ public class Start extends HttpServlet {
 	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
 						
 		//checks if a 'Single Book' has been clicked on
-		if (request.getParameter("title") != null) {
+		if (request.getParameter("viewSingleBook") != null) {
 			target = "/SingleBook.jspx";
 		}
 		//once a review has been submitted, the page is reloaded
@@ -237,6 +252,7 @@ public class Start extends HttpServlet {
 
 		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
 		if (request.getParameter("signUpPageButton") != null) {
+			request.setAttribute("differentAddressTypes", true);
 			target = "/SignUp.jspx";
 		}
 		//checks if 'Login' button was pressed, sets target to the Login page if true
@@ -343,12 +359,50 @@ public class Start extends HttpServlet {
 		String username = request.getParameter("signUpUsername");
 		String email = request.getParameter("signUpEmail");
 		String password = request.getParameter("signUpPassword");
-		String passwordConf = request.getParameter("signUpPasswordConf"); 
-
+		String passwordConf = request.getParameter("signUpPasswordConf");
+		
+		AddressBean shippingAB = new AddressBean();
+		AddressBean billingAB = new AddressBean();
+		shippingAB.setType("shipping");
+		shippingAB.setUsername(username);
+		shippingAB.setAddressLine1(request.getParameter("shippingLine1"));
+		shippingAB.setAddressLine2(request.getParameter("shippingLine2"));
+		shippingAB.setCountry(request.getParameter("shippingCountry"));
+		shippingAB.setProvince(request.getParameter("shippingProvince"));
+		shippingAB.setCity(request.getParameter("shippingCity"));
+		shippingAB.setZip(request.getParameter("shippingZip"));
+		shippingAB.setPhoneNumber(request.getParameter("addressPhone"));
+		
+		if (request.getParameter("sameTypesCheckbox") != null) {
+			billingAB.setType("billing");
+			billingAB.setUsername(username);
+			billingAB.setAddressLine1(shippingAB.getAddressLine1());
+			billingAB.setAddressLine2(shippingAB.getAddressLine2());
+			billingAB.setCountry(shippingAB.getCountry());
+			billingAB.setProvince(shippingAB.getProvince());
+			billingAB.setCity(shippingAB.getCity());
+			billingAB.setZip(shippingAB.getZip());
+			billingAB.setPhoneNumber(shippingAB.getPhoneNumber());
+			errorChecking.checkSignUpError(username, email, password, passwordConf, shippingAB, shippingAB);
+		}
+		else {
+			billingAB.setType("billing");
+			billingAB.setUsername(username);
+			billingAB.setAddressLine1(request.getParameter("billingLine1"));
+			billingAB.setAddressLine2(request.getParameter("billingLine2"));
+			billingAB.setCountry(request.getParameter("billingCountry"));
+			billingAB.setProvince(request.getParameter("billingProvince"));
+			billingAB.setCity(request.getParameter("billingCity"));
+			billingAB.setZip(request.getParameter("billingZip"));
+			billingAB.setPhoneNumber(request.getParameter("billingPhone"));
+			errorChecking.checkSignUpError(username, email, password, passwordConf, shippingAB, billingAB);
+		}
+		
 		//Sets errors, if any
-		errorChecking.checkSignUpError(username, email, password, passwordConf);
 		if (!errorChecking.getErrorStatus()) {
 			myModel.addUser(username, firstName, lastName, email, password);
+			myModel.addAddress(shippingAB);
+			myModel.addAddress(billingAB);
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
@@ -361,6 +415,7 @@ public class Start extends HttpServlet {
 			this.setCart(request, response, myModel, username);
 
 		}else {
+			
 			String signUpErrorMessage = errorChecking.getErrorMessage();
 			error = true;
 			target = "/SignUp.jspx";
@@ -535,6 +590,8 @@ public class Start extends HttpServlet {
 		
 		myModel.addToCart(bid, username);
 		this.setCart(request, response, myModel, username);
+		
+		this.openBook(request, response, myModel, bid);
 
 	}
 	

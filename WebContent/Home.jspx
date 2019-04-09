@@ -20,7 +20,7 @@
 		<header>
 			<jsp:include page="Header.jspx"/>
 		</header>
-		
+			
 	 	<footer>
 			<jsp:include page="Footer.jspx"/>
 		</footer> 

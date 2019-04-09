@@ -29,9 +29,7 @@ public class BookWrapper {
 	private String url;
 	
 	
-	public BookWrapper(int bid, String title, String author, double price, String description, int publishYear,
-			double rating, String category) {
-		super();
+	public BookWrapper(int bid, String title, String author, double price, String description, int publishYear,	double rating, String category) {
 		this.bid = bid;
 		this.title = title;
 		this.author = author;

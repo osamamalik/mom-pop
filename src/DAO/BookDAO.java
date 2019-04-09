@@ -420,12 +420,6 @@ public class BookDAO {
 				constructedQuery += " order by price desc";
 			}
 		}
-		
-		
-		System.out.println("*********************************************");
-		System.out.println(constructedQuery);
-		System.out.println("*********************************************");
-
 				
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
@@ -465,7 +459,10 @@ public class BookDAO {
 		else {
 			return books;
 		}
-	}
+		
+		
+		
+}
 		
 	
 	

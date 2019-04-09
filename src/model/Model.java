@@ -16,6 +16,7 @@ public class Model {
 	private UserDAO userDAO;
 	private BookDAO bookDAO;
 	private CartDAO cartDAO;
+	private AddressDAO addressDAO;
 
 	private boolean errorStatus;
 	private String errorMessage;
@@ -29,6 +30,7 @@ public class Model {
 			userDAO = new UserDAO();
 			bookDAO = new BookDAO();
 			cartDAO = new CartDAO();
+			addressDAO = new AddressDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -249,6 +251,28 @@ public class Model {
 		}
 	}
 	
+	
+	/***************************************************************
+		DATABASE ADDRESS OPERATIONS
+	 ****************************************************************/
+	public void addAddress(AddressBean ab) {
+		try {
+			addressDAO.addAddress(ab);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public AddressBean retrieveAddress(String username, String type) {
+		try {
+			return addressDAO.retrieveAddress(username, type);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 		
 	/***************************************************************
 		SERVICES

@@ -30,6 +30,7 @@ public class CartDAO {
 		}
 	}
 	
+	
 	public void addToCart(int bid, String user) throws SQLException {
 		
 		

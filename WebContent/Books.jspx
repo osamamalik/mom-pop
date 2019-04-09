@@ -89,8 +89,8 @@
 				<c:forEach var="entry" items="${booksList}">
 	                
 	                <tr>
-	              		<!-- <img src="${entry.getUrl()}">	</img>  -->   
-		                <td><a href="Start?title=${entry.getBid()"><c:out value="${entry.getTitle()}"/></a></td>
+	              		<td><button id="bookResultsButton" action="submit" type="submit" name="viewSingleBook" value="${entry.getBid()}" style="background:none;color:inherit;border:none;padding:0;cursor:pointer;"><img src="${entry.getUrl()}" height="280" width="175"></img></button></td>
+		                <td><c:out value="${entry.getTitle()}"/></td>
 		                <td><c:out value="${entry.getAuthor()}"/></td>
 		                <td><c:out value="${entry.getPrice()}"/></td>
 		                <td><c:out value="${entry.getRating()}"/></td>

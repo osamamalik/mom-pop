@@ -5,6 +5,20 @@ DROP TABLE Cart;
 DROP TABLE Users;
 DROP TABLE Books;
 
+
+CREATE TABLE Books (
+	bid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	title VARCHAR(250) NOT NULL,
+	author VARCHAR(120) NOT NULL,
+	price DOUBLE NOT NULL,
+	description VARCHAR(2500) NOT NULL,
+	publishYear INT NOT NULL,
+	rating DOUBLE NOT NULL,
+	category VARCHAR(32) CHECK (category IN ('Biography', 'Fantasy', 'Fiction', 'Food', 'Graphic Novels', 'History', 'Childrens', 'Mystery', 'Non-Fiction', 'Science Fiction', 'Young Adult')),
+	url VARCHAR(10000) NOT NULL,
+	PRIMARY KEY(bid)
+);
+
 CREATE TABLE Users (
 	username	VARCHAR(30) NOT NULL,
 	fname		VARCHAR(30) NOT NULL,
@@ -19,19 +33,65 @@ INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.co
 INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
 INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
 
-
-CREATE TABLE Books (
-	bid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	title VARCHAR(250) NOT NULL,
-	author VARCHAR(120) NOT NULL,
-	price DOUBLE NOT NULL,
-	description VARCHAR(2500) NOT NULL,
-	publishYear INT NOT NULL,
-	rating DOUBLE NOT NULL,
-	category VARCHAR(32) CHECK (category IN ('Biography', 'Fantasy', 'Fiction', 'Food', 'Graphic Novels', 'History', 'Childrens', 'Mystery', 'Non-Fiction', 'Science Fiction', 'Young Adult')),
-	url VARCHAR(10000) NOT NULL,
-	PRIMARY KEY(bid)
+CREATE TABLE Cart (
+	cid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username VARCHAR(30) NOT NULL,
+	bid INT NOT NULL,
+	quantity INT NOT NULL,
+	PRIMARY KEY (cid),
+	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );
+
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 1, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 2, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 3, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 4, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 5, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 6, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 7, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 8, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 9, 3);
+
+
+CREATE TABLE Reviews (
+	rid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username VARCHAR(30) NOT NULL,
+	bid INT NOT NULL,
+	review VARCHAR(2500) NOT NULL,
+	rating INT NOT NULL,
+	PRIMARY KEY (rid),
+	CONSTRAINT reviews_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
+	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+INSERT INTO Reviews (username, bid, review, rating) VALUES(
+'osama',
+1,
+'I must admit that I do not like Apple and was never a fan of Jobs but when I saw that his biography was on a must read list online, I decided to open my heart to this book. When I started reading it, I was a little close-minded to Steve Jobs story but as I advanced his personality grew on me and I actually started laughing and caring about who he was as a person, almost as if he were a friend...this book made me care about Steve job''s life and legacy because it gave me a different perspective on him. I was aware that he was deceased when I began exploring his biography but as I finished I could not help but cry for I knew that he was not part of the world anymore...but one of the last sentences of the book....truly made me laugh and this helped with the sadness.
+
+I believe this book should be read by anyone really, to learn from it in many ways and experience the good sides of Steve Jobs instead of just the bad things that were constantly said about him. He is someone who had a big impact on the 21st century and brought our society into a more advanced technological world. Thank you, Steve Jobs, and for all you contributed to our world, your legacy will live on forever!',
+4.5
+);
+
+CREATE TABLE Orders (
+	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	odate DATE NOT NULL,
+	username VARCHAR(30) NOT NULL,
+	PRIMARY KEY (oid),
+	CONSTRAINT orders_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+CREATE TABLE OrderDetails (
+	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	oid INT NOT NULL,
+	bid INT NOT NULL,
+	PRIMARY KEY (odid),
+	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
+	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
+);
+
+
+
 
 INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Steve Jobs',
@@ -1238,48 +1298,7 @@ With her razor-sharp writing and trademark psychological insight, Gillian Flynn 
 'Mystery',
 'https://images.gr-assets.com/books/1386574953l/19288043.jpg');
 
-CREATE TABLE Reviews (
-	rid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	username VARCHAR(30) NOT NULL,
-	bid INT NOT NULL,
-	review VARCHAR(2500) NOT NULL,
-	rating INT NOT NULL,
-	PRIMARY KEY (rid),
-	CONSTRAINT reviews_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
-	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
-);
 
-INSERT INTO Reviews (username, bid, review, rating) VALUES(
-'osama',
-1,
-'I must admit that I do not like Apple and was never a fan of Jobs but when I saw that his biography was on a must read list online, I decided to open my heart to this book. When I started reading it, I was a little close-minded to Steve Jobs story but as I advanced his personality grew on me and I actually started laughing and caring about who he was as a person, almost as if he were a friend...this book made me care about Steve job''s life and legacy because it gave me a different perspective on him. I was aware that he was deceased when I began exploring his biography but as I finished I could not help but cry for I knew that he was not part of the world anymore...but one of the last sentences of the book....truly made me laugh and this helped with the sadness.
 
-I believe this book should be read by anyone really, to learn from it in many ways and experience the good sides of Steve Jobs instead of just the bad things that were constantly said about him. He is someone who had a big impact on the 21st century and brought our society into a more advanced technological world. Thank you, Steve Jobs, and for all you contributed to our world, your legacy will live on forever!',
-4.5
-);
 
-CREATE TABLE Orders (
-	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	odate DATE NOT NULL,
-	username VARCHAR(30) NOT NULL,
-	PRIMARY KEY (oid),
-	CONSTRAINT orders_username_ref FOREIGN KEY (username) REFERENCES Users (username)
-);
 
-CREATE TABLE OrderDetails (
-	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	oid INT NOT NULL,
-	bid INT NOT NULL,
-	PRIMARY KEY (odid),
-	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
-	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
-);
-
-CREATE TABLE Cart (
-	cid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	username VARCHAR(30) NOT NULL,
-	bid INT NOT NULL,
-	quantity INT NOT NULL,
-	PRIMARY KEY (cid),
-	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
-);

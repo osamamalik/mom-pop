@@ -106,7 +106,9 @@ public class Start extends HttpServlet {
 			LOGIN
 		****************************************************************/
 		if (request.getParameter("loginButton") != null) {
-			this.logIn(request, response, myModel, errorChecking);
+			String username = request.getParameter("loginName");
+			String password = request.getParameter("loginPassword"); 
+			this.logIn(request, response, myModel, errorChecking, username, password);
 		}
 		
 		/***************************************************************
@@ -176,6 +178,7 @@ public class Start extends HttpServlet {
 			ADD TO SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
+			System.out.println("ADD TO CART WAS CLICKED");
 			this.addToCart(request, response, myModel);
 		}
 		
@@ -193,31 +196,20 @@ public class Start extends HttpServlet {
 			this.updateCart(request, response, myModel);
 		}
 		
+		/***************************************************************
+			PAYMENT
+		****************************************************************/
+		if (request.getParameter("checkoutButton") != null) {
+		}
+		
+		
 		
 		
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
-	
-		
-		if (loggedIn) {
-			
-			String username = (String) request.getSession().getAttribute("loggedInUser");
-			AddressBean shippingAB = myModel.retrieveAddress(username, "shipping");
-			AddressBean billingAB = myModel.retrieveAddress(username, "billing");
-			System.out.println("USER: " + username);
-			
-			System.out.println("PHONE NUMBER: "+ billingAB.getPhoneNumber());
-			
-			System.out.println("SHIPPING ADDRESS LINE1: " + shippingAB.getAddressLine1());
-			System.out.println("SHIPPING ADDRESS CITY: "+ shippingAB.getCity());
-			System.out.println("SHIPPING ADDRESS PROVINCE: "+ shippingAB.getProvince());
 
-			
-			System.out.println("BILLING ADDRESS LINE1: " + billingAB.getAddressLine1());
-			System.out.println("BILLING ADDRESS CITY: "+ billingAB.getCity());
-			System.out.println("BILLING ADDRESS PROVINCE: "+ billingAB.getProvince());
-		}
+		
 		
 		/***************************************************************
 			TESTING BLOCK
@@ -313,12 +305,14 @@ public class Start extends HttpServlet {
 			target = "/ShoppingCart.jspx";	
 		}
 		
+		//checks if checkout was requested
+		if (request.getParameter("checkoutButton") != null) {
+			target = "/Payment.jspx";	
+		}
+		
 	}
 		
-	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException {
-		
-		String username = request.getParameter("loginName");
-		String password = request.getParameter("loginPassword"); 
+	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, String username, String password) throws ServletException, IOException {
 		
 		// Sets errors, if any
 		errorChecking.checkLoginError(username, password);
@@ -342,6 +336,9 @@ public class Start extends HttpServlet {
 			
 			//sets the user's cart
 			this.setCart(request, response, myModel, username);
+			
+			//sets the user's address information
+			this.setShippingAddress(request, response, myModel, username);
 		}
 		
 		else {
@@ -403,16 +400,21 @@ public class Start extends HttpServlet {
 			myModel.addUser(username, firstName, lastName, email, password);
 			myModel.addAddress(shippingAB);
 			myModel.addAddress(billingAB);
-			loggedIn = true;
-			request.getSession().setAttribute("loggedInSession", loggedIn);
-			request.getSession().setAttribute("loggedInUser", username);
-			this.target = "/Home.jspx";
 			
-			//clears the 'visitor' shopping cart
-			myModel.clearVisitorCart();
+			//checks if there are items in the visitor shopping cart
+			//if so, adds these items to the database for the newly created user
+			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
 			
-			//sets the user's cart
+			for (CartBean cartItem : shoppingCart) {
+				cartItem.setUsername(username);
+			}
+
+			myModel.addShoppingCart(shoppingCart, username);
 			this.setCart(request, response, myModel, username);
+			
+			this.logIn(request, response, myModel, errorChecking, username, password);
+			
+			this.target = "/Home.jspx";
 
 		}else {
 			
@@ -428,6 +430,8 @@ public class Start extends HttpServlet {
 		loggedIn = false;
 		request.getSession().setAttribute("loggedInSession", loggedIn);
 		request.getSession().setAttribute("loggedInUser", null);
+		request.getSession().setAttribute("cart", null);
+		request.getSession().setAttribute("totalPrice", null);
 	}
 	
 
@@ -574,11 +578,14 @@ public class Start extends HttpServlet {
 
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		
+		System.out.println("ADD TO CART CALLED");
+
 		String username;
 		
 		//obtains bid of the book being added to cart
 		int bid = Integer.parseInt(request.getParameter("addToCart"));
+		System.out.println("BID OF BOOK BING ADDED: " + bid);
+
 		
 		//obtains the username if the user is logged in. If not, sets username as "visitor"
 		if (loggedIn) {
@@ -587,9 +594,14 @@ public class Start extends HttpServlet {
 		else {
 			username = "visitor";
 		}
+		System.out.println("USERNAME BOOK IS BEING ADDED TOD: " + username);
+
 		
-		myModel.addToCart(bid, username);
+		myModel.addToCart(bid, 1, username);
+		System.out.println("METHOD IN MODEL WAS CALLED");
+
 		this.setCart(request, response, myModel, username);
+		System.out.println("THE CART WAS SET");
 		
 		this.openBook(request, response, myModel, bid);
 
@@ -648,12 +660,37 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void setCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
-		
 		ArrayList<CartBean> shoppingCart = myModel.retrieveCart(username);
 		double totalPrice = myModel.getTotalPrice(username);
 		request.getSession().setAttribute("cart", shoppingCart);
 		request.getSession().setAttribute("totalPrice", totalPrice);
+	}
+	
+	protected void setShippingAddress(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
+
+		//obtains user's shipping and billing addresses for confirmation on the payment page
+		AddressBean shippingAB = myModel.retrieveAddress(username, "shipping");
+		AddressBean billingAB = myModel.retrieveAddress(username, "shipping");
 		
+		//sets user's shipping address details 
+		request.getSession().setAttribute("shippingLine1", shippingAB.getAddressLine1());
+		request.getSession().setAttribute("shippingLine2", shippingAB.getAddressLine2());
+		request.getSession().setAttribute("shippingCountry", shippingAB.getCountry());
+		request.getSession().setAttribute("shippingProvince", shippingAB.getProvince());
+		request.getSession().setAttribute("shippingCity", shippingAB.getCity());
+		request.getSession().setAttribute("shippingZip", shippingAB.getZip());
+		
+		//sets user's billing address details 
+		request.getSession().setAttribute("billingLine1", billingAB.getAddressLine1());
+		request.getSession().setAttribute("billingLine2", billingAB.getAddressLine2());
+		request.getSession().setAttribute("billingCountry", billingAB.getCountry());
+		request.getSession().setAttribute("billingProvince", billingAB.getProvince());
+		request.getSession().setAttribute("billingCity", billingAB.getCity());
+		request.getSession().setAttribute("billingZip", billingAB.getZip());
+		
+		//sets user's phone number
+		request.getSession().setAttribute("addressPhone", shippingAB.getPhoneNumber());
+
 	}
 		
 	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, int bookID) throws ServletException, IOException {

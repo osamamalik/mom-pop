@@ -31,22 +31,23 @@ public class CartDAO {
 	}
 	
 	
-	public void addToCart(int bid, String user) throws SQLException {
+	public void addToCart(int bid, int quantity, String user) throws SQLException {
 		
+		//constructs the initial query
+		String query = "insert into CART(username, bid, quantity) values('" + user + "', " + bid + "," + quantity + ")";
+		//retrieves the user's shopping cart
+		ArrayList<CartBean> userCart = this.retrieveCart(user);
 		
 		Connection con = this.ds.getConnection();
 		Statement stmt = con.createStatement();
-		String query = "insert into CART(username, bid, quantity) values('" + user + "', " + bid + "," + 1 + ")";
-		
-		//retrieves the user's shopping cart
-		ArrayList<CartBean> userCart = this.retrieveCart(user);
 		
 		//checks if this user's cart already contains the book
 		//if so, query is adjusted to update quantity. if not, new item is added to cart
 		for (CartBean cart : userCart) {
 		
 			if (cart.getBid() == bid) {
-				query = "update cart set quantity = quantity + 1 where cid = " + cart.getCid() + " and username = '" + user + "'";
+				int cid = cart.getCid();
+				query = "update cart set quantity = quantity + " + quantity + " where cid = " + cid + " and username = '" + user + "'";
 			}
 		}
 		
@@ -54,6 +55,14 @@ public class CartDAO {
 		stmt.close();
 		con.close();
 		
+	}
+	
+	public void addShoppingCart(ArrayList<CartBean> userCart, String user) throws SQLException {
+					
+		for (CartBean cart : userCart) {
+			this.addToCart(cart.getBid(), cart.getQuantity(), cart.getUsername());
+		}
+
 	}
 	
 	public void removeFromCart(int bid, String user) throws SQLException {
@@ -88,16 +97,16 @@ public class CartDAO {
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		while(r.next()){
-			CartBean cart = new CartBean();
+			CartBean cartItem = new CartBean();
 			int bid = r.getInt("bid");
-			cart.setCid(r.getInt("cid"));
-			cart.setBid(bid);
-			cart.setUsername(user);
-			cart.setPrice(r.getDouble("price"));
-			cart.setTitle(r.getString("title"));
-			cart.setQuantity(r.getInt("quantity"));
-			cart.setAuthor(r.getString("author"));
-			shoppingCart.add(cart);
+			cartItem.setCid(r.getInt("cid"));
+			cartItem.setBid(bid);
+			cartItem.setUsername(user);
+			cartItem.setPrice(r.getDouble("price"));
+			cartItem.setTitle(r.getString("title"));
+			cartItem.setQuantity(r.getInt("quantity"));
+			cartItem.setAuthor(r.getString("author"));
+			shoppingCart.add(cartItem);
 		}
 		
 		p.close();

@@ -21,10 +21,6 @@
 			<jsp:include page="Header.jspx"/>
 		</header>
 		
-		
-		
-		
-		
 			<table>			
 				<c:forEach var="entry" items="${sessionScope['cart']}"> 
 				
@@ -49,22 +45,163 @@
 	           		
 			</table>	
 			
-				
 			
-			 
+			
+				 
 		 
-		 	<table>
-		 	
-		 		<tr>
-		 		
-		 		</tr>
-		 	
-		 	
-		 	
-		 	
-		 	
-
-		 	</table>
+			<table>
+				
+				<tr>
+					<td><label>Billing address same as shipping?</label></td>		
+					<td><input type="checkbox" id="sameTypesCheckbox" name="sameTypesCheckbox" onclick ="billingAddressVisibility()"></input></td>
+				</tr>
+			
+				<tr>
+					<td>
+						<div>
+							<table>
+								<tr>
+									<td><p>Default Shipping Address:</p></td>
+								</tr>
+								
+								
+								<tr>
+									<td><label for="shippingLine1">Address Line 1:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="shippingLine1" name="shippingLine1" placeholder="Street address, P.P. box, company name, c/o" size="50"></input></td>		
+									<td><label id="shippingLine1Error"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="shippingLine2">Address Line 2:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="shippingLine2" name="shippingLine2" placeholder="Apartment, suite, unit, building, floor, etc." size="50"></input></td>		
+								</tr>
+								
+								<tr>
+									<td><label for="shippingCountry">Country:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="shippingCountry" name="shippingCountry"></input></td>		
+									<td><label id="shippingCountryError"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="shippingProvince">Province:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="shippingProvince" name="shippingProvince"></input></td>		
+									<td><label id="shippingProvinceError"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="shippingCity">City:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="shippingCity" name="shippingCity"></input></td>		
+									<td><label id="shippingCityError"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="shippingZip">Zip Code::</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="shippingZip" name="shippingZip"></input></td>		
+									<td><label id="shippingZipError"></label></td>
+								</tr>
+											
+							</table>	
+						</div>
+					</td>
+				
+					
+					
+					<td>
+						<div id="billingAddress">
+							<table>
+							
+								<tr>
+									<td><p>Default Billing Address:</p></td>
+								</tr>
+								
+								<tr>
+									<td><label for="billingLine1">Address Line 1:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="billingLine1" name="billingLine1" placeholder="Street address, P.P. box, company name, c/o" size="50"></input></td>		
+									<td><label id="billingLine1Error"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="billingLine2">Address Line 2:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="billingLine2" name="billingLine2" placeholder="Apartment, suite, unit, building, floor, etc." size="50"></input></td>		
+								</tr>
+								
+								<tr>
+									<td><label for="billingCountry">Country:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="billingCountry" name="billingCountry"></input></td>		
+									<td><label id="billingCountryError"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="billingProvince">Province:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="billingProvince" name="billingProvince"></input></td>		
+									<td><label id="billingProvinceError"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="billingCity">City:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="billingCity" name="billingCity"></input></td>		
+									<td><label id="billingCityError"></label></td>
+								</tr>
+								
+								<tr>
+									<td><label for="billingZip">Zip Code:</label></td>
+								</tr>
+						
+								<tr>
+									<td><input type="text" id="billingZip" name="billingZip"></input></td>		
+									<td><label id="billingZipError"></label></td>
+								</tr>
+											
+							</table>	
+						</div>
+					</td>
+					
+				</tr>
+				
+				<tr>
+					<td><label for="addressPhone">Phone Number (Format: 123-456-7890):</label></td>
+				</tr>
+		
+				<tr>
+					<td><input type="tel" id="addressPhone" name="addressPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></input></td>		
+					<td><label id="addressPhoneError"></label></td>
+				</tr>
+				
+			</table>
+			
 		 
 		 
 		 

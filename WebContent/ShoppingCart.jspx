@@ -19,15 +19,12 @@
 		<header>
 			<jsp:include page="Header.jspx"/>
 		</header>
-		
-			<p>THIS IS YOUR SHOPPING CART</p>
-		
+			
 			<table>
 			
 				<c:forEach var="entry" items="${sessionScope['cart']}"> 
 				
 	                <tr>
-	                	<td><c:out value="${entry.getBid()}"/></td>
 		                <td><c:out value="${entry.getTitle()}"/></td>
 		                <td><c:out value="${entry.getPrice()}"/></td>
 						<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>

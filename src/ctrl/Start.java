@@ -548,7 +548,6 @@ public class Start extends HttpServlet {
 			String databaseBid = Integer.toString(cartItem.getBid()); 
 			//gets the quantity that appears in the current state of cart of the same item		
 			quantity = Integer.parseInt(request.getParameter(databaseBid));
-			System.out.println(databaseBid + " WORKED");
 			//checks if the inspected item's quantity has been changed
 			//if so, updates database. if not, inspects the next item
 			if (quantity != cartItem.getQuantity()) {

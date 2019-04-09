@@ -283,7 +283,6 @@ public class Model {
 		UserBean ub = new UserBean();
 		try {
 			ub = retrieveUser(username);
-			System.out.println(ub.getPassword());
 			return ub.getPassword().equals(password);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -29,7 +29,7 @@ public class Start extends HttpServlet {
 	boolean adminLoggedIn;	
 	String target;
 	boolean error;
-	ArrayList <BookBean>books;
+	ArrayList <BookBean> books;
 	
 	//to be deleted
 	String query;
@@ -61,6 +61,13 @@ public class Start extends HttpServlet {
 		}
 		
 		try {
+			context.setAttribute("errorChecking", new ErrorChecking());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			context.setAttribute("query", new QueryConstructor());
 		}
 		catch (Exception e) {
@@ -78,6 +85,7 @@ public class Start extends HttpServlet {
 			INITIALIZATION OF MODEL AND QUERY
 		 ****************************************************************/
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
+		ErrorChecking errorChecking = (ErrorChecking) this.getServletContext().getAttribute("errorChecking");
 		QueryConstructor queryObject = (QueryConstructor) this.getServletContext().getAttribute("query");
 		request.getSession().setAttribute("query", queryObject);
 		
@@ -90,14 +98,14 @@ public class Start extends HttpServlet {
 			SIGN UP
 		 ****************************************************************/
 		if (request.getParameter("signUpButton") != null) {
-			this.signUp(request, response, myModel);
+			this.signUp(request, response, myModel, errorChecking);
 		}
 		
 		/***************************************************************
 			LOGIN
 		****************************************************************/
 		if (request.getParameter("loginButton") != null) {
-			this.logIn(request, response, myModel);
+			this.logIn(request, response, myModel, errorChecking);
 		}
 		
 		/***************************************************************
@@ -159,7 +167,7 @@ public class Start extends HttpServlet {
 			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
 		if (request.getParameter("PCSGenerateButton") != null) {
-			this.catalogService(request, response, myModel);
+			this.catalogService(request, response, myModel, errorChecking);
 		}
 		
 		
@@ -297,16 +305,16 @@ public class Start extends HttpServlet {
 		
 	}
 		
-	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException {
 		
 		String username = request.getParameter("loginName");
 		String password = request.getParameter("loginPassword"); 
 		
 		// Sets errors, if any
-		myModel.checkLoginError(username, password);
+		errorChecking.checkLoginError(username, password);
 		
 		// No errors, user is successfully logged in
-		if (!myModel.getErrorStatus()) {		
+		if (!errorChecking.getErrorStatus()) {		
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
@@ -320,31 +328,33 @@ public class Start extends HttpServlet {
 		}
 		
 		else {
-			String loginErrorMessage = myModel.getErrorMessage();
+			String loginErrorMessage = errorChecking.getErrorMessage();
 			error = true;
 			this.target = "/Login.jspx";
 			request.setAttribute("error", loginErrorMessage);
 		}
 	}
 	
-	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException {
 		
-		String username = request.getParameter("signUpName");
+		String firstName = request.getParameter("signUpFirstName");
+		String lastName = request.getParameter("signUpLastName");
+		String username = request.getParameter("signUpUsername");
 		String email = request.getParameter("signUpEmail");
-		String password = request.getParameter("signUpPassword"); 
+		String password = request.getParameter("signUpPassword");
 		String passwordConf = request.getParameter("signUpPasswordConf"); 
 
 		//Sets errors, if any
-		myModel.checkSignUpError(username, email, password, passwordConf);
-		if (!myModel.getErrorStatus()) {
-			myModel.addUser(username, email, password);
+		errorChecking.checkSignUpError(username, email, password, passwordConf);
+		if (!errorChecking.getErrorStatus()) {
+			myModel.addUser(username, firstName, lastName, email, password);
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
 			this.target = "/Home.jspx";
 
 		}else {
-			String signUpErrorMessage = myModel.getErrorMessage();
+			String signUpErrorMessage = errorChecking.getErrorMessage();
 			error = true;
 			target = "/SignUp.jspx";
 			request.setAttribute("error", signUpErrorMessage);
@@ -616,7 +626,7 @@ public class Start extends HttpServlet {
 		openBook(request, response, myModel, title);
 	}
 	
-	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException{
+	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
 		
 		int bid = (Integer.parseInt(request.getParameter("bid")));
 		String f = "xmlExports/" + request.getSession().getId()+".xml";

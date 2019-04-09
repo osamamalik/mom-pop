@@ -100,6 +100,7 @@ public class CartDAO {
 			cart.setPrice(r.getDouble("price"));
 			cart.setTitle(r.getString("title"));
 			cart.setQuantity(r.getInt("quantity"));
+			cart.setAuthor(r.getString("auhor"));
 			shoppingCart.add(cart);
 		}
 		

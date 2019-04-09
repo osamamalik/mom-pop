@@ -20,48 +20,9 @@
 		<legend>Sign Up</legend>
 		
 		<header>
-		
-			<table>
-			
-				<tr>
-				
-					<td><input type="submit" value="Home" name="homeButton"></input></td>
-					<td><input type="submit" value="Browse" name="booksPageButton"></input></td>
-					<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
-					
-				</tr>
-			
-				<tr>
-				
-					<td><input type="text" id="searchBar" name="searchBar"></input></td>
-					<td><input type="submit" value="search" name="searchButton"></input></td>
-			
-				</tr>
-				
-				
-				<table>
-					<tr>
-						<td><input type="submit" value="Biography" name="headerCategory"></input></td>
-						<td><input type="submit" value="Business" name="headerCategory"></input></td>
-						<td><input type="submit" value="Fantasy" name="headerCategory"></input></td>
-						<td><input type="submit" value="Fiction" name="headerCategory"></input></td>
-						<td><input type="submit" value="Food" name="headerCategory"></input></td>
-						<td><input type="submit" value="Graphic Novels" name="headerCategory"></input></td>
-						<td><input type="submit" value="History" name="headerCategory"></input></td>
-						<td><input type="submit" value="Kids" name="headerCategory"></input></td>
-						<td><input type="submit" value="Mystery" name="headerCategory"></input></td>
-						<td><input type="submit" value="Non-Fiction" name="headerCategory"></input></td>
-						<td><input type="submit" value="Science Fiction" name="headerCategory"></input></td>
-						<td><input type="submit" value="Textbooks" name="headerCategory"></input></td>
-						<td><input type="submit" value="Young Adult" name="headerCategory"></input></td>
-					</tr>
-				</table>
-
-			</table>
-			
-			
-			
+			<jsp:include page="Header.jspx"/>
 		</header>
+		
 			
 		<table>
 		
@@ -72,12 +33,30 @@
 			</c:if>
 			
 			<tr>
-				<td><label for="signUpName">Username:</label></td>
+				<td><label for="signUpFirstName">First Name:</label></td>
 			</tr>
 			
 			<tr>
-				<td><input type="text" id="signUpName" name="signUpName"></input></td>
-				<td><label id="signUpNameError"></label></td>
+				<td><input type="text" id="signUpFirstName" name="signUpFirstName"></input></td>
+				<td><label id="signUpFirstNameError"></label></td>
+			</tr>
+			
+			<tr>
+				<td><label for="signUpLastName">Last Name:</label></td>
+			</tr>
+			
+			<tr>
+				<td><input type="text" id="signUpLastName" name="signUpLastName"></input></td>
+				<td><label id="signUpLastNameError"></label></td>
+			</tr>
+			
+			<tr>
+				<td><label for="signUpUsername">Username:</label></td>
+			</tr>
+			
+			<tr>
+				<td><input type="text" id="signUpUsername" name="signUpUsername"></input></td>
+				<td><label id="signUpUsernameError"></label></td>
 			</tr>
 			
 			<tr>
@@ -112,6 +91,13 @@
 			</tr>
 				
 		</table>
+		
+		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		
+		
 	</form>
 	
 </body>

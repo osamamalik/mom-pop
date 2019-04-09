@@ -25,8 +25,8 @@ public class UserDAO {
 		}
 	}
 	
-	public void addUser(String username, String email, String password) throws SQLException {
-		String query ="INSERT INTO USERS(username, email, password) VALUES('" + username + "','" + email + "','" + password+ "')";
+	public void addUser(String username, String firstName, String lastName, String email, String password) throws SQLException {
+		String query ="insert into USERS values ('" + username + "','" + firstName + "','" + lastName + "','" + email + "','" + password+ "')";
 		Connection con = this.ds.getConnection();
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate(query);
@@ -52,6 +52,9 @@ public class UserDAO {
 		if(r.next()){
 			ub.setUsername(r.getString("username"));
 			ub.setPassword(r.getString("password"));
+			ub.setFirstName(r.getString("fname"));
+			ub.setLastName(r.getString("lname"));
+			ub.setEmail(r.getString("email"));
 		}
 		p.close();
 		con.close();

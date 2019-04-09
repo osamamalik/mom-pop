@@ -26,6 +26,7 @@
 				
 	                <tr>
 		                <td><c:out value="${entry.getTitle()}"/></td>
+		                <td><c:out value="${entry.getAuthor()}"/></td>
 		                <td><c:out value="${entry.getPrice()}"/></td>
 						<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
 						<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>

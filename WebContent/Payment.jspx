@@ -10,7 +10,7 @@
 <head>
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/myJS.js">;</script>
+	<script type="text/javascript" src="res/errorChecking.js">;</script>
 <title>Checkout</title>
 </head>
 <body>
@@ -47,9 +47,6 @@
 	           		
 			</table>	
 			
-			
-			
-				 
 		 
 			<table>
 				
@@ -194,11 +191,11 @@
 				</tr>
 				
 				<tr>
-					<td><label for="addressPhone">Phone Number (Format: 123-456-7890):</label></td>
+					<td><label for="addressPhone">Phone Number:</label></td>
 				</tr>
 		
 				<tr>
-					<td><input type="tel" id="addressPhone" name="addressPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="${addressPhone}"></input></td>		
+					<td><input type="tel" id="addressPhone" name="addressPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="${addressPhone}" placeholder="123-456-7890"></input></td>		
 					<td><label id="addressPhoneError"></label></td>
 				</tr>
 				
@@ -210,21 +207,30 @@
 		 		<table>
 		 	
 			 		<tr>
-						<td><label for="creditCardNumber">Credit Cart Number: Format: #### - #### - #### - ####):</label></td>
+						<td><label for="creditCardNumber">Credit Cart Number:</label></td>
 					</tr>
 			
 					<tr>
-						<td><input type="tel" id="creditCardNumber" name="creditCardNumber" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"></input></td>		
+						<td><input type="tel" id="creditCardNumber" name="creditCardNumber" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}" placeholder="111-222-333-444"></input></td>		
 						<td><label id="creditCardNumberError"></label></td>
 					</tr>
 					
 					<tr>
-						<td><label for="creditCardExpiry">Credit Expiry Date:</label></td>
+						<td><label for="creditCardExpiry">Credit Expiry Month:</label></td>
 					</tr>
 			
 					<tr>
-						<td><input type="date" id="creditCardExpiry" name="creditCardExpiry"></input></td>		
-						<td><label id="creditCardExpiry"></label></td>
+						<td><input type="number" id="creditCardExpiryMonth" name="creditCardExpiryMonth" min="01" max = "12"></input></td>		
+						<td><label id="creditCardExpiryMonth"></label></td>
+					</tr>
+					
+					<tr>
+						<td><label for="creditCardExpiryDay">Credit Expiry Day:</label></td>
+					</tr>
+			
+					<tr>
+						<td><input type="number" id="creditCardExpiryDay" name="creditCardExpiryDay" min="01" max = "31"></input></td>		
+						<td><label id="creditCardExpiryDay"></label></td>
 					</tr>
 					
 					<tr>

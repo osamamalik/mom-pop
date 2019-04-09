@@ -30,7 +30,7 @@
 					   <option>Top Matches...</option>
 			           <option>Newest to Oldest</option>
 			           <option>Oldest to Newest</option>
-			           <option>Review</option>
+			           <option>Rating</option>
  			           <option>Price - Low to High</option>
  			           <option>Price - High to Low</option>
      				 </select>
@@ -46,44 +46,59 @@
 					<td><label>FILTER</label></td>
 				</tr>
 				
-				
 				<tr>
 					<td><label>Price:</label></td>
-					<td><input type="number" id="priceLowFilter" name="priceLowFilter" placeholder="from"></input></td>
-					<td><input type="number" id="priceHighFilter" name="priceHighFilter" placeholder="to"></input></td>
+					<td><input type="number" id="priceLowFilter" name="priceLowFilter"></input></td>
+					<td><input type="number" id="priceHighFilter" name="priceHighFilter"></input></td>
 				</tr>
-				
 				
 				<tr>
 					<td>Category:</td>
 				</tr>
-				<c:forEach var="categoryFilter" items="${categoriesFilterList}">
+				<c:forEach var="category" items="${categoriesFilterList}">
 		        	<tr>   
-			        	<td><input type="checkbox"><c:out value="${categoryFilter}"/></input></td>
+			        	<td><input type="checkbox" name="categoryFilter" value = "${category}"> <c:out value= "${category}"/> </input></td>
 		            </tr>
 		        </c:forEach>
-
+		        
+		        <tr>
+					<td>Average Rating:</td>
+				</tr>
+				<tr>   
+			    	<td><input type="radio" name="ratingFilter" value="above4">4 and up</input></td>
+		        </tr>
+				<tr>   
+			    	<td><input type="radio" name="ratingFilter" value="above3">3 and up</input></td>
+		        </tr>
+				<tr>   
+			    	<td><input type="radio" name="ratingFilter" value="above2">2 and up</input></td>
+		        </tr>
+				<tr>   
+			    	<td><input type="radio" name="ratingFilter" value="above1">1 and up</input></td>
+		        </tr>
   				
 			<tr>
-				<td><input type="submit" value="Filter" name="filterButton"></input></td>
+				<td><input type="submit" value="Apply Filter" name="filterButton"></input></td>
+				<td><input type="submit" value="Reset Filter" name="resetFilterButton"></input></td>
 			</tr>
 				
 			</table>
 				
 
 			<table>		
-				<c:forEach var="entry" items="${booksMap}">
+				<c:forEach var="entry" items="${booksList}">
 	                
 	                <tr>
 	              		<!-- <img src="${entry.getUrl()}">	</img>  -->   
-		                <td><c:out value="${entry.getTitle()}"/></td>
+		                <td><a href="Start?title=${entry.getBid()"><c:out value="${entry.getTitle()}"/></a></td>
 		                <td><c:out value="${entry.getAuthor()}"/></td>
 		                <td><c:out value="${entry.getPrice()}"/></td>
-		                <td><c:out value="${entry.getReview()}"/></td>
+		                <td><c:out value="${entry.getRating()}"/></td>
 		                <td><c:out value="${entry.getPublishYear()}"/></td>
 		               	<td><c:out value="${entry.getCategory()}"/></td>
+						<!-- <td><button action="submit" type="submit" name="addToCart" value = "${entry.getBid()}">Add</button></td>-->  
 	                </tr>
-	             
+	                
 	           	</c:forEach>
 			</table>
 

@@ -8,24 +8,26 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="res/styles.css" type="text/css"
+<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
 	<script type="text/javascript" src="res/myJS.js">;</script>
-<title>Home</title>
+<title>Admin</title>
 </head>
 <body>
-
-	<form method="POST">
+	<form>
 	
 		<header>
-			<jsp:include page="Header.jspx"/>
+			<input type="submit" value="Home" name="homeButton"></input>
 		</header>
 		
-	 	<footer>
-			<jsp:include page="Footer.jspx"/>
-		</footer> 
+		<table>
+			<tr>
+				<td><input type="submit" value="Services" name="servicesButton"></input></td>
+				<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
+			</tr>
+		</table>
+		
 	</form>
-
 </body>
 </html>
 </jsp:root>

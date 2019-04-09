@@ -11,20 +11,54 @@
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
 	<script type="text/javascript" src="res/myJS.js">;</script>
-<title>Home</title>
+<title>E-men | Analytics</title>
 </head>
+
 <body>
 
 	<form method="POST">
 	
+	
 		<header>
-			<jsp:include page="Header.jspx"/>
+			<input type="submit" value="Home" name="homeButton"></input>
 		</header>
 		
-	 	<footer>
+		<table>
+		
+			<c:choose>	
+		
+				<c:when test="${sessionScope['loggedInUser'] == 'admin'}">
+				
+					<tr>
+						<td>Some analytics stuff here</td>		
+					</tr>
+
+				</c:when>
+				
+				<c:otherwise>
+				
+					<tr>
+						<td>You must be logged in in as administrator to view this page</td>
+						<td>You will be redirected to the login page</td>
+
+						<meta http-equiv='refresh' content='3; url=Login.jspx'></meta>
+					</tr>
+					
+				</c:otherwise>
+					
+			</c:choose>	
+			
+					
+		</table>
+		
+		<footer>
 			<jsp:include page="Footer.jspx"/>
 		</footer> 
+		
 	</form>
+	
+	
+
 
 </body>
 </html>

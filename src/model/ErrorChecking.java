@@ -55,10 +55,6 @@ public class ErrorChecking {
 			}
 			return;
 		}
-		else if (!email.contains("@") || email.length() < 3) {
-			setErrorStatus(true);
-			setErrorMessage("EMAILFORMAT");
-		}
 		else if (password.length() < 6) {
 			setErrorStatus(true);
 			setErrorMessage("SHORTPASSWORD");
@@ -66,6 +62,10 @@ public class ErrorChecking {
 		else if(!password.equals(passwordConf)) {
 			setErrorStatus(true);
 			setErrorMessage("PASSWORDMISMATCH");
+		}
+		else if(myModel.retrieveUser(username).getUsername() != null) {
+			setErrorStatus(true);
+			setErrorMessage("EXISTINGUSER");
 		}
 	}
 	

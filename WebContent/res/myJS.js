@@ -5,3 +5,4 @@ function loginValidate() {
 function signUpValidate() {
 	return true;
 }
+

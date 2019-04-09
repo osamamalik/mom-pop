@@ -4,7 +4,7 @@ DROP TABLE Orders;
 DROP TABLE Cart;
 DROP TABLE Users;
 DROP TABLE Books;
-
+DROP TABLE Address;
 
 CREATE TABLE Books (
 	bid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -28,10 +28,41 @@ CREATE TABLE Users (
 	PRIMARY KEY(username)
 );
 
+CREATE TABLE Users (
+	username	VARCHAR(30) NOT NULL,
+	fname		VARCHAR(30) NOT NULL,
+	lname		VARCHAR(30) NOT NULL,
+	email		VARCHAR(30) NOT NULL,
+	password	VARCHAR(50) NOT NULL,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE Address (
+	aid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username	VARCHAR(30) NOT NULL,
+	address_type VARCHAR(8) CHECK (address_type IN ('shipping', 'billing')),
+	line1 VARCHAR(100) NOT NULL,
+	line2 VARCHAR(100),
+	country VARCHAR(20) NOT NULL,
+	province VARCHAR(20) NOT NULL,
+	city VARCHAR(30) NOT NULL,
+	zip VARCHAR(20) NOT NULL,
+	phone VARCHAR(20),
+	PRIMARY KEY(aid)
+	CONSTRAINT address_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
 INSERT INTO Users VALUES ('osama', 'Osama', 'Malik', 'omalik91@gmail.com', 'abc123');
 INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.com', 'abc123');
 INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
 INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
+
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('osama', 'shipping', '1 shipping lanes', 'unit #1', 'Canada', 'ON', 'Toronto', 'M11P11', '111-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('osama', 'billing', '1 billing lanes', 'unit #1', 'Canada', 'ON', 'Toronto', 'M11P11', '111-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('ray', 'shipping', '2 shipping lanes', 'unit #2', 'Canada', 'ON', 'Toronto', 'M22P22', '222-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('ray', 'billing', '2 billing lanes', 'unit #2', 'Canada', 'ON', 'Toronto', 'M22P22', '222-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('baris', 'shipping', '3 shipping lanes', 'unit #3', 'Canada', 'ON', 'Toronto', 'M33P33', '333-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('baris', 'billing', '3 billing lanes', 'unit #3', 'Canada', 'ON', 'Toronto', 'M33P33', '333-11-11');
 
 CREATE TABLE Cart (
 	cid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -41,16 +72,6 @@ CREATE TABLE Cart (
 	PRIMARY KEY (cid),
 	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );
-
-INSERT INTO Cart (username, bid, quantity) VALUES('osama', 1, 1);
-INSERT INTO Cart (username, bid, quantity) VALUES('osama', 2, 2);
-INSERT INTO Cart (username, bid, quantity) VALUES('osama', 3, 3);
-INSERT INTO Cart (username, bid, quantity) VALUES('ray', 4, 1);
-INSERT INTO Cart (username, bid, quantity) VALUES('ray', 5, 2);
-INSERT INTO Cart (username, bid, quantity) VALUES('ray', 6, 3);
-INSERT INTO Cart (username, bid, quantity) VALUES('baris', 7, 1);
-INSERT INTO Cart (username, bid, quantity) VALUES('baris', 8, 2);
-INSERT INTO Cart (username, bid, quantity) VALUES('baris', 9, 3);
 
 
 CREATE TABLE Reviews (
@@ -64,14 +85,6 @@ CREATE TABLE Reviews (
 	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
 );
 
-INSERT INTO Reviews (username, bid, review, rating) VALUES(
-'osama',
-1,
-'I must admit that I do not like Apple and was never a fan of Jobs but when I saw that his biography was on a must read list online, I decided to open my heart to this book. When I started reading it, I was a little close-minded to Steve Jobs story but as I advanced his personality grew on me and I actually started laughing and caring about who he was as a person, almost as if he were a friend...this book made me care about Steve job''s life and legacy because it gave me a different perspective on him. I was aware that he was deceased when I began exploring his biography but as I finished I could not help but cry for I knew that he was not part of the world anymore...but one of the last sentences of the book....truly made me laugh and this helped with the sadness.
-
-I believe this book should be read by anyone really, to learn from it in many ways and experience the good sides of Steve Jobs instead of just the bad things that were constantly said about him. He is someone who had a big impact on the 21st century and brought our society into a more advanced technological world. Thank you, Steve Jobs, and for all you contributed to our world, your legacy will live on forever!',
-4.5
-);
 
 CREATE TABLE Orders (
 	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -1300,5 +1313,21 @@ With her razor-sharp writing and trademark psychological insight, Gillian Flynn 
 
 
 
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 1, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 2, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 3, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 4, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 5, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 6, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 7, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 8, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 9, 3);
 
+INSERT INTO Reviews (username, bid, review, rating) VALUES(
+'osama',
+1,
+'I must admit that I do not like Apple and was never a fan of Jobs but when I saw that his biography was on a must read list online, I decided to open my heart to this book. When I started reading it, I was a little close-minded to Steve Jobs story but as I advanced his personality grew on me and I actually started laughing and caring about who he was as a person, almost as if he were a friend...this book made me care about Steve job''s life and legacy because it gave me a different perspective on him. I was aware that he was deceased when I began exploring his biography but as I finished I could not help but cry for I knew that he was not part of the world anymore...but one of the last sentences of the book....truly made me laugh and this helped with the sadness.
 
+I believe this book should be read by anyone really, to learn from it in many ways and experience the good sides of Steve Jobs instead of just the bad things that were constantly said about him. He is someone who had a big impact on the 21st century and brought our society into a more advanced technological world. Thank you, Steve Jobs, and for all you contributed to our world, your legacy will live on forever!',
+4.5
+);

@@ -85,7 +85,7 @@ public class Model {
 		}
 		return null;
 
-}
+	}
 	
 	public BookBean retrieveBook(int bid){
 			try {
@@ -161,6 +161,22 @@ public class Model {
 		return null;
 	}
 	
+	public double getTotalPrice(String username) {
+		
+		double totalPrice = 0;
+		ArrayList<CartBean> shoppingCart = retrieveCart(username);
+		
+		if (shoppingCart.size() != 0 || shoppingCart != null) {
+			for (CartBean cartItem : shoppingCart) {
+				totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+			}
+		}
+
+		
+		return totalPrice;
+		
+	}
+	
 	/***************************************************************
 		DATABASE REVIEW OPERATIONS
     ****************************************************************/
@@ -222,6 +238,15 @@ public class Model {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void clearVisitorCart() {
+		try {
+			cartDAO.clearVisitorCart();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 		

@@ -1281,6 +1281,5 @@ CREATE TABLE Cart (
 	bid INT NOT NULL,
 	quantity INT NOT NULL,
 	PRIMARY KEY (cid),
-	CONSTRAINT cart_username_ref FOREIGN KEY (username) REFERENCES Users (username),
 	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );

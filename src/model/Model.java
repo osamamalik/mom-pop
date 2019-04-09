@@ -205,14 +205,25 @@ public class Model {
 		DATABASE SHOPPING CART OPERATIONS
 	****************************************************************/
 
-	public void addToCart(int bid, String user) {
+	public void addToCart(int bid, int quantity, String user) {
+		System.out.println("MODEL ADD TO CART WAS CALLED");
 		try {
-			cartDAO.addToCart(bid, user);
+			cartDAO.addToCart(bid, quantity, user);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public void addShoppingCart(ArrayList<CartBean> userCart, String user) {
+		try {
+			cartDAO.addShoppingCart(userCart, user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	
 	public void removeFromCart(int bid, String user) {
 		try {

@@ -42,6 +42,17 @@ CREATE TABLE Cart (
 	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );
 
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 1, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 2, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 3, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 4, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 5, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 6, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 7, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 8, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 9, 3);
+
+
 CREATE TABLE Reviews (
 	rid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	username VARCHAR(30) NOT NULL,
@@ -78,7 +89,6 @@ CREATE TABLE OrderDetails (
 	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
 	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );
-
 
 
 

@@ -730,19 +730,30 @@ public class Start extends HttpServlet {
 	
 	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
 		
-		int bid = (Integer.parseInt(request.getParameter("bid")));
-		String f = "xmlExports/" + request.getSession().getId()+".xml";
-		String filename = this.getServletContext().getRealPath("/" + f);
-		request.getSession().setAttribute("filenameProductService", filename);
-		request.setAttribute("fProductService", f);
-		System.out.println(filename);
-		try {
-			myModel.exportProductServices(bid, filename);
-			request.setAttribute("PCSResultReady", true);
-			target = "ProductCatalogService.jspx";
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String bidString = request.getParameter("bidPCS");
+		errorChecking.checkPCSError(bidString);
+
+		if (!errorChecking.getErrorStatus()) {
+			int bid = (Integer.parseInt(bidString));
+			String f = "xmlExports/" + request.getSession().getId()+".xml";
+			String filename = this.getServletContext().getRealPath("/" + f);
+			request.getSession().setAttribute("filenameProductService", filename);
+			request.setAttribute("fProductService", f);
+			System.out.println(filename);
+			try {
+				myModel.exportProductServices(bid, filename);
+				request.setAttribute("PCSResultReady", true);
+				target = "ProductCatalogService.jspx";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			String signUpErrorMessage = errorChecking.getErrorMessage();
+			error = true;
+			target = "/ProductCatalogService.jspx";
+			request.setAttribute("error", signUpErrorMessage);
 		}
 	}
 	

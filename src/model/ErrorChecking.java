@@ -73,8 +73,14 @@ public class ErrorChecking {
 			setErrorMessage("EXISTINGUSER");
 		}
 		
+		this.checkAddressError(shippingAB, billingAB);
+		
+	}
+	
+	public void checkAddressError(AddressBean shippingAB, AddressBean billingAB) {
+		
 		//checks if any of shipping address fields are blank
-		else if(shippingAB.getAddressLine1() == "" || shippingAB.getCountry() == "" || shippingAB.getProvince() == "" || shippingAB.getCity() == "" || shippingAB.getPhoneNumber() == "" || shippingAB.getZip() == "") {
+		if(shippingAB.getAddressLine1() == "" || shippingAB.getCountry() == "" || shippingAB.getProvince() == "" || shippingAB.getCity() == "" || shippingAB.getPhoneNumber() == "" || shippingAB.getZip() == "") {
 			setErrorStatus(true);
 			if (shippingAB.getAddressLine1() == "") {
 				setErrorMessage("BLANKSHIPPINGADDRESSLINE1");
@@ -97,7 +103,7 @@ public class ErrorChecking {
 		}
 		
 		//checks if any of billing address fields are blank
-		else if(billingAB.getAddressLine1() == "" || billingAB.getCountry() == "" || billingAB.getProvince() == "" || billingAB.getCity() == "" || billingAB.getPhoneNumber() == "" || billingAB.getZip() == "") {
+		if(billingAB.getAddressLine1() == "" || billingAB.getCountry() == "" || billingAB.getProvince() == "" || billingAB.getCity() == "" || billingAB.getPhoneNumber() == "" || billingAB.getZip() == "") {
 			setErrorStatus(true);
 			if (billingAB.getAddressLine1() == "") {
 				setErrorMessage("BLANKBILLINGADDRESSZIPCODE");
@@ -119,6 +125,20 @@ public class ErrorChecking {
 			}
 		}
 	}
+	
+	
+	public void checkPCSError(String bid) {
+		
+		setErrorMessage(null);
+		setErrorStatus(false);
+		
+		if (bid == "") {
+			setErrorMessage("BLANKBID");
+			setErrorStatus(true);
+		}
+		
+	}
+	
 	
 	public boolean passwordValidation(String username, String password) {
 		UserBean ub = new UserBean();

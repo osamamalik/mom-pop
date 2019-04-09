@@ -458,44 +458,10 @@ public class BookDAO {
 		}
 		else {
 			return books;
-		}
-		
-		
+		}	
 		
 }
 		
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
 }

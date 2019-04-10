@@ -16,48 +16,47 @@
 
 <body>
 
-	<div class="main">
-		<form method="POST">
-		
-		
-			<header>
-				<input type="submit" value="Home" name="homeButton"></input>
-			</header>
-			
-			<table>
-			
-				<c:choose>	
-			
-					<c:when test="${sessionScope['loggedInUser'] == 'admin'}">
-					
-						<tr>
-							<td>Some analytics stuff here</td>		
-						</tr>
+	<form method="POST">
 	
-					</c:when>
-					
-					<c:otherwise>
-					
-						<tr>
-							<td>You must be logged in in as administrator to view this page</td>
-							<td>You will be redirected to the login page</td>
 	
-							<meta http-equiv='refresh' content='3; url=Login.jspx'></meta>
-						</tr>
-						
-					</c:otherwise>
-						
-				</c:choose>	
+		<header>
+			<input type="submit" value="Home" name="homeButton"></input>
+		</header>
+		
+		<table>
+		
+			<c:choose>	
+		
+				<c:when test="${sessionScope['loggedInUser'] == 'admin'}">
 				
-						
-			</table>
+					<tr>
+						<td>Some analytics stuff here</td>		
+					</tr>
+
+				</c:when>
+				
+				<c:otherwise>
+				
+					<tr>
+						<td>You must be logged in in as administrator to view this page</td>
+						<td>You will be redirected to the login page</td>
+
+						<meta http-equiv='refresh' content='3; url=Login.jspx'></meta>
+					</tr>
+					
+				</c:otherwise>
+					
+			</c:choose>	
 			
-			<footer>
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
-			
-		</form>
-	</div>
+					
+		</table>
+		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		
+	</form>
+	
 	
 
 

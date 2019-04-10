@@ -203,8 +203,6 @@ public class Start extends HttpServlet {
 			PAYMENT
 		****************************************************************/
 		if (request.getParameter("placeOrder") != null) {
-			System.out.println("ASDASD");
-
 			this.payment(request, response, myModel, errorChecking);
 		}
 		
@@ -759,8 +757,7 @@ public class Start extends HttpServlet {
 	
 	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
 		
-		System.out.println("ASDASD");
-		
+	
 		//check if the new order number is a multiple of 3
 		int orderCount = myModel.getOrderCount();
 		if ((orderCount + 1) % 3 == 0) {

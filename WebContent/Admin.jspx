@@ -14,22 +14,20 @@
 <title>Admin</title>
 </head>
 <body>
-	<div class="main">
-		<form>
+	<form>
+	
+		<header>
+			<input type="submit" value="Home" name="homeButton"></input>
+		</header>
 		
-			<header>
-				<input type="submit" value="Home" name="homeButton"></input>
-			</header>
-			
-			<table>
-				<tr>
-					<td><input type="submit" value="Services" name="servicesButton"></input></td>
-					<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
-				</tr>
-			</table>
-			
-		</form>	
-	</div>
+		<table>
+			<tr>
+				<td><input type="submit" value="Services" name="servicesButton"></input></td>
+				<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
+			</tr>
+		</table>
+		
+	</form>
 </body>
 </html>
 </jsp:root>

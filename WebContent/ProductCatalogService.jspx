@@ -14,51 +14,56 @@
 <title>Product Catalog Service</title>
 </head>
 <body>
-	<div class="main">
-		<legend>Product Catalog Service</legend>
-	
-		<form action="" name="AnalyticsForm" method="post">
-			
-			<header>
-				<input type="submit" value="Home" name="homeButton"></input>
-			</header>
-				
-			<table>
-	
-				<c:choose>	
-			
-					<c:when test="${PCSResultReady}">
-						<p> The Export Product Service XML file can be found at: </p>
-						<a href='${filenameProductService}'> ${fProductService}	</a> 
-					</c:when>
-					
-					<c:otherwise>
-					
-						<tr>
-							<td><label for="Bookid">Book id:</label> <br/></td>
-						</tr>
-						
-						<tr>
-							<td><input id="Bookid" name="bid" type="text"/><br/></td>			
-						</tr>	
-								
-						<tr>
-							<td><button action="submit" type="submit" name="PCSGenerateButton">Generate</button></td>			
-						</tr>
-						
-					</c:otherwise>
-						
-				</c:choose>	
-					
-			
-			</table>		
+
+	<legend>Product Catalog Service</legend>
+
+	<form action="" name="AnalyticsForm" method="post">
 		
-			<footer>
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
+		<header>
+			<input type="submit" value="Home" name="homeButton"></input>
+		</header>
 			
-		</form>
-	</div>
+		<table>
+
+			<c:choose>	
+		
+				<c:when test="${PCSResultReady}">
+					<p> The Export Product Service XML file can be found at: </p>
+					<a href='${filenameProductService}'> ${fProductService}	</a> 
+				</c:when>
+				
+				<c:otherwise>
+				
+					<c:if test="${not empty error}">
+						<tr>
+							<td><p style="color:red;">${error}</p></td>
+						</tr>
+					</c:if>
+				
+					<tr>
+						<td><label for="Bookid">Book id:</label> <br/></td>
+					</tr>
+					
+					<tr>
+						<td><input id="Bookid" name="bidPCS" type="text"/><br/></td>			
+					</tr>	
+							
+					<tr>
+						<td><button action="submit" type="submit" name="PCSGenerateButton">Generate</button></td>			
+					</tr>
+					
+				</c:otherwise>
+					
+			</c:choose>	
+				
+		
+		</table>		
+	
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		
+	</form>
 	
 </body>
 </html>

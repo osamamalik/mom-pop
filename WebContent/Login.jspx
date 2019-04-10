@@ -14,19 +14,18 @@
 <title>Login</title>
 </head>
 <body>
-	
-	<div class="main">
-		<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
-			<legend>Login</legend>
+
+	<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
+		<legend>Login</legend>
+		
+		
+		<header>
+			<jsp:include page="Header.jspx"/>
+		</header>
+		
+		
 			
-			
-			<header>
-				<jsp:include page="Header.jspx"/>
-			</header>
-			
-			
-				
-			
+		<div>
 			<table>
 			
 				<c:if test="${not empty error}">
@@ -58,15 +57,23 @@
 				</tr>
 					
 			</table>
-			
-			
-			
-			<footer>
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
-			
-		</form>
-	</div>
+		</div>
+		
+		<table>
+			<tr>
+				<td><label>Don't have an account?</label></td>
+				<td><input type="submit" value="Sign Up" name="signUpPageButton"></input></td>
+			</tr>
+		</table>
+		
+		
+		
+		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		
+	</form>
 	
 </body>
 </html>

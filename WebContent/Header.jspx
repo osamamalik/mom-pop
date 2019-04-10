@@ -41,9 +41,9 @@
 		</table>
 		
 		
-		<table>
+		<table class="searchTable">
 			<tr>
-				<td><input type="text" id="searchBar" name="searchBar" placeholder="Search the store..."></input></td>
+				<td><input class="searchBar" type="text" id="searchBar" name="searchBar" placeholder="Search the store..."></input></td>
 				<td><input type="submit" value="search" name="searchButton"></input></td>
 			</tr>
 		</table>

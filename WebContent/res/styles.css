@@ -10,6 +10,14 @@ body {
 	padding:25px;
 }
 
+.searchTable {
+	width:100%;
+}
+
+.searchBar {
+	width:100%;
+}
+
 .booksResultsButton {
 	background:none;
 	color:inherit;

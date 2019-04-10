@@ -15,32 +15,33 @@
 </head>
 <body>
 
-	<form method="POST">
-	
-	
-		<header>
-			<input type="submit" value="Home" name="homeButton"></input>
-		</header>
+	<div class="main">
+		<form method="POST">
 		
 		
-		<table>
-		
-			<tr>
-				<td><input type="submit" value="Product Catalog Services" name ="PCSRequestButton"></input></td>		
-			</tr>
-			<tr>
-				<td><input type="submit" value="Order Process Services" name ="PCSRequestButton"></input></td>		
-			</tr>	
+			<header>
+				<input type="submit" value="Home" name="homeButton"></input>
+			</header>
 			
-		</table>
-		
-		
-		<footer>
-			<jsp:include page="Footer.jspx"/>
-		</footer> 
-		
-	</form>
-	
+			
+			<table>
+			
+				<tr>
+					<td><input type="submit" value="Product Catalog Services" name ="PCSRequestButton"></input></td>		
+				</tr>
+				<tr>
+					<td><input type="submit" value="Order Process Services" name ="PCSRequestButton"></input></td>		
+				</tr>	
+				
+			</table>
+			
+			
+			<footer>
+				<jsp:include page="Footer.jspx"/>
+			</footer> 
+			
+		</form>
+	</div>
 	
 
 

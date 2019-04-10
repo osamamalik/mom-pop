@@ -8,7 +8,6 @@ public class UserBean {
 	private String password;
 	
 	public UserBean() {
-		super();
 	}
 
 	public String getUsername() {

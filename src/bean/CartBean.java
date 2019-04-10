@@ -11,8 +11,6 @@ public class CartBean {
 	private String username;
 	
 	public CartBean() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getTitle() {

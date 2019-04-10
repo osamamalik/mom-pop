@@ -4,21 +4,7 @@ DROP TABLE Orders;
 DROP TABLE Cart;
 DROP TABLE Users;
 DROP TABLE Books;
-
-CREATE TABLE Users (
-	username	VARCHAR(30) NOT NULL,
-	fname		VARCHAR(30) NOT NULL,
-	lname		VARCHAR(30) NOT NULL,
-	email		VARCHAR(30) NOT NULL,
-	password	VARCHAR(50) NOT NULL,
-	PRIMARY KEY(username)
-);
-
-INSERT INTO Users VALUES ('osama', 'Osama', 'Malik', 'omalik91@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
-
+DROP TABLE Address;
 
 CREATE TABLE Books (
 	bid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -32,6 +18,93 @@ CREATE TABLE Books (
 	url VARCHAR(10000) NOT NULL,
 	PRIMARY KEY(bid)
 );
+
+CREATE TABLE Users (
+	username	VARCHAR(30) NOT NULL,
+	fname		VARCHAR(30) NOT NULL,
+	lname		VARCHAR(30) NOT NULL,
+	email		VARCHAR(30) NOT NULL,
+	password	VARCHAR(50) NOT NULL,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE Users (
+	username	VARCHAR(30) NOT NULL,
+	fname		VARCHAR(30) NOT NULL,
+	lname		VARCHAR(30) NOT NULL,
+	email		VARCHAR(30) NOT NULL,
+	password	VARCHAR(50) NOT NULL,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE Address (
+	aid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username	VARCHAR(30) NOT NULL,
+	address_type VARCHAR(8) CHECK (address_type IN ('shipping', 'billing')),
+	line1 VARCHAR(100) NOT NULL,
+	line2 VARCHAR(100),
+	country VARCHAR(20) NOT NULL,
+	province VARCHAR(20) NOT NULL,
+	city VARCHAR(30) NOT NULL,
+	zip VARCHAR(20) NOT NULL,
+	phone VARCHAR(20),
+	PRIMARY KEY(aid)
+	CONSTRAINT address_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+INSERT INTO Users VALUES ('osama', 'Osama', 'Malik', 'omalik91@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
+
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('osama', 'shipping', '1 shipping lanes', 'unit #1', 'Canada', 'ON', 'Toronto', 'M11P11', '111-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('osama', 'billing', '1 billing lanes', 'unit #1', 'Canada', 'ON', 'Toronto', 'M11P11', '111-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('ray', 'shipping', '2 shipping lanes', 'unit #2', 'Canada', 'ON', 'Toronto', 'M22P22', '222-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('ray', 'billing', '2 billing lanes', 'unit #2', 'Canada', 'ON', 'Toronto', 'M22P22', '222-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('baris', 'shipping', '3 shipping lanes', 'unit #3', 'Canada', 'ON', 'Toronto', 'M33P33', '333-11-11');
+INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('baris', 'billing', '3 billing lanes', 'unit #3', 'Canada', 'ON', 'Toronto', 'M33P33', '333-11-11');
+
+CREATE TABLE Cart (
+	cid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username VARCHAR(30) NOT NULL,
+	bid INT NOT NULL,
+	quantity INT NOT NULL,
+	PRIMARY KEY (cid),
+	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
+);
+
+
+CREATE TABLE Reviews (
+	rid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	username VARCHAR(30) NOT NULL,
+	bid INT NOT NULL,
+	review VARCHAR(2500) NOT NULL,
+	rating INT NOT NULL,
+	PRIMARY KEY (rid),
+	CONSTRAINT reviews_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
+	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+
+CREATE TABLE Orders (
+	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	odate DATE NOT NULL,
+	username VARCHAR(30) NOT NULL,
+	PRIMARY KEY (oid),
+	CONSTRAINT orders_username_ref FOREIGN KEY (username) REFERENCES Users (username)
+);
+
+CREATE TABLE OrderDetails (
+	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	oid INT NOT NULL,
+	bid INT NOT NULL,
+	PRIMARY KEY (odid),
+	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
+	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
+);
+
+
+
 
 INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Steve Jobs',
@@ -1093,16 +1166,17 @@ With her razor-sharp writing and trademark psychological insight, Gillian Flynn 
 'Mystery',
 'https://images.gr-assets.com/books/1386574953l/19288043.jpg');
 
-CREATE TABLE Reviews (
-	rid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	username VARCHAR(30) NOT NULL,
-	bid INT NOT NULL,
-	review VARCHAR(2500) NOT NULL,
-	rating INT NOT NULL,
-	PRIMARY KEY (rid),
-	CONSTRAINT reviews_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
-	CONSTRAINT reviews_username_ref FOREIGN KEY (username) REFERENCES Users (username)
-);
+
+
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 1, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 2, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('osama', 3, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 4, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 5, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('ray', 6, 3);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 7, 1);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 8, 2);
+INSERT INTO Cart (username, bid, quantity) VALUES('baris', 9, 3);
 
 INSERT INTO Reviews (username, bid, review, rating) VALUES(
 'osama',
@@ -1111,30 +1185,4 @@ INSERT INTO Reviews (username, bid, review, rating) VALUES(
 
 I believe this book should be read by anyone really, to learn from it in many ways and experience the good sides of Steve Jobs instead of just the bad things that were constantly said about him. He is someone who had a big impact on the 21st century and brought our society into a more advanced technological world. Thank you, Steve Jobs, and for all you contributed to our world, your legacy will live on forever!',
 4.5
-);
-
-CREATE TABLE Orders (
-	oid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	odate DATE NOT NULL,
-	username VARCHAR(30) NOT NULL,
-	PRIMARY KEY (oid),
-	CONSTRAINT orders_username_ref FOREIGN KEY (username) REFERENCES Users (username)
-);
-
-CREATE TABLE OrderDetails (
-	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	oid INT NOT NULL,
-	bid INT NOT NULL,
-	PRIMARY KEY (odid),
-	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
-	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
-);
-
-CREATE TABLE Cart (
-	cid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	username VARCHAR(30) NOT NULL,
-	bid INT NOT NULL,
-	quantity INT NOT NULL,
-	PRIMARY KEY (cid),
-	CONSTRAINT cart_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
 );

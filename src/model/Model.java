@@ -16,6 +16,8 @@ public class Model {
 	private UserDAO userDAO;
 	private BookDAO bookDAO;
 	private CartDAO cartDAO;
+	private AddressDAO addressDAO;
+	private OrderDAO orderDAO;
 
 	private boolean errorStatus;
 	private String errorMessage;
@@ -29,6 +31,8 @@ public class Model {
 			userDAO = new UserDAO();
 			bookDAO = new BookDAO();
 			cartDAO = new CartDAO();
+			addressDAO = new AddressDAO();
+			orderDAO = new OrderDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,14 +207,24 @@ public class Model {
 		DATABASE SHOPPING CART OPERATIONS
 	****************************************************************/
 
-	public void addToCart(int bid, String user) {
+	public void addToCart(int bid, int quantity, String user) {
 		try {
-			cartDAO.addToCart(bid, user);
+			cartDAO.addToCart(bid, quantity, user);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public void addShoppingCart(ArrayList<CartBean> userCart, String user) {
+		try {
+			cartDAO.addShoppingCart(userCart, user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	
 	public void removeFromCart(int bid, String user) {
 		try {
@@ -249,7 +263,55 @@ public class Model {
 		}
 	}
 	
-		
+	
+	/***************************************************************
+		DATABASE ADDRESS OPERATIONS
+	 ****************************************************************/
+	public void addAddress(AddressBean ab) {
+		try {
+			addressDAO.addAddress(ab);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public AddressBean retrieveAddress(String username, String type) {
+		try {
+			return addressDAO.retrieveAddress(username, type);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	/***************************************************************
+		DATABASE ORDER OPERATIONS
+	 * @return 
+	****************************************************************/
+	
+	public int getOrderCount() {
+		try {
+			return orderDAO.getOrderCount();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public void addtoOrders(ArrayList<CartBean> shoppingCart) {
+		try {
+			orderDAO.addtoOrders(shoppingCart);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
 	/***************************************************************
 		SERVICES
 	****************************************************************/

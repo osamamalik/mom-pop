@@ -20,7 +20,6 @@ public class BookBean {
 	private String url;
 	
 	public BookBean() {
-		super();
 	}
 
 	public int getBid() {

@@ -15,72 +15,74 @@
 </head>
 <body>
 	
-	<form method="post">
+	<div class="main">
+		<form method="post">
+		
+			<header>
+				<jsp:include page="Header.jspx"/>
+			</header>
+			
+			
+			
+			
+			
+				<table>			
+					<c:forEach var="entry" items="${sessionScope['cart']}"> 
+					
+		                <tr>
+			                <td><c:out value="${entry.getTitle()}"/></td>
+			                <td><c:out value="${entry.getAuthor()}"/></td>
+			                <td><c:out value="${entry.getPrice()}"/></td>
+							<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
+							<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
+		                </tr>
 	
-		<header>
-			<jsp:include page="Header.jspx"/>
-		</header>
-		
-		
-		
-		
-		
-			<table>			
-				<c:forEach var="entry" items="${sessionScope['cart']}"> 
+		           	</c:forEach>  
+		           	  	
+		           		<tr>
+							<td><button name="updateCart">update</button></td>
+		                </tr>
+		                
+		           		<tr>
+		           			<td><label>Total:</label></td>
+		           			<td>${totalPrice}</td>
+		           		</tr>
+		           		
+				</table>	
 				
-	                <tr>
-		                <td><c:out value="${entry.getTitle()}"/></td>
-		                <td><c:out value="${entry.getAuthor()}"/></td>
-		                <td><c:out value="${entry.getPrice()}"/></td>
-						<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
-						<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
-	                </tr>
-
-	           	</c:forEach>  
-	           	  	
-	           		<tr>
-						<td><button name="updateCart">update</button></td>
-	                </tr>
-	                
-	           		<tr>
-	           			<td><label>Total:</label></td>
-	           			<td>${totalPrice}</td>
-	           		</tr>
-	           		
-			</table>	
-			
+					
 				
-			
+				 
 			 
-		 
-		 	<table>
-		 	
-		 		<tr>
-		 		
-		 		</tr>
-		 	
-		 	
-		 	
-		 	
-		 	
-
-		 	</table>
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-	 	<footer>
-			<jsp:include page="Footer.jspx"/>
-		</footer> 
-		
-	</form>
+			 	<table>
+			 	
+			 		<tr>
+			 		
+			 		</tr>
+			 	
+			 	
+			 	
+			 	
+			 	
+	
+			 	</table>
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+		 	<footer>
+				<jsp:include page="Footer.jspx"/>
+			</footer> 
+			
+		</form>
+	</div>
 
 </body>
 </html>

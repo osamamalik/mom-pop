@@ -17,6 +17,7 @@ public class Model {
 	private BookDAO bookDAO;
 	private CartDAO cartDAO;
 	private AddressDAO addressDAO;
+	private OrderDAO orderDAO;
 
 	private boolean errorStatus;
 	private String errorMessage;
@@ -31,6 +32,7 @@ public class Model {
 			bookDAO = new BookDAO();
 			cartDAO = new CartDAO();
 			addressDAO = new AddressDAO();
+			orderDAO = new OrderDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -206,7 +208,6 @@ public class Model {
 	****************************************************************/
 
 	public void addToCart(int bid, int quantity, String user) {
-		System.out.println("MODEL ADD TO CART WAS CALLED");
 		try {
 			cartDAO.addToCart(bid, quantity, user);
 		} catch (SQLException e) {
@@ -284,7 +285,33 @@ public class Model {
 		}
 		return null;
 	}
-		
+	
+	
+	/***************************************************************
+		DATABASE ORDER OPERATIONS
+	 * @return 
+	****************************************************************/
+	
+	public int getOrderCount() {
+		try {
+			return orderDAO.getOrderCount();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public void addtoOrders(ArrayList<CartBean> shoppingCart) {
+		try {
+			orderDAO.addtoOrders(shoppingCart);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
 	/***************************************************************
 		SERVICES
 	****************************************************************/

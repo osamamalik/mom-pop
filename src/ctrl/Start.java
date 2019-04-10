@@ -2,6 +2,8 @@ package ctrl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +28,10 @@ import bean.*;
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean loggedIn;
-	boolean adminLoggedIn;	
-	String target;
+	boolean adminLoggedIn;
 	boolean error;
+	String target;
+	String redirectedTarget;
 	ArrayList <BookBean> books;
 	ArrayList <CartBean> cart;
 	
@@ -48,6 +51,7 @@ public class Start extends HttpServlet {
 		adminLoggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("adminLoggedIn"));
 		
 		target = "/Home.jspx";
+		redirectedTarget = "/Books.jspx";
 		error = false;
 		books = new ArrayList<BookBean>();
 		cart = new ArrayList<CartBean>();
@@ -178,7 +182,6 @@ public class Start extends HttpServlet {
 			ADD TO SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
-			System.out.println("ADD TO CART WAS CLICKED");
 			this.addToCart(request, response, myModel);
 		}
 		
@@ -199,7 +202,10 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			PAYMENT
 		****************************************************************/
-		if (request.getParameter("checkoutButton") != null) {
+		if (request.getParameter("placeOrder") != null) {
+			System.out.println("ASDASD");
+
+			this.payment(request, response, myModel, errorChecking);
 		}
 		
 		
@@ -208,17 +214,12 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
-
 		
 		
 		/***************************************************************
 			TESTING BLOCK
 		****************************************************************/
-		
-		
-		
 		request.getRequestDispatcher(target).forward(request, response);
-		
 		
 	}
 
@@ -305,11 +306,17 @@ public class Start extends HttpServlet {
 			target = "/ShoppingCart.jspx";	
 		}
 		
-		//checks if checkout was requested
+		//checks if Checkout was requested
 		if (request.getParameter("checkoutButton") != null) {
-			target = "/Payment.jspx";	
+			if (!loggedIn) {
+				this.redirectedTarget = "/Payment.jspx";
+				this.target = "/Login.jspx";
+			}
+			else {
+				this.target = "/Payment.jspx";
+			}
 		}
-		
+				
 	}
 		
 	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, String username, String password) throws ServletException, IOException {
@@ -328,7 +335,8 @@ public class Start extends HttpServlet {
 				this.adminLoggedIn = true;
 				this.target = "/Admin.jspx";
 			}else {
-				this.target = "/Home.jspx";
+				this.target = redirectedTarget;
+				this.redirectedTarget = "/Books.jspx";
 			}		
 			
 			//clears the 'visitor' shopping cart
@@ -414,7 +422,8 @@ public class Start extends HttpServlet {
 			
 			this.logIn(request, response, myModel, errorChecking, username, password);
 			
-			this.target = "/Home.jspx";
+			this.target = redirectedTarget;
+			this.redirectedTarget = "/Books.jspx";
 
 		}else {
 			
@@ -582,14 +591,11 @@ public class Start extends HttpServlet {
 
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
-		System.out.println("ADD TO CART CALLED");
 
 		String username;
 		
 		//obtains bid of the book being added to cart
 		int bid = Integer.parseInt(request.getParameter("addToCart"));
-		System.out.println("BID OF BOOK BING ADDED: " + bid);
-
 		
 		//obtains the username if the user is logged in. If not, sets username as "visitor"
 		if (loggedIn) {
@@ -598,15 +604,9 @@ public class Start extends HttpServlet {
 		else {
 			username = "visitor";
 		}
-		System.out.println("USERNAME BOOK IS BEING ADDED TOD: " + username);
 
-		
 		myModel.addToCart(bid, 1, username);
-		System.out.println("METHOD IN MODEL WAS CALLED");
-
-		this.setCart(request, response, myModel, username);
-		System.out.println("THE CART WAS SET");
-		
+		this.setCart(request, response, myModel, username);		
 		this.openBook(request, response, myModel, bid);
 
 	}
@@ -756,5 +756,32 @@ public class Start extends HttpServlet {
 			request.setAttribute("error", signUpErrorMessage);
 		}
 	}
+	
+	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
+		
+		System.out.println("ASDASD");
+		
+		//check if the new order number is a multiple of 3
+		int orderCount = myModel.getOrderCount();
+		if ((orderCount + 1) % 3 == 0) {
+			error = true;
+			target = "/Payment.jspx";
+			request.setAttribute("error", "ORDER DENIED");
+		}
+		else {
+			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
+			myModel.addtoOrders(shoppingCart);
+			target = "/SuccessfulOrder.jspx";
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

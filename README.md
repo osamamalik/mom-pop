@@ -10,12 +10,7 @@ TO DO:
 
 ● Add the same item in multiple quantities to the cart in singleBook page
 
-● REDIRECTIONS:
-	● for example, if user tried to checkout and was forwarded to the sign up page, when user signs up, they should be redirected to the payment page
-	● this works for admin - if user tries to access services or analytics, they are forwarded to the login page. when they login as admin, they're taken to the admin page
-
 ● ERROR CHECKING BACK-END
-	-PCS
 	-OPS
 	-SHOPPING CART QUANTITY
 	-PAYMENT

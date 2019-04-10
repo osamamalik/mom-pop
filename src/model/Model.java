@@ -206,7 +206,6 @@ public class Model {
 	****************************************************************/
 
 	public void addToCart(int bid, int quantity, String user) {
-		System.out.println("MODEL ADD TO CART WAS CALLED");
 		try {
 			cartDAO.addToCart(bid, quantity, user);
 		} catch (SQLException e) {

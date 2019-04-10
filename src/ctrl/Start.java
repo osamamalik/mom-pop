@@ -344,7 +344,7 @@ public class Start extends HttpServlet {
 			this.setCart(request, response, myModel, username);
 			
 			//sets the user's address information
-			this.setShippingAddress(request, response, myModel, username);
+			this.setAddress(request, response, myModel, username);
 		}
 		
 		else {
@@ -668,7 +668,7 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("totalPrice", totalPrice);
 	}
 	
-	protected void setShippingAddress(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
+	protected void setAddress(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
 
 		//obtains user's shipping and billing addresses for confirmation on the payment page
 		AddressBean shippingAB = myModel.retrieveAddress(username, "shipping");
@@ -756,7 +756,6 @@ public class Start extends HttpServlet {
 	}
 	
 	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
-		
 	
 		//check if the new order number is a multiple of 3
 		int orderCount = myModel.getOrderCount();

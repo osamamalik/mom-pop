@@ -10,7 +10,7 @@
 <head>
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/errorChecking.js">;</script>
+	<script type="text/javascript" src="res/script.js">;</script>
 <title>Checkout</title>
 </head>
 <body>
@@ -22,32 +22,32 @@
 		</header>
 		
 		
-		
-			<table>			
-				<c:forEach var="entry" items="${sessionScope['cart']}"> 
-				
-	                <tr>
-		                <td><c:out value="${entry.getTitle()}"/></td>
-		                <td><c:out value="${entry.getAuthor()}"/></td>
-		                <td><c:out value="${entry.getPrice()}"/></td>
-						<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
-						<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
-	                </tr>
-
-	           	</c:forEach>  
-	           	  	
-	           		<tr>
-						<td><button name="updateCart">update</button></td>
-	                </tr>
-	                
-	           		<tr>
-	           			<td><label>Total:</label></td>
-	           			<td>${totalPrice}</td>
-	           		</tr>
-	           		
-			</table>	
-			
+			<div>
+				<table>			
+					<c:forEach var="entry" items="${sessionScope['cart']}"> 
+					
+		                <tr>
+			                <td><c:out value="${entry.getTitle()}"/></td>
+			                <td><c:out value="${entry.getAuthor()}"/></td>
+			                <td><c:out value="${entry.getPrice()}"/></td>
+							<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
+							<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
+		                </tr>
+	
+		           	</c:forEach>  
+		           	  	
+		           		<tr>
+							<td><button name="updateCart">update</button></td>
+		                </tr>
+		                
+		           		<tr>
+		           			<td><label>Total:</label></td>
+		           			<td>${totalPrice}</td>
+		           		</tr>	
+				</table>	
+			</div>
 		 
+		 	
 			<table>
 				
 				<tr>
@@ -195,7 +195,7 @@
 				</tr>
 		
 				<tr>
-					<td><input type="tel" id="addressPhone" name="addressPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="${addressPhone}" placeholder="123-456-7890"></input></td>		
+					<td><input type="tel" id="addressPhone" name="addressPhone"  value="${addressPhone}" placeholder="123-456-7890"></input></td>		
 					<td><label id="addressPhoneError"></label></td>
 				</tr>
 				
@@ -211,7 +211,7 @@
 					</tr>
 			
 					<tr>
-						<td><input type="tel" id="creditCardNumber" name="creditCardNumber" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}" placeholder="111-222-333-444"></input></td>		
+						<td><input type="tel" id="creditCardNumber" name="creditCardNumber" placeholder="111-222-333-444"></input></td>		
 						<td><label id="creditCardNumberError"></label></td>
 					</tr>
 					
@@ -245,9 +245,9 @@
 				</table>
 		 	
 		 	</div>
-		 
-		 
-		 
+		 	
+			<td><input type="submit" name="placeOrder" value="Confirm order"></input></td>
+
 	 	<footer>
 			<jsp:include page="Footer.jspx"/>
 		</footer> 

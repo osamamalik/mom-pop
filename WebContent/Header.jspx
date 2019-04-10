@@ -8,12 +8,12 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="res/styles.css" type="text/css"
-	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/myJS.js">;</script>
+	<link rel="StyleSheet" href="res/header.css" type="text/css"/>
+	<script type="text/javascript" src="res/script.js">;</script>
 <title>Header</title>
 </head>
 <body>
+		
 		
 		<table>
 			<tr>
@@ -39,12 +39,12 @@
 				
 			</tr>
 		</table>
-		
+				
 		
 		<table>
 			<tr>
 				<td><input type="text" id="searchBar" name="searchBar" placeholder="Search the store..."></input></td>
-				<td><input class="searchBar" type="submit" value="search" name="searchButton"></input></td>
+				<td><input type="submit" value="search" name="searchButton"></input></td>
 			</tr>
 		</table>
 		

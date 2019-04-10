@@ -15,7 +15,6 @@
 </head>
 <body>
 
-	<div class="main">
 	<form action="" name="myForm" method="post" onsubmit="return signUpValidate();">
 		
 		<legend>Sign Up</legend>
@@ -260,7 +259,7 @@
 		
 		
 	</form>
-	</div>
+	
 </body>
 </html>
 </jsp:root>

@@ -2,6 +2,8 @@ package ctrl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -200,8 +202,10 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			PAYMENT
 		****************************************************************/
-		if (request.getParameter("checkoutButton") != null) {
-			this.checkOut(request, response, myModel, errorChecking);
+		if (request.getParameter("placeOrder") != null) {
+			System.out.println("ASDASD");
+
+			this.payment(request, response, myModel, errorChecking);
 		}
 		
 		
@@ -210,13 +214,11 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
-
 		
 		
 		/***************************************************************
 			TESTING BLOCK
 		****************************************************************/
-		System.out.println(this.redirectedTarget);
 		request.getRequestDispatcher(target).forward(request, response);
 		
 	}
@@ -302,6 +304,17 @@ public class Start extends HttpServlet {
 		//checks if Shopping Cart was requested
 		if (request.getParameter("showShoppingCart") != null) {
 			target = "/ShoppingCart.jspx";	
+		}
+		
+		//checks if Checkout was requested
+		if (request.getParameter("checkoutButton") != null) {
+			if (!loggedIn) {
+				this.redirectedTarget = "/Payment.jspx";
+				this.target = "/Login.jspx";
+			}
+			else {
+				this.target = "/Payment.jspx";
+			}
 		}
 				
 	}
@@ -744,16 +757,22 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	protected void checkOut(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
+	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
 		
-		if (!loggedIn) {
-			this.redirectedTarget = "/Payment.jspx";
-			this.target = "/Login.jspx";
+		System.out.println("ASDASD");
+		
+		//check if the new order number is a multiple of 3
+		int orderCount = myModel.getOrderCount();
+		if ((orderCount + 1) % 3 == 0) {
+			error = true;
+			target = "/Payment.jspx";
+			request.setAttribute("error", "ORDER DENIED");
 		}
 		else {
-			this.target = "/Payment.jspx";
+			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
+			myModel.addtoOrders(shoppingCart);
+			target = "/SuccessfulOrder.jspx";
 		}
-		
 	}
 
 	

@@ -124,6 +124,8 @@ public class OrderDAO {
 				ob.setUsername(r2.getString("username"));
 				ob.setOrderDate(r2.getString("odate"));
 			}
+			r2.close();
+			p2.close();
 			aob.add(ob);
 		}
 		
@@ -156,13 +158,38 @@ public class OrderDAO {
 				ob.setDate(r.getString("odate"));
 				aob.add(ob);
 			}
-			
+			r2.close();
+			p2.close();
 		}
 		
 		p.close();
 		con.close();
 		r.close();
 		return aob;
+	}
+	
+	/* for analytics top 10.
+	 * I need to fix the query.
+	 * Right now it returns books but its not in order and
+	 * im not sure if it is returning the correct top ten.*/
+	public ArrayList<BookBean> getTop10() throws SQLException, ClassNotFoundException{
+		
+		ArrayList<BookBean> abb= new ArrayList<BookBean>(); 
+		String query = "Select bid as bid from OrderDetails group by bid Order by count(bid) fetch first 10 rows only";
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		BookDAO bookDAO = new BookDAO();
+		
+		while(r.next()) {
+			String bid = r.getString("bid");
+			BookBean bb = bookDAO.retrieveBook(Integer.parseInt(bid));
+			abb.add(bb);
+		}
+		p.close();
+		con.close();
+		r.close();
+		return abb;
 	}
 	
 

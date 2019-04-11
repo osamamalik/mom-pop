@@ -311,6 +311,16 @@ public class Model {
 		}
 	}
 	
+	public ArrayList<OrderBean> retrieveOrders(int bid){
+		try {
+			return orderDAO.retrieveOrders(bid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
 
 	/***************************************************************
 		SERVICES
@@ -348,8 +358,33 @@ public class Model {
 		
 	}
 	
-	public void exportOrderServices(int orderID, String filename) throws Exception {
+	public void exportOrderServices(int bid, String filename) throws Exception {
+		ArrayList<OrderBean> aob = retrieveOrders(bid);
 
+		FileWriter fw = new FileWriter(filename);
+		for(int i = 0; i < aob.size() ; i++) {
+			OrderBean ob = aob.get(i);
+			String date = ob.getOrderDate();
+			int oid = ob.getOid();
+			String user = ob.getUsername();
+			
+			OrderWrapper  ow = new OrderWrapper(bid, date, oid, user);
+			JAXBContext jc = JAXBContext.newInstance(ow.getClass());
+			Marshaller marshaller = jc.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+			
+			StringWriter sw = new StringWriter();
+			sw.write("\n");
+			
+			marshaller.marshal(ow, new StreamResult(sw));
+
+			System.out.println(sw.toString()); // for debugging
+
+			
+			fw.append(sw.toString());
+		}
+		fw.close();
 	}
 	
 	

@@ -11,31 +11,48 @@
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
 	<script type="text/javascript" src="res/myJS.js">;</script>
-<title>E-men | Services</title>
+<title>Order Catalog Service</title>
 </head>
 <body>
-
 	<div class="main">
-		<form method="POST">
-		
-		
+		<legend>Order Catalog Service</legend>
+	
+		<form action="" name="AnalyticsForm" method="post">
+			
 			<header>
 				<input type="submit" value="Home" name="homeButton"></input>
 			</header>
-			
-			
-			<table>
-			
-				<tr>
-					<td><input type="submit" value="Product Catalog Services" name ="PCSRequestButton"></input></td>		
-				</tr>
-				<tr>
-					<td><input type="submit" value="Order Process Services" name ="OPSRequestButton"></input></td>		
-				</tr>	
 				
-			</table>
+			<table>
+	
+				<c:choose>	
 			
+					<c:when test="${OPSResultReady}">
+						<p> The Export Product Service XML file can be found at: </p>
+						<a href='${filenameOrderService}'> ${fOrderService}	</a> 
+					</c:when>
+					
+					<c:otherwise>
+					
+						<tr>
+							<td><label for="Bookid">Book id:</label> <br/></td>
+						</tr>
+						
+						<tr>
+							<td><input id="Bookid" name="bid" type="text"/><br/></td>			
+						</tr>	
+								
+						<tr>
+							<td><button action="submit" type="submit" name="OPSGenerateButton">Generate</button></td>			
+						</tr>
+						
+					</c:otherwise>
+						
+				</c:choose>	
+					
 			
+			</table>		
+		
 			<footer>
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
@@ -43,8 +60,6 @@
 		</form>
 	</div>
 	
-
-
 </body>
 </html>
 </jsp:root>

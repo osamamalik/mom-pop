@@ -320,6 +320,17 @@ public class Model {
 
 	}
 	
+	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month){
+		try {
+			return orderDAO.retrieveOrdersByMonth(month);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
+	
 
 	/***************************************************************
 		SERVICES

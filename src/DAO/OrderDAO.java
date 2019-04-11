@@ -133,6 +133,38 @@ public class OrderDAO {
 		return aob;
 	}
 	
+	
+	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month) throws SQLException{
+		String query = "select * from Orders where MONTH(odate) = " + month;
+		ArrayList<OrderWrapper> aob= new ArrayList<OrderWrapper>(); 
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		
+		while (r.next()){
+			int oid = Integer.parseInt(r.getString("oid"));
+			String query2 = "select * from OrderDetails where oid = " + oid;
+			PreparedStatement p2 = con.prepareStatement(query2);
+			ResultSet r2 = p2.executeQuery();
+			
+			while (r2.next()) {
+				OrderWrapper ob = new OrderWrapper();
+				ob.setOid(oid);
+				int bid = Integer.parseInt(r2.getString("bid"));
+				ob.setBid(bid);
+				ob.setUser(r.getString("username"));
+				ob.setDate(r.getString("odate"));
+				aob.add(ob);
+			}
+			
+		}
+		
+		p.close();
+		con.close();
+		r.close();
+		return aob;
+	}
+	
 
 }
 

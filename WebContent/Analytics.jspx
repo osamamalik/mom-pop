@@ -30,8 +30,14 @@
 			
 					<c:when test="${sessionScope['loggedInUser'] == 'admin'}">
 					
-						<tr>
-							<td>Some analytics stuff here</td>		
+						<tr> 
+						Hello Admin, <br/>
+						In the Analytics Page you may view a report with the books sold each month <br/>
+						by pressing the OrdersByMonth button. <br/>
+						You may also see out top 10 most ordered books by pressing the top10 button. <br/>
+						Lets go out there and make some money. 
+							<td><input type="submit" value="top10" name="top10"></input></td>
+							<td><input type="submit" value="OrdersByMonth" name="OrdersByMonth"></input></td>		
 						</tr>
 	
 					</c:when>

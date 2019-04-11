@@ -211,8 +211,12 @@ public class Start extends HttpServlet {
 		if (request.getParameter("OPSGenerateButton") != null) {
 			this.orderProcessingService(request, response, myModel, errorChecking);
 		}
-		
-		
+		/***************************************************************
+					Analytics
+		 ****************************************************************/
+		if (request.getParameter("WhichMonth") != null) {
+			this.OrdersByMonth(request, response, myModel, errorChecking);
+		}
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
@@ -224,6 +228,8 @@ public class Start extends HttpServlet {
 		request.getRequestDispatcher(target).forward(request, response);
 		
 	}
+
+
 
 
 	/**
@@ -283,6 +289,9 @@ public class Start extends HttpServlet {
 			else if (adminLoggedIn){
 				target = "/Analytics.jspx";
 			}		
+		}
+		if (request.getParameter("OrdersByMonth") != null) {
+			target = "/OrdersByMonth.jspx";	
 		}
 		
 		//checks if PCS was requested
@@ -796,7 +805,7 @@ public class Start extends HttpServlet {
 			try {
 				myModel.exportOrderServices(bid, filename);
 				request.setAttribute("OPSResultReady", true);
-				target = "OrderProcessingService.jspx";
+				target = "/OrderProcessingService.jspx";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -810,11 +819,66 @@ public class Start extends HttpServlet {
 		}
 	}
 	
+	public void OrdersByMonth(HttpServletRequest request, HttpServletResponse response, Model myModel,
+			ErrorChecking errorChecking) {
+		String month = request.getParameter("monthOption");
+		int num = 0;
+		switch (month) {
+			case "January":
+				num = 1;
+				break;
+
+			case "February":
+				num = 2;
+				break;
+
+			case "March":
+				num = 3;
+				break;
+
+			case "April":
+				num = 4;
+				break;
+
+			case "May":
+				num = 5;
+				break;
+
+			case "June":
+				num = 6;
+				break;
+
+			case "July":
+				num = 7;
+				break;
+
+			case "August":
+				num = 8;
+				break;
+
+			case "September":
+				num = 9;
+				break;
+
+			case "October":
+				num = 10;
+				break;
+
+			case "November":
+				num = 11;
+				break;
+
+			case "December":
+				num = 12;
+				break;
+		}
+		
+			ArrayList<OrderWrapper> aw = myModel.retrieveOrdersByMonth(num);
+			request.getSession().setAttribute("OrderByMonth", aw);
+			request.setAttribute("obm", 1);
+			target = "/OrdersByMonth.jspx";
 	
-	
-	
-	
-	
+	}
 	
 	
 	

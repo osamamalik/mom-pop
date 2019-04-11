@@ -27,7 +27,8 @@ TO DO:
 	
 - OPS IMPLEMENTATION
 
-- PCS AND OPS AS SERVICES
+- PCS AND OPS AS SERVICES: PCS working correctly you need to run and have this in the url: 
+http://localhost:8080/e-men/rest/service/pcs?bid=1
 
 - ANALYTICS PAGE
 

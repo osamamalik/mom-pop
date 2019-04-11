@@ -16,6 +16,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import model.*;
 import bean.*;
@@ -24,6 +29,7 @@ import bean.*;
 /**
  * Servlet implementation class Start
  */
+@Path("service") 
 @WebServlet({"/Start", "/Start/*"})
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -211,6 +217,8 @@ public class Start extends HttpServlet {
 		if (request.getParameter("OPSGenerateButton") != null) {
 			this.orderProcessingService(request, response, myModel, errorChecking);
 		}
+		
+
 		/***************************************************************
 					Analytics
 		 ****************************************************************/
@@ -774,13 +782,15 @@ public class Start extends HttpServlet {
 			request.setAttribute("fProductService", f);
 			System.out.println(filename);
 			try {
-				myModel.exportProductServices(bid, filename);
+				 myModel.exportProductServices(bid, filename);
 				request.setAttribute("PCSResultReady", true);
 				target = "ProductCatalogService.jspx";
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		else {
 			String signUpErrorMessage = errorChecking.getErrorMessage();
@@ -880,6 +890,24 @@ public class Start extends HttpServlet {
 	
 	}
 	
+	@GET
+    @Path("/pcs/")
+	@Produces(MediaType.TEXT_XML)
+	public String getProductCatalogService(@QueryParam("bid") String bookid) {
+		int bid = Integer.parseInt(bookid);
+		Model myModel = new Model();
+		try {
+			String toReturn = myModel.exportProductWebServices(bid);
+			
+			target = "/ProductProcessingService.jspx";
+			
+			return toReturn;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
 	
 	
 }

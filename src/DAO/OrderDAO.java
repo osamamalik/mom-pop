@@ -110,8 +110,7 @@ public class OrderDAO {
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		
-
-		if(r.next()){
+		while (r.next()){
 			
 			OrderBean ob = new OrderBean();
 			int oid = Integer.parseInt(r.getString("oid"));
@@ -121,7 +120,7 @@ public class OrderDAO {
 			ResultSet r2 = p2.executeQuery();
 			
 			ob.setOid(oid);
-			if(r2.next()) {
+			while (r2.next()) {
 				ob.setUsername(r2.getString("username"));
 				ob.setOrderDate(r2.getString("odate"));
 			}

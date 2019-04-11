@@ -162,27 +162,13 @@ public class Start extends HttpServlet {
 			this.addReview(request, response, myModel);
 		}
 		
-		
 		/***************************************************************
 			SEARCH BAR
 		****************************************************************/
 		if (request.getParameter("searchButton") != null) {
 			this.searchStore(request, response, myModel, queryObject);
 		}
-		
-		/***************************************************************
-			PRODUCT CATALOG SERVICES
-		 ****************************************************************/
-		if (request.getParameter("PCSGenerateButton") != null) {
-			this.catalogService(request, response, myModel, errorChecking);
-		}
-		
-		if (request.getParameter("OPSGenerateButton") != null) {
-			this.OrderCatalogService(request, response, myModel, errorChecking);
-		}
-		
-		
-		
+				
 		/***************************************************************
 			ADD TO SHOPPING CART
 		 ****************************************************************/
@@ -211,7 +197,20 @@ public class Start extends HttpServlet {
 			this.payment(request, response, myModel, errorChecking);
 		}
 		
+		/***************************************************************
+			PRODUCT CATALOG SERVICES
+		 ****************************************************************/
+		if (request.getParameter("PCSGenerateButton") != null) {
+			this.productCatalogService(request, response, myModel, errorChecking);
+		}
 		
+		
+		/***************************************************************
+			ORDER PROCESSING SERVICES
+		 ****************************************************************/
+		if (request.getParameter("OPSGenerateButton") != null) {
+			this.orderProcessingService(request, response, myModel, errorChecking);
+		}
 		
 		
 		/***************************************************************
@@ -291,8 +290,9 @@ public class Start extends HttpServlet {
 			target = "/ProductCatalogService.jspx";	
 		}
 		
+		//checks if OPS was requested
 		if (request.getParameter("OPSRequestButton") != null) {
-			target = "/OrderCatalogService.jspx";	
+			target = "/OrderProcessingService.jspx";	
 		}
 		
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
@@ -734,11 +734,28 @@ public class Start extends HttpServlet {
 		int title = (Integer.parseInt(request.getParameter("title")));
 		openBook(request, response, myModel, title);
 	}
+		
+	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
+		
 	
-	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
+		//check if the new order number is a multiple of 3
+		int orderCount = myModel.getOrderCount();
+		if ((orderCount + 1) % 3 == 0) {
+			error = true;
+			target = "/Payment.jspx";
+			request.setAttribute("error", "ORDER DENIED");
+		}
+		else {
+			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
+			myModel.addtoOrders(shoppingCart);
+			target = "/SuccessfulOrder.jspx";
+		}
+	}
+
+	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
 		
 		String bidString = request.getParameter("bid");
-		errorChecking.checkPCSError(bidString);
+		errorChecking.checkServicesError(bidString);
 
 		if (!errorChecking.getErrorStatus()) {
 			int bid = (Integer.parseInt(bidString));
@@ -764,6 +781,7 @@ public class Start extends HttpServlet {
 		}
 	}
 	
+<<<<<<< HEAD
 	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
 	
 		//check if the new order number is a multiple of 3
@@ -782,9 +800,12 @@ public class Start extends HttpServlet {
 
 	
 	protected void OrderCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
+=======
+	protected void orderProcessingService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
+>>>>>>> c9cd39684e59bc80af639b7db083a62283b5bb79
 		
 		String bidString = request.getParameter("bid");
-		errorChecking.checkPCSError(bidString);
+		errorChecking.checkServicesError(bidString);
 
 		if (!errorChecking.getErrorStatus()) {
 			int bid = (Integer.parseInt(bidString));
@@ -796,7 +817,7 @@ public class Start extends HttpServlet {
 			try {
 				myModel.exportOrderServices(bid, filename);
 				request.setAttribute("OPSResultReady", true);
-				target = "OrderCatalogService.jspx";
+				target = "OrderProcessingService.jspx";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -805,7 +826,7 @@ public class Start extends HttpServlet {
 		else {
 			String signUpErrorMessage = errorChecking.getErrorMessage();
 			error = true;
-			target = "/ProductCatalogService.jspx";
+			target = "/OrderProcessingService.jspx";
 			request.setAttribute("error", signUpErrorMessage);
 		}
 	}

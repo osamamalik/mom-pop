@@ -127,12 +127,12 @@ public class ErrorChecking {
 	}
 	
 	
-	public void checkPCSError(String bid) {
+	public void checkServicesError(String id) {
 		
 		setErrorMessage(null);
 		setErrorStatus(false);
 		
-		if (bid == "") {
+		if (id == "") {
 			setErrorMessage("BLANKBID");
 			setErrorStatus(true);
 		}

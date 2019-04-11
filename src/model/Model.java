@@ -289,7 +289,6 @@ public class Model {
 	
 	/***************************************************************
 		DATABASE ORDER OPERATIONS
-	 * @return 
 	****************************************************************/
 	
 	public int getOrderCount() {
@@ -359,9 +358,9 @@ public class Model {
 	}
 	
 	public void exportOrderServices(int bid, String filename) throws Exception {
+		
 		ArrayList<OrderBean> aob = retrieveOrders(bid);
 
-		FileWriter fw = new FileWriter(filename);
 		for(int i = 0; i < aob.size() ; i++) {
 			OrderBean ob = aob.get(i);
 			String date = ob.getOrderDate();
@@ -381,10 +380,11 @@ public class Model {
 
 			System.out.println(sw.toString()); // for debugging
 
-			
-			fw.append(sw.toString());
+			FileWriter fw = new FileWriter(filename);
+			fw.write(sw.toString());
+			fw.close();
+
 		}
-		fw.close();
 	}
 	
 	

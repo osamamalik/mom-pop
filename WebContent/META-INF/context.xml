@@ -7,17 +7,11 @@
 		type="javax.sql.DataSource"
 		driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
 		url = "jdbc:derby:C:\Users\Barisbc\eclipse-workspace\Project\e-men\MyDB;create=true" />
-<<<<<<< HEAD
 		
 		<!--url= "jdbc:derby:C:\Users\Raymond\MyDB" />-->
 		<!-- url="jdbc:derby:/Users/osamamalik/eclipse-workspace/e-men/MyDB" -->
 		<!-- url = "jdbc:derby:C:\Users\Raymond\eclipse-workspace\e-men\MyDB" /> -->
-=======
-		<!--url= "jdbc:derby:C:\Users\Raymond\MyDB" /> -->
-		<!-- url="jdbc:derby:/Users/osamamalik/eclipse-workspace/e-men/MyDB" -->
-		<!-- url = "jdbc:derby:C:\Users\Raymond\eclipse-workspace\e-men\MyDB" /> -->
 
->>>>>>> c9cd39684e59bc80af639b7db083a62283b5bb79
 	<ResourceLink global="jdbc/EECS" name="jdbc/EECS"
 		type="javax.sql.DataSource" />
 </Context>

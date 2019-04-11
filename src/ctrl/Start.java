@@ -66,6 +66,13 @@ public class Start extends HttpServlet {
 		}
 		
 		try {
+			context.setAttribute("services", new Services());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			context.setAttribute("errorChecking", new ErrorChecking());
 		}
 		catch (Exception e) {
@@ -87,9 +94,10 @@ public class Start extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		/***************************************************************
-			INITIALIZATION OF MODEL AND QUERY
+			INITIALIZATION OF MODEL CLASSES
 		 ****************************************************************/
 		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
+		Services services = (Services) this.getServletContext().getAttribute("services");
 		ErrorChecking errorChecking = (ErrorChecking) this.getServletContext().getAttribute("errorChecking");
 		QueryConstructor queryObject = (QueryConstructor) this.getServletContext().getAttribute("query");
 		request.getSession().setAttribute("query", queryObject);
@@ -201,7 +209,7 @@ public class Start extends HttpServlet {
 			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
 		if (request.getParameter("PCSGenerateButton") != null) {
-			this.productCatalogService(request, response, myModel, errorChecking);
+			this.productCatalogService(request, response, myModel, errorChecking, services);
 		}
 		
 		
@@ -209,7 +217,7 @@ public class Start extends HttpServlet {
 			ORDER PROCESSING SERVICES
 		 ****************************************************************/
 		if (request.getParameter("OPSGenerateButton") != null) {
-			this.orderProcessingService(request, response, myModel, errorChecking);
+			this.orderProcessingService(request, response, myModel, errorChecking, services);
 		}
 		
 		
@@ -737,7 +745,6 @@ public class Start extends HttpServlet {
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
 		
-	
 		//check if the new order number is a multiple of 3
 		int orderCount = myModel.getOrderCount();
 		if ((orderCount + 1) % 3 == 0) {
@@ -752,7 +759,7 @@ public class Start extends HttpServlet {
 		}
 	}
 
-	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
+	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
 		
 		String bidString = request.getParameter("bid");
 		errorChecking.checkServicesError(bidString);
@@ -765,7 +772,7 @@ public class Start extends HttpServlet {
 			request.setAttribute("fProductService", f);
 			System.out.println(filename);
 			try {
-				myModel.exportProductServices(bid, filename);
+				services.exportProductServices(bid, filename);
 				request.setAttribute("PCSResultReady", true);
 				target = "ProductCatalogService.jspx";
 			} catch (Exception e) {
@@ -780,29 +787,9 @@ public class Start extends HttpServlet {
 			request.setAttribute("error", signUpErrorMessage);
 		}
 	}
-	
-<<<<<<< HEAD
-	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
-	
-		//check if the new order number is a multiple of 3
-		int orderCount = myModel.getOrderCount();
-		if ((orderCount + 1) % 3 == 0) {
-			error = true;
-			target = "/Payment.jspx";
-			request.setAttribute("error", "ORDER DENIED");
-		}
-		else {
-			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
-			myModel.addtoOrders(shoppingCart);
-			target = "/SuccessfulOrder.jspx";
-		}
-	}
 
 	
-	protected void OrderCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
-=======
-	protected void orderProcessingService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
->>>>>>> c9cd39684e59bc80af639b7db083a62283b5bb79
+	protected void orderProcessingService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
 		
 		String bidString = request.getParameter("bid");
 		errorChecking.checkServicesError(bidString);
@@ -815,7 +802,7 @@ public class Start extends HttpServlet {
 			request.setAttribute("fOrderService", f);
 			System.out.println(filename);
 			try {
-				myModel.exportOrderServices(bid, filename);
+				services.exportOrderServices(bid, filename);
 				request.setAttribute("OPSResultReady", true);
 				target = "OrderProcessingService.jspx";
 			} catch (Exception e) {
@@ -830,9 +817,6 @@ public class Start extends HttpServlet {
 			request.setAttribute("error", signUpErrorMessage);
 		}
 	}
-	
-	
-	
 	
 	
 	

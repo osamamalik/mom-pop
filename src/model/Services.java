@@ -1,12 +1,16 @@
 package model;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import bean.*;
 import model.*;
@@ -14,26 +18,25 @@ import model.*;
 
 public class Services {
 	
-	private DatabaseOperator myModel;
+	private DatabaseOperator databaseOperator;
 
 	public Services() {
-		myModel = new DatabaseOperator();
+		databaseOperator = new DatabaseOperator();
 	}
 
 	
 	public void exportProductServices(int bid, String filename) throws Exception {
 	
-		BookBean bb = myModel.retrieveBook(bid);
+		BookBean bb = databaseOperator.retrieveBook(bid);
 		String title = bb.getTitle();
 		String author = bb.getAuthor();
 		double price = bb.getPrice();
-		String description = bb.getDescription();
 		int publishYear = bb.getPublishYear();
 		double rating = bb.getRating();
 		String cat = bb.getCategory();
 	
 	
-		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
+		BookWrapper bw = new BookWrapper(bid, title, author, price, publishYear, rating, cat);
 		
 		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
 		Marshaller marshaller = jc.createMarshaller();
@@ -55,8 +58,9 @@ public class Services {
 	
 	public void exportOrderServices(int bid, String filename) throws Exception {
 		
-		ArrayList<OrderBean> aob = myModel.retrieveOrders(bid);
-	
+		ArrayList<OrderBean> aob = databaseOperator.retrieveOrders(bid);
+		
+			
 		for(int i = 0; i < aob.size() ; i++) {
 			OrderBean ob = aob.get(i);
 			String date = ob.getOrderDate();

@@ -14,8 +14,8 @@ public class OrderWrapper {
 	
 	//@XmlAttribute(name="bid")
 	private int bid;
-	private String date;
 	private int oid;
+	private String date;
 	private String user;
 	
 	public OrderWrapper(int bid, String date, int oid, String user) {
@@ -24,7 +24,6 @@ public class OrderWrapper {
 		this.date = date;
 		this.user = user;
 	}
-	
 	
 	public int getBid() {
 		return bid;
@@ -41,16 +40,13 @@ public class OrderWrapper {
 		this.date = date;
 	}
 
-
 	public int getOid() {
 		return oid;
 	}
 
-
 	public void setOid(int oid) {
 		this.oid = oid;
 	}
-
 
 	public OrderWrapper() {
 		super();

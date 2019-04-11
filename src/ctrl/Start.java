@@ -205,7 +205,6 @@ public class Start extends HttpServlet {
 			this.productCatalogService(request, response, databaseOperator, errorChecking, services);
 		}
 		
-		
 		/***************************************************************
 			ORDER PROCESSING SERVICES
 		 ****************************************************************/
@@ -426,7 +425,6 @@ public class Start extends HttpServlet {
 			}
 
 			databaseOperator.addShoppingCart(shoppingCart, username);
-			this.setCart(request, response, databaseOperator, username);
 			
 			this.logIn(request, response, databaseOperator, errorChecking, username, password);
 			
@@ -677,34 +675,7 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("cart", shoppingCart);
 		request.getSession().setAttribute("totalPrice", totalPrice);
 	}
-	
-	protected void setAddress(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
-
-		//obtains user's shipping and billing addresses for confirmation on the payment page
-		AddressBean shippingAB = databaseOperator.retrieveAddress(username, "shipping");
-		AddressBean billingAB = databaseOperator.retrieveAddress(username, "shipping");
-		
-		//sets user's shipping address details 
-		request.getSession().setAttribute("shippingLine1", shippingAB.getAddressLine1());
-		request.getSession().setAttribute("shippingLine2", shippingAB.getAddressLine2());
-		request.getSession().setAttribute("shippingCountry", shippingAB.getCountry());
-		request.getSession().setAttribute("shippingProvince", shippingAB.getProvince());
-		request.getSession().setAttribute("shippingCity", shippingAB.getCity());
-		request.getSession().setAttribute("shippingZip", shippingAB.getZip());
-		
-		//sets user's billing address details 
-		request.getSession().setAttribute("billingLine1", billingAB.getAddressLine1());
-		request.getSession().setAttribute("billingLine2", billingAB.getAddressLine2());
-		request.getSession().setAttribute("billingCountry", billingAB.getCountry());
-		request.getSession().setAttribute("billingProvince", billingAB.getProvince());
-		request.getSession().setAttribute("billingCity", billingAB.getCity());
-		request.getSession().setAttribute("billingZip", billingAB.getZip());
-		
-		//sets user's phone number
-		request.getSession().setAttribute("addressPhone", shippingAB.getPhoneNumber());
-
-	}
-		
+			
 	protected void openBook(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, int bookID) throws ServletException, IOException {
 		BookBean singleBook = databaseOperator.retrieveBook(bookID);
 		request.setAttribute("singleBook", singleBook);
@@ -738,19 +709,117 @@ public class Start extends HttpServlet {
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 		
+		String username = request.getSession().getAttribute("loggedInUser").toString();
+
 		//check if the new order number is a multiple of 3
 		int orderCount = databaseOperator.getOrderCount();
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
-			request.setAttribute("error", "ORDER DENIED");
+			request.setAttribute("error", "CREDIT CARD AUTHORIZATION FAILED");
 		}
 		else {
-			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
+			
+			ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
+			
+			//obtains the entered addresses for payment
+			AddressBean paymentShippingAB = this.retrievePaymentAddresses(request, response, databaseOperator, errorChecking).get(0);
+			AddressBean paymentBillingAB = this.retrievePaymentAddresses(request, response, databaseOperator, errorChecking).get(1);
+			
+			//obtains the default addresses of user
+			AddressBean defaultShippingAB  = databaseOperator.retrieveAddress(username, "shipping");
+			AddressBean defaultBillingAB  = databaseOperator.retrieveAddress(username, "billing");
+
+			//checks if addresses are default addresses in database
+			boolean defaultShippingAddressUsed = errorChecking.compareAddresses(paymentShippingAB, defaultShippingAB);
+			boolean defaultBillingAddressUsed = errorChecking.compareAddresses(paymentBillingAB, defaultBillingAB);
+			
+			//default shipping and billing address added to orderDetails - new addition to address table not necessary
+			if (defaultShippingAddressUsed && defaultBillingAddressUsed) {
+				
+				//databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
+
+			}//default shipping and new billing address added to orderDetails - new addition to address table is necessary
+			else if (defaultShippingAddressUsed && !defaultBillingAddressUsed) {
+				
+				//databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, paymentBillingAB);
+
+			}//new shipping and default billing address added to orderDetails - new addition to address table is necessary
+			else if (!defaultShippingAddressUsed && defaultBillingAddressUsed) {
+				
+				//databaseOperator.addtoOrders(shoppingCart, paymentShippingAB, defaultBillingAB);
+
+			}//new shipping and new new address added to orderDetails - new addition to address table is necessary
+			else if (!defaultShippingAddressUsed && !defaultBillingAddressUsed) {
+				
+				//databaseOperator.addtoOrders(shoppingCart, paymentShippingAB, paymentBillingAB);
+
+			}
+
 			databaseOperator.addtoOrders(shoppingCart);
 			target = "/SuccessfulOrder.jspx";
+			
 		}
 	}
+	
+	protected void setAddress(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
+
+		//obtains user's shipping and billing addresses for confirmation on the payment page
+		AddressBean shippingAB = databaseOperator.retrieveAddress(username, "shipping");
+		AddressBean billingAB = databaseOperator.retrieveAddress(username, "billing");
+		
+		//sets user's shipping address details 
+		request.getSession().setAttribute("paymentShippingLine1", shippingAB.getAddressLine1());
+		request.getSession().setAttribute("paymentShippingLine2", shippingAB.getAddressLine2());
+		request.getSession().setAttribute("paymentShippingCountry", shippingAB.getCountry());
+		request.getSession().setAttribute("paymentShippingProvince", shippingAB.getProvince());
+		request.getSession().setAttribute("paymentShippingCity", shippingAB.getCity());
+		request.getSession().setAttribute("paymentShippingZip", shippingAB.getZip());
+		
+		//sets user's billing address details 
+		request.getSession().setAttribute("paymentBillingLine1", billingAB.getAddressLine1());
+		request.getSession().setAttribute("paymentBillingLine2", billingAB.getAddressLine2());
+		request.getSession().setAttribute("paymentBillingCountry", billingAB.getCountry());
+		request.getSession().setAttribute("paymentBillingProvince", billingAB.getProvince());
+		request.getSession().setAttribute("paymentBillingCity", billingAB.getCity());
+		request.getSession().setAttribute("paymentBillingZip", billingAB.getZip());
+		
+		//sets user's phone number
+		request.getSession().setAttribute("paymentAddressPhone", shippingAB.getPhoneNumber());
+
+	}
+	
+	protected ArrayList<AddressBean> retrievePaymentAddresses(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
+		
+		AddressBean shippingAB = new AddressBean();
+		AddressBean billingAB = new AddressBean();
+		ArrayList<AddressBean> paymentAddressees = new ArrayList<AddressBean>();
+
+		//gets user's payment shipping address details 
+		shippingAB.setAddressLine1(request.getParameter("paymentShippingLine1"));
+		shippingAB.setAddressLine2(request.getParameter("paymentShippingLine2"));
+		shippingAB.setCountry(request.getParameter("paymentShippingCountry"));
+		shippingAB.setProvince(request.getParameter("paymentShippingProvince"));
+		shippingAB.setCity(request.getParameter("paymentShippingCity"));
+		shippingAB.setZip(request.getParameter("paymentShippingZip"));
+		shippingAB.setPhoneNumber(request.getParameter("paymentAddressPhone"));
+
+		
+		//gets user's payment billing address details 
+		billingAB.setAddressLine1(request.getParameter("paymentBillingLine1"));
+		billingAB.setAddressLine2(request.getParameter("paymentBillingLine2"));
+		billingAB.setCountry(request.getParameter("paymentBillingCountry"));
+		billingAB.setProvince(request.getParameter("paymentBillingProvince"));
+		billingAB.setCity(request.getParameter("paymentBillingCity"));
+		billingAB.setZip(request.getParameter("paymentBillingZip"));
+		billingAB.setPhoneNumber(request.getParameter("paymentAddressPhone"));
+
+		paymentAddressees.add(shippingAB);
+		paymentAddressees.add(billingAB);
+		
+		return paymentAddressees;
+	}
+	
 
 	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
 		

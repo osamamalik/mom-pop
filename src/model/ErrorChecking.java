@@ -2,17 +2,20 @@ package model;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import DAO.*;
 import bean.*;
 
 public class ErrorChecking {
 
-	private DatabaseOperator myModel;
+	private DatabaseOperator databaseOperator;
 	private boolean errorStatus;
 	private String errorMessage;
 
 	public ErrorChecking() {
-		myModel = new DatabaseOperator();
+		databaseOperator = new DatabaseOperator();
 		this.errorStatus = false;
 		this.errorMessage = null;
 	}
@@ -68,7 +71,7 @@ public class ErrorChecking {
 			setErrorMessage("PASSWORDMISMATCH");
 		}
 		//checks if username already exists in database
-		else if(myModel.retrieveUser(username).getUsername() != null) {
+		else if(databaseOperator.retrieveUser(username).getUsername() != null) {
 			setErrorStatus(true);
 			setErrorMessage("EXISTINGUSER");
 		}
@@ -142,14 +145,37 @@ public class ErrorChecking {
 	
 	public boolean passwordValidation(String username, String password) {
 		UserBean ub = new UserBean();
-		ub = myModel.retrieveUser(username);
+		ub = databaseOperator.retrieveUser(username);
 		return ub.getPassword().equals(password);
 	}
 	
 	public boolean checkUserExists(String username) {
-		return myModel.checkUserExists(username);
+		return databaseOperator.checkUserExists(username);
 	}
 	
+	public boolean compareAddresses(AddressBean ab1, AddressBean ab2) {
+		String ab1ln1 = ab1.getAddressLine1();
+		String ab2ln1 = ab2.getAddressLine1();
+		String ab1ln2 = ab1.getAddressLine2();
+		String ab2ln2 = ab2.getAddressLine2();
+		String ab1Cnt = ab1.getCountry();
+		String ab2Cnt = ab2.getCountry();
+		String ab1Prov = ab1.getProvince();
+		String ab2Prov = ab2.getProvince();
+		String ab1City = ab1.getCity();
+		String ab2City = ab2.getCity();
+		String ab1Zip = ab1.getZip();
+		String ab2Zip = ab2.getZip();
+		String ab1Number = ab1.getPhoneNumber();
+		String ab2Number = ab2.getPhoneNumber();
+		
+		if (ab1ln1.equals(ab2ln1) && ab1ln2.equals(ab2ln2) && ab1Cnt.equals(ab2Cnt) && ab1Prov.equals(ab2Prov) && ab1City.equals(ab2City) && ab1Zip.equals(ab2Zip) && ab1Number.equals(ab2Number)){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	public void setErrorStatus(boolean status) {
 		this.errorStatus = status;

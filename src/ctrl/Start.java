@@ -177,6 +177,11 @@ public class Start extends HttpServlet {
 			this.catalogService(request, response, myModel, errorChecking);
 		}
 		
+		if (request.getParameter("OPSGenerateButton") != null) {
+			this.OrderCatalogService(request, response, myModel, errorChecking);
+		}
+		
+		
 		
 		/***************************************************************
 			ADD TO SHOPPING CART
@@ -284,6 +289,10 @@ public class Start extends HttpServlet {
 		//checks if PCS was requested
 		if (request.getParameter("PCSRequestButton") != null) {
 			target = "/ProductCatalogService.jspx";	
+		}
+		
+		if (request.getParameter("OPSRequestButton") != null) {
+			target = "/OrderCatalogService.jspx";	
 		}
 		
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
@@ -728,7 +737,7 @@ public class Start extends HttpServlet {
 	
 	protected void catalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
 		
-		String bidString = request.getParameter("bidPCS");
+		String bidString = request.getParameter("bid");
 		errorChecking.checkPCSError(bidString);
 
 		if (!errorChecking.getErrorStatus()) {
@@ -772,6 +781,35 @@ public class Start extends HttpServlet {
 		}
 	}
 
+	
+	protected void OrderCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException{
+		
+		String bidString = request.getParameter("bid");
+		errorChecking.checkPCSError(bidString);
+
+		if (!errorChecking.getErrorStatus()) {
+			int bid = (Integer.parseInt(bidString));
+			String f = "xmlExports/" + request.getSession().getId()+".xml";
+			String filename = this.getServletContext().getRealPath("/" + f);
+			request.getSession().setAttribute("filenameOrderService", filename);
+			request.setAttribute("fOrderService", f);
+			System.out.println(filename);
+			try {
+				myModel.exportOrderServices(bid, filename);
+				request.setAttribute("OPSResultReady", true);
+				target = "OrderCatalogService.jspx";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			String signUpErrorMessage = errorChecking.getErrorMessage();
+			error = true;
+			target = "/ProductCatalogService.jspx";
+			request.setAttribute("error", signUpErrorMessage);
+		}
+	}
 	
 	
 	

@@ -30,7 +30,7 @@
 					<td><input type="submit" value="Product Catalog Services" name ="PCSRequestButton"></input></td>		
 				</tr>
 				<tr>
-					<td><input type="submit" value="Order Process Services" name ="PCSRequestButton"></input></td>		
+					<td><input type="submit" value="Order Process Services" name ="OPSRequestButton"></input></td>		
 				</tr>	
 				
 			</table>

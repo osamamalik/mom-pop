@@ -42,6 +42,10 @@
 	           			<td><label>Total:</label></td>
 	           			<td>${totalPrice}</td>
 	           		</tr>
+	           		
+	           		<c:if test = "${totalPrice gt 0}">
+	           			<td><button name="checkoutButton">checkout</button></td>
+	           		</c:if>
 			</table>		 
 		 
 	 	<footer>

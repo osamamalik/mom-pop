@@ -11,19 +11,20 @@
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
 	<script>
-	  setTimeout(function() {
+	 /* setTimeout(function() {
 	      document.location = "Home.jspx";
-	  }, 4000); // 
+	  }, 4000); */
 	</script>
 <title>Successful Order</title>
 </head>
 <body>
-	
+	<form method="POST">
 	<div>
 		<p> Your order has been successfully placed </p>
 		<p> Thank you for shopping with us </p>
+		 <input type="submit" value="Home" name="homeButton"></input> 
 	</div>
-	
+	</form>
 	
 </body>
 </html>

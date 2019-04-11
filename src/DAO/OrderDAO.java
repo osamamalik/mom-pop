@@ -102,6 +102,38 @@ public class OrderDAO {
 		
 		return lastOrderId;
 	}
+	
+	public ArrayList<OrderBean> retrieveOrders(int bid) throws SQLException{
+		String query = "select * from OrderDetails where bid = " + bid;
+		ArrayList<OrderBean> aob= new ArrayList<OrderBean>(); 
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		
+
+		if(r.next()){
+			
+			OrderBean ob = new OrderBean();
+			int oid = Integer.parseInt(r.getString("oid"));
+			
+			String query2 = "select * from Orders where oid = " + oid;
+			PreparedStatement p2 = con.prepareStatement(query2);
+			ResultSet r2 = p2.executeQuery();
+			
+			ob.setOid(oid);
+			if(r2.next()) {
+				ob.setUsername(r2.getString("username"));
+				ob.setOrderDate(r2.getString("odate"));
+			}
+			aob.add(ob);
+		}
+		
+		p.close();
+		con.close();
+		r.close();
+		return aob;
+	}
+	
 
 }
 

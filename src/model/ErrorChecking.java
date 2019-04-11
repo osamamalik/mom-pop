@@ -7,12 +7,12 @@ import bean.*;
 
 public class ErrorChecking {
 
-	private Model myModel;
+	private DatabaseOperator myModel;
 	private boolean errorStatus;
 	private String errorMessage;
 
 	public ErrorChecking() {
-		myModel = new Model();
+		myModel = new DatabaseOperator();
 		this.errorStatus = false;
 		this.errorMessage = null;
 	}

@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import DAO.*;
 import bean.*;
 
-public class Model {
+public class DatabaseOperator {
 	private UserDAO userDAO;
 	private BookDAO bookDAO;
 	private CartDAO cartDAO;
 	private AddressDAO addressDAO;
 	private OrderDAO orderDAO;
 
-	public Model() {
+	public DatabaseOperator() {
 
 		try {
 			userDAO = new UserDAO();

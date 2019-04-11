@@ -14,10 +14,10 @@ import model.*;
 
 public class Services {
 	
-	private Model myModel;
+	private DatabaseOperator myModel;
 
 	public Services() {
-		myModel = new Model();
+		myModel = new DatabaseOperator();
 	}
 
 	

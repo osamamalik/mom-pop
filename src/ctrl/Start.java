@@ -1,14 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -55,11 +48,11 @@ public class Start extends HttpServlet {
 		error = false;
 		books = new ArrayList<BookBean>();
 		cart = new ArrayList<CartBean>();
-		Model model = new Model();
-		model.clearVisitorCart();
+		DatabaseOperator databaseOperator = new DatabaseOperator();
+		databaseOperator.clearVisitorCart();
 		
 		try {
-			context.setAttribute("myModel", new Model());
+			context.setAttribute("databaseOperator", new DatabaseOperator());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -96,7 +89,7 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			INITIALIZATION OF MODEL CLASSES
 		 ****************************************************************/
-		Model myModel = (Model) this.getServletContext().getAttribute("myModel");
+		DatabaseOperator databaseOperator = (DatabaseOperator) this.getServletContext().getAttribute("databaseOperator");
 		Services services = (Services) this.getServletContext().getAttribute("services");
 		ErrorChecking errorChecking = (ErrorChecking) this.getServletContext().getAttribute("errorChecking");
 		QueryConstructor queryObject = (QueryConstructor) this.getServletContext().getAttribute("query");
@@ -105,13 +98,13 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			PAGE REDIRECTIONS
 		 ****************************************************************/
-		this.redirector(request, response, myModel, queryObject);
+		this.redirector(request, response, databaseOperator, queryObject);
 		
 		/***************************************************************
 			SIGN UP
 		 ****************************************************************/
 		if (request.getParameter("signUpButton") != null) {
-			this.signUp(request, response, myModel, errorChecking);
+			this.signUp(request, response, databaseOperator, errorChecking);
 		}
 		
 		/***************************************************************
@@ -120,7 +113,7 @@ public class Start extends HttpServlet {
 		if (request.getParameter("loginButton") != null) {
 			String username = request.getParameter("loginName");
 			String password = request.getParameter("loginPassword"); 
-			this.logIn(request, response, myModel, errorChecking, username, password);
+			this.logIn(request, response, databaseOperator, errorChecking, username, password);
 		}
 		
 		/***************************************************************
@@ -136,26 +129,26 @@ public class Start extends HttpServlet {
 		
 		// Calls method for listing all books
 		if (request.getParameter("booksPageButton") != null) {
-			this.listAllBooks(request, response, myModel, queryObject);
+			this.listAllBooks(request, response, databaseOperator, queryObject);
 		}
 		
 		// Calls method for listing books by category
 		if (request.getParameter("headerCategory") != null) {
-			this.listBooksByCategory(request, response, myModel, queryObject);
+			this.listBooksByCategory(request, response, databaseOperator, queryObject);
 		}
 		
 		/***************************************************************
 			BOOK SORTINGS
 		****************************************************************/
 		if (request.getParameter("sortButton") != null) {
-			this.sortBooks(request, response, myModel, queryObject);	
+			this.sortBooks(request, response, databaseOperator, queryObject);	
 		}
 		
 		/***************************************************************
 			FILTER
 		****************************************************************/
 		if (request.getParameter("filterButton") != null || request.getParameter("resetFilterButton") != null ) {
-			this.filter(request, response, myModel, queryObject);
+			this.filter(request, response, databaseOperator, queryObject);
 		}
 	
 		/***************************************************************
@@ -163,53 +156,53 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("viewSingleBook") != null) {
 			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
-			this.openBook(request, response, myModel, title);
+			this.openBook(request, response, databaseOperator, title);
 		}
 		
 		if (request.getParameter("addReviewButton") != null) {
-			this.addReview(request, response, myModel);
+			this.addReview(request, response, databaseOperator);
 		}
 		
 		/***************************************************************
 			SEARCH BAR
 		****************************************************************/
 		if (request.getParameter("searchButton") != null) {
-			this.searchStore(request, response, myModel, queryObject);
+			this.searchStore(request, response, databaseOperator, queryObject);
 		}
 				
 		/***************************************************************
 			ADD TO SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
-			this.addToCart(request, response, myModel);
+			this.addToCart(request, response, databaseOperator);
 		}
 		
 		/***************************************************************
 			REMOVE FROM SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("removeItem") != null) {
-			this.removeFromCart(request, response, myModel);
+			this.removeFromCart(request, response, databaseOperator);
 		}
 		
 		/***************************************************************
 			UPDATE SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("updateCart") != null) {
-			this.updateCart(request, response, myModel);
+			this.updateCart(request, response, databaseOperator);
 		}
 		
 		/***************************************************************
 			PAYMENT
 		****************************************************************/
 		if (request.getParameter("placeOrder") != null) {
-			this.payment(request, response, myModel, errorChecking);
+			this.payment(request, response, databaseOperator, errorChecking);
 		}
 		
 		/***************************************************************
 			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
 		if (request.getParameter("PCSGenerateButton") != null) {
-			this.productCatalogService(request, response, myModel, errorChecking, services);
+			this.productCatalogService(request, response, databaseOperator, errorChecking, services);
 		}
 		
 		
@@ -217,7 +210,7 @@ public class Start extends HttpServlet {
 			ORDER PROCESSING SERVICES
 		 ****************************************************************/
 		if (request.getParameter("OPSGenerateButton") != null) {
-			this.orderProcessingService(request, response, myModel, errorChecking, services);
+			this.orderProcessingService(request, response, databaseOperator, errorChecking, services);
 		}
 		
 		
@@ -242,7 +235,7 @@ public class Start extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	protected void redirector(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+	protected void redirector(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
 						
 		//checks if a 'Single Book' has been clicked on
 		if (request.getParameter("viewSingleBook") != null) {
@@ -267,7 +260,7 @@ public class Start extends HttpServlet {
 			target = "/Books.jspx";
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
-			categories = myModel.retrieveUniqueCategories();
+			categories = databaseOperator.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
 				
@@ -334,7 +327,7 @@ public class Start extends HttpServlet {
 				
 	}
 		
-	protected void logIn(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, String username, String password) throws ServletException, IOException {
+	protected void logIn(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, String username, String password) throws ServletException, IOException {
 		
 		// Sets errors, if any
 		errorChecking.checkLoginError(username, password);
@@ -355,13 +348,13 @@ public class Start extends HttpServlet {
 			}		
 			
 			//clears the 'visitor' shopping cart
-			myModel.clearVisitorCart();
+			databaseOperator.clearVisitorCart();
 			
 			//sets the user's cart
-			this.setCart(request, response, myModel, username);
+			this.setCart(request, response, databaseOperator, username);
 			
 			//sets the user's address information
-			this.setAddress(request, response, myModel, username);
+			this.setAddress(request, response, databaseOperator, username);
 		}
 		
 		else {
@@ -372,7 +365,7 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	protected void signUp(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking) throws ServletException, IOException {
+	protected void signUp(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) throws ServletException, IOException {
 		
 		String firstName = request.getParameter("signUpFirstName");
 		String lastName = request.getParameter("signUpLastName");
@@ -420,9 +413,9 @@ public class Start extends HttpServlet {
 		
 		//Sets errors, if any
 		if (!errorChecking.getErrorStatus()) {
-			myModel.addUser(username, firstName, lastName, email, password);
-			myModel.addAddress(shippingAB);
-			myModel.addAddress(billingAB);
+			databaseOperator.addUser(username, firstName, lastName, email, password);
+			databaseOperator.addAddress(shippingAB);
+			databaseOperator.addAddress(billingAB);
 			
 			//checks if there are items in the visitor shopping cart
 			//if so, adds these items to the database for the newly created user
@@ -432,10 +425,10 @@ public class Start extends HttpServlet {
 				cartItem.setUsername(username);
 			}
 
-			myModel.addShoppingCart(shoppingCart, username);
-			this.setCart(request, response, myModel, username);
+			databaseOperator.addShoppingCart(shoppingCart, username);
+			this.setCart(request, response, databaseOperator, username);
 			
-			this.logIn(request, response, myModel, errorChecking, username, password);
+			this.logIn(request, response, databaseOperator, errorChecking, username, password);
 			
 			this.target = redirectedTarget;
 			this.redirectedTarget = "/Books.jspx";
@@ -459,30 +452,30 @@ public class Start extends HttpServlet {
 	}
 	
 
-	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
 	
 		queryObject.setCategory(null);
 		queryObject.setSearchTerm(null);
 		queryObject.resetFilter();
 		
 		queryObject.setAllBooks(true);
-		books = myModel.queryConstructor(queryObject);
+		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);
 	}
 	
-	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
 		
 		queryObject.setAllBooks(false);
 		queryObject.setSearchTerm(null);
 		
 		String category = request.getParameter("headerCategory");
 		queryObject.setCategory(category);
-		books = myModel.queryConstructor(queryObject);
+		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);
 		
 	}
 	
-	protected void sortBooks(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+	protected void sortBooks(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
 		
 		//obtains the sort option
 		String sortOption = request.getParameter("sortOption");
@@ -506,12 +499,12 @@ public class Start extends HttpServlet {
 			queryObject.setSortPriceHighToLow(true);
 		}
 		
-		books = myModel.queryConstructor(queryObject);
+		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);
 		
 	}
 	
-	protected void searchStore(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {
+	protected void searchStore(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
 		
 		queryObject.setAllBooks(false);
 		queryObject.setCategory(null);
@@ -521,22 +514,22 @@ public class Start extends HttpServlet {
 		
 		queryObject.setSearchTerm(searchTerm);
 			
-		books = myModel.queryConstructor(queryObject);
+		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);	
 	}
 	
-	protected void filter(HttpServletRequest request, HttpServletResponse response, Model myModel, QueryConstructor queryObject) throws ServletException, IOException {		
+	protected void filter(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {		
 		
 		//if user chose to reset the filter, queryObject's filter attributes are reset
 		//if not, queryObject's filter attributes are initialized
 		if (request.getParameter("resetFilterButton") != null) {
 			queryObject.resetFilter();
-			books = myModel.queryConstructor(queryObject);
+			books = databaseOperator.queryConstructor(queryObject);
 			request.setAttribute("booksList", books);		
 			
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
-			categories = myModel.retrieveUniqueCategories();
+			categories = databaseOperator.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
 		else {
@@ -599,13 +592,13 @@ public class Start extends HttpServlet {
 							
 			}
 				
-			books = myModel.queryConstructor(queryObject);
+			books = databaseOperator.queryConstructor(queryObject);
 			request.setAttribute("booksList", books);
 		}
 	}
 
 	
-	protected void addToCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void addToCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 
 		String username;
 		
@@ -620,13 +613,13 @@ public class Start extends HttpServlet {
 			username = "visitor";
 		}
 
-		myModel.addToCart(bid, 1, username);
-		this.setCart(request, response, myModel, username);		
-		this.openBook(request, response, myModel, bid);
+		databaseOperator.addToCart(bid, 1, username);
+		this.setCart(request, response, databaseOperator, username);		
+		this.openBook(request, response, databaseOperator, bid);
 
 	}
 	
-	protected void removeFromCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void removeFromCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 		
 		String username;
 
@@ -641,12 +634,12 @@ public class Start extends HttpServlet {
 			username = "visitor";
 		}
 		
-		myModel.removeFromCart(bid, username);
-		this.setCart(request, response, myModel, username);
+		databaseOperator.removeFromCart(bid, username);
+		this.setCart(request, response, databaseOperator, username);
 		
 	}
 	
-	protected void updateCart(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void updateCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 
 		String username;
 		int quantity;
@@ -659,7 +652,7 @@ public class Start extends HttpServlet {
 			username = "visitor";
 		}
 		
-		ArrayList<CartBean> databaseShoppingCart = myModel.retrieveCart(username);
+		ArrayList<CartBean> databaseShoppingCart = databaseOperator.retrieveCart(username);
 		
 		for (CartBean cartItem : databaseShoppingCart) {
 			
@@ -670,26 +663,26 @@ public class Start extends HttpServlet {
 			//checks if the inspected item's quantity has been changed
 			//if so, updates database. if not, inspects the next item
 			if (quantity != cartItem.getQuantity()) {
-				myModel.updateQuantity(cartItem.getBid(), cartItem.getUsername(), quantity);
+				databaseOperator.updateQuantity(cartItem.getBid(), cartItem.getUsername(), quantity);
 			}
 		}
 		
-		this.setCart(request, response, myModel, username);
+		this.setCart(request, response, databaseOperator, username);
 		
 	}
 	
-	protected void setCart(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
-		ArrayList<CartBean> shoppingCart = myModel.retrieveCart(username);
-		double totalPrice = myModel.getTotalPrice(username);
+	protected void setCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
+		ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
+		double totalPrice = databaseOperator.getTotalPrice(username);
 		request.getSession().setAttribute("cart", shoppingCart);
 		request.getSession().setAttribute("totalPrice", totalPrice);
 	}
 	
-	protected void setAddress(HttpServletRequest request, HttpServletResponse response, Model myModel, String username) throws ServletException, IOException {
+	protected void setAddress(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
 
 		//obtains user's shipping and billing addresses for confirmation on the payment page
-		AddressBean shippingAB = myModel.retrieveAddress(username, "shipping");
-		AddressBean billingAB = myModel.retrieveAddress(username, "shipping");
+		AddressBean shippingAB = databaseOperator.retrieveAddress(username, "shipping");
+		AddressBean billingAB = databaseOperator.retrieveAddress(username, "shipping");
 		
 		//sets user's shipping address details 
 		request.getSession().setAttribute("shippingLine1", shippingAB.getAddressLine1());
@@ -712,14 +705,14 @@ public class Start extends HttpServlet {
 
 	}
 		
-	protected void openBook(HttpServletRequest request, HttpServletResponse response, Model myModel, int bookID) throws ServletException, IOException {
-		BookBean singleBook = myModel.retrieveBook(bookID);
+	protected void openBook(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, int bookID) throws ServletException, IOException {
+		BookBean singleBook = databaseOperator.retrieveBook(bookID);
 		request.setAttribute("singleBook", singleBook);
 		
 		// Retrieve user review for book if it exists, otherwise give option to add review:
 		if (request.getSession().getAttribute("loggedInUser") != null) {
 			String username = request.getSession().getAttribute("loggedInUser").toString();
-			ArrayList<String> review = myModel.retrieveReviewByUsernameAndBook(username, bookID);
+			ArrayList<String> review = databaseOperator.retrieveReviewByUsernameAndBook(username, bookID);
 			if (!review.isEmpty()) {
 				request.setAttribute("userReviewExists", true);
 				request.setAttribute("userReview", review.get(0));
@@ -733,20 +726,20 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	protected void addReview(HttpServletRequest request, HttpServletResponse response, Model myModel) throws ServletException, IOException {
+	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 		String username = request.getSession().getAttribute("loggedInUser").toString();
 		int bookID = Integer.parseInt(request.getParameter("title"));
 		String review = request.getParameter("review");
 		int rating = Integer.parseInt(request.getParameter("rating"));
-		myModel.addReview(username, bookID, review, rating);
+		databaseOperator.addReview(username, bookID, review, rating);
 		int title = (Integer.parseInt(request.getParameter("title")));
-		openBook(request, response, myModel, title);
+		openBook(request, response, databaseOperator, title);
 	}
 		
-	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
+	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 		
 		//check if the new order number is a multiple of 3
-		int orderCount = myModel.getOrderCount();
+		int orderCount = databaseOperator.getOrderCount();
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
@@ -754,12 +747,12 @@ public class Start extends HttpServlet {
 		}
 		else {
 			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
-			myModel.addtoOrders(shoppingCart);
+			databaseOperator.addtoOrders(shoppingCart);
 			target = "/SuccessfulOrder.jspx";
 		}
 	}
 
-	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
+	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
 		
 		String bidString = request.getParameter("bid");
 		errorChecking.checkServicesError(bidString);
@@ -789,7 +782,7 @@ public class Start extends HttpServlet {
 	}
 
 	
-	protected void orderProcessingService(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
+	protected void orderProcessingService(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
 		
 		String bidString = request.getParameter("bid");
 		errorChecking.checkServicesError(bidString);

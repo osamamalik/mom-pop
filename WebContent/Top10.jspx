@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8" 
+		pageEncoding="UTF-8" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="StyleSheet" href="res/styles.css" type="text/css"
+	title="cse4413" media="screen, print"/>
+	<script type="text/javascript" src="res/myJS.js">;</script>
+<title>E-men | Services</title>
+</head>
+<body>
+
+	<div class="main">
+		<form method="POST">
+		
+		
+			<header>
+				<input type="submit" value="Home" name="homeButton"></input>
+			</header>
+				<p>Hello Admin, These are the top 10 books sold</p>
+				
+				<table>
+					<td><c:out value=" Book "/></td>
+					
+				<c:forEach var="entry" items="${sessionScope['Top10']}"> 
+					
+	              <tr class="booksResultRow">
+		              		<td class="booksResultsImageCell"><button class="booksResultsButton" action="submit" type="submit" name="viewSingleBook" value="${entry.getBid()}"><img class="booksResultsImage" src="${entry.getUrl()}"></img></button></td>
+			                <td class="booksResultsInfoCell">
+			                	<h3><c:out value="${entry.getTitle()}"/></h3>
+			                	<h4>by <c:out value="${entry.getAuthor()}"/></h4>
+			                	<p><c:out value="${entry.getCategory()}"/> | <c:out value="${entry.getPublishYear()}"/></p>
+			                	<p>Rating: <f:formatNumber value="${entry.getRating()}" minFractionDigits="2"/></p>
+			                	<h3><f:formatNumber value="${entry.getPrice()}" type="currency" currencySymbol="$"/></h3>
+			                </td>
+							<!-- <td><button action="submit" type="submit" name="addToCart" value = "${entry.getBid()}">Add</button></td>-->
+		                </tr>
+
+	           	</c:forEach>
+	           	</table>
+	</form>
+	</div>
+</body>
+</html>
+</jsp:root>

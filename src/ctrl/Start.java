@@ -225,6 +225,8 @@ public class Start extends HttpServlet {
 		if (request.getParameter("WhichMonth") != null) {
 			this.OrdersByMonth(request, response, myModel, errorChecking);
 		}
+
+		
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
@@ -339,6 +341,15 @@ public class Start extends HttpServlet {
 			else {
 				this.target = "/Payment.jspx";
 			}
+		}
+		
+		if(request.getParameter("top10") != null) {
+			if (!adminLoggedIn) {
+				target = "/Login.jspx";
+			}
+			else if (adminLoggedIn){
+				target = "/Top10.jspx";
+			}	
 		}
 				
 	}
@@ -754,8 +765,9 @@ public class Start extends HttpServlet {
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, Model myModel, ErrorChecking errorChecking){
 		
-	
+		
 		//check if the new order number is a multiple of 3
+		int i =0;
 		int orderCount = myModel.getOrderCount();
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
@@ -765,6 +777,8 @@ public class Start extends HttpServlet {
 		else {
 			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
 			myModel.addtoOrders(shoppingCart);
+			
+			request.getSession().setAttribute("Order", i++);
 			target = "/SuccessfulOrder.jspx";
 		}
 	}
@@ -908,6 +922,8 @@ public class Start extends HttpServlet {
 		}
 		return "";
 	}
+	
+
 	
 	
 }

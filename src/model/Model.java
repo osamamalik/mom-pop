@@ -427,6 +427,18 @@ public class Model {
 		return sw.toString();
 		
 	}
+	
+	
+	
+	public ArrayList<BookBean> getTop10() throws ClassNotFoundException{
+		
+		try {
+			return orderDAO.getTop10();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
 
 

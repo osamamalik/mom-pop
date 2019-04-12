@@ -113,7 +113,7 @@ public class Start extends HttpServlet {
 			SIGN UP
 		 ****************************************************************/
 		if (request.getParameter("signUpButton") != null) {
-			this.signUp(request, response, databaseOperator, errorChecking);
+			this.signUp(request, response, databaseOperator, errorChecking, queryObject);
 		}
 		
 		/***************************************************************
@@ -122,7 +122,7 @@ public class Start extends HttpServlet {
 		if (request.getParameter("loginButton") != null) {
 			String username = request.getParameter("loginName");
 			String password = request.getParameter("loginPassword"); 
-			this.logIn(request, response, databaseOperator, errorChecking, username, password);
+			this.logIn(request, response, databaseOperator, errorChecking, username, password, queryObject);
 		}
 		
 		/***************************************************************
@@ -233,7 +233,7 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
-		
+		System.out.println(databaseOperator.getOrderCount());
 		
 		/***************************************************************
 			TESTING BLOCK
@@ -281,43 +281,7 @@ public class Start extends HttpServlet {
 			categories = databaseOperator.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
-				
-		//checks if services access is requested
-		//checks if user is logged in as admin
-		else if (request.getParameter("servicesButton") != null) {
-			if (!adminLoggedIn) {
-				target = "/Login.jspx";
-			}
-			else if (adminLoggedIn){
-				target = "/Services.jspx";
-			}		
-		}
-		
-		//checks if analytics access is requested
-		//checks if user is logged in as admin
-		else if (request.getParameter("analyticsButton") != null) {
-			if (!adminLoggedIn) {
-				target = "/Login.jspx";
-			}
-			else if (adminLoggedIn){
-				target = "/Analytics.jspx";
-			}		
-		}
-		
-		if (request.getParameter("OrdersByMonth") != null) {
-			target = "/OrdersByMonth.jspx";	
-		}
-		
-		//checks if PCS was requested
-		else if (request.getParameter("PCSRequestButton") != null) {
-			target = "/ProductCatalogService.jspx";	
-		}
-		
-		//checks if OPS was requested
-		else if (request.getParameter("OPSRequestButton") != null) {
-			target = "/OrderProcessingService.jspx";	
-		}
-		
+					
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
 		 if (request.getParameter("homeButton") != null) {
 			if (adminLoggedIn) {
@@ -346,20 +310,50 @@ public class Start extends HttpServlet {
 				this.target = "/Payment.jspx";
 			}
 		}
-		
-		//checks if top10 orders were requested
-		if(request.getParameter("top10") != null) {
+		 
+		//checks if services access is requested
+		//checks if user is logged in as admin
+		else if (request.getParameter("servicesButton") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
 			else if (adminLoggedIn){
-				target = "/Top10.jspx";
-			}	
+				target = "/Services.jspx";
+			}		
+		}
+		
+		//checks if analytics access is requested
+		//checks if user is logged in as admin
+		else if (request.getParameter("analyticsButton") != null) {
+			if (!adminLoggedIn) {
+				target = "/Login.jspx";
+			}
+			else if (adminLoggedIn){
+				target = "/Analytics.jspx";
+			}		
 		}
 				
+		//checks if PCS was requested
+		else if (request.getParameter("PCSRequestButton") != null) {
+			target = "/ProductCatalogService.jspx";	
+		}
+		
+		//checks if OPS was requested
+		else if (request.getParameter("OPSRequestButton") != null) {
+			target = "/OrderProcessingService.jspx";	
+		}
+		
+		//checks if monthly orders were requested
+		if (request.getParameter("OrdersByMonth") != null) {
+			target = "/OrdersByMonth.jspx";	
+		}
+		//checks if top10 orders were requested
+		if(request.getParameter("top10") != null) {
+			target = "/Top10.jspx";	
+		}
 	}
 		
-	protected void logIn(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, String username, String password) throws ServletException, IOException {
+	protected void logIn(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, String username, String password, QueryConstructor queryObject) throws ServletException, IOException {
 		
 		// Sets errors, if any
 		errorChecking.checkLoginError(username, password);
@@ -377,6 +371,7 @@ public class Start extends HttpServlet {
 			}else {
 				this.target = redirectedTarget;
 				this.redirectedTarget = "/Books.jspx";
+				this.listAllBooks(request, response, databaseOperator, queryObject);
 			}		
 			
 			//clears the 'visitor' shopping cart
@@ -397,7 +392,7 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	protected void signUp(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) throws ServletException, IOException {
+	protected void signUp(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, QueryConstructor queryObject) throws ServletException, IOException {
 		
 		String firstName = request.getParameter("signUpFirstName");
 		String lastName = request.getParameter("signUpLastName");
@@ -459,7 +454,7 @@ public class Start extends HttpServlet {
 
 			databaseOperator.addShoppingCart(shoppingCart, username);
 			
-			this.logIn(request, response, databaseOperator, errorChecking, username, password);
+			this.logIn(request, response, databaseOperator, errorChecking, username, password, queryObject);
 			
 			this.target = redirectedTarget;
 			this.redirectedTarget = "/Books.jspx";
@@ -754,6 +749,7 @@ public class Start extends HttpServlet {
 		}
 		else {			
 			ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
+			ArrayList<AddressBean> paymentAddresses = new ArrayList<AddressBean>();
 			
 			//obtains the entered addresses for payment
 			AddressBean paymentShippingAB = this.retrievePaymentAddresses(request, response, databaseOperator, errorChecking).get(0);
@@ -767,30 +763,31 @@ public class Start extends HttpServlet {
 			boolean defaultShippingAddressUsed = errorChecking.compareAddresses(paymentShippingAB, defaultShippingAB);
 			boolean defaultBillingAddressUsed = errorChecking.compareAddresses(paymentBillingAB, defaultBillingAB);
 			
-			//default shipping and billing address added to orderDetails - new addition to address table not necessary
+			//default shipping and billing address added to orderDetails - update to address table not necessary
 			if (defaultShippingAddressUsed && defaultBillingAddressUsed) {
 				
-				//databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
+				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 
-			}//default shipping and new billing address added to orderDetails - new addition to address table is necessary
+			}//default shipping and new billing address added to orderDetails - billing address will be updated
 			else if (defaultShippingAddressUsed && !defaultBillingAddressUsed) {
 				
-				//databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, paymentBillingAB);
+				databaseOperator.updateAddress(paymentBillingAB);
+				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 
-			}//new shipping and default billing address added to orderDetails - new addition to address table is necessary
+			}//new shipping and default billing address added to orderDetails - shipping address will be updated
 			else if (!defaultShippingAddressUsed && defaultBillingAddressUsed) {
-				
-				//databaseOperator.addtoOrders(shoppingCart, paymentShippingAB, defaultBillingAB);
 
-			}//new shipping and new new address added to orderDetails - new addition to address table is necessary
+				databaseOperator.updateAddress(paymentShippingAB);
+				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
+
+			}//new shipping and new new address added to orderDetails - both addresses will be updated
 			else if (!defaultShippingAddressUsed && !defaultBillingAddressUsed) {
 				
-				//databaseOperator.addtoOrders(shoppingCart, paymentShippingAB, paymentBillingAB);
-
+				databaseOperator.updateAddress(paymentBillingAB);
+				databaseOperator.updateAddress(paymentShippingAB);
+				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 			}
 
-			databaseOperator.addtoOrders(shoppingCart);
-			
 			//request.getSession().setAttribute("Order", i++);
 			target = "/SuccessfulOrder.jspx";
 			
@@ -802,7 +799,7 @@ public class Start extends HttpServlet {
 		//obtains user's shipping and billing addresses for confirmation on the payment page
 		AddressBean shippingAB = databaseOperator.retrieveAddress(username, "shipping");
 		AddressBean billingAB = databaseOperator.retrieveAddress(username, "billing");
-		
+
 		//sets user's shipping address details 
 		request.getSession().setAttribute("paymentShippingLine1", shippingAB.getAddressLine1());
 		request.getSession().setAttribute("paymentShippingLine2", shippingAB.getAddressLine2());
@@ -821,7 +818,6 @@ public class Start extends HttpServlet {
 		
 		//sets user's phone number
 		request.getSession().setAttribute("paymentAddressPhone", shippingAB.getPhoneNumber());
-
 	}
 	
 	protected ArrayList<AddressBean> retrievePaymentAddresses(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
@@ -922,11 +918,9 @@ public class Start extends HttpServlet {
 	public void ordersByMonth(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
 		// gets month to  select
 		String month = request.getParameter("monthOption");
-		System.out.println(month);
 		
 		List<String> monthList = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 		int num = monthList.indexOf(month) + 1;
-		System.out.println(num);
 		
 		ArrayList<OrderWrapper> ow = databaseOperator.retrieveOrdersByMonth(num);
 		request.getSession().setAttribute("OrderByMonth", ow);

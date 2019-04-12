@@ -33,11 +33,11 @@ public class OrderDAO {
 	}
 	
 	
-	public void addtoOrders(ArrayList<CartBean> shoppingCart) throws SQLException {
+	public void addtoOrders(ArrayList<CartBean> shoppingCart, AddressBean shippingAddress, AddressBean billingAddress) throws SQLException {
 		
 		LocalDate date = LocalDate.now();
-		String user = shoppingCart.get(0).getUsername();
-		String query = "insert into ORDERS(odate, username) values('" + date + "', '" + user + "')";
+		String username = shoppingCart.get(0).getUsername();
+		String query = "insert into ORDERS(odate, username) values('" + date + "', '" + username + "')";
 
 		Connection con = this.ds.getConnection();
 		Statement stmt = con.createStatement();
@@ -45,20 +45,23 @@ public class OrderDAO {
 		stmt.close();
 		con.close();
 		
-		this.addOrderDetails(shoppingCart);
+		int shippingAID = shippingAddress.getAid();
+		int billingAID = billingAddress.getAid();
+				
+		this.addOrderDetails(shoppingCart, shippingAID, billingAID);
 	}
 	
-	public void addOrderDetails(ArrayList<CartBean> shoppingCart) throws SQLException {
+	public void addOrderDetails(ArrayList<CartBean> shoppingCart, int shippingAID, int billingAID) throws SQLException {
 		int lastOID = this.getLastOrderId();
 		
 		for (CartBean cartItem : shoppingCart) {
-			this.addSingleOrderDetails(lastOID, cartItem.getBid());
+			this.addSingleOrderDetails(lastOID, cartItem.getBid(), shippingAID, billingAID);
 		}
 	}
 	
-	public void addSingleOrderDetails(int oid, int bid) throws SQLException {
+	public void addSingleOrderDetails(int oid, int bid, int shippingAID, int billingAID) throws SQLException {
 		
-		String query = "insert into ORDERDETAILS(oid, bid) values(" + oid + ", " + bid + ")";
+		String query = "insert into ORDERDETAILS(oid, bid, shippingAid, billingAid) values(" + oid + ", " + bid + ", " + shippingAID + ", " + billingAID + ")";
 		Connection con = this.ds.getConnection();
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate(query);
@@ -103,9 +106,14 @@ public class OrderDAO {
 		return lastOrderId;
 	}
 	
+	
+	/* this method needs to be fixed
+	 * right now it returns a new ob for each book (each bid in order details)
+	 * each order bean is supposed to return a list of book beans 
+	*/
 	public ArrayList<OrderBean> retrieveOrders(int bid) throws SQLException{
 		String query = "select * from OrderDetails where bid = " + bid;
-		ArrayList<OrderBean> aob= new ArrayList<OrderBean>(); 
+		ArrayList<OrderBean> aob = new ArrayList<OrderBean>(); 
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -114,12 +122,12 @@ public class OrderDAO {
 			
 			OrderBean ob = new OrderBean();
 			int oid = Integer.parseInt(r.getString("oid"));
+			ob.setOid(oid);
 			
 			String query2 = "select * from Orders where oid = " + oid;
 			PreparedStatement p2 = con.prepareStatement(query2);
 			ResultSet r2 = p2.executeQuery();
 			
-			ob.setOid(oid);
 			while (r2.next()) {
 				ob.setUsername(r2.getString("username"));
 				ob.setOrderDate(r2.getString("odate"));
@@ -135,10 +143,14 @@ public class OrderDAO {
 		return aob;
 	}
 	
-	
+	/* this method also needs to be fixed
+	 * right now it returns a new order wrapper for each book in order details
+	 * in order details, multiple rows have oid's. each book in an
+	 * order is on a different row
+	*/
 	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month) throws SQLException{
 		String query = "select * from Orders where MONTH(odate) = " + month;
-		ArrayList<OrderWrapper> aob= new ArrayList<OrderWrapper>(); 
+		ArrayList<OrderWrapper> aow = new ArrayList<OrderWrapper>(); 
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
@@ -150,13 +162,13 @@ public class OrderDAO {
 			ResultSet r2 = p2.executeQuery();
 			
 			while (r2.next()) {
-				OrderWrapper ob = new OrderWrapper();
-				ob.setOid(oid);
+				OrderWrapper ow = new OrderWrapper();
+				ow.setOid(oid);
 				int bid = Integer.parseInt(r2.getString("bid"));
-				ob.setBid(bid);
-				ob.setUser(r.getString("username"));
-				ob.setDate(r.getString("odate"));
-				aob.add(ob);
+				ow.setBid(bid);
+				ow.setUser(r.getString("username"));
+				ow.setDate(r.getString("odate"));
+				aow.add(ow);
 			}
 			r2.close();
 			p2.close();
@@ -165,7 +177,7 @@ public class OrderDAO {
 		p.close();
 		con.close();
 		r.close();
-		return aob;
+		return aow;
 	}
 	
 	/* for analytics top 10.

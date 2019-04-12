@@ -2,6 +2,7 @@ package bean;
 
 public class AddressBean {
 	
+	private int aid;
 	private String type;
 	private String username;
 	private String addressLine1;
@@ -13,6 +14,14 @@ public class AddressBean {
 	private String phoneNumber;
 	
 	public AddressBean() {
+	}
+
+	public int getAid() {
+		return aid;
+	}
+
+	public void setAid(int aid) {
+		this.aid = aid;
 	}
 
 	public String getType() {
@@ -86,6 +95,8 @@ public class AddressBean {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+
 
 
 	

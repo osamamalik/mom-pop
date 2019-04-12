@@ -261,6 +261,16 @@ public class DatabaseOperator {
 		}
 	}
 	
+	public void updateAddress(AddressBean ab) {
+		try {
+			addressDAO.updateAddress(ab);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 	public AddressBean retrieveAddress(String username, String type) {
 		try {
 			return addressDAO.retrieveAddress(username, type);
@@ -286,9 +296,9 @@ public class DatabaseOperator {
 		return -1;
 	}
 	
-	public void addtoOrders(ArrayList<CartBean> shoppingCart) {
+	public void addtoOrders(ArrayList<CartBean> shoppingCart, AddressBean shippingAddress, AddressBean billingAddress) {
 		try {
-			orderDAO.addtoOrders(shoppingCart);
+			orderDAO.addtoOrders(shoppingCart,shippingAddress, billingAddress);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -69,7 +69,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentShippingLine1" name="paymentShippingLine1" placeholder="Street address, P.P. box, company name, c/o" size="50" value="${shippingLine1}"></input></td>		
+									<td><input type="text" id="paymentShippingLine1" name="paymentShippingLine1" placeholder="Street address, P.P. box, company name, c/o" size="50" value="${paymentShippingLine1}"></input></td>		
 									<td><label id="paymentShippingLine1Error"></label></td>
 								</tr>
 								
@@ -78,7 +78,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentShippingLine2" name="paymentShippingLine2" placeholder="Apartment, suite, unit, building, floor, etc." size="50" value="${shippingLine2}"></input></td>		
+									<td><input type="text" id="paymentShippingLine2" name="paymentShippingLine2" placeholder="Apartment, suite, unit, building, floor, etc." size="50" value="${paymentShippingLine2}"></input></td>		
 								</tr>
 								
 								<tr>
@@ -86,7 +86,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentShippingCountry" name="paymentShippingCountry" value="${shippingCountry}"></input></td>		
+									<td><input type="text" id="paymentShippingCountry" name="paymentShippingCountry" value="${paymentShippingCountry}"></input></td>		
 									<td><label id="paymentShippingCountryError"></label></td>
 								</tr>
 								
@@ -95,7 +95,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentShippingProvince" name="paymentShippingProvince" value="${shippingProvince}"></input></td>		
+									<td><input type="text" id="paymentShippingProvince" name="paymentShippingProvince" value="${paymentShippingProvince}"></input></td>		
 									<td><label id="paymentShippingProvinceError"></label></td>
 								</tr>
 								
@@ -104,7 +104,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentShippingCity" name="paymentShippingCity" value="${shippingCity}"></input></td>		
+									<td><input type="text" id="paymentShippingCity" name="paymentShippingCity" value="${paymentShippingCity}"></input></td>		
 									<td><label id="paymentShippingCityError"></label></td>
 								</tr>
 								
@@ -113,7 +113,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentShippingZip" name="paymentShippingZip" value="${shippingZip}"></input></td>		
+									<td><input type="text" id="paymentShippingZip" name="paymentShippingZip" value="${paymentShippingZip}"></input></td>		
 									<td><label id="paymentShippingZipError"></label></td>
 								</tr>
 											
@@ -136,7 +136,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentBillingLine1" name="paymentBillingLine1" placeholder="Street address, P.P. box, company name, c/o" size="50" value="${billingLine1}"></input></td>		
+									<td><input type="text" id="paymentBillingLine1" name="paymentBillingLine1" placeholder="Street address, P.P. box, company name, c/o" size="50" value="${paymentBillingLine1}"></input></td>		
 									<td><label id="paymentBillingLine1Error"></label></td>
 								</tr>
 								
@@ -145,7 +145,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentBillingLine2" name="paymentBillingLine2" placeholder="Apartment, suite, unit, building, floor, etc." size="50" value="${billingLine2}"></input></td>		
+									<td><input type="text" id="paymentBillingLine2" name="paymentBillingLine2" placeholder="Apartment, suite, unit, building, floor, etc." size="50" value="${paymentBillingLine2}"></input></td>		
 								</tr>
 								
 								<tr>
@@ -153,7 +153,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentBillingCountry" name="paymentBillingCountry" value="${billingCountry}"></input></td>		
+									<td><input type="text" id="paymentBillingCountry" name="paymentBillingCountry" value="${paymentBillingCountry}"></input></td>		
 									<td><label id="paymentBillingCountryError"></label></td>
 								</tr>
 								
@@ -162,7 +162,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentBillingProvince" name="paymentBillingProvince" value="${billingProvince}"></input></td>		
+									<td><input type="text" id="paymentBillingProvince" name="paymentBillingProvince" value="${paymentBillingProvince}"></input></td>		
 									<td><label id="paymentBillingProvinceError"></label></td>
 								</tr>
 								
@@ -171,7 +171,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentBillingCity" name="paymentBillingCity" value="${billingCity}"></input></td>		
+									<td><input type="text" id="paymentBillingCity" name="paymentBillingCity" value="${paymentBillingCity}"></input></td>		
 									<td><label id="paymentBillingCityError"></label></td>
 								</tr>
 								
@@ -180,7 +180,7 @@
 								</tr>
 						
 								<tr>
-									<td><input type="text" id="paymentBillingZip" name="paymentBillingZip" value="${billingZip}"></input></td>		
+									<td><input type="text" id="paymentBillingZip" name="paymentBillingZip" value="${paymentBillingZip}"></input></td>		
 									<td><label id="paymentBillingZipError"></label></td>
 								</tr>
 											
@@ -195,7 +195,7 @@
 				</tr>
 		
 				<tr>
-					<td><input type="tel" id="paymentAddressPhone" name="paymentAddressPhone"  value="${addressPhone}" placeholder="123-456-7890"></input></td>		
+					<td><input type="tel" id="paymentAddressPhone" name="paymentAddressPhone"  value="${paymentAddressPhone}" placeholder="123-456-7890"></input></td>		
 					<td><label id="paymentAddressPhoneError"></label></td>
 				</tr>
 				

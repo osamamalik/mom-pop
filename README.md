@@ -19,14 +19,10 @@ TO DO:
 	-PAYMENT
 
 - PERSISTENCE OF FIELDS WHEN AN ERROR IS GIVEN SO THE USER DOESN'T HAVE TO ENTER EVERYTHING AGAIN
-<<<<<<< HEAD
-	
-- PCS AND OPS AS SERVICES
-=======
 
 - PCS AND OPS AS SERVICES: PCS working correctly you need to run and have this in the url: 
 http://localhost:8080/e-men/rest/service/pcs?bid=1
->>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
+
 
 - ANALYTICS PAGE
 
@@ -40,6 +36,7 @@ http://localhost:8080/e-men/rest/service/pcs?bid=1
 
 - DESIGN DOCUMENT
 
+- DATABASE CONFIGURATION
 
 
 ***************************************************************************************************************************************************

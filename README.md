@@ -11,7 +11,6 @@ TO DO:
 - Add the same item in multiple quantities to the cart in singleBook page
 
 - ERROR CHECKING BACK-END
-	-OPS
 	-SHOPPING CART QUANTITY
 	-PAYMENT
 - ERROR CHECKING FRONT-END
@@ -22,10 +21,6 @@ TO DO:
 	-PAYMENT
 
 - PERSISTENCE OF FIELDS WHEN AN ERROR IS GIVEN SO THE USER DOESN'T HAVE TO ENTER EVERYTHING AGAIN
-
-- AJAX
-	
-- OPS IMPLEMENTATION
 
 - PCS AND OPS AS SERVICES: PCS working correctly you need to run and have this in the url: 
 http://localhost:8080/e-men/rest/service/pcs?bid=1

@@ -17,9 +17,8 @@
 	
 	<form action="" name="myForm" method="post" onsubmit="return signUpValidate();">
 		
-		<legend>Sign Up</legend>
 		
-		<header class="main">
+		<header class="header">
 			<jsp:include page="Header.jspx"/>
 		</header>
 		<div class="main">

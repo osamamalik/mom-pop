@@ -302,9 +302,132 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 		return null;
+<<<<<<< HEAD:src/model/DatabaseOperator.java
+=======
+
+	}
+	
+	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month){
+		try {
+			return orderDAO.retrieveOrdersByMonth(month);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
+	
+
+	/***************************************************************
+		SERVICES
+	****************************************************************/
+
+	public void exportProductServices(int bid, String filename) throws Exception {
+
+		BookBean bb = retrieveBook(bid);
+		String title = bb.getTitle();
+		String author = bb.getAuthor();
+		double price = bb.getPrice();
+		String description = bb.getDescription();
+		int publishYear = bb.getPublishYear();
+		double rating = bb.getRating();
+		String cat = bb.getCategory();
+
+	
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
+		
+		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+		StringWriter sw = new StringWriter();
+		sw.write("\n");
+		
+		marshaller.marshal(bw, new StreamResult(sw));
+
+		System.out.println(sw.toString()); // for debugging
+
+		FileWriter fw = new FileWriter(filename);
+		fw.write(sw.toString());
+		fw.close();
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81:src/model/Model.java
 	}
 		
+<<<<<<< HEAD:src/model/DatabaseOperator.java
+=======
+		ArrayList<OrderBean> aob = retrieveOrders(bid);
+
+		for(int i = 0; i < aob.size() ; i++) {
+			OrderBean ob = aob.get(i);
+			String date = ob.getOrderDate();
+			int oid = ob.getOid();
+			String user = ob.getUsername();
+			
+			OrderWrapper  ow = new OrderWrapper(bid, date, oid, user);
+			JAXBContext jc = JAXBContext.newInstance(ow.getClass());
+			Marshaller marshaller = jc.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+			
+			StringWriter sw = new StringWriter();
+			sw.write("\n");
+			
+			marshaller.marshal(ow, new StreamResult(sw));
+
+			System.out.println(sw.toString()); // for debugging
+
+			FileWriter fw = new FileWriter(filename);
+			fw.write(sw.toString());
+			fw.close();
+
+		}
+	}
 	
+	public String exportProductWebServices(int bid) throws Exception {
+
+		BookBean bb = retrieveBook(bid);
+		String title = bb.getTitle();
+		String author = bb.getAuthor();
+		double price = bb.getPrice();
+		String description = bb.getDescription();
+		int publishYear = bb.getPublishYear();
+		double rating = bb.getRating();
+		String cat = bb.getCategory();
+
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81:src/model/Model.java
+	
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
+		
+		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+		StringWriter sw = new StringWriter();
+		sw.write("\n");
+		
+		marshaller.marshal(bw, new StreamResult(sw));
+
+		System.out.println(sw.toString()); // for debugging
+
+	
+		return sw.toString();
+		
+	}
+	
+	
+	
+	public ArrayList<BookBean> getTop10() throws ClassNotFoundException{
+		
+		try {
+			return orderDAO.getTop10();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
 
 

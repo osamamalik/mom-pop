@@ -15,15 +15,15 @@
 </head>
 <body>
 
-	<div class="main">
+
 		<form method="POST">
 		
 		
-			<header>
+			<header class="header">
 				<input type="submit" value="Home" name="homeButton"></input>
 			</header>
 			
-			
+				<div class="main">
 			<table>
 			
 				<tr>
@@ -39,9 +39,9 @@
 			<footer>
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
-			
+			</div>
 		</form>
-	</div>
+	
 	
 
 

@@ -17,11 +17,11 @@
 	
 	<form method="post">
 	
-		<header>
+		<header class="header">
 			<jsp:include page="Header.jspx"/>
 		</header>
 		
-		
+		<div class="main">
 			<div>
 				<table>			
 					<c:forEach var="entry" items="${sessionScope['cart']}"> 
@@ -251,7 +251,7 @@
 	 	<footer>
 			<jsp:include page="Footer.jspx"/>
 		</footer> 
-		
+		</div>
 	</form>
 
 </body>

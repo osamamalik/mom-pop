@@ -13,7 +13,9 @@
 <title>Header</title>
 </head>
 <body>
-		
+		<div class="logo">
+			<button class="logoButton" action="submit" type="submit" name="homeButton"><img src="res/images/logo.png" class="logoImage" /></button>
+		</div>
 		
 		<table>
 			<tr>

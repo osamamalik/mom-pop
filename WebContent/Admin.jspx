@@ -14,12 +14,12 @@
 <title>Admin</title>
 </head>
 <body>
-	<div class="main">
+	
 		<form>
-		
-			<header>
+			<header class="header">
 				<input type="submit" value="Home" name="homeButton"></input>
 			</header>
+		<div class="main">
 			
 			<table>
 				<tr>
@@ -27,9 +27,9 @@
 					<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
 				</tr>
 			</table>
-			
+			</div>
 		</form>	
-	</div>
+	
 </body>
 </html>
 </jsp:root>

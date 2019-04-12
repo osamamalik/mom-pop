@@ -18,6 +18,16 @@ public class OrderWrapper {
 	private String date;
 	private String user;
 	
+	public String getUser() {
+		return user;
+	}
+
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+
 	public OrderWrapper(int bid, String date, int oid, String user) {
 		this.oid = oid;
 		this.bid = bid;

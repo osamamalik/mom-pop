@@ -15,12 +15,13 @@
 </head>
 <body>
 
-	<div class="main">
+	
 		<form action="" name="" method="post">
 							
-			<header>
+			<header class="header">
 				<jsp:include page="Header.jspx"/>
 			</header>
+			<div class="main">
 			
 			<table>
 			
@@ -111,9 +112,9 @@
 			<footer>
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
-			
+			</div>
 		</form>
-	</div>
+	
 
 </body>
 </html>

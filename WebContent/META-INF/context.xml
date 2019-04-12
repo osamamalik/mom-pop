@@ -6,11 +6,17 @@
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 		type="javax.sql.DataSource"
 		driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
+<<<<<<< HEAD
 		url = "jdbc:derby:C:\Users\Barisbc\eclipse-workspace\Project\e-men\MyDB;create=true" />
 		
 		<!--url= "jdbc:derby:C:\Users\Raymond\MyDB" />-->
 		<!-- url="jdbc:derby:/Users/osamamalik/eclipse-workspace/e-men/MyDB" -->
 		<!-- url = "jdbc:derby:C:\Users\Raymond\eclipse-workspace\e-men\MyDB" /> -->
+=======
+		url="jdbc:derby:/Users/osamamalik/eclipse-workspace/e-men/MyDB" />
+		<!-- url = "jdbc:derby:C:\Users\Raymond\MyDB" -->
+		<!-- "jdbc:derby:C:\Users\Barisbc\eclipse-workspace\Project\e-men\MyDB;create=true"/> -->
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 
 	<ResourceLink global="jdbc/EECS" name="jdbc/EECS"
 		type="javax.sql.DataSource" />

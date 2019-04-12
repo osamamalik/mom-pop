@@ -9,6 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import model.*;
 import bean.*;
@@ -17,6 +22,7 @@ import bean.*;
 /**
  * Servlet implementation class Start
  */
+@Path("service") 
 @WebServlet({"/Start", "/Start/*"})
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -212,6 +218,14 @@ public class Start extends HttpServlet {
 			this.orderProcessingService(request, response, databaseOperator, errorChecking, services);
 		}
 		
+
+		/***************************************************************
+					Analytics
+		 ****************************************************************/
+		if (request.getParameter("WhichMonth") != null) {
+			this.OrdersByMonth(request, response, myModel, errorChecking);
+		}
+
 		
 		/***************************************************************
 			TESTING BLOCK
@@ -224,6 +238,8 @@ public class Start extends HttpServlet {
 		request.getRequestDispatcher(target).forward(request, response);
 		
 	}
+
+
 
 
 	/**
@@ -241,21 +257,21 @@ public class Start extends HttpServlet {
 			target = "/SingleBook.jspx";
 		}
 		//once a review has been submitted, the page is reloaded
-		if (request.getParameter("addReviewButton") != null) {
+		else if (request.getParameter("addReviewButton") != null) {
 			target = "/SingleBook.jspx";
 		}
 
 		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("signUpPageButton") != null) {
+		else if (request.getParameter("signUpPageButton") != null) {
 			request.setAttribute("differentAddressTypes", true);
 			target = "/SignUp.jspx";
 		}
 		//checks if 'Login' button was pressed, sets target to the Login page if true
-		if (request.getParameter("loginPageButton") != null) {
+		else if (request.getParameter("loginPageButton") != null) {
 			target = "/Login.jspx";
 		}
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
+		else if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
 			target = "/Books.jspx";
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
@@ -265,7 +281,7 @@ public class Start extends HttpServlet {
 				
 		//checks if services access is requested
 		//checks if user is logged in as admin
-		if (request.getParameter("servicesButton") != null) {
+		else if (request.getParameter("servicesButton") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
@@ -276,7 +292,7 @@ public class Start extends HttpServlet {
 		
 		//checks if analytics access is requested
 		//checks if user is logged in as admin
-		if (request.getParameter("analyticsButton") != null) {
+		else if (request.getParameter("analyticsButton") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
@@ -284,19 +300,22 @@ public class Start extends HttpServlet {
 				target = "/Analytics.jspx";
 			}		
 		}
+		if (request.getParameter("OrdersByMonth") != null) {
+			target = "/OrdersByMonth.jspx";	
+		}
 		
 		//checks if PCS was requested
-		if (request.getParameter("PCSRequestButton") != null) {
+		else if (request.getParameter("PCSRequestButton") != null) {
 			target = "/ProductCatalogService.jspx";	
 		}
 		
 		//checks if OPS was requested
-		if (request.getParameter("OPSRequestButton") != null) {
+		else if (request.getParameter("OPSRequestButton") != null) {
 			target = "/OrderProcessingService.jspx";	
 		}
 		
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("homeButton") != null) {
+		 if (request.getParameter("homeButton") != null) {
 			if (adminLoggedIn) {
 				adminLoggedIn = false;
 				loggedIn = false;
@@ -309,12 +328,12 @@ public class Start extends HttpServlet {
 		}
 		
 		//checks if Shopping Cart was requested
-		if (request.getParameter("showShoppingCart") != null) {
+		else if (request.getParameter("showShoppingCart") != null) {
 			target = "/ShoppingCart.jspx";	
 		}
 		
 		//checks if Checkout was requested
-		if (request.getParameter("checkoutButton") != null) {
+		else if (request.getParameter("checkoutButton") != null) {
 			if (!loggedIn) {
 				this.redirectedTarget = "/Payment.jspx";
 				this.target = "/Login.jspx";
@@ -322,6 +341,15 @@ public class Start extends HttpServlet {
 			else {
 				this.target = "/Payment.jspx";
 			}
+		}
+		
+	 if(request.getParameter("top10") != null) {
+			if (!adminLoggedIn) {
+				target = "/Login.jspx";
+			}
+			else if (adminLoggedIn){
+				target = "/Top10.jspx";
+			}	
 		}
 				
 	}
@@ -709,16 +737,24 @@ public class Start extends HttpServlet {
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 		
+<<<<<<< HEAD
 		String username = request.getSession().getAttribute("loggedInUser").toString();
 
 		//check if the new order number is a multiple of 3
 		int orderCount = databaseOperator.getOrderCount();
+=======
+		
+		//check if the new order number is a multiple of 3
+		int i =0;
+		int orderCount = myModel.getOrderCount();
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
 			request.setAttribute("error", "CREDIT CARD AUTHORIZATION FAILED");
 		}
 		else {
+<<<<<<< HEAD
 			
 			ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
 			
@@ -757,6 +793,12 @@ public class Start extends HttpServlet {
 			}
 
 			databaseOperator.addtoOrders(shoppingCart);
+=======
+			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
+			myModel.addtoOrders(shoppingCart);
+			
+			request.getSession().setAttribute("Order", i++);
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 			target = "/SuccessfulOrder.jspx";
 			
 		}
@@ -834,13 +876,19 @@ public class Start extends HttpServlet {
 			request.setAttribute("fProductService", f);
 			System.out.println(filename);
 			try {
+<<<<<<< HEAD
 				services.exportProductServices(bid, filename);
+=======
+				 myModel.exportProductServices(bid, filename);
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 				request.setAttribute("PCSResultReady", true);
 				target = "ProductCatalogService.jspx";
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		else {
 			String signUpErrorMessage = errorChecking.getErrorMessage();
@@ -866,7 +914,7 @@ public class Start extends HttpServlet {
 			try {
 				services.exportOrderServices(bid, filename);
 				request.setAttribute("OPSResultReady", true);
-				target = "OrderProcessingService.jspx";
+				target = "/OrderProcessingService.jspx";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -880,6 +928,91 @@ public class Start extends HttpServlet {
 		}
 	}
 	
+	public void OrdersByMonth(HttpServletRequest request, HttpServletResponse response, Model myModel,
+			ErrorChecking errorChecking) {
+		// gets month to  select
+		String month = request.getParameter("monthOption");
+		int num = 0;
+		switch (month) {
+			case "January":
+				num = 1;
+				break;
+
+			case "February":
+				num = 2;
+				break;
+
+			case "March":
+				num = 3;
+				break;
+
+			case "April":
+				num = 4;
+				break;
+
+			case "May":
+				num = 5;
+				break;
+
+			case "June":
+				num = 6;
+				break;
+
+			case "July":
+				num = 7;
+				break;
+
+			case "August":
+				num = 8;
+				break;
+
+			case "September":
+				num = 9;
+				break;
+
+			case "October":
+				num = 10;
+				break;
+
+			case "November":
+				num = 11;
+				break;
+
+			case "December":
+				num = 12;
+				break;
+		}
+		
+			ArrayList<OrderWrapper> aw = myModel.retrieveOrdersByMonth(num);
+			request.getSession().setAttribute("OrderByMonth", aw);
+			request.setAttribute("obm", 1);
+			target = "/OrdersByMonth.jspx";
+	
+	}
+	
+<<<<<<< HEAD
+=======
+	@GET
+    @Path("/pcs/")
+	@Produces(MediaType.TEXT_XML)
+	public String getProductCatalogService(@QueryParam("bid") String bookid) {
+		int bid = Integer.parseInt(bookid);
+		Model myModel = new Model();
+		try {
+			String toReturn = myModel.exportProductWebServices(bid);
+			
+			target = "/ProductProcessingService.jspx";
+			
+			return toReturn;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+
 	
 	
+>>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 }

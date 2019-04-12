@@ -14,13 +14,13 @@
 <title>Shopping Cart</title>
 </head>
 <body>
-	<div class="main">
+	
 		<form method="post">
 	
-		<header>
+		<header class="header">
 			<jsp:include page="Header.jspx"/>
 		</header>
-			
+			<div class="main">
 			<table>
 			
 				<c:forEach var="entry" items="${sessionScope['cart']}"> 
@@ -51,9 +51,9 @@
 	 	<footer>
 			<jsp:include page="Footer.jspx"/>
 		</footer> 
-		
+		</div>
 	</form>
-	</div>
+	
 </body>
 </html>
 </jsp:root>

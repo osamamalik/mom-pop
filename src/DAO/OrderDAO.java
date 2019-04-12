@@ -175,13 +175,14 @@ public class OrderDAO {
 	public ArrayList<BookBean> getTop10() throws SQLException, ClassNotFoundException{
 		
 		ArrayList<BookBean> abb= new ArrayList<BookBean>(); 
-		String query = "Select bid as bid from OrderDetails group by bid Order by count(bid) fetch first 10 rows only";
+		String query = "Select bid, count(bid) as Nbid from OrderDetails group by bid Order by Nbid desc fetch first 10 rows only";
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		BookDAO bookDAO = new BookDAO();
 		
 		while(r.next()) {
+			String Nbid = r.getString("Nbid");
 			String bid = r.getString("bid");
 			BookBean bb = bookDAO.retrieveBook(Integer.parseInt(bid));
 			abb.add(bb);

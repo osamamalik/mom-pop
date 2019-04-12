@@ -73,7 +73,7 @@ public class AddressDAO {
 		ResultSet r = p.executeQuery();
 		AddressBean address = new AddressBean();
 		if(r.next()){
-			address.setAid(Integer.parseInt(r.getString("aid")));
+			address.setAid(r.getInt("aid"));
 			address.setUsername(username);
 			address.setType(type);
 			address.setAddressLine1(r.getString("line1"));

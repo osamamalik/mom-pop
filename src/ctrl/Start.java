@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import DAO.OrderDAO;
 import model.*;
 import bean.*;
 
@@ -32,10 +34,12 @@ public class Start extends HttpServlet {
 	boolean loggedIn;
 	boolean adminLoggedIn;
 	boolean error;
+	int orderCount;
 	String target;
 	String redirectedTarget;
 	ArrayList <BookBean> books;
 	ArrayList <CartBean> cart;
+	
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -59,7 +63,8 @@ public class Start extends HttpServlet {
 		cart = new ArrayList<CartBean>();
 		DatabaseOperator databaseOperator = new DatabaseOperator();
 		databaseOperator.clearVisitorCart();
-		
+		orderCount = databaseOperator.getOrderCount();
+
 		try {
 			context.setAttribute("databaseOperator", new DatabaseOperator());
 		}
@@ -221,7 +226,6 @@ public class Start extends HttpServlet {
 			this.orderProcessingService(request, response, databaseOperator, errorChecking, services);
 		}
 		
-
 		/***************************************************************
 			ANALYTICS
 		 ****************************************************************/
@@ -233,8 +237,7 @@ public class Start extends HttpServlet {
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
-		System.out.println(databaseOperator.getOrderCount());
-		
+
 		/***************************************************************
 			TESTING BLOCK
 		****************************************************************/
@@ -736,20 +739,19 @@ public class Start extends HttpServlet {
 	}
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
-		
+			
 		String username = request.getSession().getAttribute("loggedInUser").toString();
 
-		//check if the new order number is a multiple of 3
-		int orderCount = databaseOperator.getOrderCount();
-		
+		//check if the new order number is a multiple of 3		
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
 			request.setAttribute("error", "CREDIT CARD AUTHORIZATION FAILED");
+			orderCount++;
 		}
 		else {			
+						
 			ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
-			ArrayList<AddressBean> paymentAddresses = new ArrayList<AddressBean>();
 			
 			//obtains the entered addresses for payment
 			AddressBean paymentShippingAB = this.retrievePaymentAddresses(request, response, databaseOperator, errorChecking).get(0);
@@ -770,7 +772,6 @@ public class Start extends HttpServlet {
 
 			}//default shipping and new billing address added to orderDetails - billing address will be updated
 			else if (defaultShippingAddressUsed && !defaultBillingAddressUsed) {
-				
 				databaseOperator.updateAddress(paymentBillingAB);
 				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 
@@ -790,7 +791,6 @@ public class Start extends HttpServlet {
 
 			//request.getSession().setAttribute("Order", i++);
 			target = "/SuccessfulOrder.jspx";
-			
 		}
 	}
 	
@@ -824,9 +824,13 @@ public class Start extends HttpServlet {
 		
 		AddressBean shippingAB = new AddressBean();
 		AddressBean billingAB = new AddressBean();
-		ArrayList<AddressBean> paymentAddressees = new ArrayList<AddressBean>();
+		ArrayList<AddressBean> paymentAddresses = new ArrayList<AddressBean>();
 
+		String username = request.getSession().getAttribute("loggedInUser").toString();
+		
 		//gets user's payment shipping address details 
+		shippingAB.setType("shipping");
+		shippingAB.setUsername(username);
 		shippingAB.setAddressLine1(request.getParameter("paymentShippingLine1"));
 		shippingAB.setAddressLine2(request.getParameter("paymentShippingLine2"));
 		shippingAB.setCountry(request.getParameter("paymentShippingCountry"));
@@ -837,6 +841,8 @@ public class Start extends HttpServlet {
 
 		
 		//gets user's payment billing address details 
+		billingAB.setType("billing");
+		billingAB.setUsername(username);
 		billingAB.setAddressLine1(request.getParameter("paymentBillingLine1"));
 		billingAB.setAddressLine2(request.getParameter("paymentBillingLine2"));
 		billingAB.setCountry(request.getParameter("paymentBillingCountry"));
@@ -845,10 +851,10 @@ public class Start extends HttpServlet {
 		billingAB.setZip(request.getParameter("paymentBillingZip"));
 		billingAB.setPhoneNumber(request.getParameter("paymentAddressPhone"));
 
-		paymentAddressees.add(shippingAB);
-		paymentAddressees.add(billingAB);
+		paymentAddresses.add(shippingAB);
+		paymentAddresses.add(billingAB);
 		
-		return paymentAddressees;
+		return paymentAddresses;
 	}
 	
 

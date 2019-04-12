@@ -53,7 +53,7 @@ public class OrderDAO {
 	
 	public void addOrderDetails(ArrayList<CartBean> shoppingCart, int shippingAID, int billingAID) throws SQLException {
 		int lastOID = this.getLastOrderId();
-		
+		System.out.println(lastOID);
 		for (CartBean cartItem : shoppingCart) {
 			this.addSingleOrderDetails(lastOID, cartItem.getBid(), shippingAID, billingAID);
 		}
@@ -203,8 +203,26 @@ public class OrderDAO {
 		r.close();
 		return abb;
 	}
+		
+	public void printOrderDetails() throws SQLException{
 	
-
+		String query = "Select * from orderdetails";
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		
+		while(r.next()) {
+			System.out.println("ODID: " + r.getInt("odid"));
+			System.out.println("OID: " + r.getInt("oid"));
+			System.out.println("BID: " + r.getInt("bid"));
+			System.out.println("shippingAid: " + r.getInt("shippingAid"));
+			System.out.println("billingAid: " + r.getInt("billingAid"));
+		}
+		p.close();
+		con.close();
+		r.close();	
+	}
+	
 }
 
 

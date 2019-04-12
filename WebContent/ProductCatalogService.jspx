@@ -14,15 +14,16 @@
 <title>Product Catalog Service</title>
 </head>
 <body>
-	<div class="main">
+	
 		<legend>Product Catalog Service</legend>
 	
 		<form action="" name="AnalyticsForm" method="post">
 			
-			<header>
+			<header class="header">
 				<input type="submit" value="Home" name="homeButton"></input>
 			</header>
 				
+				<div class="main">
 			<table>
 	
 				<c:choose>	
@@ -56,9 +57,9 @@
 			<footer>
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
-			
+			</div>
 		</form>
-	</div>
+
 	
 </body>
 </html>

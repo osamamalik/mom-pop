@@ -15,18 +15,17 @@
 </head>
 <body>
 	
-	<div class="main">
+	
 		<form action="" name="myForm" method="post" onsubmit="return loginValidate();">
-			<legend>Login</legend>
 			
 			
-			<header>
+			<header class="header">
 				<jsp:include page="Header.jspx"/>
 			</header>
 			
 			
 				
-			
+			<div class="main">
 			<table>
 			
 				<c:if test="${not empty error}">
@@ -64,9 +63,9 @@
 			<footer>
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
-			
+			</div>
 		</form>
-	</div>
+	
 	
 </body>
 </html>

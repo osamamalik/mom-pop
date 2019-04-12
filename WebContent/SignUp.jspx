@@ -14,15 +14,15 @@
 <title>Sign Up</title>
 </head>
 <body>
-
+	
 	<form action="" name="myForm" method="post" onsubmit="return signUpValidate();">
 		
 		<legend>Sign Up</legend>
 		
-		<header>
+		<header class="main">
 			<jsp:include page="Header.jspx"/>
 		</header>
-		
+		<div class="main">
 			
 		<table>
 		
@@ -257,7 +257,7 @@
 			<jsp:include page="Footer.jspx"/>
 		</footer> 
 		
-		
+		</div>
 	</form>
 	
 </body>

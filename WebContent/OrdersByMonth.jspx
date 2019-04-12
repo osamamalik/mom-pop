@@ -15,13 +15,13 @@
 </head>
 <body>
 
-	<div class="main">
 		<form method="POST">
 		
 		
-			<header>
+			<header class="header">
 				<input type="submit" value="Home" name="homeButton"></input>
 			</header>
+			<div class="main">
 				<p>Hello Admin, you may select a month to view the report of books sold.</p>
 			<td>
 				<select name="monthOption">
@@ -63,9 +63,8 @@
 	           	</table>
 			</c:if>
 			
-			
+			</div>
 		</form>
-	</div>	
 
 </body>
 </html>

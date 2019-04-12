@@ -2,12 +2,13 @@ package listener;
 
 import java.util.ArrayList;
 
+
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
 import bean.BookBean;
-import model.Model;
+import model.*;
 
 /**
  * Application Lifecycle Listener implementation class top10
@@ -16,13 +17,10 @@ import model.Model;
 @WebListener
 public class top10 implements HttpSessionAttributeListener {
 	
-	
-	Model myModel = new Model();
-    /**
-     * Default constructor. 
-     */
+	private DatabaseOperator databaseOperator;
+
     public top10() {
-        // TODO Auto-generated constructor stub
+        databaseOperator = new DatabaseOperator();
     }
 
 	/**
@@ -33,7 +31,7 @@ public class top10 implements HttpSessionAttributeListener {
     	if (event.getName().equals("Order")){
     		try {
 				
-    			ArrayList<BookBean> abb= myModel.getTop10();
+    			ArrayList<BookBean> abb= databaseOperator.getTop10Orders();
 				event.getSession().setAttribute("Top10", abb);
 				
 			} catch (ClassNotFoundException e) {
@@ -58,7 +56,7 @@ public class top10 implements HttpSessionAttributeListener {
     	if (event.getName().equals("Order")){
     		try {
 				
-    			ArrayList<BookBean> abb= myModel.getTop10();
+    			ArrayList<BookBean> abb= databaseOperator.getTop10Orders();
 				event.getSession().setAttribute("Top10", abb);
 				
 			} catch (ClassNotFoundException e) {

@@ -17,53 +17,83 @@
 
 		<form method="POST">
 		
-		
 			<header class="header">
 				<input type="submit" value="Home" name="homeButton"></input>
 			</header>
+			
 			<div class="main">
-				<p>Hello Admin, you may select a month to view the report of books sold.</p>
-			<td>
-				<select name="monthOption">
-				   <option>January</option>
-		           <option>February</option>
-		           <option>March</option>
-			       <option>April</option>
-	 		       <option>May</option>
-	 	           <option>June</option>
-	 	           <option>July</option>
-	 	           <option>August</option>
-	 	           <option>September</option>
-	 	           <option>October</option>
-	 	           <option>November</option>
-	 	           <option>December</option>   
-	     	 	</select>
-	     	</td>
-					<td>
-						<input type="submit" value="Continue" name="WhichMonth"></input>
-					</td>
-			
-			<c:if test = "${obm eq 1}">
-				<table>
-					<td><c:out value=" Order id "/></td>
-					<td><c:out value=" Order Date "/></td>
-					<td><c:out value=" Book id "/></td>
-					<td><c:out value=" User "/></td>
-					
-				<c:forEach var="entry" items="${sessionScope['OrderByMonth']}"> 
-					
-	                <tr>
-		                <td><c:out value="${entry.getOid()}"/></td>
-		                <td><c:out value="${entry.getDate()}"/></td>
-						<td><c:out value="${entry.getBid()}"/></td>
-						<td><c:out value="${entry.getUser()}"/></td>
-	                </tr>
 
-	           	</c:forEach>
-	           	</table>
-			</c:if>
+				<c:choose>	
 			
+					<c:when test = "${OBMResultsReady}">
+						
+						<table>
+							
+							<tr>
+								<td><c:out value=" Order id "/></td>
+								<td><c:out value=" Order Date "/></td>
+								<td><c:out value=" Book id "/></td>
+								<td><c:out value=" User "/></td>
+							</tr>
+							
+							<c:forEach var="entry" items="${sessionScope['OrderByMonth']}"> 
+								
+				                <tr>
+					                <td><c:out value="${entry.getOid()}"/></td>
+					                <td><c:out value="${entry.getDate()}"/></td>
+									<td><c:out value="${entry.getBid()}"/></td>
+									<td><c:out value="${entry.getUser()}"/></td>
+				                </tr>
+			
+				           	</c:forEach>
+				           	
+			           	</table>
+		           	
+					</c:when>
+					
+					<c:otherwise>
+						
+						<table>
+							<tr>
+								<td><p>Select a month to view the report of books sold.</p></td>
+							</tr>
+							<tr>
+								<td>
+									<select name="monthOption">
+									   <option>January</option>
+							           <option>February</option>
+							           <option>March</option>
+								       <option>April</option>
+						 		       <option>May</option>
+						 	           <option>June</option>
+						 	           <option>July</option>
+						 	           <option>August</option>
+						 	           <option>September</option>
+						 	           <option>October</option>
+						 	           <option>November</option>
+						 	           <option>December</option>   
+						     	 	</select>
+						     	</td>
+					     	</tr>
+					     	
+					     	<tr>
+								<td>
+									<input type="submit" value="Continue" name="WhichMonth"></input>
+								</td>
+							</tr>
+							
+						</table>
+					
+					</c:otherwise>
+
+				</c:choose>
+				
+				<footer>
+					<jsp:include page="Footer.jspx"/>
+				</footer> 
 			</div>
+			
+
 		</form>
 
 </body>

@@ -2,6 +2,9 @@ package ctrl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -220,10 +223,10 @@ public class Start extends HttpServlet {
 		
 
 		/***************************************************************
-					Analytics
+			ANALYTICS
 		 ****************************************************************/
 		if (request.getParameter("WhichMonth") != null) {
-			this.OrdersByMonth(request, response, myModel, errorChecking);
+			this.ordersByMonth(request, response, databaseOperator, errorChecking);
 		}
 
 		
@@ -300,6 +303,7 @@ public class Start extends HttpServlet {
 				target = "/Analytics.jspx";
 			}		
 		}
+		
 		if (request.getParameter("OrdersByMonth") != null) {
 			target = "/OrdersByMonth.jspx";	
 		}
@@ -343,7 +347,8 @@ public class Start extends HttpServlet {
 			}
 		}
 		
-	 if(request.getParameter("top10") != null) {
+		//checks if top10 orders were requested
+		if(request.getParameter("top10") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
@@ -737,25 +742,17 @@ public class Start extends HttpServlet {
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 		
-<<<<<<< HEAD
 		String username = request.getSession().getAttribute("loggedInUser").toString();
 
 		//check if the new order number is a multiple of 3
 		int orderCount = databaseOperator.getOrderCount();
-=======
 		
-		//check if the new order number is a multiple of 3
-		int i =0;
-		int orderCount = myModel.getOrderCount();
->>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
 			request.setAttribute("error", "CREDIT CARD AUTHORIZATION FAILED");
 		}
-		else {
-<<<<<<< HEAD
-			
+		else {			
 			ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
 			
 			//obtains the entered addresses for payment
@@ -793,12 +790,8 @@ public class Start extends HttpServlet {
 			}
 
 			databaseOperator.addtoOrders(shoppingCart);
-=======
-			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
-			myModel.addtoOrders(shoppingCart);
 			
-			request.getSession().setAttribute("Order", i++);
->>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
+			//request.getSession().setAttribute("Order", i++);
 			target = "/SuccessfulOrder.jspx";
 			
 		}
@@ -876,11 +869,9 @@ public class Start extends HttpServlet {
 			request.setAttribute("fProductService", f);
 			System.out.println(filename);
 			try {
-<<<<<<< HEAD
+
 				services.exportProductServices(bid, filename);
-=======
-				 myModel.exportProductServices(bid, filename);
->>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
+
 				request.setAttribute("PCSResultReady", true);
 				target = "ProductCatalogService.jspx";
 				
@@ -928,78 +919,31 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	public void OrdersByMonth(HttpServletRequest request, HttpServletResponse response, Model myModel,
-			ErrorChecking errorChecking) {
+	public void ordersByMonth(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
 		// gets month to  select
 		String month = request.getParameter("monthOption");
-		int num = 0;
-		switch (month) {
-			case "January":
-				num = 1;
-				break;
-
-			case "February":
-				num = 2;
-				break;
-
-			case "March":
-				num = 3;
-				break;
-
-			case "April":
-				num = 4;
-				break;
-
-			case "May":
-				num = 5;
-				break;
-
-			case "June":
-				num = 6;
-				break;
-
-			case "July":
-				num = 7;
-				break;
-
-			case "August":
-				num = 8;
-				break;
-
-			case "September":
-				num = 9;
-				break;
-
-			case "October":
-				num = 10;
-				break;
-
-			case "November":
-				num = 11;
-				break;
-
-			case "December":
-				num = 12;
-				break;
-		}
+		System.out.println(month);
 		
-			ArrayList<OrderWrapper> aw = myModel.retrieveOrdersByMonth(num);
-			request.getSession().setAttribute("OrderByMonth", aw);
-			request.setAttribute("obm", 1);
-			target = "/OrdersByMonth.jspx";
+		List<String> monthList = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+		int num = monthList.indexOf(month) + 1;
+		System.out.println(num);
+		
+		ArrayList<OrderWrapper> ow = databaseOperator.retrieveOrdersByMonth(num);
+		request.getSession().setAttribute("OrderByMonth", ow);
+		request.setAttribute("OBMResultsReady", true);
+		target = "/OrdersByMonth.jspx";
 	
 	}
 	
-<<<<<<< HEAD
-=======
+
 	@GET
     @Path("/pcs/")
 	@Produces(MediaType.TEXT_XML)
 	public String getProductCatalogService(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
-		Model myModel = new Model();
+		Services services = new Services();
 		try {
-			String toReturn = myModel.exportProductWebServices(bid);
+			String toReturn = services.exportProductWebServices(bid);
 			
 			target = "/ProductProcessingService.jspx";
 			
@@ -1013,6 +957,4 @@ public class Start extends HttpServlet {
 	
 
 	
-	
->>>>>>> 17c794e16d9a1cd8ee8b51d75526f134709e5c81
 }

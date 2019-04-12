@@ -27,7 +27,7 @@
 			<input type="submit" value="Home" name="homeButton"></input>
 		</header>
 		<div class="main">
-			<p>Hello Admin, These are the top 10 books sold</p>
+			<p>These are the top 10 books at this time: </p>
 
 			<table>
 				<td><c:out value=" Book " /></td>
@@ -63,11 +63,14 @@
 									currencySymbol="$" />
 							</h3>
 						</td>
-						<!-- <td><button action="submit" type="submit" name="addToCart" value = "${entry.getBid()}">Add</button></td>-->
 					</tr>
 
 				</c:forEach>
 			</table>
+			
+			<footer>
+				<jsp:include page="Footer.jspx"/>
+			</footer> 
 		</div>
 	</form>
 

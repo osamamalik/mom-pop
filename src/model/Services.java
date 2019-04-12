@@ -30,13 +30,14 @@ public class Services {
 		BookBean bb = databaseOperator.retrieveBook(bid);
 		String title = bb.getTitle();
 		String author = bb.getAuthor();
+		String description = bb.getDescription();
 		double price = bb.getPrice();
 		int publishYear = bb.getPublishYear();
 		double rating = bb.getRating();
 		String cat = bb.getCategory();
 	
 	
-		BookWrapper bw = new BookWrapper(bid, title, author, price, publishYear, rating, cat);
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
 		
 		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
 		Marshaller marshaller = jc.createMarshaller();
@@ -85,6 +86,37 @@ public class Services {
 			fw.close();
 	
 		}
+	}
+	
+	public String exportProductWebServices(int bid) throws Exception {
+
+		BookBean bb = databaseOperator.retrieveBook(bid);
+		String title = bb.getTitle();
+		String author = bb.getAuthor();
+		double price = bb.getPrice();
+		String description = bb.getDescription();
+		int publishYear = bb.getPublishYear();
+		double rating = bb.getRating();
+		String cat = bb.getCategory();
+
+	
+		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
+		
+		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+		StringWriter sw = new StringWriter();
+		sw.write("\n");
+		
+		marshaller.marshal(bw, new StreamResult(sw));
+
+		System.out.println(sw.toString()); // for debugging
+
+	
+		return sw.toString();
+		
 	}
 	
 	

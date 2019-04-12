@@ -257,21 +257,21 @@ public class Start extends HttpServlet {
 			target = "/SingleBook.jspx";
 		}
 		//once a review has been submitted, the page is reloaded
-		if (request.getParameter("addReviewButton") != null) {
+		else if (request.getParameter("addReviewButton") != null) {
 			target = "/SingleBook.jspx";
 		}
 
 		//checks if 'Sign Up' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("signUpPageButton") != null) {
+		else if (request.getParameter("signUpPageButton") != null) {
 			request.setAttribute("differentAddressTypes", true);
 			target = "/SignUp.jspx";
 		}
 		//checks if 'Login' button was pressed, sets target to the Login page if true
-		if (request.getParameter("loginPageButton") != null) {
+		else if (request.getParameter("loginPageButton") != null) {
 			target = "/Login.jspx";
 		}
 		//checks if 'List Books', 'Sort', or a search was submitted, sets target to the Login page if true
-		if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
+		else if (request.getParameter("booksPageButton") != null || (request.getParameter("searchButton") != null) || (request.getParameter("sortButton") != null) || (request.getParameter("filterButton") != null) || (request.getParameter("headerCategory") != null)) {
 			target = "/Books.jspx";
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
@@ -281,7 +281,7 @@ public class Start extends HttpServlet {
 				
 		//checks if services access is requested
 		//checks if user is logged in as admin
-		if (request.getParameter("servicesButton") != null) {
+		else if (request.getParameter("servicesButton") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
@@ -292,7 +292,7 @@ public class Start extends HttpServlet {
 		
 		//checks if analytics access is requested
 		//checks if user is logged in as admin
-		if (request.getParameter("analyticsButton") != null) {
+		else if (request.getParameter("analyticsButton") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
@@ -305,17 +305,17 @@ public class Start extends HttpServlet {
 		}
 		
 		//checks if PCS was requested
-		if (request.getParameter("PCSRequestButton") != null) {
+		else if (request.getParameter("PCSRequestButton") != null) {
 			target = "/ProductCatalogService.jspx";	
 		}
 		
 		//checks if OPS was requested
-		if (request.getParameter("OPSRequestButton") != null) {
+		else if (request.getParameter("OPSRequestButton") != null) {
 			target = "/OrderProcessingService.jspx";	
 		}
 		
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
-		if (request.getParameter("homeButton") != null) {
+		 if (request.getParameter("homeButton") != null) {
 			if (adminLoggedIn) {
 				adminLoggedIn = false;
 				loggedIn = false;
@@ -328,12 +328,12 @@ public class Start extends HttpServlet {
 		}
 		
 		//checks if Shopping Cart was requested
-		if (request.getParameter("showShoppingCart") != null) {
+		else if (request.getParameter("showShoppingCart") != null) {
 			target = "/ShoppingCart.jspx";	
 		}
 		
 		//checks if Checkout was requested
-		if (request.getParameter("checkoutButton") != null) {
+		else if (request.getParameter("checkoutButton") != null) {
 			if (!loggedIn) {
 				this.redirectedTarget = "/Payment.jspx";
 				this.target = "/Login.jspx";
@@ -343,7 +343,7 @@ public class Start extends HttpServlet {
 			}
 		}
 		
-		if(request.getParameter("top10") != null) {
+	 if(request.getParameter("top10") != null) {
 			if (!adminLoggedIn) {
 				target = "/Login.jspx";
 			}
@@ -845,6 +845,7 @@ public class Start extends HttpServlet {
 	
 	public void OrdersByMonth(HttpServletRequest request, HttpServletResponse response, Model myModel,
 			ErrorChecking errorChecking) {
+		// gets month to  select
 		String month = request.getParameter("monthOption");
 		int num = 0;
 		switch (month) {

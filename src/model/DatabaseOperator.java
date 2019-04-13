@@ -326,7 +326,7 @@ public class DatabaseOperator {
 
 	}
 	
-	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month){
+	public ArrayList<OrderBean> retrieveOrdersByMonth(int month){
 		try {
 			return orderDAO.retrieveOrdersByMonth(month);
 		} catch (SQLException e) {

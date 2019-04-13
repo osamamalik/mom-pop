@@ -56,13 +56,13 @@ public class OrderDAO {
 		int lastOID = this.getLastOrderId();
 		System.out.println(lastOID);
 		for (CartBean cartItem : shoppingCart) {
-			this.addSingleOrderDetails(lastOID, cartItem.getBid(), shippingAID, billingAID);
+			this.addSingleOrderDetails(lastOID, cartItem.getBid(), cartItem.getQuantity() ,shippingAID, billingAID);
 		}
 	}
 	
-	public void addSingleOrderDetails(int oid, int bid, int shippingAID, int billingAID) throws SQLException {
+	public void addSingleOrderDetails(int oid, int bid, int quantity,int shippingAID, int billingAID) throws SQLException {
 		
-		String query = "insert into ORDERDETAILS(oid, bid, shippingAid, billingAid) values(" + oid + ", " + bid + ", " + shippingAID + ", " + billingAID + ")";
+		String query = "insert into ORDERDETAILS(oid, bid, quantity, shippingAid, billingAid) values(" + oid + ", " + bid + ", " + quantity + ", " + shippingAID + ", " + billingAID + ")";
 		Connection con = this.ds.getConnection();
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate(query);
@@ -183,7 +183,7 @@ public class OrderDAO {
 	}
 	
 	public HashMap<BookBean, Integer> retrieveBookMapByOid (int oid) throws SQLException{
-		String query = "select bid and quantity from orderdetails where oid = " + oid;
+		String query = "select bid, quantity from orderdetails where oid = " + oid;
 		
 		HashMap<BookBean, Integer> orderedBooks = new HashMap<BookBean, Integer>();
 		DatabaseOperator databaseOperator = new DatabaseOperator();
@@ -201,7 +201,7 @@ public class OrderDAO {
 	}
 	
 	public ArrayList<AddressBean> retrieveAddressesByOid (int oid) throws SQLException{
-		String query = "select shippingAid and billingAid from orderdetails where oid = " + oid;
+		String query = "select shippingAid, billingAid from orderdetails where oid = " + oid;
 		ArrayList<AddressBean> addresses = new ArrayList<AddressBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);

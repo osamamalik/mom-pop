@@ -337,12 +337,12 @@ public class Start extends HttpServlet {
 		}
 				
 		//checks if PCS was requested
-		else if (request.getParameter("PCSRequestButton") != null) {
+		if (request.getParameter("PCSRequestButton") != null) {
 			target = "/ProductCatalogService.jspx";	
 		}
 		
 		//checks if OPS was requested
-		else if (request.getParameter("OPSRequestButton") != null) {
+		if (request.getParameter("OPSRequestButton") != null) {
 			target = "/OrderProcessingService.jspx";	
 		}
 		
@@ -953,6 +953,8 @@ public class Start extends HttpServlet {
 		}
 		return "";
 	}
+	
+	
 	
 
 	

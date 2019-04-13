@@ -59,7 +59,7 @@ public class Services {
 	
 	public void exportOrderServices(int bid, String filename) throws Exception {
 		
-		ArrayList<OrderBean> aob = databaseOperator.retrieveOrders(bid);
+		ArrayList<OrderBean> aob = databaseOperator.retrieveOrdersByBid(bid);
 		
 			
 		for(int i = 0; i < aob.size() ; i++) {

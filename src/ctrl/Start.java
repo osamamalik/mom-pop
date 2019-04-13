@@ -928,7 +928,7 @@ public class Start extends HttpServlet {
 		List<String> monthList = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 		int num = monthList.indexOf(month) + 1;
 		
-		ArrayList<OrderWrapper> ow = databaseOperator.retrieveOrdersByMonth(num);
+		ArrayList<OrderBean> ow = databaseOperator.retrieveOrdersByMonth(num);
 		request.getSession().setAttribute("OrderByMonth", ow);
 		request.setAttribute("OBMResultsReady", true);
 		target = "/OrdersByMonth.jspx";

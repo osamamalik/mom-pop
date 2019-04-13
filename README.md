@@ -7,6 +7,7 @@
 Monday, April 9, 2019:
 
 TO DO:
+- figure out a way to fix the redirector, sometimes it breaks. when one button is pressed then another it depended on the order of the if statements. Tried to fix with else if statements. Made it better but sometimes it still gets confused. 
 
 - ERROR CHECKING OF INPUT FIELDS - CHARACTER LIMIT
 	- IF WE DON'T DO THIS, WEBSITE CRASHES
@@ -27,8 +28,7 @@ TO DO:
 - PCS AND OPS AS SERVICES: PCS working correctly you need to run and have this in the url: 
 http://localhost:8080/e-men/rest/service/pcs?bid=1
 
-
-- ANALYTICS PAGE
+- ANALYTICS PAGE //Finished! try to break it. 
 
 - VISITOR LOGGING TO DATABASE (SEE PROJECT DOCUMENTATION - LAST TABLE VisitEvent)
 

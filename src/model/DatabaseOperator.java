@@ -281,6 +281,17 @@ public class DatabaseOperator {
 		return null;
 	}
 	
+	public AddressBean retrieveAddressByAid(int aid) {
+		try {
+			return addressDAO.retrieveAddressByAid(aid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 	
 	/***************************************************************
 		DATABASE ORDER OPERATIONS
@@ -305,16 +316,15 @@ public class DatabaseOperator {
 		}
 	}
 	
-	public ArrayList<OrderBean> retrieveOrders(int bid){
+	public ArrayList<OrderBean> retrieveOrdersByBid(int bid){
 		try {
-			return orderDAO.retrieveOrders(bid);
+			return orderDAO.retrieveOrdersByBid(bid);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 
 	}
-	
 	
 	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month){
 		try {

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -105,79 +106,157 @@ public class OrderDAO {
 		
 		return lastOrderId;
 	}
-	
-	
-	/* this method needs to be fixed
-	 * right now it returns a new ob for each book (each bid in order details)
-	 * each order bean is supposed to return a list of book beans 
-	*/
-	public ArrayList<OrderBean> retrieveOrders(int bid) throws SQLException{
-		String query = "select * from OrderDetails where bid = " + bid;
-		ArrayList<OrderBean> aob = new ArrayList<OrderBean>(); 
-		Connection con = this.ds.getConnection();
-		PreparedStatement p = con.prepareStatement(query);
-		ResultSet r = p.executeQuery();
+
+	public ArrayList<OrderBean> retrieveOrdersByBid(int bid) throws SQLException{
 		
-		while (r.next()){
-			
+		ArrayList<OrderBean> orderList = new ArrayList<OrderBean>();
+		
+		String username;
+		String orderDate;
+		HashMap<BookBean, Integer> orderedBooks = new HashMap<BookBean, Integer>();
+		AddressBean shippingAddress;
+		AddressBean billingAddress;
+		
+		ArrayList<Integer> oidList = this.retrieveOidList(bid);
+		
+		for (Integer oid : oidList) {
 			OrderBean ob = new OrderBean();
-			int oid = Integer.parseInt(r.getString("oid"));
+			username = this.retrieveUsernameByOid(oid);
+			orderDate = this.retrieveDateByOid(oid);
+			orderedBooks = this.retrieveBookMapByOid(oid);
+			shippingAddress = this.retrieveAddressesByOid(oid).get(0);
+			billingAddress = this.retrieveAddressesByOid(oid).get(1);
 			ob.setOid(oid);
-			
-			String query2 = "select * from Orders where oid = " + oid;
-			PreparedStatement p2 = con.prepareStatement(query2);
-			ResultSet r2 = p2.executeQuery();
-			
-			while (r2.next()) {
-				ob.setUsername(r2.getString("username"));
-				ob.setOrderDate(r2.getString("odate"));
-			}
-			r2.close();
-			p2.close();
-			aob.add(ob);
+			ob.setUsername(username);
+			ob.setOrderDate(orderDate);
+			ob.setOrderedBooks(orderedBooks);
+			ob.setShippingAddress(shippingAddress);
+			ob.setBillingAddress(billingAddress);
+			orderList.add(ob);
 		}
-		
-		p.close();
-		con.close();
-		r.close();
-		return aob;
+		return orderList;
 	}
 	
-	/* this method also needs to be fixed
-	 * right now it returns a new order wrapper for each book in order details
-	 * in order details, multiple rows have oid's. each book in an
-	 * order is on a different row
-	*/
-	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month) throws SQLException{
-		String query = "select * from Orders where MONTH(odate) = " + month;
-		ArrayList<OrderWrapper> aow = new ArrayList<OrderWrapper>(); 
+	public ArrayList<Integer> retrieveOidList(int bid) throws SQLException{
+		String query = "select oid from OrderDetails where bid = " + bid;
+		ArrayList<Integer> oidList = new ArrayList<Integer>(); 
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while (r.next()){
+			oidList.add(r.getInt("oid"));	
+		}
+		p.close();
+		con.close();
+		r.close();
+		return oidList;
+	}
+	
+	public String retrieveUsernameByOid(int oid) throws SQLException{
+		String query = "select username from orders where oid = " + oid;
+		String username = null;
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		if (r.next()){
+			username = (r.getString("username"));	
+		}
+		p.close();
+		con.close();
+		r.close();
+		return username;
+	}
+	
+	public String retrieveDateByOid (int oid) throws SQLException{
+		String query = "select odate from orders where oid = " + oid;
+		String date = null;
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		if (r.next()){
+			date = (r.getString("odate"));	
+		}
+		p.close();
+		con.close();
+		r.close();
+		return date;
+	}
+	
+	public HashMap<BookBean, Integer> retrieveBookMapByOid (int oid) throws SQLException{
+		String query = "select bid and quantity from orderdetails where oid = " + oid;
+		
+		HashMap<BookBean, Integer> orderedBooks = new HashMap<BookBean, Integer>();
+		DatabaseOperator databaseOperator = new DatabaseOperator();
+		
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while (r.next()){
+			orderedBooks.put(databaseOperator.retrieveBook(r.getInt("bid")), r.getInt("quantity"));
+		}
+		p.close();
+		con.close();
+		r.close();
+		return orderedBooks;
+	}
+	
+	public ArrayList<AddressBean> retrieveAddressesByOid (int oid) throws SQLException{
+		String query = "select shippingAid and billingAid from orderdetails where oid = " + oid;
+		ArrayList<AddressBean> addresses = new ArrayList<AddressBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		
-		while (r.next()){
-			int oid = Integer.parseInt(r.getString("oid"));
-			String query2 = "select * from OrderDetails where oid = " + oid;
-			PreparedStatement p2 = con.prepareStatement(query2);
-			ResultSet r2 = p2.executeQuery();
-			
-			while (r2.next()) {
-				OrderWrapper ow = new OrderWrapper();
-				ow.setOid(oid);
-				int bid = Integer.parseInt(r2.getString("bid"));
-				ow.setBid(bid);
-				ow.setUser(r.getString("username"));
-				ow.setDate(r.getString("odate"));
-				aow.add(ow);
-			}
-			r2.close();
-			p2.close();
-		}
+		DatabaseOperator databaseOperator = new DatabaseOperator();
 		
+		if (r.next()){
+			addresses.add(databaseOperator.retrieveAddressByAid(r.getInt("shippingAid")));
+			addresses.add(databaseOperator.retrieveAddressByAid(r.getInt("billingAid")));
+		}
 		p.close();
 		con.close();
 		r.close();
-		return aow;
+		return addresses;
+	}
+	
+	public ArrayList<OrderBean> retrieveOrdersByMonth(int month) throws SQLException{
+		String query = "select oid from Orders where MONTH(odate) = " + month;
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		
+		ArrayList<OrderBean> orderList = new ArrayList<OrderBean>();
+		
+		String username;
+		String orderDate;
+		HashMap<BookBean, Integer> orderedBooks = new HashMap<BookBean, Integer>();
+		AddressBean shippingAddress;
+		AddressBean billingAddress;
+	
+		ArrayList <Integer> oidList = new ArrayList<Integer>();
+		while(r.next()) {
+			oidList.add(r.getInt("oid"));
+		}
+		p.close();
+		con.close();
+		r.close();
+		
+		for (Integer oid : oidList) {
+			OrderBean ob = new OrderBean();
+			username = this.retrieveUsernameByOid(oid);
+			orderDate = this.retrieveDateByOid(oid);
+			orderedBooks = this.retrieveBookMapByOid(oid);
+			shippingAddress = this.retrieveAddressesByOid(oid).get(0);
+			billingAddress = this.retrieveAddressesByOid(oid).get(1);
+			ob.setOid(oid);
+			ob.setUsername(username);
+			ob.setOrderDate(orderDate);
+			ob.setOrderedBooks(orderedBooks);
+			ob.setShippingAddress(shippingAddress);
+			ob.setBillingAddress(billingAddress);
+			orderList.add(ob);
+		}
+		return orderList;
 	}
 	
 	/* for analytics top 10.

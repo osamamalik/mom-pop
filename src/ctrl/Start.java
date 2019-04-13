@@ -932,7 +932,6 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("OrderByMonth", ow);
 		request.setAttribute("OBMResultsReady", true);
 		target = "/OrdersByMonth.jspx";
-	
 	}
 	
 

@@ -90,13 +90,14 @@ CREATE TABLE OrderDetails (
 	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	oid INT NOT NULL,
 	bid INT NOT NULL,
+	quantity INT NOT NULL,
 	shippingAid INT NOT NULL,
 	billingAid INT NOT NULL,
 	PRIMARY KEY (odid),
 	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
 	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
-	CONSTRAINT orderdetails_shippingAddressid_ref FOREIGN KEY (shippingAddressid) REFERENCES Address (aid),
-	CONSTRAINT orderdetails_billingAddressid_ref FOREIGN KEY (billingAddressid) REFERENCES Address (aid)
+	CONSTRAINT orderdetails_shippingAddressid_ref FOREIGN KEY (shippingAid) REFERENCES Address (aid),
+	CONSTRAINT orderdetails_billingAddressid_ref FOREIGN KEY (billingAid) REFERENCES Address (aid)
 
 );
 

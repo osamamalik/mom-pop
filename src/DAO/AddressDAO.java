@@ -89,5 +89,29 @@ public class AddressDAO {
 		r.close();
 		return address;
 	}
+	
+	public AddressBean retrieveAddressByAid(int aid) throws SQLException {
+		String query = "select * from ADDRESS where aid = " + aid;
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		AddressBean address = new AddressBean();
+		if(r.next()){
+			address.setAid(r.getInt("aid"));
+			address.setUsername(r.getString("username"));
+			address.setType(r.getString("address_type"));
+			address.setAddressLine1(r.getString("line1"));
+			address.setAddressLine2(r.getString("line2"));
+			address.setCountry(r.getString("country"));
+			address.setProvince(r.getString("province"));
+			address.setCity(r.getString("city"));
+			address.setZip(r.getString("zip"));
+			address.setPhoneNumber(r.getString("phone"));
+		}
+		p.close();
+		con.close();
+		r.close();
+		return address;
+	}
 
 }

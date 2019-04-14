@@ -788,8 +788,10 @@ public class Start extends HttpServlet {
 				databaseOperator.updateAddress(paymentShippingAB);
 				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 			}
-
-			//request.getSession().setAttribute("Order", i++);
+			
+			// i and Order are needed for listener!
+			int i = 0;
+			request.getSession().setAttribute("Order", i++);
 			target = "/SuccessfulOrder.jspx";
 		}
 	}
@@ -934,7 +936,12 @@ public class Start extends HttpServlet {
 		target = "/OrdersByMonth.jspx";
 	}
 	
-
+	public void getTop10(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
+		
+		ArrayList<BookBean> abb = (ArrayList<BookBean>) request.getSession().getAttribute("Top10");
+		request.getSession().setAttribute("Top10", abb);
+	}
+	
 	@GET
     @Path("/pcs/")
 	@Produces(MediaType.TEXT_XML)

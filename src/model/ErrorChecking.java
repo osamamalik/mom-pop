@@ -281,7 +281,19 @@ public class ErrorChecking {
 		
 		//checks if the BID value is blank
 		if (id == "") {
-			setErrorMessage("BLANKBID");
+			setErrorMessage("BLANK BID VALUE");
+			setErrorStatus(true);
+		}
+	}
+	
+	public void checkReviewError(String review) {
+		
+		setErrorMessage(null);
+		setErrorStatus(false);
+		
+		//checks if the BID value is blank
+		if (review == "") {
+			setErrorMessage("REVIEW CANNOT BE BLANK");
 			setErrorStatus(true);
 		}
 	}
@@ -320,6 +332,7 @@ public class ErrorChecking {
 			return false;
 		}
 	}
+	
 	
 	public void setErrorStatus(boolean status) {
 		this.errorStatus = status;

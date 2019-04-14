@@ -171,11 +171,12 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("viewSingleBook") != null) {
 			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
+			request.getSession().setAttribute("title", title);
 			this.openBook(request, response, databaseOperator, title);
 		}
 		
 		if (request.getParameter("addReviewButton") != null) {
-			this.addReview(request, response, databaseOperator);
+			this.addReview(request, response, databaseOperator, errorChecking);
 		}
 		
 		/***************************************************************
@@ -186,7 +187,7 @@ public class Start extends HttpServlet {
 		}
 		
 		/***************************************************************
-			ADD TO SHOPPING CART
+			SHOW SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("showShoppingCart") != null) {
 			this.showCart(request, response, databaseOperator);
@@ -198,6 +199,7 @@ public class Start extends HttpServlet {
 		if (request.getParameter("addToCart") != null) {
 			this.addToCart(request, response, databaseOperator);
 		}
+		
 		
 		/***************************************************************
 			REMOVE FROM SHOPPING CART
@@ -308,7 +310,6 @@ public class Start extends HttpServlet {
 		
 		//checks if Shopping Cart was requested
 		else if (request.getParameter("showShoppingCart") != null) {
-			
 			target = "/ShoppingCart.jspx";	
 		}
 		
@@ -656,6 +657,10 @@ public class Start extends HttpServlet {
 		else {
 			request.setAttribute("nonEmptyCart", false);
 		}
+		
+		System.out.println(username + "'s cart size is: ");
+		System.out.println(databaseShoppingCart.size());
+		
 	}
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
@@ -674,7 +679,8 @@ public class Start extends HttpServlet {
 		}
 
 		databaseOperator.addToCart(bid, 1, username);
-		this.setCart(request, response, databaseOperator, username);		
+		this.setCart(request, response, databaseOperator, username);	
+		this.showCart(request, response, databaseOperator);
 		this.openBook(request, response, databaseOperator, bid);
 
 	}
@@ -696,7 +702,7 @@ public class Start extends HttpServlet {
 		
 		databaseOperator.removeFromCart(bid, username);
 		this.setCart(request, response, databaseOperator, username);
-		
+		this.showCart(request, response, databaseOperator);
 	}
 	
 	protected void updateCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
@@ -728,7 +734,7 @@ public class Start extends HttpServlet {
 		}
 		
 		this.setCart(request, response, databaseOperator, username);
-		
+		this.showCart(request, response, databaseOperator);
 	}
 	
 	protected void setCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
@@ -759,25 +765,48 @@ public class Start extends HttpServlet {
 		}
 	}
 	
-	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
-		String username = request.getSession().getAttribute("loggedInUser").toString();
-		int bookID = Integer.parseInt(request.getParameter("title"));
+	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) throws ServletException, IOException {
+		
 		String review = request.getParameter("review");
-		int rating = Integer.parseInt(request.getParameter("rating"));
-		databaseOperator.addReview(username, bookID, review, rating);
-		int title = (Integer.parseInt(request.getParameter("title")));
-		openBook(request, response, databaseOperator, title);
+		int bookID = Integer.parseInt(request.getSession().getAttribute("title").toString());
+
+		//checks if anything was added to the review field before submission of review
+		errorChecking.checkReviewError(review);
+		
+		if (!errorChecking.getErrorStatus()) {
+			String username = request.getSession().getAttribute("loggedInUser").toString();
+			int rating = Integer.parseInt(request.getParameter("rating"));
+			databaseOperator.addReview(username, bookID, review, rating);
+			openBook(request, response, databaseOperator, bookID);	
+		}
+		else {
+			target = "/SingleBook.jspx";
+			openBook(request, response, databaseOperator, bookID);	
+			request.setAttribute("error", errorChecking.getErrorMessage());
+		}
 	}
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 			
 		String username = request.getSession().getAttribute("loggedInUser").toString();
-
+		String creditCardNumber = request.getParameter("creditCardNumber");
+		String expiryMonth = request.getParameter("creditCardExpiryMonth");
+		String expiryDay = request.getParameter("creditCardExpiryDay");
+		String securityCode = request.getParameter("creditCardSecurity");
+		
+		errorChecking.checkPaymentInformation(creditCardNumber, expiryMonth, expiryDay, securityCode);
+		
 		//check if the new order number is a multiple of 3		
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
 			request.setAttribute("error", "CREDIT CARD AUTHORIZATION FAILED");
-			orderCount++;
+			this.orderCount++;
+		}
+		//if there are errors, sets the appropriate error message
+		else if (errorChecking.getErrorStatus()) {
+			error = true;
+			target = "/Payment.jspx";
+			request.setAttribute("error", errorChecking.getErrorMessage());
 		}
 		else {			
 						

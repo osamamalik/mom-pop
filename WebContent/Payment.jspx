@@ -29,6 +29,7 @@
 				</tr>
 			</c:if>
 			<div>
+						
 				<table>			
 					<c:forEach var="entry" items="${sessionScope['cart']}"> 
 					

@@ -23,29 +23,42 @@
 			<div class="main">
 			<table>
 			
-				<c:forEach var="entry" items="${sessionScope['cart']}"> 
-				
-	                <tr>
-		                <td><c:out value="${entry.getTitle()}"/></td>
-		                <td><c:out value="${entry.getAuthor()}"/></td>
-		                <td><f:formatNumber value="${entry.getPrice()}" type="currency" currencySymbol="$"/></td>
-						<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
-						<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
-	                </tr>
-
-	           	</c:forEach>
-	           	
-	           		<tr>
-						<td><button name="updateCart">update</button></td>
-	                </tr>
-	           		<tr>
-	           			<td><label>Total:</label></td>
-	           			<td>${totalPrice}</td>
-	           		</tr>
+				<c:choose>	
+	
+					<c:when test="${nonEmptyCart}">					
+						
+						<c:forEach var="entry" items="${sessionScope['cart']}"> 
+						
+			                <tr>
+				                <td><c:out value="${entry.getTitle()}"/></td>
+				                <td><c:out value="${entry.getAuthor()}"/></td>
+				                <td><f:formatNumber value="${entry.getPrice()}" type="currency" currencySymbol="$"/></td>
+								<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
+								<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
+			                </tr>
+		
+			           	</c:forEach>
+			           	
+			           		<tr>
+								<td><button name="updateCart">update</button></td>
+			                </tr>
+			           		<tr>
+			           			<td><label>Total:</label></td>
+			           			<td>${totalPrice}</td>
+			           		</tr>
+			           		
+			           		<c:if test = "${totalPrice gt 0}">
+			           			<td><button name="checkoutButton">checkout</button></td>
+			           		</c:if>
+		           	</c:when>
 	           		
-	           		<c:if test = "${totalPrice gt 0}">
-	           			<td><button name="checkoutButton">checkout</button></td>
-	           		</c:if>
+	           							
+					<c:otherwise>
+							<p>You currently don't have any items in your shopping cart</p>
+					</c:otherwise>
+           		
+           		</c:choose>	
+	           	
 			</table>		 
 		 
 	 	<footer>

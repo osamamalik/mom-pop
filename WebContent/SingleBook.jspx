@@ -17,8 +17,7 @@
 </head>
 <body>
 	
-		<form action="" name="" method="post">
-
+		<form action="" name="singleBookForm" method="post">
 
 			<header class="header">
 				<jsp:include page="Header.jspx" />
@@ -67,7 +66,7 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-								<input type="submit" value="Add Review" name="addReviewButton" onclick="return reviewValidate();" />
+								<button action="submit" type="submit" name="addReviewButton" >Add Review</button>
 							</c:otherwise>
 						</c:choose>
 					</c:if>

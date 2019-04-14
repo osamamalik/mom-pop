@@ -28,7 +28,6 @@ public class BookWrapper {
 	//@XmlAttribute(name="url")
 	private String url;
 	
-	
 	public BookWrapper(int bid, String title, String author, double price, String description, int publishYear,	double rating, String category) {
 		this.bid = bid;
 		this.title = title;
@@ -38,7 +37,6 @@ public class BookWrapper {
 		this.publishYear = publishYear;
 		this.rating = rating;
 		this.category = category;
-		this.url = url;
 	}
 	
 	

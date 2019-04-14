@@ -1,31 +1,19 @@
 package model;
 
-import java.io.FileWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.transform.stream.StreamResult;
 
 import DAO.*;
 import bean.*;
 
-public class Model {
+public class DatabaseOperator {
 	private UserDAO userDAO;
 	private BookDAO bookDAO;
 	private CartDAO cartDAO;
 	private AddressDAO addressDAO;
 	private OrderDAO orderDAO;
 
-	private boolean errorStatus;
-	private String errorMessage;
-
-	public Model() {
-
-		this.errorStatus = false;
-		this.errorMessage = null;
+	public DatabaseOperator() {
 
 		try {
 			userDAO = new UserDAO();
@@ -88,7 +76,6 @@ public class Model {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 	
 	public BookBean retrieveBook(int bid){
@@ -225,7 +212,6 @@ public class Model {
 		}
 	}
 
-	
 	public void removeFromCart(int bid, String user) {
 		try {
 			cartDAO.removeFromCart(bid, user);
@@ -263,7 +249,6 @@ public class Model {
 		}
 	}
 	
-	
 	/***************************************************************
 		DATABASE ADDRESS OPERATIONS
 	 ****************************************************************/
@@ -276,6 +261,16 @@ public class Model {
 		}
 	}
 	
+	public void updateAddress(AddressBean ab) {
+		try {
+			addressDAO.updateAddress(ab);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 	public AddressBean retrieveAddress(String username, String type) {
 		try {
 			return addressDAO.retrieveAddress(username, type);
@@ -285,6 +280,17 @@ public class Model {
 		}
 		return null;
 	}
+	
+	public AddressBean retrieveAddressByAid(int aid) {
+		try {
+			return addressDAO.retrieveAddressByAid(aid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	
 	
 	/***************************************************************
@@ -301,18 +307,18 @@ public class Model {
 		return -1;
 	}
 	
-	public void addtoOrders(ArrayList<CartBean> shoppingCart) {
+	public void addtoOrders(ArrayList<CartBean> shoppingCart, AddressBean shippingAddress, AddressBean billingAddress) {
 		try {
-			orderDAO.addtoOrders(shoppingCart);
+			orderDAO.addtoOrders(shoppingCart,shippingAddress, billingAddress);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public ArrayList<OrderBean> retrieveOrders(int bid){
+	public ArrayList<OrderBean> retrieveOrdersByBid(int bid){
 		try {
-			return orderDAO.retrieveOrders(bid);
+			return orderDAO.retrieveOrdersByBid(bid);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -320,7 +326,7 @@ public class Model {
 
 	}
 	
-	public ArrayList<OrderWrapper> retrieveOrdersByMonth(int month){
+	public ArrayList<OrderBean> retrieveOrdersByMonth(int month){
 		try {
 			return orderDAO.retrieveOrdersByMonth(month);
 		} catch (SQLException e) {
@@ -330,107 +336,7 @@ public class Model {
 
 	}
 	
-	
-
-	/***************************************************************
-		SERVICES
-	****************************************************************/
-
-	public void exportProductServices(int bid, String filename) throws Exception {
-
-		BookBean bb = retrieveBook(bid);
-		String title = bb.getTitle();
-		String author = bb.getAuthor();
-		double price = bb.getPrice();
-		String description = bb.getDescription();
-		int publishYear = bb.getPublishYear();
-		double rating = bb.getRating();
-		String cat = bb.getCategory();
-
-	
-		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
-		
-		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
-		Marshaller marshaller = jc.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-
-		StringWriter sw = new StringWriter();
-		sw.write("\n");
-		
-		marshaller.marshal(bw, new StreamResult(sw));
-
-		System.out.println(sw.toString()); // for debugging
-
-		FileWriter fw = new FileWriter(filename);
-		fw.write(sw.toString());
-		fw.close();
-	}
-	
-	public void exportOrderServices(int bid, String filename) throws Exception {
-		
-		ArrayList<OrderBean> aob = retrieveOrders(bid);
-
-		for(int i = 0; i < aob.size() ; i++) {
-			OrderBean ob = aob.get(i);
-			String date = ob.getOrderDate();
-			int oid = ob.getOid();
-			String user = ob.getUsername();
-			
-			OrderWrapper  ow = new OrderWrapper(bid, date, oid, user);
-			JAXBContext jc = JAXBContext.newInstance(ow.getClass());
-			Marshaller marshaller = jc.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-			
-			StringWriter sw = new StringWriter();
-			sw.write("\n");
-			
-			marshaller.marshal(ow, new StreamResult(sw));
-
-			System.out.println(sw.toString()); // for debugging
-
-			FileWriter fw = new FileWriter(filename);
-			fw.write(sw.toString());
-			fw.close();
-
-		}
-	}
-	
-	public String exportProductWebServices(int bid) throws Exception {
-
-		BookBean bb = retrieveBook(bid);
-		String title = bb.getTitle();
-		String author = bb.getAuthor();
-		double price = bb.getPrice();
-		String description = bb.getDescription();
-		int publishYear = bb.getPublishYear();
-		double rating = bb.getRating();
-		String cat = bb.getCategory();
-
-	
-		BookWrapper bw = new BookWrapper(bid, title, author, price, description, publishYear, rating, cat);
-		
-		JAXBContext jc = JAXBContext.newInstance(bw.getClass());
-		Marshaller marshaller = jc.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-
-		StringWriter sw = new StringWriter();
-		sw.write("\n");
-		
-		marshaller.marshal(bw, new StreamResult(sw));
-
-		System.out.println(sw.toString()); // for debugging
-
-	
-		return sw.toString();
-		
-	}
-	
-	
-	
-	public ArrayList<BookBean> getTop10() throws ClassNotFoundException{
+	public ArrayList<BookBean> getTop10Orders() throws ClassNotFoundException{
 		
 		try {
 			return orderDAO.getTop10();
@@ -439,6 +345,8 @@ public class Model {
 		}
 		return null;
 	}
+	
+	
 }
 
 

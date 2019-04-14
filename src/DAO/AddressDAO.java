@@ -30,7 +30,6 @@ public class AddressDAO {
 		}
 	}
 	
-
 	public void addAddress(AddressBean ab) throws SQLException {
 		String username = ab.getUsername();
 		String address_type = ab.getType();
@@ -49,6 +48,24 @@ public class AddressDAO {
 		con.close();
 	}
 	
+	public void updateAddress(AddressBean ab) throws SQLException {
+		String username = ab.getUsername();
+		String address_type = ab.getType();
+		String line1 = ab.getAddressLine1();
+		String line2 = ab.getAddressLine2();
+		String country = ab.getCountry();
+		String province = ab.getProvince();
+		String city = ab.getCity();
+		String zip = ab.getZip();
+		String phone = ab.getPhoneNumber();
+		String query = "update ADDRESS set line1='" + line1 + "', line2='" + line2 + "', country='" + country + "', province='" + province + "', city='" + city + "', zip='" + zip + "', phone='" + phone + "' where username='" + username + "' and address_type='" + address_type + "'";
+		Connection con = this.ds.getConnection();
+		Statement stmt = con.createStatement();
+		stmt.executeUpdate(query);
+		stmt.close();
+		con.close();
+	}
+	
 	public AddressBean retrieveAddress(String username, String type) throws SQLException {
 		String query = "select * from ADDRESS where username = '" + username + "' and address_type = '" + type + "'";
 		Connection con = this.ds.getConnection();
@@ -56,8 +73,33 @@ public class AddressDAO {
 		ResultSet r = p.executeQuery();
 		AddressBean address = new AddressBean();
 		if(r.next()){
+			address.setAid(r.getInt("aid"));
 			address.setUsername(username);
 			address.setType(type);
+			address.setAddressLine1(r.getString("line1"));
+			address.setAddressLine2(r.getString("line2"));
+			address.setCountry(r.getString("country"));
+			address.setProvince(r.getString("province"));
+			address.setCity(r.getString("city"));
+			address.setZip(r.getString("zip"));
+			address.setPhoneNumber(r.getString("phone"));
+		}
+		p.close();
+		con.close();
+		r.close();
+		return address;
+	}
+	
+	public AddressBean retrieveAddressByAid(int aid) throws SQLException {
+		String query = "select * from ADDRESS where aid = " + aid;
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		AddressBean address = new AddressBean();
+		if(r.next()){
+			address.setAid(r.getInt("aid"));
+			address.setUsername(r.getString("username"));
+			address.setType(r.getString("address_type"));
 			address.setAddressLine1(r.getString("line1"));
 			address.setAddressLine2(r.getString("line2"));
 			address.setCountry(r.getString("country"));

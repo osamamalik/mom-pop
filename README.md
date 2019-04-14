@@ -9,7 +9,9 @@ Monday, April 9, 2019:
 TO DO:
 - figure out a way to fix the redirector, sometimes it breaks. when one button is pressed then another it depended on the order of the if statements. Tried to fix with else if statements. Made it better but sometimes it still gets confused. 
 
-- Add the same item in multiple quantities to the cart in singleBook page
+- ERROR CHECKING OF INPUT FIELDS - CHARACTER LIMIT
+	- IF WE DON'T DO THIS, WEBSITE CRASHES
+	- TO SEE TRY ADDING MORE THAN 20 CHARACTERS TO ZIPCODE, ETC
 
 - ERROR CHECKING BACK-END
 	-SHOPPING CART QUANTITY
@@ -38,6 +40,7 @@ http://localhost:8080/e-men/rest/service/pcs?bid=1
 
 - DESIGN DOCUMENT
 
+- DATABASE CONFIGURATION
 
 
 ***************************************************************************************************************************************************

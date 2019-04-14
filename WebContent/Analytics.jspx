@@ -17,54 +17,38 @@
 <body>
 
 	
-		<form method="POST">
+	<form method="POST">
+	
+	
+		<header class="header">
+			<input type="submit" value="Home" name="homeButton"></input>
+		</header>
 		
+		<div class="main">
 		
-			<header class="header">
-				<input type="submit" value="Home" name="homeButton"></input>
-			</header>
-			<div class="main">
 			<table>
-			
-				<c:choose>	
-			
-					<c:when test="${sessionScope['loggedInUser'] == 'admin'}">
 					
-						<tr> 
-						Hello Admin, <br/>
-						In the Analytics Page you may view a report with the books sold each month <br/>
-						by pressing the OrdersByMonth button. <br/>
-						You may also see out top 10 most ordered books by pressing the top10 button. <br/>
-						Lets go out there and make some money. 
-							<td><input type="submit" value="top10" name="top10"></input></td>
-							<td><input type="submit" value="OrdersByMonth" name="OrdersByMonth"></input></td>		
-						</tr>
-	
-					</c:when>
-					
-					<c:otherwise>
-					
-						<tr>
-							<td>You must be logged in in as administrator to view this page</td>
-							<td>You will be redirected to the login page</td>
-	
-							<meta http-equiv='refresh' content='3; url=Login.jspx'></meta>
-						</tr>
-						
-					</c:otherwise>
-						
-				</c:choose>	
+				<tr>
+					<div>
+						<p>Hello Admin,</p>
+						<p>In the Analytics Page you may view a report with the books sold each month by pressing the 'Orders By Month' button. </p>
+						<p>You may also see the top 10 most ordered books at this time by pressing the 'Top 10 Orders' button. </p>
+					</div>
+				</tr>
 				
+				<tr>
+					<td><input type="submit" value="Orders By Month" name="OrdersByMonth"></input></td>
+					<td><input type="submit" value="Top 10 Orders" name="top10"></input></td>
+				</tr>
+
 						
 			</table>
-			
-			<footer>
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
-			</div>
-		</form>
-	
-	
+		
+		<footer>
+			<jsp:include page="Footer.jspx"/>
+		</footer> 
+		</div>
+	</form>
 
 
 </body>

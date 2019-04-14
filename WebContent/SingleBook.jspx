@@ -12,9 +12,7 @@
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print" />
-<script type="text/javascript" src="res/myJS.js">
-	;
-</script>
+<script type="text/javascript" src="res/myJS.js">;</script>
 <title>Books</title>
 </head>
 <body>
@@ -82,7 +80,7 @@
 			<footer>
 				<jsp:include page="Footer.jspx" />
 			</footer>
-</div>
+		</div>
 		</form>
 	
 

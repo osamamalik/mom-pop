@@ -10,7 +10,7 @@
 <head>
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/errorChecking.js">;</script>
+	<script type="text/javascript" src="res/pcsErrorChecking.js">;</script>
 <title>Product Catalog Service</title>
 </head>
 <body>

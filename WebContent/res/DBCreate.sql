@@ -2,9 +2,9 @@ DROP TABLE Reviews;
 DROP TABLE OrderDetails;
 DROP TABLE Orders;
 DROP TABLE Cart;
-DROP TABLE Users;
 DROP TABLE Books;
 DROP TABLE Address;
+DROP TABLE Users;
 
 CREATE TABLE Books (
 	bid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -24,18 +24,14 @@ CREATE TABLE Users (
 	fname		VARCHAR(30) NOT NULL,
 	lname		VARCHAR(30) NOT NULL,
 	email		VARCHAR(30) NOT NULL,
-	password	VARCHAR(50) NOT NULL,
+	password	VARCHAR(20) NOT NULL,
 	PRIMARY KEY(username)
 );
 
-CREATE TABLE Users (
-	username	VARCHAR(30) NOT NULL,
-	fname		VARCHAR(30) NOT NULL,
-	lname		VARCHAR(30) NOT NULL,
-	email		VARCHAR(30) NOT NULL,
-	password	VARCHAR(50) NOT NULL,
-	PRIMARY KEY(username)
-);
+INSERT INTO Users VALUES ('osama', 'Osama', 'Malik', 'omalik91@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
+INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
 
 CREATE TABLE Address (
 	aid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -48,14 +44,10 @@ CREATE TABLE Address (
 	city VARCHAR(30) NOT NULL,
 	zip VARCHAR(20) NOT NULL,
 	phone VARCHAR(20),
-	PRIMARY KEY(aid)
+	PRIMARY KEY(aid),
 	CONSTRAINT address_username_ref FOREIGN KEY (username) REFERENCES Users (username)
 );
 
-INSERT INTO Users VALUES ('osama', 'Osama', 'Malik', 'omalik91@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('ray', 'Raymond', 'Barakat', 'raymondsbarakat@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('baris', 'Baris', 'Bagcilar', 'bbagcilar@gmail.com', 'abc123');
-INSERT INTO Users VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', 'admin');
 
 INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('osama', 'shipping', '1 shipping lanes', 'unit #1', 'Canada', 'ON', 'Toronto', 'M11P11', '111-11-11');
 INSERT INTO Address (username, address_type, line1, line2, country, province, city, zip, phone) VALUES ('osama', 'billing', '1 billing lanes', 'unit #1', 'Canada', 'ON', 'Toronto', 'M11P11', '111-11-11');
@@ -98,13 +90,16 @@ CREATE TABLE OrderDetails (
 	odid INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	oid INT NOT NULL,
 	bid INT NOT NULL,
+	quantity INT NOT NULL,
+	shippingAid INT NOT NULL,
+	billingAid INT NOT NULL,
 	PRIMARY KEY (odid),
 	CONSTRAINT orderdetails_oid_ref FOREIGN KEY (oid) REFERENCES Orders (oid),
-	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid)
+	CONSTRAINT orderdetails_bid_ref FOREIGN KEY (bid) REFERENCES Books (bid),
+	CONSTRAINT orderdetails_shippingAddressid_ref FOREIGN KEY (shippingAid) REFERENCES Address (aid),
+	CONSTRAINT orderdetails_billingAddressid_ref FOREIGN KEY (billingAid) REFERENCES Address (aid)
+
 );
-
-
-
 
 INSERT INTO Books (title, author, price, description, publishYear, rating, category, url) VALUES(
 'Steve Jobs',

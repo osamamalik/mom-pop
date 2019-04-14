@@ -5,10 +5,12 @@ import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.PropertyException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -139,6 +141,47 @@ public class Services {
 	
 		return sw.toString();
 		
+	}
+	
+	public String exportOrderWebServices(int bid) throws Exception {
+		ArrayList<OrderBean> aob = databaseOperator.retrieveOrdersByBid(bid);
+		String toReturn = "";
+		
+		for(int i = 0; i < aob.size() ; i++) {
+			OrderBean ob = aob.get(i);
+			String date = ob.getOrderDate();
+			int oid = ob.getOid();
+			String user = ob.getUsername();
+			UserBean ub = databaseOperator.retrieveUser(user);
+			String firstName = ub.getFirstName();
+			String lastName = ub.getLastName();
+			
+			AddressBean shippingAdress = ob.getShippingAddress();
+			AddressBean billingAdress = ob.getBillingAddress();
+			shippingAdress.setName(firstName+" "+lastName);
+			HashMap<BookBean, Integer> bMap = ob.getOrderedBooks();
+			
+			OrderWrapper  ow = new OrderWrapper(bid, date, oid, user);
+			OrderWrapper ow2 = new OrderWrapper(shippingAdress, billingAdress, bMap, date);
+			
+			JAXBContext jc = JAXBContext.newInstance(ow2.getClass());
+			Marshaller marshaller = jc.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+			
+			StringWriter sw = new StringWriter();
+			sw.write("\n");
+			
+			marshaller.marshal(ow2, new StreamResult(sw));
+	
+			System.out.println(sw.toString()); // for debugging
+	
+			
+			toReturn += sw.toString();
+			
+	
+		}
+		return toReturn;
 	}
 	
 	

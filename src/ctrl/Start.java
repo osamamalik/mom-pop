@@ -954,7 +954,24 @@ public class Start extends HttpServlet {
 		return "";
 	}
 	
-	
+	@GET
+    @Path("/ops/")
+	@Produces(MediaType.TEXT_XML)
+	public String getOrerCatalogService(@QueryParam("bid") String bookid) {
+		int bid = Integer.parseInt(bookid);
+		Services services = new Services();
+		try {
+			String toReturn = services.exportOrderWebServices(bid);
+			
+			target = "/ProductProcessingService.jspx";
+			
+			return toReturn;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
 	
 
 	

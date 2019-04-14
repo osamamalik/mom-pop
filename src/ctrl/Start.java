@@ -788,7 +788,12 @@ public class Start extends HttpServlet {
 				databaseOperator.updateAddress(paymentShippingAB);
 				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 			}
+<<<<<<< HEAD
 
+=======
+			
+			// i and Order are needed for listener!
+>>>>>>> 44a420d05ceb7bde72435d10dac693be2b2185ed
 			int i = 0;
 			request.getSession().setAttribute("Order", i++);
 			target = "/SuccessfulOrder.jspx";
@@ -941,7 +946,10 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("Top10", abb);
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 44a420d05ceb7bde72435d10dac693be2b2185ed
 	@GET
     @Path("/pcs/")
 	@Produces(MediaType.TEXT_XML)

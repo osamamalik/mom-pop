@@ -171,7 +171,6 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("viewSingleBook") != null) {
 			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
-			request.getSession().setAttribute("title", title);
 			this.openBook(request, response, databaseOperator, title);
 		}
 		
@@ -762,35 +761,23 @@ public class Start extends HttpServlet {
 	
 	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 		String username = request.getSession().getAttribute("loggedInUser").toString();
-		int bookID = Integer.parseInt(request.getSession().getAttribute("title").toString());
+		int bookID = Integer.parseInt(request.getParameter("title"));
 		String review = request.getParameter("review");
 		int rating = Integer.parseInt(request.getParameter("rating"));
 		databaseOperator.addReview(username, bookID, review, rating);
-		openBook(request, response, databaseOperator, bookID);
+		int title = (Integer.parseInt(request.getParameter("title")));
+		openBook(request, response, databaseOperator, title);
 	}
-		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 			
 		String username = request.getSession().getAttribute("loggedInUser").toString();
-		String creditCardNumber = request.getParameter("creditCardNumber");
-		String expiryMonth = request.getParameter("creditCardExpiryMonth");
-		String expiryDay = request.getParameter("creditCardExpiryDay");
-		String securityCode = request.getParameter("creditCardSecurity");
-		
-		errorChecking.checkPaymentInformation(creditCardNumber, expiryMonth, expiryDay, securityCode);
-		
+
 		//check if the new order number is a multiple of 3		
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
 			target = "/Payment.jspx";
 			request.setAttribute("error", "CREDIT CARD AUTHORIZATION FAILED");
-			this.orderCount++;
-		}
-		//if there are errors, sets the appropriate error message
-		else if (errorChecking.getErrorStatus()) {
-			error = true;
-			target = "/Payment.jspx";
-			request.setAttribute("error", errorChecking.getErrorMessage());
+			orderCount++;
 		}
 		else {			
 						
@@ -1008,7 +995,7 @@ public class Start extends HttpServlet {
 	@GET
     @Path("/ops/")
 	@Produces(MediaType.TEXT_XML)
-	public String getOrderCatalogService(@QueryParam("bid") String bookid) {
+	public String getOrerCatalogService(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
 		Services services = new Services();
 		try {
@@ -1023,5 +1010,7 @@ public class Start extends HttpServlet {
 		}
 		return "";
 	}
+	
+
 	
 }

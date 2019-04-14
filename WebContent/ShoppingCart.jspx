@@ -23,12 +23,6 @@
 			<div class="main">
 			<table>
 			
-			
-				<c:choose>	
-		
-				<c:when test="${nonEmptyCart}">					
-					
-			
 				<c:forEach var="entry" items="${sessionScope['cart']}"> 
 				
 	                <tr>
@@ -52,15 +46,6 @@
 	           		<c:if test = "${totalPrice gt 0}">
 	           			<td><button name="checkoutButton">checkout</button></td>
 	           		</c:if>
-	           		</c:when>
-	           		
-	           							
-					<c:otherwise>
-						<p>You currently don't have any items in your shopping cart</p>
-					</c:otherwise>
-	           		
-	           	</c:choose>	
-	           	
 			</table>		 
 		 
 	 	<footer>

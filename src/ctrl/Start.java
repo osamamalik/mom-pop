@@ -170,6 +170,7 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("viewSingleBook") != null) {
 			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
+			request.getSession().setAttribute("title", title);
 			this.openBook(request, response, databaseOperator, title);
 		}
 		
@@ -730,12 +731,11 @@ public class Start extends HttpServlet {
 	
 	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 		String username = request.getSession().getAttribute("loggedInUser").toString();
-		int bookID = Integer.parseInt(request.getParameter("title"));
+		int bookID = Integer.parseInt(request.getSession().getAttribute("title").toString());
 		String review = request.getParameter("review");
 		int rating = Integer.parseInt(request.getParameter("rating"));
 		databaseOperator.addReview(username, bookID, review, rating);
-		int title = (Integer.parseInt(request.getParameter("title")));
-		openBook(request, response, databaseOperator, title);
+		openBook(request, response, databaseOperator, bookID);
 	}
 		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){

@@ -12,7 +12,7 @@
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print" />
-<script type="text/javascript" src="res/myJS.js">;</script>
+<script type="text/javascript" src="res/reviewErrorChecking.js">;</script>
 <title>Books</title>
 </head>
 <body>
@@ -57,7 +57,8 @@
 							<c:otherwise>
 								<label for="review">Review:</label>
 								<br />
-								<textarea name="review" rows="4" cols="75" maxlength="2500">Add a review...</textarea>
+								<textarea id="review" name="review" rows="4" cols="75" maxlength="2500">Add a review...</textarea>
+								<label id="reviewError"></label>
 								<br />
 								<select name="rating">
 									<option value="1">1</option>
@@ -66,7 +67,7 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-								<input type="submit" value="Add Review" name="addReviewButton" />
+								<input type="submit" value="Add Review" name="addReviewButton" onclick="return reviewValidate();" />
 							</c:otherwise>
 						</c:choose>
 					</c:if>

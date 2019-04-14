@@ -43,7 +43,7 @@
 						</tr>	
 								
 						<tr>
-							<td><button action="submit" type="submit" name="PCSGenerateButton" onclick="return pcsValidate()">Generate</button></td>			
+							<td><button action="submit" type="submit" name="PCSGenerateButton" onclick="return pcsValidate();">Generate</button></td>			
 						</tr>
 						
 					</c:otherwise>

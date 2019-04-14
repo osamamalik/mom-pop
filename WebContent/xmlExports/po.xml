@@ -14,7 +14,7 @@
       <state>PA</state>
       <zip>95819</zip>
    </billTo>
-   <comment>Hurry, my lawn is going wild</comment>
+   <comment>Hurry, my lawn is going wild<!/comment>
    <items>
       <item partNum="872-AA">
          <productName>Lawnmower</productName>

@@ -60,7 +60,7 @@ public class OrderDAO {
 		}
 	}
 	
-	public void addSingleOrderDetails(int oid, int bid, int quantity,int shippingAID, int billingAID) throws SQLException {
+	public void addSingleOrderDetails(int oid, int bid, int quantity, int shippingAID, int billingAID) throws SQLException {
 		
 		String query = "insert into ORDERDETAILS(oid, bid, quantity, shippingAid, billingAid) values(" + oid + ", " + bid + ", " + quantity + ", " + shippingAID + ", " + billingAID + ")";
 		Connection con = this.ds.getConnection();

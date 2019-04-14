@@ -217,7 +217,7 @@
 					</tr>
 			
 					<tr>
-						<td><input type="tel" id="creditCardNumber" name="creditCardNumber" placeholder="111-222-333-444"></input></td>		
+						<td><input type="tel" id="creditCardNumber" name="creditCardNumber" placeholder="111222333444"></input></td>		
 						<td><label id="creditCardNumberError"></label></td>
 					</tr>
 					
@@ -226,7 +226,7 @@
 					</tr>
 			
 					<tr>
-						<td><input type="number" id="creditCardExpiryMonth" name="creditCardExpiryMonth" min="01" max = "12"></input></td>		
+						<td><input type="number" id="creditCardExpiryMonth" name="creditCardExpiryMonth" placeholder="MM" min="01" max = "12"></input></td>		
 						<td><label id="creditCardExpiryMonth"></label></td>
 					</tr>
 					
@@ -235,7 +235,7 @@
 					</tr>
 			
 					<tr>
-						<td><input type="number" id="creditCardExpiryDay" name="creditCardExpiryDay" min="01" max = "31"></input></td>		
+						<td><input type="number" id="creditCardExpiryDay" name="creditCardExpiryDay" min="01" max = "31" placeholder="DD"></input></td>		
 						<td><label id="creditCardExpiryDay"></label></td>
 					</tr>
 					
@@ -244,7 +244,7 @@
 					</tr>
 			
 					<tr>
-						<td><input type="number" max="999" min = "000" id="creditCardSecurity" name="creditCardSecurity"></input></td>		
+						<td><input type="number" max="999" min = "000" id="creditCardSecurity" name="creditCardSecurity" placeholder="123" ></input></td>		
 						<td><label id="creditCardSecurity"></label></td>
 					</tr>
 					

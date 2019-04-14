@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -67,9 +68,30 @@ public class Services {
 			String date = ob.getOrderDate();
 			int oid = ob.getOid();
 			String user = ob.getUsername();
+			UserBean ub = databaseOperator.retrieveUser(user);
+			String firstName = ub.getFirstName();
+			String lastName = ub.getLastName();
+			
+			AddressBean shippingAdress = ob.getShippingAddress();
+			AddressBean billingAdress = ob.getBillingAddress();
+			shippingAdress.setName(firstName+" "+lastName);
+			/*
+			String shippingStreet = shippingAdress.getAddressLine1();
+			String shippingCity = shippingAdress.getCity();
+			String shippingState = shippingAdress.getProvince();
+			String shippingZip = shippingAdress.getZip();
+			
+			String billingStreet = billingAdress.getAddressLine1();
+			String billingCity = billingAdress.getCity();
+			String billingState = billingAdress.getProvince();
+			String billingZip = billingAdress.getZip();
+			*/
+			HashMap<BookBean, Integer> bMap = ob.getOrderedBooks();
 			
 			OrderWrapper  ow = new OrderWrapper(bid, date, oid, user);
-			JAXBContext jc = JAXBContext.newInstance(ow.getClass());
+			OrderWrapper ow2 = new OrderWrapper(shippingAdress, billingAdress, bMap, date);
+			
+			JAXBContext jc = JAXBContext.newInstance(ow2.getClass());
 			Marshaller marshaller = jc.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
@@ -77,12 +99,12 @@ public class Services {
 			StringWriter sw = new StringWriter();
 			sw.write("\n");
 			
-			marshaller.marshal(ow, new StreamResult(sw));
+			marshaller.marshal(ow2, new StreamResult(sw));
 	
 			System.out.println(sw.toString()); // for debugging
 	
 			FileWriter fw = new FileWriter(filename);
-			fw.write(sw.toString());
+			fw.append(sw.toString());
 			fw.close();
 	
 		}

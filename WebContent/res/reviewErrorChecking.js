@@ -6,16 +6,17 @@ function reviewValidate() {
 	reviewErrorStatus = false;
 	
 	var review = document.getElementById("review").value;
-	if (review.length == 0 || review.length > 2500){
+	if (review.length == 0 || review.length > 2500) {
 		reviewError.innerHTML = "*";
 		reviewError.style.color = "red";
 		reviewErrorStatus = true;
-	}else{
+	}
+	else {
 		reviewError.innerHTML = "";
 	}
 	
 	if (reviewErrorStatus) {
-		alert("Please enter a review that is not empty and less than 2500 characters");
+		alert("Please enter a review that is not empty and less than 2500 characters.");
 		return false;
 	}
 	

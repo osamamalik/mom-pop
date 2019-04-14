@@ -10,13 +10,11 @@
 <head>
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/myJS.js">;</script>
+	<script type="text/javascript" src="res/errorChecking.js">;</script>
 <title>Product Catalog Service</title>
 </head>
 <body>
-	
-		<legend>Product Catalog Service</legend>
-	
+		
 		<form action="" name="AnalyticsForm" method="post">
 			
 			<header class="header">
@@ -40,11 +38,12 @@
 						</tr>
 						
 						<tr>
-							<td><input id="Bookid" name="bid" type="text"/><br/></td>			
+							<td><input id="Bookid" name="bid" type="text"/><br/></td>
+							<td><label id="BookidError"></label></td>			
 						</tr>	
 								
 						<tr>
-							<td><button action="submit" type="submit" name="PCSGenerateButton">Generate</button></td>			
+							<td><button action="submit" type="submit" name="PCSGenerateButton" onclick="return pcsValidate();">Generate</button></td>			
 						</tr>
 						
 					</c:otherwise>

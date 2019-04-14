@@ -329,6 +329,30 @@ function signUpValidate() {
 	return true;
 }
 
+function pcsValidate() {
+	var BookidError;
+	bookIDError = document.getElementById("BookidError");
+	
+	var bookIDErrorStatus;
+	bookIDErrorStatus = false;
+	
+	var bookID = document.getElementById("Bookid").value;
+	if (isNaN(bookID) || bookID == ""){
+		bookIDError.innerHTML = "*";
+		bookIDError.style.color = "red";
+		bookIDErrorStatus = true;
+	}else{
+		bookIDError.innerHTML = "";
+	}
+	
+	if (bookIDErrorStatus) {
+		alert("Please enter a valid book id.");
+		return false;
+	}
+	
+	return true;
+}
+
 function validate(){
 
 	var nameError, creditError;
@@ -347,7 +371,6 @@ function validate(){
 	}else{
 		nameError.innerHTML = "";
 	}
-
 	
 	var minCreditTaken = document.getElementById("minCreditTaken").value;
 	if (isNaN(minCreditTaken) || minCreditTaken <= 0){

@@ -10,12 +10,12 @@
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/script.js">;</script>
+	<script type="text/javascript" src="res/errorChecking.js">;</script>
 <title>Sign Up</title>
 </head>
 <body>
 	
-	<form action="" name="myForm" method="post" onsubmit="return signUpValidate();">
+	<form action="" name="myForm" method="post">
 		
 		
 		<header class="header">
@@ -87,8 +87,8 @@
 			</tr>
 			
 			<tr>
-				<td><input type="password" id="signUpPasswordConf" name="signUpPasswordConf"></input></td>		
-				<td><label id="signUpPasswordConfError"></label></td>
+				<td><input type="password" id="signUpPasswordConfirmation" name="signUpPasswordConfirmation"></input></td>		
+				<td><label id="signUpPasswordConfirmationError"></label></td>
 			</tr>
 			
 			
@@ -246,7 +246,7 @@
 			</table>
 			
 			<tr>
-				<td><input type="submit" value="Sign Up!" name="signUpButton"></input></td>
+				<td><input type="submit" value="Sign Up!" name="signUpButton" onclick="return signUpValidate();"></input></td>
 			</tr>
 				
 		</table>

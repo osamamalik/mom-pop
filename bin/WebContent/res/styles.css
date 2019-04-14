@@ -1,0 +1,73 @@
+body {
+	background-color: #282828;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+}
+
+.main {
+	margin:0 auto;
+	width:80%;
+	background-color:white;
+	padding:25px;
+}
+
+.header {
+	margin:0 auto;
+	width:80%;
+	background-color:#282828;
+	color:white;
+	padding:25px;
+}
+
+.logo {
+	float:left;
+}
+
+.logoImage {
+	width:50%;
+}
+
+.logoButton {
+	background:none;
+	color:inherit;
+	border:none;
+	padding:0;
+	cursor:pointer;
+}
+
+.searchTable {
+	width:100%;
+}
+
+.searchBar {
+	width:100%;
+}
+
+.booksResultsButton {
+	background:none;
+	color:inherit;
+	border:none;
+	padding:0;
+	cursor:pointer;
+}
+
+.booksResultsImage {
+	width:175px;
+	height:275px;
+}
+
+.booksResultTable {
+	border-collapse: collapse;
+	width:100%;
+}
+
+.booksResultsInfoCell {
+	width:90%;
+	padding-left:20px;
+}
+
+tr.booksResultRow td {
+	border-bottom: 2px solid black;
+	vertical-align: top;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="true" />
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="StyleSheet" href="res/styles.css" type="text/css"
+	title="cse4413" media="screen, print" />
+<script type="text/javascript" src="res/reviewErrorChecking.js">;</script>
+<title>Books</title>
+</head>
+<body>
+	
+		<form action="" name="" method="post">
+
+
+			<header class="header">
+				<jsp:include page="Header.jspx" />
+			</header>
+			<div class="main">
+			<div style="padding-bottom:70px;">
+				<div style="float: left; padding: 10px;width=20%">
+					<img src="${singleBook.getUrl()}" alt="" />
+				</div>
+
+				<div>
+					<h1>${singleBook.getTitle()}</h1>
+					<h3>
+						by <strong>${singleBook.getAuthor()}</strong>
+					</h3>
+					<h3>${singleBook.getCategory()} | ${singleBook.getPublishYear()}</h3>
+					<h2><f:formatNumber value="${singleBook.getPrice()}" type="currency" currencySymbol="$"/></h2>
+
+					<p>Rating: <f:formatNumber value="${singleBook.getRating()}" minFractionDigits="2" /></p>
+
+					<p>${singleBook.getDescription()}</p>
+
+					<c:if test="${loggedInSession}">
+						<c:choose>
+							<c:when test="${userReviewExists}">
+								<p>
+									<strong>Your Review:</strong>
+								</p>
+								<p>${userReview}</p>
+								<p>
+									Your Rating: <strong>${userRating}</strong>
+								</p>
+
+							</c:when>
+
+							<c:otherwise>
+								<label for="review">Review:</label>
+								<br />
+								<textarea id="review" name="review" rows="4" cols="75" maxlength="2500">Add a review...</textarea>
+								<label id="reviewError"></label>
+								<br />
+								<select name="rating">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+								<input type="submit" value="Add Review" name="addReviewButton" onclick="return reviewValidate();" />
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</div>
+			</div>
+
+			<button action="submit" type="submit" name="addToCart"
+				value="${singleBook.getBid()}">Add to Cart</button>
+
+
+			<footer>
+				<jsp:include page="Footer.jspx" />
+			</footer>
+		</div>
+		</form>
+	
+
+</body>
+	</html>
+</jsp:root>

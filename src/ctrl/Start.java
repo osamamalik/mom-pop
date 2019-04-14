@@ -1,7 +1,6 @@
 package ctrl;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +18,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import DAO.OrderDAO;
 import model.*;
 import bean.*;
 
@@ -50,6 +48,8 @@ public class Start extends HttpServlet {
 	}
 
 	public void init(ServletConfig config) throws ServletException {
+		
+		
 		super.init(config);
 		ServletContext context = getServletContext();
 		
@@ -92,6 +92,7 @@ public class Start extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
@@ -170,7 +171,6 @@ public class Start extends HttpServlet {
 		****************************************************************/
 		if (request.getParameter("viewSingleBook") != null) {
 			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
-			request.getSession().setAttribute("title", title);
 			this.openBook(request, response, databaseOperator, title);
 		}
 		
@@ -184,7 +184,14 @@ public class Start extends HttpServlet {
 		if (request.getParameter("searchButton") != null) {
 			this.searchStore(request, response, databaseOperator, queryObject);
 		}
-				
+		
+		/***************************************************************
+			ADD TO SHOPPING CART
+		 ****************************************************************/
+		if (request.getParameter("showShoppingCart") != null) {
+			this.showCart(request, response, databaseOperator);
+		}
+		
 		/***************************************************************
 			ADD TO SHOPPING CART
 		 ****************************************************************/
@@ -301,6 +308,7 @@ public class Start extends HttpServlet {
 		
 		//checks if Shopping Cart was requested
 		else if (request.getParameter("showShoppingCart") != null) {
+			
 			target = "/ShoppingCart.jspx";	
 		}
 		
@@ -351,6 +359,7 @@ public class Start extends HttpServlet {
 		if (request.getParameter("OrdersByMonth") != null) {
 			target = "/OrdersByMonth.jspx";	
 		}
+		
 		//checks if top10 orders were requested
 		if(request.getParameter("top10") != null) {
 			target = "/Top10.jspx";	
@@ -628,6 +637,27 @@ public class Start extends HttpServlet {
 	}
 
 	
+	protected void showCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
+
+		String username;	
+		//obtains the username if the user is logged in. If not, sets username as "visitor"
+		if (loggedIn) {
+			username = (String) request.getSession().getAttribute("loggedInUser");
+		}
+		else {
+			username = "visitor";
+		}
+		
+		ArrayList<CartBean> databaseShoppingCart = databaseOperator.retrieveCart(username);
+		
+		if (databaseShoppingCart.size() > 0) {
+			request.setAttribute("nonEmptyCart", true);
+		}
+		else {
+			request.setAttribute("nonEmptyCart", false);
+		}
+	}
+	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 
 		String username;
@@ -731,13 +761,13 @@ public class Start extends HttpServlet {
 	
 	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 		String username = request.getSession().getAttribute("loggedInUser").toString();
-		int bookID = Integer.parseInt(request.getSession().getAttribute("title").toString());
+		int bookID = Integer.parseInt(request.getParameter("title"));
 		String review = request.getParameter("review");
 		int rating = Integer.parseInt(request.getParameter("rating"));
 		databaseOperator.addReview(username, bookID, review, rating);
-		openBook(request, response, databaseOperator, bookID);
+		int title = (Integer.parseInt(request.getParameter("title")));
+		openBook(request, response, databaseOperator, title);
 	}
-		
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
 			
 		String username = request.getSession().getAttribute("loggedInUser").toString();

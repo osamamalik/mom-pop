@@ -9,18 +9,6 @@ Monday, April 9, 2019:
 TO DO:
 - figure out a way to fix the redirector, sometimes it breaks. when one button is pressed then another it depended on the order of the if statements. Tried to fix with else if statements. Made it better but sometimes it still gets confused. 
 
-- ERROR CHECKING OF INPUT FIELDS - CHARACTER LIMIT
-	- IF WE DON'T DO THIS, WEBSITE CRASHES
-	- TO SEE TRY ADDING MORE THAN 20 CHARACTERS TO ZIPCODE, ETC
-
-- ERROR CHECKING BACK-END
-	-SHOPPING CART QUANTITY
-	-PAYMENT
-- ERROR CHECKING FRONT-END
-	-OPS
-	-PAYMENT
-	-REVIEW
-
 - PERSISTENCE OF FIELDS WHEN AN ERROR IS GIVEN SO THE USER DOESN'T HAVE TO ENTER EVERYTHING AGAIN
 
 - PCS AND OPS AS SERVICES: PCS working correctly you need to run and have this in the url: 

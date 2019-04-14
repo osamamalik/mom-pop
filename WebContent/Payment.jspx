@@ -10,7 +10,7 @@
 <head>
 	<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/script.js">;</script>
+	<script type="text/javascript" src="res/paymentErrorChecking.js">;</script>
 <title>Checkout</title>
 </head>
 <body>
@@ -197,7 +197,7 @@
 				</tr>
 				
 				<tr>
-					<td><label for="addressPhone">Phone Number:</label></td>
+					<td><label for="paymentAddressPhone">Phone Number:</label></td>
 				</tr>
 		
 				<tr>
@@ -222,12 +222,12 @@
 					</tr>
 					
 					<tr>
-						<td><label for="creditCardExpiry">Credit Expiry Month:</label></td>
+						<td><label for="creditCardExpiryMonth">Credit Expiry Month:</label></td>
 					</tr>
 			
 					<tr>
 						<td><input type="number" id="creditCardExpiryMonth" name="creditCardExpiryMonth" min="01" max = "12"></input></td>		
-						<td><label id="creditCardExpiryMonth"></label></td>
+						<td><label id="creditCardExpiryMonthError"></label></td>
 					</tr>
 					
 					<tr>
@@ -236,7 +236,7 @@
 			
 					<tr>
 						<td><input type="number" id="creditCardExpiryDay" name="creditCardExpiryDay" min="01" max = "31"></input></td>		
-						<td><label id="creditCardExpiryDay"></label></td>
+						<td><label id="creditCardExpiryDayError"></label></td>
 					</tr>
 					
 					<tr>
@@ -245,14 +245,14 @@
 			
 					<tr>
 						<td><input type="number" max="999" min = "000" id="creditCardSecurity" name="creditCardSecurity"></input></td>		
-						<td><label id="creditCardSecurity"></label></td>
+						<td><label id="creditCardSecurityError"></label></td>
 					</tr>
 					
 				</table>
 		 	
 		 	</div>
 		 	
-			<td><input type="submit" name="placeOrder" value="Confirm order"></input></td>
+			<td><input type="submit" name="placeOrder" value="Confirm order" onclick="return paymentValidate();"></input></td>
 
 	 	<footer>
 			<jsp:include page="Footer.jspx"/>

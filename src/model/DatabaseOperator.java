@@ -28,8 +28,8 @@ public class DatabaseOperator {
 
 	/***************************************************************
 		DATABASE USER OPERATIONS
-    ****************************************************************/
-	
+	 ****************************************************************/
+
 	public UserBean retrieveUser(String username){
 		try {
 			return userDAO.retrieveUser(username);
@@ -46,7 +46,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updatePassword(String username, String newPassword) {
 		try {
 			userDAO.updatePassword(username, newPassword);
@@ -54,7 +54,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean checkUserExists(String username){
 		try {
 			return userDAO.checkUserExists(username);
@@ -64,11 +64,11 @@ public class DatabaseOperator {
 		}
 		return false;
 	}
-	
+
 	/***************************************************************
 		DATABASE BOOK OPERATIONS
-    ****************************************************************/
-	
+	 ****************************************************************/
+
 	public ArrayList<BookBean> retrieveAllBooks(){
 		try {
 			return bookDAO.retrieveAllBooks();
@@ -77,16 +77,16 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public BookBean retrieveBook(int bid){
-			try {
-				return bookDAO.retrieveBook(bid);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return null;
+		try {
+			return bookDAO.retrieveBook(bid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByAuthor(String author){
 		try {
 			return bookDAO.retrieveByAuthor(author);
@@ -95,7 +95,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByTitle(String title){
 		try {
 			return bookDAO.retrieveByTitle(title);
@@ -104,7 +104,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<BookBean>retrieveByCategory(String category){
 		try {
 			return bookDAO.retrieveByCategory(category);
@@ -122,7 +122,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 
 	public ArrayList<BookBean>retrieveByQuery(String query){
 		try {
@@ -132,7 +132,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<String> retrieveUniqueCategories(){
 		try {
 			return bookDAO.retrieveUniqueCategories();
@@ -141,7 +141,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<BookBean> queryConstructor(QueryConstructor query){
 		try {
 			return bookDAO.constructQuery(query);
@@ -151,26 +151,26 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public double getTotalPrice(String username) {
-		
+
 		double totalPrice = 0;
 		ArrayList<CartBean> shoppingCart = retrieveCart(username);
-		
+
 		if (shoppingCart.size() != 0 || shoppingCart != null) {
 			for (CartBean cartItem : shoppingCart) {
 				totalPrice += cartItem.getPrice() * cartItem.getQuantity();
 			}
 		}
 
-		
+
 		return totalPrice;
-		
+
 	}
-	
+
 	/***************************************************************
 		DATABASE REVIEW OPERATIONS
-    ****************************************************************/
+	 ****************************************************************/
 
 	public ArrayList<String> retrieveReviewByUsernameAndBook(String username, int bookID) {
 		try {
@@ -180,7 +180,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public void addReview(String username, int bookID, String review, int rating) {
 		try {
 			bookDAO.addReview(username, bookID, review, rating);
@@ -188,11 +188,11 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/***************************************************************
 		DATABASE SHOPPING CART OPERATIONS
-	****************************************************************/
+	 ****************************************************************/
 
 	public void addToCart(int bid, int quantity, String user) {
 		try {
@@ -202,7 +202,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addShoppingCart(ArrayList<CartBean> userCart, String user) {
 		try {
 			cartDAO.addShoppingCart(userCart, user);
@@ -220,7 +220,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateQuantity(int bid, String user, int quantity) {
 		try {
 			cartDAO.updateQuantity(bid, user, quantity);
@@ -229,7 +229,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<CartBean> retrieveCart(String user) {
 		try {
 			return cartDAO.retrieveCart(user);
@@ -239,7 +239,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public void clearVisitorCart() {
 		try {
 			cartDAO.clearVisitorCart();
@@ -248,7 +248,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/***************************************************************
 		DATABASE ADDRESS OPERATIONS
 	 ****************************************************************/
@@ -260,7 +260,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateAddress(AddressBean ab) {
 		try {
 			addressDAO.updateAddress(ab);
@@ -270,7 +270,7 @@ public class DatabaseOperator {
 		}
 	}
 
-	
+
 	public AddressBean retrieveAddress(String username, String type) {
 		try {
 			return addressDAO.retrieveAddress(username, type);
@@ -280,7 +280,7 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
+
 	public AddressBean retrieveAddressByAid(int aid) {
 		try {
 			return addressDAO.retrieveAddressByAid(aid);
@@ -291,12 +291,12 @@ public class DatabaseOperator {
 		return null;
 	}
 
-	
-	
+
+
 	/***************************************************************
 		DATABASE ORDER OPERATIONS
-	****************************************************************/
-	
+	 ****************************************************************/
+
 	public int getOrderCount() {
 		try {
 			return orderDAO.getOrderCount();
@@ -306,7 +306,7 @@ public class DatabaseOperator {
 		}
 		return -1;
 	}
-	
+
 	public void addtoOrders(ArrayList<CartBean> shoppingCart, AddressBean shippingAddress, AddressBean billingAddress) {
 		try {
 			orderDAO.addtoOrders(shoppingCart,shippingAddress, billingAddress);
@@ -315,7 +315,7 @@ public class DatabaseOperator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<OrderBean> retrieveOrdersByBid(int bid){
 		try {
 			return orderDAO.retrieveOrdersByBid(bid);
@@ -325,7 +325,7 @@ public class DatabaseOperator {
 		return null;
 
 	}
-	
+
 	public ArrayList<OrderBean> retrieveOrdersByMonth(int month){
 		try {
 			return orderDAO.retrieveOrdersByMonth(month);
@@ -335,9 +335,9 @@ public class DatabaseOperator {
 		return null;
 
 	}
-	
+
 	public ArrayList<BookBean> getTop10Orders() throws ClassNotFoundException{
-		
+
 		try {
 			return orderDAO.getTop10();
 		} catch (SQLException e) {
@@ -345,8 +345,8 @@ public class DatabaseOperator {
 		}
 		return null;
 	}
-	
-	
+
+
 }
 
 

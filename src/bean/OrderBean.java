@@ -9,7 +9,7 @@ public class OrderBean {
 	private HashMap<BookBean, Integer> orderedBooks;
 	private AddressBean shippingAddress;
 	private AddressBean billingAddress;
-	
+
 	public OrderBean() {
 	}
 
@@ -61,9 +61,9 @@ public class OrderBean {
 		this.billingAddress = billingAddress;
 	}
 
-	
 
 
-		
-	
+
+
+
 }

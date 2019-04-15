@@ -18,17 +18,17 @@ import bean.*;
 import model.QueryConstructor;
 
 public class BookDAO {
-	
+
 	private DataSource ds;
-	
+
 	public BookDAO() throws ClassNotFoundException{
 		try {
-		  this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
+			this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<BookBean> retrieveAllBooks() throws SQLException {
 		String query = "select * from BOOKS";
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -54,7 +54,7 @@ public class BookDAO {
 		r.close();
 		return books;
 	}
-	
+
 	public BookBean retrieveBook(int bid) throws SQLException {
 		String query = "select * from BOOKS where bid = " + bid;
 		Connection con = this.ds.getConnection();
@@ -77,7 +77,7 @@ public class BookDAO {
 		r.close();
 		return bb;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByAuthor(String author) throws SQLException {
 		String query = "select * from BOOKS where author like '%" + author + "%'";
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -103,7 +103,7 @@ public class BookDAO {
 		r.close();
 		return books;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByTitle(String title) throws SQLException {
 		String query = "select * from BOOKS where title like '%" + title + "%'";
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -129,7 +129,7 @@ public class BookDAO {
 		r.close();
 		return books;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByCategory(String category) throws SQLException {
 		String query = "select * from BOOKS where category like '%" + category + "%'";
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -155,7 +155,7 @@ public class BookDAO {
 		r.close();
 		return books;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByPriceRange(double lowerRange, double higherRange) throws SQLException {
 		String query = "select * from BOOKS where price >= " + lowerRange + " and price <= " + higherRange;
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -181,7 +181,7 @@ public class BookDAO {
 		r.close();
 		return books;
 	}
-	
+
 	public ArrayList<BookBean> retrieveByRating(double lowerRange) throws SQLException {
 		String query = "select * from BOOKS where rating >= " + lowerRange;
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
@@ -206,7 +206,7 @@ public class BookDAO {
 		con.close();
 		r.close();
 		return books;
-		
+
 	}
 
 	public ArrayList<BookBean> retrieveBookByQuery(String query) throws SQLException {
@@ -228,14 +228,14 @@ public class BookDAO {
 			bb.setUrl(r.getString("url"));
 			books.add(bb);
 		}
-		
+
 		p.close();
 		con.close();
 		r.close();
 		return books;
 	}
-	
-	
+
+
 	public ArrayList<String> retrieveUniqueCategories() throws SQLException {
 		String query = "select distinct category from BOOKS";
 		ArrayList<String> categories = new ArrayList<String>();
@@ -250,7 +250,7 @@ public class BookDAO {
 		r.close();
 		return categories;
 	}
-	
+
 	public ArrayList<String> retrieveReviewByUsernameAndBook(String username, int bookID) throws SQLException {
 		String query = "select review, rating from reviews where username = '" + username + "' and bid = " + bookID;
 		ArrayList<String> review = new ArrayList<String>();
@@ -266,7 +266,7 @@ public class BookDAO {
 		r.close();
 		return review;
 	}
-	
+
 	public void addReview(String username, int bookID, String review, int rating) throws SQLException {
 		review = review.replace("'","''");
 		String query = "INSERT INTO REVIEWS (username, bid, review, rating) VALUES ('" + username + "'," + bookID + ",'" + review + "'," + rating + ")";
@@ -276,14 +276,14 @@ public class BookDAO {
 		stmt.close();
 		con.close();
 	}
-	
-	
+
+
 	//completes a query based on the attributes of the 'query' object passed as a parameter
 	public ArrayList<BookBean> constructQuery(QueryConstructor query) throws SQLException {
-		
+
 		String constructedQuery = "select * from books";
 		ArrayList<BookBean> filterBooks = new ArrayList<BookBean>();
-		
+
 		//constructs a query based on the category attribute of the 'query' object
 		//note: this is not a filter; this denotes browsing by category
 		if (query.getCategory() != null) {
@@ -301,25 +301,25 @@ public class BookDAO {
 		if (query.isAllBooks()) {
 			constructedQuery = "select * from books";
 		}
-		
+
 		//checks if any filters were added, prepares a bookBean filterBooks that holds the intersection of filters
 		if (query.isFilter()) {
-			
+
 			ArrayList<BookBean> ratingFilterBooks = new ArrayList<BookBean>();
 			ArrayList<BookBean> priceFilterBooks = new ArrayList<BookBean>();
 			ArrayList<BookBean> categoryFilterBooks = new ArrayList<BookBean>();
 			ArrayList<BookBean> tempBooks = new ArrayList<BookBean>();
-			
+
 			//if category filter was chosen, books with this request are obtained
 			if (query.getCategoryFilter() != null) {
 				categoryFilterBooks = this.retrieveByCategory(query.getCategoryFilter());
 			}
-			
+
 			// if rating filter was chosen, books with this request are obtained
 			if (query.getRatingFilter() != 0) {
 				ratingFilterBooks = this.retrieveByRating(query.getRatingFilter());
 			}
-			
+
 			// if the price filter was chosen, books with this request are obtained
 			if (query.getPriceFilterLow() != 0 || query.getPriceFilterHigh() != Double.MAX_VALUE) {
 				double priceLowFilter = query.getPriceFilterLow();
@@ -329,66 +329,66 @@ public class BookDAO {
 
 			//if all filters return books, takes the intersection, stores in filterBooks
 			if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty() && !categoryFilterBooks.isEmpty()) {
-				
+
 				//first takes the intersection of rating and price filters, stores in tempBook
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean priceBook : priceFilterBooks) {
-		            	if (ratingBook.getBid() == priceBook.getBid()) {
-		            		tempBooks.add(ratingBook);
-		            	}
-		            }
-		        }
+						if (ratingBook.getBid() == priceBook.getBid()) {
+							tempBooks.add(ratingBook);
+						}
+					}
+				}
 				//takes intersection of tempBook with categoryBook
 				for (BookBean tempBook : tempBooks) {
 					for (BookBean categoryBook : categoryFilterBooks) {
-		            	if (tempBook.getBid() == categoryBook.getBid()) {
-		            		filterBooks.add(tempBook);
-		            	}
-		            }
-		        }
+						if (tempBook.getBid() == categoryBook.getBid()) {
+							filterBooks.add(tempBook);
+						}
+					}
+				}
 			}
-			
+
 			//if only rating and price filters return books, takes the intersection, stores in filterBooks
 			else if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty()) {
-							
+
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean priceBook : priceFilterBooks) {
-		            	if (ratingBook.getBid() == priceBook.getBid()) {
-		            		filterBooks.add(ratingBook);
-		            	}
-		            }
-		        }
+						if (ratingBook.getBid() == priceBook.getBid()) {
+							filterBooks.add(ratingBook);
+						}
+					}
+				}
 			}
-			
+
 			//if only price and category filters return books, takes the intersection, stores in filterBooks
 			else if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty()) {
-							
+
 				for (BookBean priceBook : priceFilterBooks) {
 					for (BookBean categoryBook : categoryFilterBooks) {
-		            	if (priceBook.getBid() == categoryBook.getBid()) {
-		            		filterBooks.add(priceBook);
-		            	}
-		            }
-		        }
+						if (priceBook.getBid() == categoryBook.getBid()) {
+							filterBooks.add(priceBook);
+						}
+					}
+				}
 			}
-			
+
 			//if only rating and category filters return books, takes the intersection, stores in filterBooks
 			else if (!ratingFilterBooks.isEmpty() && !priceFilterBooks.isEmpty()) {
-							
+
 				for (BookBean ratingBook : ratingFilterBooks) {
 					for (BookBean categoryBook : categoryFilterBooks) {
-		            	if (ratingBook.getBid() == categoryBook.getBid()) {
-		            		filterBooks.add(ratingBook);
-		            	}
-		            }
-		        }
+						if (ratingBook.getBid() == categoryBook.getBid()) {
+							filterBooks.add(ratingBook);
+						}
+					}
+				}
 			}
-			
+
 			//if only rating filter returns books, stores them in ratingOrPriceBooks
 			else if(!ratingFilterBooks.isEmpty()){
 				filterBooks = ratingFilterBooks;
 			}
-			
+
 			//if only price filter returns books, stores them in ratingOrPriceBooks
 			else if(!priceFilterBooks.isEmpty()){
 				filterBooks = priceFilterBooks;
@@ -397,13 +397,13 @@ public class BookDAO {
 			else if(!priceFilterBooks.isEmpty()){
 				filterBooks = categoryFilterBooks;
 			}
-			
+
 		}
-		
-				
+
+
 		//adds the sorting elements to the end of the query if the user has chosen sorting
 		if (query.isSort()) {
-			
+
 			if (query.isSortNewestToOldest()) {
 				constructedQuery += " order by publishYear desc";
 			}
@@ -420,7 +420,7 @@ public class BookDAO {
 				constructedQuery += " order by price desc";
 			}
 		}
-				
+
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(constructedQuery);
@@ -442,26 +442,26 @@ public class BookDAO {
 		p.close();
 		con.close();
 		r.close();
-		
+
 		//checks if a filter was applied, if so, returns the intersection of
 		//'book' obtained by query and filterBooks obtained by filter intersections
 		if (query.isFilter()) {
 			ArrayList<BookBean> result = new ArrayList<BookBean>();
 			for (BookBean book : books) {
 				for (BookBean filterBook : filterBooks) {
-	            	if (book.getBid() == filterBook.getBid()) {
-	            		result.add(book);
-	            	}
-	            }
-	        }
+					if (book.getBid() == filterBook.getBid()) {
+						result.add(book);
+					}
+				}
+			}
 			return result;
 		}
 		else {
 			return books;
 		}	
-		
-}
-		
-	
-	
+
+	}
+
+
+
 }

@@ -1,56 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="true"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="true" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
-	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/myJS.js">;</script>
+	title="cse4413" media="screen, print" />
+<script type="text/javascript" src="res/myJS.js">
+	;
+</script>
 <title>Home</title>
 </head>
 <body>
 
-	
-		<form action="" method="post">
-		
-			<header class="header">
-				<jsp:include page="Header.jspx"/>
-			</header>
-			<div class="main">
-				<img src="res/images/welcome.jpg" style="height:100%;width:100%;object-fit:contain" />
-				<h3>Browse some of our most popular categories:</h3>
-				<table style="height:100%;width:100%;object-fit:contain">
-					<tr class="homeCategoryTableImageRow">
-						<td><button action="submit" class="homeCategoryButton" type="submit" name="booksPageButton"><img class="homeCategoryImage" src="res/images/all.png" /></button></td>
-						<td><button action="submit" class="homeCategoryButton" type="submit" value="Fantasy" name="headerCategory"><img class="homeCategoryImage" src="res/images/fantasy.png" /></button></td>
-						<td><button action="submit" class="homeCategoryButton" type="submit" value="Food" name="headerCategory"><img class="homeCategoryImage" src="res/images/food.png" /></button></td>
-						<td><button action="submit" class="homeCategoryButton" type="submit" value="History" name="headerCategory"><img class="homeCategoryImage" src="res/images/history.png" /></button></td>
-						<td><button action="submit" class="homeCategoryButton" type="submit" value="Mystery" name="headerCategory"><img class="homeCategoryImage" src="res/images/mystery.png" /></button></td>
-						<td><button action="submit" class="homeCategoryButton" type="submit" value="Science Fiction" name="headerCategory"><img class="homeCategoryImage" src="res/images/scifi.png" /></button></td>						
-					</tr>
-					<tr class="homeCategoryTableLabelRow">
-						<td>All Categories</td>
-						<td>Fantasy</td>
-						<td>Food</td>
-						<td>History</td>
-						<td>Mystery</td>
-						<td>Science Fiction</td>
-					</tr>
-				</table>
-			</div>
-			
-		 	<footer class="footer">
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
-			
-		</form>
-	
+	<form action="" method="post">
+
+		<header class="header">
+			<jsp:include page="Header.jspx" />
+		</header>
+		<div class="main">
+			<img src="res/images/welcome.jpg"
+				style="height: 100%; width: 100%; object-fit: contain" alt="" />
+			<h3>Browse some of our most popular categories:</h3>
+			<table style="height: 100%; width: 100%; object-fit: contain">
+				<tr class="homeCategoryTableImageRow">
+					<td><button action="submit" class="homeCategoryButton"
+							type="submit" name="booksPageButton">
+							<img class="homeCategoryImage" src="res/images/all.png" alt="" />
+						</button></td>
+					<td><button action="submit" class="homeCategoryButton"
+							type="submit" value="Fantasy" name="headerCategory">
+							<img class="homeCategoryImage" src="res/images/fantasy.png"
+								alt="" />
+						</button></td>
+					<td><button action="submit" class="homeCategoryButton"
+							type="submit" value="Food" name="headerCategory">
+							<img class="homeCategoryImage" src="res/images/food.png" alt="" />
+						</button></td>
+					<td><button action="submit" class="homeCategoryButton"
+							type="submit" value="History" name="headerCategory">
+							<img class="homeCategoryImage" src="res/images/history.png"
+								alt="" />
+						</button></td>
+					<td><button action="submit" class="homeCategoryButton"
+							type="submit" value="Mystery" name="headerCategory">
+							<img class="homeCategoryImage" src="res/images/mystery.png"
+								alt="" />
+						</button></td>
+					<td><button action="submit" class="homeCategoryButton"
+							type="submit" value="Science Fiction" name="headerCategory">
+							<img class="homeCategoryImage" src="res/images/scifi.png" alt="" />
+						</button></td>
+				</tr>
+				<tr class="homeCategoryTableLabelRow">
+					<td>All Categories</td>
+					<td>Fantasy</td>
+					<td>Food</td>
+					<td>History</td>
+					<td>Mystery</td>
+					<td>Science Fiction</td>
+				</tr>
+			</table>
+		</div>
+
+		<footer class="footer">
+			<jsp:include page="Footer.jspx" />
+		</footer>
+
+	</form>
+
 
 </body>
-</html>
+	</html>
 </jsp:root>

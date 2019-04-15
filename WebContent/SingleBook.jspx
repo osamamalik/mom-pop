@@ -12,29 +12,31 @@
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print" />
-<script type="text/javascript" src="res/reviewErrorChecking.js">;</script>
+<script type="text/javascript" src="res/reviewErrorChecking.js">
+	;
+</script>
 <title>Books</title>
 </head>
 <body>
-	
-		<form action="" name="" method="post">
+
+	<form action="" name="" method="post">
 
 
-			<header class="header">
-				<jsp:include page="Header.jspx" />
-			</header>
-			<div class="main">
+		<header class="header">
+			<jsp:include page="Header.jspx" />
+		</header>
+		<div class="main">
 			<c:if test="${not empty error}">
 				<tr>
-					<td><p style="color:red;">${error}</p></td>
+					<td><p style="color: red;">${error}</p></td>
 				</tr>
 			</c:if>
-			<div style="padding-bottom:70px;">
-								
+			<div style="padding-bottom: 70px;">
+
 				<div style="float: left; padding: 10px;width=20%">
 					<img src="${singleBook.getUrl()}" alt="" />
 				</div>
-				
+
 
 
 				<div>
@@ -42,10 +44,18 @@
 					<h3>
 						by <strong>${singleBook.getAuthor()}</strong>
 					</h3>
-					<h3>${singleBook.getCategory()} | ${singleBook.getPublishYear()}</h3>
-					<h2><f:formatNumber value="${singleBook.getPrice()}" type="currency" currencySymbol="$"/></h2>
+					<h3>${singleBook.getCategory()}|
+						${singleBook.getPublishYear()}</h3>
+					<h2>
+						<f:formatNumber value="${singleBook.getPrice()}" type="currency"
+							currencySymbol="$" />
+					</h2>
 
-					<p>Rating: <f:formatNumber value="${singleBook.getRating()}" minFractionDigits="2" /></p>
+					<p>
+						Rating:
+						<f:formatNumber value="${singleBook.getRating()}"
+							minFractionDigits="2" />
+					</p>
 
 					<p>${singleBook.getDescription()}</p>
 
@@ -65,7 +75,8 @@
 							<c:otherwise>
 								<label for="review">Review:</label>
 								<br />
-								<textarea id="review" name="review" rows="4" cols="75" maxlength="2500" placeholder="Add a review..."><jsp:text /></textarea>
+								<textarea id="review" name="review" rows="4" cols="75"
+									maxlength="2500" placeholder="Add a review..."><jsp:text /></textarea>
 								<label id="reviewError"></label>
 								<br />
 								<select name="rating">
@@ -75,7 +86,7 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-								<input type="submit" value="Add Review" name="addReviewButton"/>
+								<input type="submit" value="Add Review" name="addReviewButton" />
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -86,13 +97,13 @@
 				value="${singleBook.getBid()}">Add to Cart</button>
 
 
-			</div>
-			
-		 	<footer class="footer">
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
-		</form>
-	
+		</div>
+
+		<footer class="footer">
+			<jsp:include page="Footer.jspx" />
+		</footer>
+	</form>
+
 
 </body>
 	</html>

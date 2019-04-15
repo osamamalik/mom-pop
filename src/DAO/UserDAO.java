@@ -14,17 +14,17 @@ import javax.sql.DataSource;
 import bean.*;
 
 public class UserDAO {
-	
+
 	private DataSource ds;
-	
+
 	public UserDAO() throws ClassNotFoundException{
 		try {
-		  this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
+			this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addUser(String username, String firstName, String lastName, String email, String password) throws SQLException {
 		String query ="insert into USERS values ('" + username + "','" + firstName + "','" + lastName + "','" + email + "','" + password+ "')";
 		Connection con = this.ds.getConnection();
@@ -33,7 +33,7 @@ public class UserDAO {
 		stmt.close();
 		con.close();
 	}
-	
+
 	public void updatePassword(String username, String newPassword) throws SQLException {
 		String query ="UPDATE USERS SET password = '" + newPassword + "' WHERE username = '" + username + "'";
 		Connection con = this.ds.getConnection();
@@ -42,7 +42,7 @@ public class UserDAO {
 		stmt.close();
 		con.close();
 	}
-	
+
 	public UserBean retrieveUser(String username) throws SQLException {
 		String query = "SELECT * from USERS where username ='" + username + "'";
 		UserBean ub = new UserBean();
@@ -61,7 +61,7 @@ public class UserDAO {
 		r.close();
 		return ub;
 	}
-	
+
 	public boolean checkUserExists(String username) throws SQLException {
 		String query = "SELECT * from USERS where username ='" + username + "'";
 		Connection con = this.ds.getConnection();

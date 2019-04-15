@@ -21,15 +21,15 @@ import DAO.*;
 public class AddressDAO {
 
 	private DataSource ds;
-	
+
 	public AddressDAO() throws ClassNotFoundException{
 		try {
-		  this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
+			this.ds = (DataSource)(new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addAddress(AddressBean ab) throws SQLException {
 		String username = ab.getUsername();
 		String address_type = ab.getType();
@@ -47,7 +47,7 @@ public class AddressDAO {
 		stmt.close();
 		con.close();
 	}
-	
+
 	public void updateAddress(AddressBean ab) throws SQLException {
 		String username = ab.getUsername();
 		String address_type = ab.getType();
@@ -65,7 +65,7 @@ public class AddressDAO {
 		stmt.close();
 		con.close();
 	}
-	
+
 	public AddressBean retrieveAddress(String username, String type) throws SQLException {
 		String query = "select * from ADDRESS where username = '" + username + "' and address_type = '" + type + "'";
 		Connection con = this.ds.getConnection();
@@ -89,7 +89,7 @@ public class AddressDAO {
 		r.close();
 		return address;
 	}
-	
+
 	public AddressBean retrieveAddressByAid(int aid) throws SQLException {
 		String query = "select * from ADDRESS where aid = " + aid;
 		Connection con = this.ds.getConnection();

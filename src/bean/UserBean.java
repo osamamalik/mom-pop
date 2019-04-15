@@ -6,7 +6,7 @@ public class UserBean {
 	String lastName;
 	private String email;
 	private String password;
-	
+
 	public UserBean() {
 	}
 
@@ -49,7 +49,7 @@ public class UserBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
-	
+
+
 }

@@ -19,12 +19,12 @@ public class ErrorChecking {
 		this.errorStatus = false;
 		this.errorMessage = null;
 	}
-	
+
 
 	public void checkLoginError(String username, String password) {
 		setErrorMessage(null);
 		setErrorStatus(false);
-		
+
 		//checks if username or password values are blank
 		if (username == "" || password == "") {
 			setErrorStatus(true);
@@ -59,13 +59,13 @@ public class ErrorChecking {
 			setErrorMessage("INCORRECT PASSWORD");
 			return;
 		}
-	
+
 	}
-	
+
 	public void checkSignUpError(String username, String email, String password, String passwordConf, AddressBean shippingAB, AddressBean billingAB) {
 		setErrorMessage(null);
 		setErrorStatus(false);
-		
+
 		//checks if username, email, or password are blank
 		if (username == "" || passwordConf == "" || email == "" || password == "") {
 			setErrorStatus(true);
@@ -119,14 +119,14 @@ public class ErrorChecking {
 		}
 		//checks for errors for the entered address fields
 		this.checkAddressError(shippingAB, billingAB);
-		
+
 	}
-	
+
 	public void checkAddressError(AddressBean shippingAB, AddressBean billingAB) {
-		
+
 		setErrorMessage(null);
 		setErrorStatus(false);
-		
+
 		//checks if any of shipping address fields are blank
 		if(shippingAB.getAddressLine1() == "" || shippingAB.getCountry() == "" || shippingAB.getProvince() == "" || shippingAB.getCity() == "" || shippingAB.getPhoneNumber() == "" || shippingAB.getZip() == "") {
 			setErrorStatus(true);
@@ -150,7 +150,7 @@ public class ErrorChecking {
 			}
 			return;
 		}
-		
+
 		//checks if any of shipping address fields match character limitations in the database
 		if (shippingAB.getAddressLine1().length() > 100 || shippingAB.getAddressLine2().length() > 100 || shippingAB.getCountry().length() > 20 || shippingAB.getProvince().length() > 20 || shippingAB.getCity().length() > 30 || shippingAB.getZip().length() > 20 || shippingAB.getPhoneNumber().length() > 20) {
 			setErrorStatus(true);
@@ -178,7 +178,7 @@ public class ErrorChecking {
 			return;
 		}
 
-		
+
 		//checks if any of billing address fields are blank
 		if(billingAB.getAddressLine1() == "" || billingAB.getCountry() == "" || billingAB.getProvince() == "" || billingAB.getCity() == "" || billingAB.getPhoneNumber() == "" || billingAB.getZip() == "") {
 			setErrorStatus(true);
@@ -202,7 +202,7 @@ public class ErrorChecking {
 			}
 			return;
 		}
-		
+
 		//checks if any of billing address fields match character limitations in the database
 		if (billingAB.getAddressLine1().length() > 100 || billingAB.getAddressLine2().length() > 100 || billingAB.getCountry().length() > 20 || billingAB.getProvince().length() > 20 || billingAB.getCity().length() > 30 || billingAB.getZip().length() > 20 || billingAB.getPhoneNumber().length() > 20) {
 			setErrorStatus(true);
@@ -230,12 +230,12 @@ public class ErrorChecking {
 			return;
 		}
 	}
-	
+
 	public void checkPaymentInformation(String creditCardNumber, String expiryMonth, String expiryDay, String securityCode) {
-		
+
 		setErrorMessage(null);
 		setErrorStatus(false);
-		
+
 		//checks if any of the payment fields are blank
 		if (creditCardNumber == "" || expiryMonth == "" || expiryDay == "" || securityCode == "") {
 			setErrorStatus(true);
@@ -253,7 +253,7 @@ public class ErrorChecking {
 			}
 			return;
 		}
-		
+
 		//checks if the payment fields have the correct lengths
 		if (creditCardNumber.length() != 12 || expiryMonth.length() != 2 || expiryDay.length() != 2 || securityCode.length() != 3) {
 			setErrorStatus(true);
@@ -271,44 +271,44 @@ public class ErrorChecking {
 			}
 			return;
 		}
-		
+
 	}
-	
+
 	public void checkServicesError(String id) {
-		
+
 		setErrorMessage(null);
 		setErrorStatus(false);
-		
+
 		//checks if the BID value is blank
 		if (id == "") {
 			setErrorMessage("BLANK BID VALUE");
 			setErrorStatus(true);
 		}
 	}
-	
+
 	public void checkReviewError(String review) {
-		
+
 		setErrorMessage(null);
 		setErrorStatus(false);
-		
+
 		//checks if the BID value is blank
 		if (review == "") {
 			setErrorMessage("REVIEW CANNOT BE BLANK");
 			setErrorStatus(true);
 		}
 	}
-	
-	
+
+
 	public boolean passwordValidation(String username, String password) {
 		UserBean ub = new UserBean();
 		ub = databaseOperator.retrieveUser(username);
 		return ub.getPassword().equals(password);
 	}
-	
+
 	public boolean checkUserExists(String username) {
 		return databaseOperator.checkUserExists(username);
 	}
-	
+
 	public boolean compareAddresses(AddressBean ab1, AddressBean ab2) {
 		String ab1ln1 = ab1.getAddressLine1();
 		String ab2ln1 = ab2.getAddressLine1();
@@ -324,7 +324,7 @@ public class ErrorChecking {
 		String ab2Zip = ab2.getZip();
 		String ab1Number = ab1.getPhoneNumber();
 		String ab2Number = ab2.getPhoneNumber();
-		
+
 		if (ab1ln1.equals(ab2ln1) && ab1ln2.equals(ab2ln2) && ab1Cnt.equals(ab2Cnt) && ab1Prov.equals(ab2Prov) && ab1City.equals(ab2City) && ab1Zip.equals(ab2Zip) && ab1Number.equals(ab2Number)){
 			return true;
 		}
@@ -332,23 +332,23 @@ public class ErrorChecking {
 			return false;
 		}
 	}
-	
-	
+
+
 	public void setErrorStatus(boolean status) {
 		this.errorStatus = status;
 	}
-	
+
 	public void setErrorMessage(String message) {
 		this.errorMessage = message;
 	}
-	
+
 	public boolean getErrorStatus() {
 		return this.errorStatus;
 	}
-	
+
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}
-	
-	
+
+
 }

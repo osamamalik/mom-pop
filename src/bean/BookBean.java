@@ -13,37 +13,37 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType(propOrder={"bid", "title", "author" , "price", "description", "publishYear", "rating","category", "url"})
 public class BookBean {
-	
+
 	//@XmlAttribute
 	//private String item;
-	
+
 	@XmlAttribute
 	private int bid;
-	
+
 	@XmlElement
 	private String title;
-	
+
 	@XmlElement
 	private String author;
-	
+
 	@XmlElement
 	private double price;
-	
+
 	@XmlTransient
 	private String description;
-	
+
 	@XmlTransient
 	private int publishYear;
-	
+
 	@XmlTransient
 	private double rating;
-	
+
 	@XmlTransient
 	private String category;
-	
+
 	@XmlTransient
 	private String url;
-	
+
 	public BookBean() {
 	}
 

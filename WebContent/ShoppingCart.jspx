@@ -1,73 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="true"/>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="true" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
-	title="cse4413" media="screen, print"/>
-	<script type="text/javascript" src="res/myJS.js">;</script>
+	title="cse4413" media="screen, print" />
+<script type="text/javascript" src="res/myJS.js">
+	;
+</script>
 <title>Shopping Cart</title>
 </head>
 <body>
-	
-		<form method="post">
-	
+
+	<form method="post" action="">
+
 		<header class="header">
-			<jsp:include page="Header.jspx"/>
+			<jsp:include page="Header.jspx" />
 		</header>
-			<div class="main">
+		<div class="main">
 			<table>
-			
-				<c:choose>	
-	
-					<c:when test="${nonEmptyCart}">					
-						
-						<c:forEach var="entry" items="${sessionScope['cart']}"> 
-						
-			                <tr>
-				                <td><c:out value="${entry.getTitle()}"/></td>
-				                <td><c:out value="${entry.getAuthor()}"/></td>
-				                <td><f:formatNumber value="${entry.getPrice()}" type="currency" currencySymbol="$"/></td>
-								<td><input type="number" min="1" size="1" name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
-								<td><button name="removeItem" value = "${entry.getBid()}">X</button></td>
-			                </tr>
-		
-			           	</c:forEach>
-			           	
-			           		<tr>
-								<td><button name="updateCart">update</button></td>
-			                </tr>
-			           		<tr>
-			           			<td><label>Total:</label></td>
-			           			<td><f:formatNumber value="${totalPrice}" type="currency" currencySymbol="$"/></td>
-			           		</tr>
-			           		
-			           		<c:if test = "${totalPrice gt 0}">
-			           			<td><button name="checkoutButton">checkout</button></td>
-			           		</c:if>
-		           	</c:when>
-	           		
-	           							
+
+				<c:choose>
+
+					<c:when test="${nonEmptyCart}">
+
+						<c:forEach var="entry" items="${sessionScope['cart']}">
+
+							<tr>
+								<td><c:out value="${entry.getTitle()}" /></td>
+								<td><c:out value="${entry.getAuthor()}" /></td>
+								<td><f:formatNumber value="${entry.getPrice()}"
+										type="currency" currencySymbol="$" /></td>
+								<td><input type="number" min="1" size="1"
+									name="${entry.getBid()}" value="${entry.getQuantity()}"></input></td>
+								<td><button name="removeItem" value="${entry.getBid()}">X</button></td>
+							</tr>
+
+						</c:forEach>
+
+						<tr>
+							<td><button name="updateCart">update</button></td>
+						</tr>
+						<tr>
+							<td><label>Total:</label></td>
+							<td><f:formatNumber value="${totalPrice}" type="currency"
+									currencySymbol="$" /></td>
+						</tr>
+
+						<c:if test="${totalPrice gt 0}">
+							<td><button name="checkoutButton">checkout</button></td>
+						</c:if>
+					</c:when>
+
+
 					<c:otherwise>
-							<p>You currently don't have any items in your shopping cart</p>
+						<p>You currently don't have any items in your shopping cart</p>
 					</c:otherwise>
-           		
-           		</c:choose>	
-	           	
-			</table>		 
-		 
-	 	</div>
-			
-		 	<footer class="footer">
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
+
+				</c:choose>
+
+			</table>
+
+		</div>
+
+		<footer class="footer">
+			<jsp:include page="Footer.jspx" />
+		</footer>
 	</form>
-	
+
 </body>
-</html>
+	</html>
 </jsp:root>

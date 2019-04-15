@@ -37,7 +37,7 @@ public class QueryConstructor {
 		this.ratingFilter = 0;
 		this.categoryFilter = null;
 	}
-	
+
 	public void reset() {
 		this.allBooks = false;
 		this.category = null;
@@ -55,7 +55,7 @@ public class QueryConstructor {
 		this.sortPriceHighToLow = false;
 		this.sortPriceLowtoHigh = false;
 	}
-	
+
 	public void resetFilter() {
 		this.filter = false;
 		this.priceFilterLow = 0;
@@ -63,7 +63,7 @@ public class QueryConstructor {
 		this.ratingFilter = 0;
 		this.categoryFilter = null;
 	}
-	
+
 	public boolean isAllBooks() {
 		return allBooks;
 	}
@@ -167,7 +167,7 @@ public class QueryConstructor {
 	public void setPriceFilterHigh(double priceFilterHigh) {
 		this.priceFilterHigh = priceFilterHigh;
 	}
-	
+
 	public double getRatingFilter() {
 		return ratingFilter;
 	}
@@ -183,7 +183,7 @@ public class QueryConstructor {
 	public void setCategoryFilter(String categoryFilter) {
 		this.categoryFilter = categoryFilter;
 	}
-	
-	
-	
+
+
+
 }

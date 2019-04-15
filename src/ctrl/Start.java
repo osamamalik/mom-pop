@@ -37,8 +37,8 @@ public class Start extends HttpServlet {
 	String redirectedTarget;
 	ArrayList <BookBean> books;
 	ArrayList <CartBean> cart;
-	
-	
+
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -48,14 +48,14 @@ public class Start extends HttpServlet {
 	}
 
 	public void init(ServletConfig config) throws ServletException {
-		
-		
+
+
 		super.init(config);
 		ServletContext context = getServletContext();
-		
+
 		loggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("loggedIn"));
 		adminLoggedIn = Boolean.parseBoolean(this.getServletContext().getInitParameter("adminLoggedIn"));
-		
+
 		target = "/Home.jspx";
 		redirectedTarget = "/Books.jspx";
 		error = false;
@@ -71,31 +71,31 @@ public class Start extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			context.setAttribute("services", new Services());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			context.setAttribute("errorChecking", new ErrorChecking());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			context.setAttribute("query", new QueryConstructor());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -109,133 +109,133 @@ public class Start extends HttpServlet {
 		ErrorChecking errorChecking = (ErrorChecking) this.getServletContext().getAttribute("errorChecking");
 		QueryConstructor queryObject = (QueryConstructor) this.getServletContext().getAttribute("query");
 		request.getSession().setAttribute("query", queryObject);
-		
+
 		/***************************************************************
 			PAGE REDIRECTIONS
 		 ****************************************************************/
 		this.redirector(request, response, databaseOperator, queryObject);
-		
+
 		/***************************************************************
 			SIGN UP
 		 ****************************************************************/
 		if (request.getParameter("signUpButton") != null) {
 			this.signUp(request, response, databaseOperator, errorChecking, queryObject);
 		}
-		
+
 		/***************************************************************
 			LOGIN
-		****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("loginButton") != null) {
 			String username = request.getParameter("loginName");
 			String password = request.getParameter("loginPassword"); 
 			this.logIn(request, response, databaseOperator, errorChecking, username, password, queryObject);
 		}
-		
+
 		/***************************************************************
 			SIGN OUT
-	    ****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("signoutButton") != null) {
 			this.signOut(request, response);
 		}
-		
+
 		/***************************************************************
 			BOOK LISTINGS
-		****************************************************************/
-		
+		 ****************************************************************/
+
 		// Calls method for listing all books
 		if (request.getParameter("booksPageButton") != null) {
 			this.listAllBooks(request, response, databaseOperator, queryObject);
 		}
-		
+
 		// Calls method for listing books by category
 		if (request.getParameter("headerCategory") != null) {
 			this.listBooksByCategory(request, response, databaseOperator, queryObject);
 		}
-		
+
 		/***************************************************************
 			BOOK SORTINGS
-		****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("sortButton") != null) {
 			this.sortBooks(request, response, databaseOperator, queryObject);	
 		}
-		
+
 		/***************************************************************
 			FILTER
-		****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("filterButton") != null || request.getParameter("resetFilterButton") != null ) {
 			this.filter(request, response, databaseOperator, queryObject);
 		}
-	
+
 		/***************************************************************
 			SINGLE BOOK PAGE
-		****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("viewSingleBook") != null) {
 			int title = (Integer.parseInt(request.getParameter("viewSingleBook")));
 			request.getSession().setAttribute("title", title);
 			this.openBook(request, response, databaseOperator, title);
 		}
-		
+
 		if (request.getParameter("addReviewButton") != null) {
 			this.addReview(request, response, databaseOperator, errorChecking);
 		}
-		
+
 		/***************************************************************
 			SEARCH BAR
-		****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("searchButton") != null) {
 			this.searchStore(request, response, databaseOperator, queryObject);
 		}
-		
+
 		/***************************************************************
 			SHOW SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("showShoppingCart") != null) {
 			this.showCart(request, response, databaseOperator);
 		}
-		
+
 		/***************************************************************
 			ADD TO SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("addToCart") != null) {
 			this.addToCart(request, response, databaseOperator);
 		}
-		
-		
+
+
 		/***************************************************************
 			REMOVE FROM SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("removeItem") != null) {
 			this.removeFromCart(request, response, databaseOperator);
 		}
-		
+
 		/***************************************************************
 			UPDATE SHOPPING CART
 		 ****************************************************************/
 		if (request.getParameter("updateCart") != null) {
 			this.updateCart(request, response, databaseOperator);
 		}
-		
+
 		/***************************************************************
 			PAYMENT
-		****************************************************************/
+		 ****************************************************************/
 		if (request.getParameter("placeOrder") != null) {
 			this.payment(request, response, databaseOperator, errorChecking);
 		}
-		
+
 		/***************************************************************
 			PRODUCT CATALOG SERVICES
 		 ****************************************************************/
 		if (request.getParameter("PCSGenerateButton") != null) {
 			this.productCatalogService(request, response, databaseOperator, errorChecking, services);
 		}
-		
+
 		/***************************************************************
 			ORDER PROCESSING SERVICES
 		 ****************************************************************/
 		if (request.getParameter("OPSGenerateButton") != null) {
 			this.orderProcessingService(request, response, databaseOperator, errorChecking, services);
 		}
-		
+
 		/***************************************************************
 			ANALYTICS
 		 ****************************************************************/
@@ -243,16 +243,16 @@ public class Start extends HttpServlet {
 			this.ordersByMonth(request, response, databaseOperator, errorChecking);
 		}
 
-		
+
 		/***************************************************************
 			TESTING BLOCK
 		 ****************************************************************/
 
 		/***************************************************************
 			TESTING BLOCK
-		****************************************************************/
+		 ****************************************************************/
 		request.getRequestDispatcher(target).forward(request, response);
-		
+
 	}
 
 
@@ -265,9 +265,9 @@ public class Start extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
+
 	protected void redirector(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
-						
+
 		//checks if a 'Single Book' has been clicked on
 		if (request.getParameter("viewSingleBook") != null) {
 			target = "/SingleBook.jspx";
@@ -294,9 +294,9 @@ public class Start extends HttpServlet {
 			categories = databaseOperator.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
-					
+
 		//checks if 'Home' button was pressed, sets target to the Sign Up page if true
-		 if (request.getParameter("homeButton") != null) {
+		if (request.getParameter("homeButton") != null) {
 			if (adminLoggedIn) {
 				adminLoggedIn = false;
 				loggedIn = false;
@@ -307,12 +307,12 @@ public class Start extends HttpServlet {
 			}
 			target = "/Home.jspx";
 		}
-		
+
 		//checks if Shopping Cart was requested
 		else if (request.getParameter("showShoppingCart") != null) {
 			target = "/ShoppingCart.jspx";	
 		}
-		
+
 		//checks if Checkout was requested
 		else if (request.getParameter("checkoutButton") != null) {
 			if (!loggedIn) {
@@ -323,7 +323,7 @@ public class Start extends HttpServlet {
 				this.target = "/Payment.jspx";
 			}
 		}
-		 
+
 		//checks if services access is requested
 		//checks if user is logged in as admin
 		else if (request.getParameter("servicesButton") != null) {
@@ -334,7 +334,7 @@ public class Start extends HttpServlet {
 				target = "/Services.jspx";
 			}		
 		}
-		
+
 		//checks if analytics access is requested
 		//checks if user is logged in as admin
 		else if (request.getParameter("analyticsButton") != null) {
@@ -345,39 +345,39 @@ public class Start extends HttpServlet {
 				target = "/Analytics.jspx";
 			}		
 		}
-				
+
 		//checks if PCS was requested
 		if (request.getParameter("PCSRequestButton") != null) {
 			target = "/ProductCatalogService.jspx";	
 		}
-		
+
 		//checks if OPS was requested
 		if (request.getParameter("OPSRequestButton") != null) {
 			target = "/OrderProcessingService.jspx";	
 		}
-		
+
 		//checks if monthly orders were requested
 		if (request.getParameter("OrdersByMonth") != null) {
 			target = "/OrdersByMonth.jspx";	
 		}
-		
+
 		//checks if top10 orders were requested
 		if(request.getParameter("top10") != null) {
 			target = "/Top10.jspx";	
 		}
 	}
-		
+
 	protected void logIn(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, String username, String password, QueryConstructor queryObject) throws ServletException, IOException {
-		
+
 		// Sets errors, if any
 		errorChecking.checkLoginError(username, password);
-		
+
 		// No errors, user is successfully logged in
 		if (!errorChecking.getErrorStatus()) {		
 			loggedIn = true;
 			request.getSession().setAttribute("loggedInSession", loggedIn);
 			request.getSession().setAttribute("loggedInUser", username);
-			
+
 			//if admin logs in, redirects to the admin page
 			if (request.getSession().getAttribute("loggedInUser").equals("admin")) {
 				this.adminLoggedIn = true;
@@ -387,17 +387,17 @@ public class Start extends HttpServlet {
 				this.redirectedTarget = "/Books.jspx";
 				this.listAllBooks(request, response, databaseOperator, queryObject);
 			}		
-			
+
 			//clears the 'visitor' shopping cart
 			databaseOperator.clearVisitorCart();
-			
+
 			//sets the user's cart
 			this.setCart(request, response, databaseOperator, username);
-			
+
 			//sets the user's address information
 			this.setAddress(request, response, databaseOperator, username);
 		}
-		
+
 		else {
 			String loginErrorMessage = errorChecking.getErrorMessage();
 			error = true;
@@ -405,16 +405,16 @@ public class Start extends HttpServlet {
 			request.setAttribute("error", loginErrorMessage);
 		}
 	}
-	
+
 	protected void signUp(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, QueryConstructor queryObject) throws ServletException, IOException {
-		
+
 		String firstName = request.getParameter("signUpFirstName");
 		String lastName = request.getParameter("signUpLastName");
 		String username = request.getParameter("signUpUsername");
 		String email = request.getParameter("signUpEmail");
 		String password = request.getParameter("signUpPassword");
 		String passwordConf = request.getParameter("signUpPasswordConf");
-		
+
 		AddressBean shippingAB = new AddressBean();
 		AddressBean billingAB = new AddressBean();
 		shippingAB.setType("shipping");
@@ -426,7 +426,7 @@ public class Start extends HttpServlet {
 		shippingAB.setCity(request.getParameter("shippingCity"));
 		shippingAB.setZip(request.getParameter("shippingZip"));
 		shippingAB.setPhoneNumber(request.getParameter("addressPhone"));
-		
+
 		if (request.getParameter("sameTypesCheckbox") != null) {
 			billingAB.setType("billing");
 			billingAB.setUsername(username);
@@ -451,72 +451,72 @@ public class Start extends HttpServlet {
 			billingAB.setPhoneNumber(request.getParameter("billingPhone"));
 			errorChecking.checkSignUpError(username, email, password, passwordConf, shippingAB, billingAB);
 		}
-		
+
 		//Sets errors, if any
 		if (!errorChecking.getErrorStatus()) {
 			databaseOperator.addUser(username, firstName, lastName, email, password);
 			databaseOperator.addAddress(shippingAB);
 			databaseOperator.addAddress(billingAB);
-			
+
 			//checks if there are items in the visitor shopping cart
 			//if so, adds these items to the database for the newly created user
 			ArrayList<CartBean> shoppingCart = (ArrayList<CartBean>) request.getSession().getAttribute("cart");
-			
+
 			for (CartBean cartItem : shoppingCart) {
 				cartItem.setUsername(username);
 			}
 
 			databaseOperator.addShoppingCart(shoppingCart, username);
-			
+
 			this.logIn(request, response, databaseOperator, errorChecking, username, password, queryObject);
-			
+
 			this.target = redirectedTarget;
 			this.redirectedTarget = "/Books.jspx";
 
 		}else {
-			
+
 			String signUpErrorMessage = errorChecking.getErrorMessage();
 			error = true;
 			target = "/SignUp.jspx";
 			request.setAttribute("error", signUpErrorMessage);
 		}
 	}
-	
+
 	protected void signOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+
 		loggedIn = false;
 		request.getSession().setAttribute("loggedInSession", loggedIn);
 		request.getSession().setAttribute("loggedInUser", null);
 		request.getSession().setAttribute("cart", null);
 		request.getSession().setAttribute("totalPrice", null);
 	}
-	
+
 
 	protected void listAllBooks(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
-	
+
 		queryObject.setCategory(null);
 		queryObject.setSearchTerm(null);
 		queryObject.resetFilter();
-		
+
 		queryObject.setAllBooks(true);
 		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);
 	}
-	
+
 	protected void listBooksByCategory(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
-		
+
 		queryObject.setAllBooks(false);
 		queryObject.setSearchTerm(null);
-		
+
 		String category = request.getParameter("headerCategory");
 		queryObject.setCategory(category);
 		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);
-		
+
 	}
-	
+
 	protected void sortBooks(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
-		
+
 		//obtains the sort option
 		String sortOption = request.getParameter("sortOption");
 		queryObject.resetSort();
@@ -538,58 +538,58 @@ public class Start extends HttpServlet {
 		else if (sortOption.equals("Price - High to Low")) {
 			queryObject.setSortPriceHighToLow(true);
 		}
-		
+
 		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);
-		
+
 	}
-	
+
 	protected void searchStore(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {
-		
+
 		queryObject.setAllBooks(false);
 		queryObject.setCategory(null);
 
 		//obtains the searched term
 		String searchTerm = request.getParameter("searchBar").toUpperCase();
-		
+
 		queryObject.setSearchTerm(searchTerm);
-			
+
 		books = databaseOperator.queryConstructor(queryObject);
 		request.setAttribute("booksList", books);	
 	}
-	
+
 	protected void filter(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, QueryConstructor queryObject) throws ServletException, IOException {		
-		
+
 		//if user chose to reset the filter, queryObject's filter attributes are reset
 		//if not, queryObject's filter attributes are initialized
 		if (request.getParameter("resetFilterButton") != null) {
 			queryObject.resetFilter();
 			books = databaseOperator.queryConstructor(queryObject);
 			request.setAttribute("booksList", books);		
-			
+
 			//Retrieves unique categories and sets the filter display
 			ArrayList <String>categories = new ArrayList<String>();
 			categories = databaseOperator.retrieveUniqueCategories();
 			request.setAttribute("categoriesFilterList", categories);
 		}
 		else {
-		
+
 			// checks if any filters were selected
 			if (request.getParameter("categoryFilter") != null || request.getParameter("ratingFilter") != null || !request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
-				
+
 				queryObject.setFilter(true);
-	
+
 				// obtains the selected category filter, adds it to queryObject
 				if (request.getParameter("categoryFilter") != null) {
 					String categoryFilter = request.getParameter("categoryFilter");
 					queryObject.setCategoryFilter(categoryFilter);
 				}
-	
+
 				// obtains the selected review filter, adds it to queryObject
 				if (request.getParameter("ratingFilter") != null) {
-				
+
 					String ratingFilter = request.getParameter("ratingFilter");
-					
+
 					if (ratingFilter.equals("above1")) {
 						queryObject.setRatingFilter(1);
 					}
@@ -602,15 +602,15 @@ public class Start extends HttpServlet {
 					else {
 						queryObject.setRatingFilter(4);
 					}
-					
+
 				}
-				
+
 				// obtains the selected price range filter
 				if (!request.getParameter("priceLowFilter").equals("") || !request.getParameter("priceHighFilter").equals("")) {
-					
+
 					double priceLowFilter;
 					double priceHighFilter;
-					
+
 					if (!request.getParameter("priceLowFilter").equals("") && !request.getParameter("priceHighFilter").equals("")) {
 						priceLowFilter = Double.parseDouble(request.getParameter("priceLowFilter"));
 						priceHighFilter = Double.parseDouble(request.getParameter("priceHighFilter"));
@@ -629,15 +629,15 @@ public class Start extends HttpServlet {
 
 					}
 				}
-							
+
 			}
-				
+
 			books = databaseOperator.queryConstructor(queryObject);
 			request.setAttribute("booksList", books);
 		}
 	}
 
-	
+
 	protected void showCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 
 		String username;	
@@ -648,25 +648,25 @@ public class Start extends HttpServlet {
 		else {
 			username = "visitor";
 		}
-		
+
 		ArrayList<CartBean> databaseShoppingCart = databaseOperator.retrieveCart(username);
-		
+
 		if (databaseShoppingCart.size() > 0) {
 			request.setAttribute("nonEmptyCart", true);
 		}
 		else {
 			request.setAttribute("nonEmptyCart", false);
 		}
-		
+
 	}
-	
+
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 
 		String username;
-		
+
 		//obtains bid of the book being added to cart
 		int bid = Integer.parseInt(request.getParameter("addToCart"));
-		
+
 		//obtains the username if the user is logged in. If not, sets username as "visitor"
 		if (loggedIn) {
 			username = (String) request.getSession().getAttribute("loggedInUser");
@@ -681,14 +681,14 @@ public class Start extends HttpServlet {
 		this.openBook(request, response, databaseOperator, bid);
 
 	}
-	
+
 	protected void removeFromCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
-		
+
 		String username;
 
 		//obtains bid of the book being removed from cart
 		int bid = Integer.parseInt(request.getParameter("removeItem"));
-		
+
 		//obtains the username if the user is logged in. If not, sets username as "visitor"
 		if (loggedIn) {
 			username = (String) request.getSession().getAttribute("loggedInUser");
@@ -696,17 +696,17 @@ public class Start extends HttpServlet {
 		else {
 			username = "visitor";
 		}
-		
+
 		databaseOperator.removeFromCart(bid, username);
 		this.setCart(request, response, databaseOperator, username);
 		this.showCart(request, response, databaseOperator);
 	}
-	
+
 	protected void updateCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
 
 		String username;
 		int quantity;
-			
+
 		//obtains the username if the user is logged in. If not, sets username as "visitor"
 		if (loggedIn) {
 			username = (String) request.getSession().getAttribute("loggedInUser");
@@ -714,11 +714,11 @@ public class Start extends HttpServlet {
 		else {
 			username = "visitor";
 		}
-		
+
 		ArrayList<CartBean> databaseShoppingCart = databaseOperator.retrieveCart(username);
-		
+
 		for (CartBean cartItem : databaseShoppingCart) {
-			
+
 			//gets the bid of the item being inspected from the database
 			String databaseBid = Integer.toString(cartItem.getBid()); 
 			//gets the quantity that appears in the current state of cart of the same item		
@@ -729,22 +729,22 @@ public class Start extends HttpServlet {
 				databaseOperator.updateQuantity(cartItem.getBid(), cartItem.getUsername(), quantity);
 			}
 		}
-		
+
 		this.setCart(request, response, databaseOperator, username);
 		this.showCart(request, response, databaseOperator);
 	}
-	
+
 	protected void setCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
 		ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
 		double totalPrice = databaseOperator.getTotalPrice(username);
 		request.getSession().setAttribute("cart", shoppingCart);
 		request.getSession().setAttribute("totalPrice", totalPrice);
 	}
-			
+
 	protected void openBook(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, int bookID) throws ServletException, IOException {
 		BookBean singleBook = databaseOperator.retrieveBook(bookID);
 		request.setAttribute("singleBook", singleBook);
-		
+
 		// Retrieve user review for book if it exists, otherwise give option to add review:
 		if (request.getSession().getAttribute("loggedInUser") != null) {
 			String username = request.getSession().getAttribute("loggedInUser").toString();
@@ -761,15 +761,15 @@ public class Start extends HttpServlet {
 			}
 		}
 	}
-	
+
 	protected void addReview(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) throws ServletException, IOException {
-		
+
 		String review = request.getParameter("review");
 		int bookID = Integer.parseInt(request.getSession().getAttribute("title").toString());
 
 		//checks if anything was added to the review field before submission of review
 		errorChecking.checkReviewError(review);
-		
+
 		if (!errorChecking.getErrorStatus()) {
 			String username = request.getSession().getAttribute("loggedInUser").toString();
 			int rating = Integer.parseInt(request.getParameter("rating"));
@@ -783,15 +783,15 @@ public class Start extends HttpServlet {
 		}
 	}
 	protected void payment(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking){
-			
+
 		String username = request.getSession().getAttribute("loggedInUser").toString();
 		String creditCardNumber = request.getParameter("creditCardNumber");
 		String expiryMonth = request.getParameter("creditCardExpiryMonth");
 		String expiryDay = request.getParameter("creditCardExpiryDay");
 		String securityCode = request.getParameter("creditCardSecurity");
-		
+
 		errorChecking.checkPaymentInformation(creditCardNumber, expiryMonth, expiryDay, securityCode);
-		
+
 		//check if the new order number is a multiple of 3		
 		if ((orderCount + 1) % 3 == 0) {
 			error = true;
@@ -806,13 +806,13 @@ public class Start extends HttpServlet {
 			request.setAttribute("error", errorChecking.getErrorMessage());
 		}
 		else {			
-						
+
 			ArrayList<CartBean> shoppingCart = databaseOperator.retrieveCart(username);
-			
+
 			//obtains the entered addresses for payment
 			AddressBean paymentShippingAB = this.retrievePaymentAddresses(request, response, databaseOperator, errorChecking).get(0);
 			AddressBean paymentBillingAB = this.retrievePaymentAddresses(request, response, databaseOperator, errorChecking).get(1);
-			
+
 			//obtains the default addresses of user
 			AddressBean defaultShippingAB  = databaseOperator.retrieveAddress(username, "shipping");
 			AddressBean defaultBillingAB  = databaseOperator.retrieveAddress(username, "billing");
@@ -820,10 +820,10 @@ public class Start extends HttpServlet {
 			//checks if addresses are default addresses in database
 			boolean defaultShippingAddressUsed = errorChecking.compareAddresses(paymentShippingAB, defaultShippingAB);
 			boolean defaultBillingAddressUsed = errorChecking.compareAddresses(paymentBillingAB, defaultBillingAB);
-			
+
 			//default shipping and billing address added to orderDetails - update to address table not necessary
 			if (defaultShippingAddressUsed && defaultBillingAddressUsed) {
-				
+
 				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
 
 			}//default shipping and new billing address added to orderDetails - billing address will be updated
@@ -839,7 +839,7 @@ public class Start extends HttpServlet {
 
 			}//new shipping and new new address added to orderDetails - both addresses will be updated
 			else if (!defaultShippingAddressUsed && !defaultBillingAddressUsed) {
-				
+
 				databaseOperator.updateAddress(paymentBillingAB);
 				databaseOperator.updateAddress(paymentShippingAB);
 				databaseOperator.addtoOrders(shoppingCart, defaultShippingAB, defaultBillingAB);
@@ -851,7 +851,7 @@ public class Start extends HttpServlet {
 			target = "/SuccessfulOrder.jspx";
 		}
 	}
-	
+
 	protected void setAddress(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, String username) throws ServletException, IOException {
 
 		//obtains user's shipping and billing addresses for confirmation on the payment page
@@ -865,7 +865,7 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("paymentShippingProvince", shippingAB.getProvince());
 		request.getSession().setAttribute("paymentShippingCity", shippingAB.getCity());
 		request.getSession().setAttribute("paymentShippingZip", shippingAB.getZip());
-		
+
 		//sets user's billing address details 
 		request.getSession().setAttribute("paymentBillingLine1", billingAB.getAddressLine1());
 		request.getSession().setAttribute("paymentBillingLine2", billingAB.getAddressLine2());
@@ -873,19 +873,19 @@ public class Start extends HttpServlet {
 		request.getSession().setAttribute("paymentBillingProvince", billingAB.getProvince());
 		request.getSession().setAttribute("paymentBillingCity", billingAB.getCity());
 		request.getSession().setAttribute("paymentBillingZip", billingAB.getZip());
-		
+
 		//sets user's phone number
 		request.getSession().setAttribute("paymentAddressPhone", shippingAB.getPhoneNumber());
 	}
-	
+
 	protected ArrayList<AddressBean> retrievePaymentAddresses(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
-		
+
 		AddressBean shippingAB = new AddressBean();
 		AddressBean billingAB = new AddressBean();
 		ArrayList<AddressBean> paymentAddresses = new ArrayList<AddressBean>();
 
 		String username = request.getSession().getAttribute("loggedInUser").toString();
-		
+
 		//gets user's payment shipping address details 
 		shippingAB.setType("shipping");
 		shippingAB.setUsername(username);
@@ -897,7 +897,7 @@ public class Start extends HttpServlet {
 		shippingAB.setZip(request.getParameter("paymentShippingZip"));
 		shippingAB.setPhoneNumber(request.getParameter("paymentAddressPhone"));
 
-		
+
 		//gets user's payment billing address details 
 		billingAB.setType("billing");
 		billingAB.setUsername(username);
@@ -911,13 +911,13 @@ public class Start extends HttpServlet {
 
 		paymentAddresses.add(shippingAB);
 		paymentAddresses.add(billingAB);
-		
+
 		return paymentAddresses;
 	}
-	
+
 
 	protected void productCatalogService(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
-		
+
 		String bidString = request.getParameter("bid");
 		errorChecking.checkServicesError(bidString);
 
@@ -933,12 +933,12 @@ public class Start extends HttpServlet {
 
 				request.setAttribute("PCSResultReady", true);
 				target = "ProductCatalogService.jspx";
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		else {
 			String signUpErrorMessage = errorChecking.getErrorMessage();
@@ -948,9 +948,9 @@ public class Start extends HttpServlet {
 		}
 	}
 
-	
+
 	protected void orderProcessingService(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking, Services services) throws ServletException, IOException{
-		
+
 		String bidString = request.getParameter("bid");
 		errorChecking.checkServicesError(bidString);
 
@@ -976,38 +976,38 @@ public class Start extends HttpServlet {
 			request.setAttribute("error", signUpErrorMessage);
 		}
 	}
-	
+
 	public void ordersByMonth(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
 		// gets month to  select
 		String month = request.getParameter("monthOption");
-		
+
 		List<String> monthList = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 		int num = monthList.indexOf(month) + 1;
-		
+
 		ArrayList<OrderBean> ow = databaseOperator.retrieveOrdersByMonth(num);
 		request.getSession().setAttribute("OrderByMonth", ow);
 		request.setAttribute("OBMResultsReady", true);
 		target = "/OrdersByMonth.jspx";
 	}
-	
+
 	public void getTop10(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator, ErrorChecking errorChecking) {
-		
+
 		ArrayList<BookBean> abb = (ArrayList<BookBean>) request.getSession().getAttribute("Top10");
 		request.getSession().setAttribute("Top10", abb);
 	}
-	
+
 
 	@GET
-    @Path("/pcs/")
+	@Path("/pcs/")
 	@Produces(MediaType.TEXT_XML)
 	public String getProductCatalogService(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
 		Services services = new Services();
 		try {
 			String toReturn = services.exportProductWebServices(bid);
-			
+
 			target = "/ProductProcessingService.jspx";
-			
+
 			return toReturn;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1015,18 +1015,18 @@ public class Start extends HttpServlet {
 		}
 		return "";
 	}
-	
+
 	@GET
-    @Path("/ops/")
+	@Path("/ops/")
 	@Produces(MediaType.TEXT_XML)
 	public String getOrderCatalogService(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
 		Services services = new Services();
 		try {
 			String toReturn = services.exportOrderWebServices(bid);
-			
+
 			target = "/ProductProcessingService.jspx";
-			
+
 			return toReturn;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1034,7 +1034,7 @@ public class Start extends HttpServlet {
 		}
 		return "";
 	}
-	
 
-	
+
+
 }

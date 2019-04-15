@@ -27,7 +27,7 @@
 			<input type="submit" value="Home" name="homeButton"></input>
 		</header>
 		<div class="main">
-			<p>These are the top 10 books at this time: </p>
+			<p>These are the top 10 books at this time:</p>
 
 			<table>
 				<td><c:out value=" Book " /></td>
@@ -67,12 +67,12 @@
 
 				</c:forEach>
 			</table>
-			
-			</div>
-			
-		 	<footer class="footer">
-				<jsp:include page="Footer.jspx"/>
-			</footer> 
+
+		</div>
+
+		<footer class="footer">
+			<jsp:include page="Footer.jspx" />
+		</footer>
 	</form>
 
 </body>

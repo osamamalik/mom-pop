@@ -1,7 +1,7 @@
 package bean;
 
 public class CartBean {
-	
+
 	private String title;
 	private String author;
 	private int cid;
@@ -9,7 +9,7 @@ public class CartBean {
 	private double price;
 	private int quantity;
 	private String username;
-	
+
 	public CartBean() {
 	}
 
@@ -70,10 +70,10 @@ public class CartBean {
 	}
 
 
-	
 
 
 
 
-	
+
+
 }

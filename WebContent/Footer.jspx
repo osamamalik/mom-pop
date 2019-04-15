@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
-		pageEncoding="ISO-8859-1" session="true"/>
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="true" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="StyleSheet" href="res/styles.css" type="text/css"
-	title="cse4413" media="screen, print"/>
+	title="cse4413" media="screen, print" />
 <title>Footer</title>
 </head>
 <body>
 
-	<form>
-	
+	<form action="">
+
 		<table>
 			<tr>
 				<td><input type="submit" value="Services" name="servicesButton"></input></td>
-				<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
+				<td><input type="submit" value="Analytics"
+					name="analyticsButton"></input></td>
 			</tr>
 		</table>
-		
+
 		<div class="copyright">
-			<p class="copyright">© 2019 Mom and Pop Bookstore Inc., a subsidiary of E-Men Industries.</p>
+			<p class="copyright">© 2019 Mom and Pop Bookstore Inc., a
+				subsidiary of E-Men Industries.</p>
 		</div>
 
 	</form>
-	
+
 </body>
-</html>
+	</html>
 </jsp:root>

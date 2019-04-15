@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType(propOrder={"addressLine1", "city", "province" , "zip"})*/
 public class AddressBean {
-	
+
 	@XmlElement(name="name")
 	private String name;
 
@@ -23,31 +23,31 @@ public class AddressBean {
 	private String type;
 	@XmlTransient
 	private String username;
-	
+
 	@XmlElement(name="street")
 	private String addressLine1;
-	
+
 	@XmlTransient
 	private String AddressLine2;
-	
+
 	@XmlElement
 	private String province;
-	
+
 	@XmlElement
 	private String city;
-	
+
 	@XmlElement
 	private String zip;
-	
+
 	@XmlTransient
 	private String phoneNumber;
-	
+
 	//@XmlAttribute(name="shipTo")
 	//private String ShipTo;
-	
+
 	@XmlAttribute(name="country")
 	private String country;
-	
+
 	public AddressBean() {
 	}
 
@@ -140,8 +140,8 @@ public class AddressBean {
 	}
 
 
-	
-	
+
+
 }
 
 

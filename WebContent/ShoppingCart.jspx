@@ -44,7 +44,7 @@
 			                </tr>
 			           		<tr>
 			           			<td><label>Total:</label></td>
-			           			<td>${totalPrice}</td>
+			           			<td><f:formatNumber value="${totalPrice}" type="currency" currencySymbol="$"/></td>
 			           		</tr>
 			           		
 			           		<c:if test = "${totalPrice gt 0}">

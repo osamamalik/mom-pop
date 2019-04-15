@@ -658,9 +658,6 @@ public class Start extends HttpServlet {
 			request.setAttribute("nonEmptyCart", false);
 		}
 		
-		System.out.println(username + "'s cart size is: ");
-		System.out.println(databaseShoppingCart.size());
-		
 	}
 	
 	protected void addToCart(HttpServletRequest request, HttpServletResponse response, DatabaseOperator databaseOperator) throws ServletException, IOException {
@@ -930,7 +927,6 @@ public class Start extends HttpServlet {
 			String filename = this.getServletContext().getRealPath("/" + f);
 			request.getSession().setAttribute("filenameProductService", filename);
 			request.setAttribute("fProductService", f);
-			System.out.println(filename);
 			try {
 
 				services.exportProductServices(bid, filename);
@@ -964,7 +960,6 @@ public class Start extends HttpServlet {
 			String filename = this.getServletContext().getRealPath("/" + f);
 			request.getSession().setAttribute("filenameOrderService", filename);
 			request.setAttribute("fOrderService", f);
-			System.out.println(filename);
 			try {
 				services.exportOrderServices(bid, filename);
 				request.setAttribute("OPSResultReady", true);
@@ -1024,7 +1019,7 @@ public class Start extends HttpServlet {
 	@GET
     @Path("/ops/")
 	@Produces(MediaType.TEXT_XML)
-	public String getOrerCatalogService(@QueryParam("bid") String bookid) {
+	public String getOrderCatalogService(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
 		Services services = new Services();
 		try {

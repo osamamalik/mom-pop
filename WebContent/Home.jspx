@@ -24,7 +24,7 @@
 			<div class="main">
 				<img src="res/images/welcome.jpg" style="height:100%;width:100%;object-fit:contain" />
 				<h3>Browse some of our most popular categories:</h3>
-				<table>
+				<table style="height:100%;width:100%;object-fit:contain">
 					<tr class="homeCategoryTableImageRow">
 						<td><button action="submit" class="homeCategoryButton" type="submit" name="booksPageButton"><img class="homeCategoryImage" src="res/images/all.png" /></button></td>
 						<td><button action="submit" class="homeCategoryButton" type="submit" value="Fantasy" name="headerCategory"><img class="homeCategoryImage" src="res/images/fantasy.png" /></button></td>

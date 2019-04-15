@@ -998,7 +998,7 @@ public class Start extends HttpServlet {
 	@GET
     @Path("/pcs/")
 	@Produces(MediaType.TEXT_XML)
-	public String getProductCatalogService(@QueryParam("bid") String bookid) {
+	public String getProductInfo(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
 		Services services = new Services();
 		try {
@@ -1017,7 +1017,7 @@ public class Start extends HttpServlet {
 	@GET
     @Path("/ops/")
 	@Produces(MediaType.TEXT_XML)
-	public String getOrerCatalogService(@QueryParam("bid") String bookid) {
+	public String getOrdersByPartNumber(@QueryParam("bid") String bookid) {
 		int bid = Integer.parseInt(bookid);
 		Services services = new Services();
 		try {

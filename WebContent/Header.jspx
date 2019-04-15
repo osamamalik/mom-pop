@@ -13,40 +13,33 @@
 <title>Header</title>
 </head>
 <body>
-		<div class="logo">
-			<button class="logoButton" action="submit" type="submit" name="homeButton"><img src="res/images/logo.png" class="logoImage" /></button>
-		</div>
 		
 		<table>
 			<tr>
-			
-				<td><input type="submit" value="Home" name="homeButton"></input></td>
-				<td><input type="submit" value="Browse" name="booksPageButton"></input></td>
-				<td><input type="submit" value="Specials" name="specialBooksButton"></input></td>
-				<td><input type="submit" value="Cart" name="showShoppingCart"></input></td>
-				<td><input type="submit" value="Checkout" name="checkoutButton"></input></td>	
-				
+				<td><button class="logoButton" style="text-align:left;" action="submit" type="submit" name="homeButton"><img src="res/images/logo.png" class="logoImage" /></button></td>
+				<td style="vertical-align:top;"><input type="submit" value="Cart" name="showShoppingCart" class="headerButton"></input></td>
+				<td style="vertical-align:top;"><input type="submit" value="Checkout" name="checkoutButton" class="headerButton"></input></td>
 				<c:choose>	
 		
 					<c:when test="${loggedInSession}">
-							<td><input type="submit" value="Signout" name="signoutButton"></input></td>
+							<td style="vertical-align:top;"><input type="submit" value="Signout" name="signoutButton" class="headerButton"></input></td>
 					</c:when>
 					
 					<c:otherwise>
-							<td><input type="submit" value="Sign Up" name="signUpPageButton"></input></td>
-							<td><input type="submit" value="Login" name="loginPageButton"></input></td>
+							<td style="vertical-align:top;"><input type="submit" value="Sign Up" name="signUpPageButton" class="headerButton"></input></td>
+							<td style="vertical-align:top;"><input type="submit" value="Login" name="loginPageButton" class="headerButton"></input></td>
 					</c:otherwise>
 					
 				</c:choose>	
-				
 			</tr>
 		</table>
+		<br />
 				
 		
 		<table class="searchTable">
 			<tr>
 				<td><input class="searchBar" type="text" id="searchBar" name="searchBar" placeholder="Search the store..."></input></td>
-				<td><input type="submit" value="search" name="searchButton"></input></td>
+				<td><input type="submit" value="Search" name="searchButton"></input></td>
 			</tr>
 		</table>
 		

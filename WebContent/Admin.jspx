@@ -28,6 +28,10 @@
 				</tr>
 			</table>
 			</div>
+			
+		 	<footer class="footer">
+				<jsp:include page="Footer.jspx"/>
+			</footer> 
 		</form>	
 	
 </body>

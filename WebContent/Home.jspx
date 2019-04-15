@@ -8,7 +8,7 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="StyleSheet" href="res/styles.css" type="text/css"
+<link rel="StyleSheet" href="res/styles.css" type="text/css"
 	title="cse4413" media="screen, print"/>
 	<script type="text/javascript" src="res/myJS.js">;</script>
 <title>Home</title>
@@ -16,16 +16,38 @@
 <body>
 
 	
-		<form method="POST">
+		<form action="" method="post">
 		
 			<header class="header">
 				<jsp:include page="Header.jspx"/>
 			</header>
 			<div class="main">
-		 	<footer>
+				<img src="res/images/welcome.jpg" style="height:100%;width:100%;object-fit:contain" />
+				<h3>Browse some of our most popular categories:</h3>
+				<table>
+					<tr class="homeCategoryTableImageRow">
+						<td><button action="submit" class="homeCategoryButton" type="submit" name="booksPageButton"><img class="homeCategoryImage" src="res/images/all.png" /></button></td>
+						<td><button action="submit" class="homeCategoryButton" type="submit" value="Fantasy" name="headerCategory"><img class="homeCategoryImage" src="res/images/fantasy.png" /></button></td>
+						<td><button action="submit" class="homeCategoryButton" type="submit" value="Food" name="headerCategory"><img class="homeCategoryImage" src="res/images/food.png" /></button></td>
+						<td><button action="submit" class="homeCategoryButton" type="submit" value="History" name="headerCategory"><img class="homeCategoryImage" src="res/images/history.png" /></button></td>
+						<td><button action="submit" class="homeCategoryButton" type="submit" value="Mystery" name="headerCategory"><img class="homeCategoryImage" src="res/images/mystery.png" /></button></td>
+						<td><button action="submit" class="homeCategoryButton" type="submit" value="Science Fiction" name="headerCategory"><img class="homeCategoryImage" src="res/images/scifi.png" /></button></td>						
+					</tr>
+					<tr class="homeCategoryTableLabelRow">
+						<td>All Categories</td>
+						<td>Fantasy</td>
+						<td>Food</td>
+						<td>History</td>
+						<td>Mystery</td>
+						<td>Science Fiction</td>
+					</tr>
+				</table>
+			</div>
+			
+		 	<footer class="footer">
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
-			</div>
+			
 		</form>
 	
 

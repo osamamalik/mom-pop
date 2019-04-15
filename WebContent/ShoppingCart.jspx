@@ -61,10 +61,11 @@
 	           	
 			</table>		 
 		 
-	 	<footer>
-			<jsp:include page="Footer.jspx"/>
-		</footer> 
-		</div>
+	 	</div>
+			
+		 	<footer class="footer">
+				<jsp:include page="Footer.jspx"/>
+			</footer> 
 	</form>
 	
 </body>

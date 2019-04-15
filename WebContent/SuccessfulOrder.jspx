@@ -20,10 +20,11 @@
 		<div class="main">
 			<p>Your order has been placed</p>
 			<p>Thank you for shopping with us!</p>
-		<footer>
-			<jsp:include page="Footer.jspx"/>
-		</footer> 
 		</div>
+			
+		 	<footer class="footer">
+				<jsp:include page="Footer.jspx"/>
+			</footer> 
 	</form>
 
 </body>

@@ -54,10 +54,11 @@
 			
 			</table>		
 		
-			<footer>
+			</div>
+			
+		 	<footer class="footer">
 				<jsp:include page="Footer.jspx"/>
 			</footer> 
-			</div>
 		</form>
 	</div>
 	

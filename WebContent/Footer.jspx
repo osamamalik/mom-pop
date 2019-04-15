@@ -8,6 +8,8 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="StyleSheet" href="res/styles.css" type="text/css"
+	title="cse4413" media="screen, print"/>
 <title>Footer</title>
 </head>
 <body>
@@ -20,6 +22,10 @@
 				<td><input type="submit" value="Analytics" name="analyticsButton"></input></td>
 			</tr>
 		</table>
+		
+		<div class="copyright">
+			<p class="copyright">© 2019 Mom and Pop Bookstore Inc., a subsidiary of E-Men Industries.</p>
+		</div>
 
 	</form>
 	

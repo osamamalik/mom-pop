@@ -6,8 +6,8 @@ This is the final project of EECS 4413 - Building E-Commerce Systems at York Uni
 <li>Searching the database by keywords, book categories, authors</li>
 <li>Applying price range, publication date, rating filters</li>
 <li>Applying sorting py price, publication date, rating</li>
-<li>Creating an account (with shipping and billing addresses), logging into existing account, logging out of account</li>
-<li>Adding and removing items into shopping cart, adjusting the quantity of items in the shopping cart while updating the bill</li>
+<li>Creating an account, logging into existing account, logging out of account</li>
+<li>A fully functional shopping cart</li>
 <li>Adding reviews for a given book</li>
 <li>Checking out by providing credit card information (run under https, SSL)</li>
 

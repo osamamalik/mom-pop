@@ -1,6 +1,6 @@
 # mom-pop
 
-This is the final project of EECS 4413 - Building E-Commerce Systems at York University. The project strictly followed the MVS design pattern and featured all basic functionalities of an online book-store such as:
+This is the final project of EECS 4413 - Building E-Commerce Systems at York University. The project strictly followed the MVC design pattern and featured all basic functionalities of an online book-store such as:
 <ul>
 <li>An extensive database of books</li>
 <li>Searching the database by keywords, book categories, authors</li>

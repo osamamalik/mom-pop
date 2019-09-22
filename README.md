@@ -12,13 +12,17 @@ This is the final project of EECS 4413 - Building E-Commerce Systems at York Uni
 <li>Checking out by providing credit card information (run under https, SSL)</li>
 
 <li>Provides administrator functions on:
-<li>generating a report of books sold each month</li>
-<li>real-time analytics of 10 most popular books through listeners</li>
+  <ul>
+    <li>generating a report of books sold each month</li>
+    <li>real-time analytics of 10 most popular books through listeners</li>
+  </ul>
 </li>
 
 <li>Provides REST services py providing xml files on:
-<li>getting detailed product info</li>
-<li>getting orders by part number</li>
+  <ul>
+    <li>getting detailed product info</li>
+    <li>getting orders by part number</li> 
+  </ul>
 </li>
 
 </ul>

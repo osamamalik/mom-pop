@@ -38,7 +38,7 @@ This is the final project of EECS 4413 - Building E-Commerce Systems at York Uni
 <li>Download and unzip Apache Tomcat (v8.5)</li>
 <li>Download and unzip Apache Derby 10*</li>
 <li>Configure Eclipse with Tomcat by creating a new Web server, selecting Apache Tomcat 8.5, pointing to the directory where you unzipped Tomcat</li>
-<li>Download the jstl.jar file from Apache and place it in your project's Web-INF->lib folder</li>
+<li>Download the latest jstl.jar file from Apache and place it in your project's Web-INF->lib folder</li>
 <li>Run the DBCreate.sql file under WebContent/res to populate the database</li>
 </ul>
 

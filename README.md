@@ -18,7 +18,7 @@ This is the final project of EECS 4413 - Building E-Commerce Systems at York Uni
   </ul>
 </li>
 
-<li>Provides REST services py providing xml files on:
+<li>Provides REST services by providing xml files on:
   <ul>
     <li>getting detailed product info</li>
     <li>getting orders by part number</li> 
